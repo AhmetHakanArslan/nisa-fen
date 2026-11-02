@@ -6,7 +6,7 @@
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Nisa Matematik Çalışması</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
 /* Matematik · Layout: tek sütun "çalışma defteri"; sayfalama hash ile (ana → bölüm: konu → test → yazılı → baba kontrolü → sonuç; tatbikat: 7 soru → kontrol → sonuç) */
 :root{
@@ -200,6 +200,54 @@ button,.btn,.opt,label.item,summary{-webkit-tap-highlight-color:transparent;touc
 @media (min-width:1000px){ .wrap{max-width:920px} }
 @media (prefers-reduced-motion:no-preference){.paper{animation:in .22s ease}}
 @keyframes in{from{transform:translateY(6px);opacity:.6}to{transform:none;opacity:1}}
+
+/* ===== Kareli defter teması ===== */
+:root{
+  --bg:#F8FAFD; --grid:#DCE6F5; --paper:#FFFFFF; --fg:#1E2A5A; --muted:#51608F; --line:#C9D4EA; --edge:#1E2A5A;
+  --accent:#2C47A8; --accent-soft:#EEF2FB; --on-accent:#FFFFFF; --note:#FFF06A; --note-edge:#E3D23E; --tape:#9FD8F7;
+  --hand:"Patrick Hand","Comic Sans MS",cursive; --display:var(--hand);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121933; --grid:#1D2650; --paper:#1A2346; --fg:#E8EDFF; --muted:#AAB6DC; --line:#36437A; --edge:#8294D8;
+  --accent:#AFC2FF; --accent-soft:#232F5C; --on-accent:#121933; --note:#4A4318; --note-edge:#2C280C; --tape:#2D5D7D}}
+:root[data-theme="dark"]{
+  --bg:#121933; --grid:#1D2650; --paper:#1A2346; --fg:#E8EDFF; --muted:#AAB6DC; --line:#36437A; --edge:#8294D8;
+  --accent:#AFC2FF; --accent-soft:#232F5C; --on-accent:#121933; --note:#4A4318; --note-edge:#2C280C; --tape:#2D5D7D}
+body{background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+h1,h2{font-family:var(--hand);font-weight:400;letter-spacing:.2px}
+h1{font-size:2.3rem;line-height:1.05} h2{font-size:1.7rem;line-height:1.1}
+h3{font-family:var(--body);font-weight:800}
+.eyebrow{text-transform:none;letter-spacing:0;font-size:.88rem;font-weight:800}
+.back{font-weight:800;color:var(--fg)}
+.paper{border:2px solid var(--edge);border-radius:8px;box-shadow:6px 6px 0 var(--edge)}
+#app[data-unit] .paper{border-top:2px solid var(--edge);background-image:linear-gradient(var(--unit),var(--unit));background-size:100% 12px;background-repeat:no-repeat;padding-top:32px}
+.rule{background:var(--note);border-radius:3px;box-shadow:0 6px 0 -2px var(--note-edge)}
+.rule b{font-family:var(--hand);font-weight:400;font-size:1.45rem;line-height:1.2}
+.note{background:var(--accent-soft);border:2px dashed var(--line)}
+.ornek{background:var(--paper)}
+.unit{border:2px solid var(--edge);border-radius:8px;box-shadow:4px 4px 0 var(--edge)}
+.unit:hover{border-color:var(--edge);box-shadow:5px 5px 0 var(--edge);transform:translate(-1px,-1px)}
+.unit .no{border:2px solid var(--edge);border-radius:50%;font-family:var(--hand);font-weight:400}
+.how li{border:2px solid var(--edge);border-radius:8px}
+.how li::before{font-family:var(--hand);font-weight:400;font-size:1.6rem;color:var(--fg)}
+button,.btn{font-family:var(--body);font-weight:800}
+.primary{background:var(--fg);color:var(--paper);border:2px solid var(--fg)}
+.ghost{background:var(--paper);color:var(--fg);border:2px solid var(--edge)}
+.opt{border:2px solid var(--edge);border-radius:10px}
+.crumb{border:2px solid var(--line)}
+.pg{border:2px solid var(--line)}
+.progress{height:12px;background:var(--paper);border:2px solid var(--edge)}
+.chip{border:1.5px solid var(--line);font-family:var(--hand);font-weight:400;font-size:1.02rem;background:var(--paper)}
+.chip.ok{border-color:var(--ok)}
+.scorebar{background:var(--fg);color:var(--paper);border-radius:10px}
+.big-score{font-family:var(--hand);font-weight:400}
+.scores div{border:2px solid var(--edge);border-radius:8px}
+.scores b{font-family:var(--hand);font-weight:400}
+details.yokla{border:2px solid var(--line);border-radius:8px;background:var(--paper)}
+.qhead{font-family:var(--hand);font-weight:400;font-size:1.55rem}
+.themebtn{border:2px solid var(--edge)}
+.todo li{border-radius:3px}
+@media (min-width:700px){ h1{font-size:2.8rem} h2{font-size:2rem} .rule b{font-size:1.6rem} }
 </style>
 
 </head>
@@ -207,6 +255,7 @@ button,.btn,.opt,label.item,summary{-webkit-tap-highlight-color:transparent;touc
 <div class="wrap" id="app"></div>
 
 <script>
+const DERS='mat';
 /* ---------- ÇİZİM YARDIMCILARI ---------- */
 const tbl=(head,rows)=>`<div class="tbl-wrap"><table><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>c===''?'<td class="blank"></td>':`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 const qs=items=>`<ol class="qs">${items.map(([l,t,p])=>`<li><span class="ql">${l}</span><span>${t} <span class="pts">(${p} puan)</span></span></li>`).join('')}</ol>`;
@@ -748,7 +797,7 @@ function sendBox(msg){
 /* ---------- SAYFALAR ---------- */
 function vAna(){
   const doneCount=[1,2,3,4,5].filter(n=>P.b[n]&&P.b[n].yazili!=null).length;
-  let h=`<header class="home-head"><div class="top"><span class="eyebrow">6. Sınıf Matematik · 1. Dönem 1. Yazılı</span>${themeBtn()}</div><h1>Nisa'nın Matematik Çalışması</h1>
+  let h=`<header class="home-head"><div class="top"><a class="back" href="../">← Ana sayfa</a>${themeBtn()}</div><span class="eyebrow">6. Sınıf Matematik · 1. Dönem 1. Yazılı</span><h1>Nisa'nın Matematik Çalışması</h1>
   <p class="muted">Sınavda 5 konu var: çarpan ve katlar, bölünebilme, asal sayılar, ortak kat ve ortak bölen, olasılık. Her bölümü sırayla bitir.</p></header>
   <ol class="how"><li>Konuyu oku</li><li>Testi çöz, site anında kontrol eder</li><li>Yazılı sorusunu kağıda, işlemleriyle çöz</li><li>Babam kontrol etsin, sonucu abime gönder</li></ol>
   <h2>Bölümler</h2><div class="list">`;
@@ -760,7 +809,6 @@ function vAna(){
     const chip=p!=null?`<span class="chip ok">${p}/100</span>`:doneCount<5?`<span class="chip">Önce bölümler (${doneCount}/5)</span>`:`<span class="chip">Hazır</span>`;
     h+=`<a class="unit ${p!=null?'done':''}" href="#t${n}-soru"><span class="no">T${n}</span><span><h3>${t.ad}</h3><span class="sub">${t.sorular.length} soru, gerçek sınav gibi, baba kontrollü</span></span>${chip}</a>`;});
   h+=`<a class="unit" href="#tekrar"><span class="no">★</span><span><h3>Son Tekrar</h3><span class="sub">Sınav sabahı için bütün kurallar tek sayfada</span></span><span class="chip">1 sayfa</span></a></div>
-  <h2>Diğer dersler</h2><div class="list"><a class="unit other" href="../"><span class="no">Fen</span><span><h3>Fen Çalışması</h3><span class="sub">Gezegenler, tutulmalar, kuvvet</span></span><span class="chip">Geç →</span></a></div>
   <div class="actions center" id="resetZone"><button class="ghost" data-act="reset1">İlerlemeyi sıfırla</button></div>`;
   return h;
 }
@@ -863,6 +911,7 @@ function vTekrar(){
 /* ---------- YÖNLENDİRME ---------- */
 function render(){
   const h=(location.hash||'#ana').slice(1); let html; let m;
+  try{const bm=h.match(/^b(\d)-/),tm=h.match(/^t(\d)-/);if(bm)localStorage.setItem('nisaSon',JSON.stringify({d:DERS,b:+bm[1],t:Date.now()}));else if(tm)localStorage.setItem('nisaSon',JSON.stringify({d:DERS,tt:+tm[1],t:Date.now()}));}catch(e){}
   const um=h.match(/^b([1-5])-/);
   if(um){app.style.setProperty('--unit',`var(--c${um[1]})`);app.style.setProperty('--unit-soft',`var(--c${um[1]}-soft)`);app.dataset.unit=um[1];}
   else{app.style.removeProperty('--unit');app.style.removeProperty('--unit-soft');delete app.dataset.unit;}
