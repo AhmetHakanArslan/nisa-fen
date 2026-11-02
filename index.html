@@ -3,1036 +3,149 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>Nisa Fen Çalışması</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap">
+<title>Nisa'nın Çalışma Defteri</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
-/* Layout: tek sütun "çalışma defteri"; sayfalama hash ile (ana → bölüm: konu → test → yazılı → baba kontrolü → sonuç; tatbikat: 7 soru → kontrol → sonuç) */
+/* Ana sayfa: kareli defter. Ders ilerlemeleri her dersin kendi kaydından (localStorage) okunur. */
 :root{
-  --bg:#eef2f8; --paper:#ffffff; --fg:#1b2540; --muted:#5d6a86; --line:#d6deec;
-  --accent:#2f5bd3; --accent-soft:#e6ecfc; --ok:#178a57; --ok-soft:#e0f3e9; --warn:#b5531a; --warn-soft:#fbeadf;
-  --force:#d0452f; --box:#c7d2e6; --sun:#f4b733; --shadow:rgba(20,28,48,.30); --on-accent:#ffffff;
-  --c1:#4b46c7; --c1-soft:#e9e8fb; --c2:#c26510; --c2-soft:#fcecd9; --c3:#c93a2b; --c3-soft:#fbe3df; --c4:#1d8656; --c4-soft:#dcf2e6;
-  --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
-  --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --bg:#F8FAFD; --grid:#DCE6F5; --paper:#FFFFFF; --fg:#1E2A5A; --muted:#51608F; --line:#C9D4EA; --edge:#1E2A5A;
+  --note:#FFF06A; --note-edge:#E3D23E; --tape:#9FD8F7; --star:#FFC83D; --star-off:#A9B6D6;
+  --fen:#4B8DF7; --mat:#FF8A3D;
+  --hand:"Patrick Hand","Comic Sans MS",cursive; --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0e1424; --paper:#161f35; --fg:#e7ecf8; --muted:#9eabc6; --line:#2a3655;
-  --accent:#86a8ff; --accent-soft:#1f2b4b; --ok:#4fd39a; --ok-soft:#163629; --warn:#f2a073; --warn-soft:#3b2518;
-  --force:#ff7a62; --box:#3a4868; --sun:#f6c24f; --shadow:rgba(0,0,0,.55); --on-accent:#0e1424; color-scheme:dark;
-  --c1:#a9a4ff; --c1-soft:#25244b; --c2:#f2a54e; --c2-soft:#3a2a14; --c3:#ff8370; --c3-soft:#3f201c; --c4:#5fd39a; --c4-soft:#163629}}
+  --bg:#121933; --grid:#1D2650; --paper:#1A2346; --fg:#E8EDFF; --muted:#AAB6DC; --line:#36437A; --edge:#8294D8;
+  --note:#4A4318; --note-edge:#2C280C; --tape:#2D5D7D; --star-off:#4C5A8C; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0e1424; --paper:#161f35; --fg:#e7ecf8; --muted:#9eabc6; --line:#2a3655;
-  --accent:#86a8ff; --accent-soft:#1f2b4b; --ok:#4fd39a; --ok-soft:#163629; --warn:#f2a073; --warn-soft:#3b2518;
-  --force:#ff7a62; --box:#3a4868; --sun:#f6c24f; --shadow:rgba(0,0,0,.55); --on-accent:#0e1424; color-scheme:dark;
-  --c1:#a9a4ff; --c1-soft:#25244b; --c2:#f2a54e; --c2-soft:#3a2a14; --c3:#ff8370; --c3-soft:#3f201c; --c4:#5fd39a; --c4-soft:#163629}
-
-body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 48px}
-.wrap{max-width:680px;margin:0 auto;display:grid;gap:16px}
-h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;line-height:1.2}
-h1{font-size:1.7rem;font-weight:800}
-h2{font-size:1.3rem;font-weight:800}
-h3{font-size:1.08rem;font-weight:700}
-p{margin:0}
-ul,ol{margin:0;padding-left:1.3em;display:grid;gap:4px}
-a{color:var(--accent)}
-.eyebrow{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:800}
-.muted{color:var(--muted)}
-
-.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.back{font-weight:700;text-decoration:none;font-size:.95rem}
-.crumbs{display:flex;gap:6px;flex-wrap:wrap}
-.crumb{font-size:.8rem;font-weight:700;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:var(--paper)}
-.crumb.on{background:var(--unit,var(--accent));border-color:var(--unit,var(--accent));color:var(--on-accent)}
-.crumb.done{color:var(--ok);border-color:var(--ok)}
-
-.paper{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:14px;min-width:0}
-.paper > section{display:grid;gap:10px}
-.rule{background:var(--accent-soft);border-radius:12px;padding:14px 16px;display:grid;gap:4px}
-.rule b{font-family:var(--display);font-size:1.15rem}
-.ornek{border:2px dashed var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:6px}
-.ornek .eyebrow{color:var(--accent)}
-.hata{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:12px 14px}
-.hata b:first-child{color:var(--warn)}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
-.mini{border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.95rem}
-.mini > b:first-child{font-family:var(--display);font-size:1.05rem;display:block}
-
-.tbl-wrap{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:420px}
-th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
-th{background:var(--accent-soft);font-weight:800}
-td.blank{height:2.2em}
-
-.fig{overflow-x:auto}
-.fig svg{display:block;width:100%;height:auto;min-width:320px}
-.fig text{font-family:var(--body);font-weight:700;font-size:13px;fill:var(--fg)}
-.cap{font-size:.82rem;color:var(--muted);text-align:center}
-
-.qs{list-style:none;padding:0;display:grid;gap:10px}
-.qs li{display:grid;grid-template-columns:30px 1fr;gap:6px}
-.ql{font-family:var(--display);font-weight:800;color:var(--accent);font-size:1.1rem;line-height:1.5}
-.pts{color:var(--muted);font-size:.85rem;white-space:nowrap}
-.note{background:var(--accent-soft);border-radius:12px;padding:12px 14px;font-size:.95rem}
-
-button,.btn{font-family:var(--display);font-weight:700;font-size:1.05rem;border:0;border-radius:12px;padding:12px 18px;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
-.primary{background:var(--accent);color:var(--on-accent)}
-.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
-.wa{background:#1f9d55;color:#fff}
-button:focus-visible,.btn:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-.actions.center{justify-content:center}
-
-.lead{font-size:1.05rem;border-left:4px solid var(--unit,var(--accent));padding:4px 0 4px 14px;color:var(--fg)}
-details.yokla{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--bg)}
-details.yokla summary{cursor:pointer;font-weight:700;display:grid;gap:2px}
-details.yokla summary .eyebrow{color:var(--accent)}
-details.yokla summary::after{content:"Cevabı görmek için dokun";font-weight:600;font-size:.82rem;color:var(--muted)}
-details.yokla[open] summary::after{content:""}
-details.yokla p{margin-top:8px;background:var(--ok-soft);border-radius:8px;padding:8px 10px}
-.pages{display:flex;gap:6px;flex-wrap:wrap}
-.pg{width:36px;height:36px;padding:0;border-radius:50%;font-size:.95rem;background:var(--paper);color:var(--muted);border:1px solid var(--line)}
-.pg.on{background:var(--unit,var(--accent));color:var(--on-accent);border-color:var(--unit,var(--accent))}
-.pg.done{color:var(--ok);border-color:var(--ok)}
-.hata ul{margin-top:6px}
-.themebtn{min-height:0;padding:6px 12px;font-size:.85rem;border-radius:999px;margin-left:auto}
-/* Ana sayfa */
-.home-head{display:grid;gap:6px}
-.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;list-style:none;padding:0;counter-reset:h}
-.how li{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.9rem;counter-increment:h}
-.how li::before{content:counter(h);font-family:var(--display);font-weight:800;color:var(--accent);font-size:1.3rem;display:block;line-height:1}
-.unit{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px;text-decoration:none;color:var(--fg)}
-.unit:hover{border-color:var(--unit,var(--accent))}
-.unit .no{font-family:var(--display);font-weight:800;font-size:1.6rem;width:52px;height:52px;border-radius:12px;display:grid;place-items:center;background:var(--unit-soft,var(--accent-soft));color:var(--unit,var(--accent))}
-.unit h3{font-size:1.1rem}
-.unit .sub{font-size:.85rem;color:var(--muted)}
-.chip{font-size:.8rem;font-weight:800;padding:4px 10px;border-radius:999px;background:var(--bg);color:var(--muted);white-space:nowrap}
-.chip.ok{background:var(--ok-soft);color:var(--ok)}
-.list{display:grid;gap:10px}
-
-/* Test */
-.opts{display:grid;gap:8px}
-.opt{background:var(--paper);color:var(--fg);border:2px solid var(--line);text-align:left;font-family:var(--body);font-weight:700;font-size:1rem}
-.opt:hover:not([disabled]){border-color:var(--accent)}
-.opt.right{border-color:var(--ok);background:var(--ok-soft)}
-.opt.wrong{border-color:var(--warn);background:var(--warn-soft)}
-.opt[disabled]{cursor:default}
-.fb{border-radius:12px;padding:12px 14px}
-.fb.good{background:var(--ok-soft)} .fb.good b{color:var(--ok)}
-.fb.bad{background:var(--warn-soft)} .fb.bad b{color:var(--warn)}
-.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
-.progress span{display:block;height:100%;background:var(--unit,var(--accent));border-radius:99px}
-#app[data-unit] .paper{border-top:5px solid var(--unit)}
-
-/* Kontrol */
-.grp{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:14px}
-.grp.first{border-top:0;padding-top:0}
-.qhead{font-family:var(--display);font-weight:800;font-size:1.2rem;color:var(--accent);margin-top:6px}
-.model{background:var(--ok-soft);border-radius:10px;padding:10px 12px;font-size:.95rem}
-label.item{display:grid;grid-template-columns:24px 1fr auto;gap:10px;align-items:start;cursor:pointer;padding:6px 4px;border-radius:8px}
-label.item:hover{background:var(--accent-soft)}
-label.item input{width:20px;height:20px;margin:3px 0 0;accent-color:var(--ok)}
-.item .p{font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
-.scorebar{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--paper);border-radius:14px;padding:12px 16px;
-  display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:800}
-.scorebar .big{font-family:var(--display);font-size:1.4rem;font-variant-numeric:tabular-nums}
-.scorebar button{background:var(--paper);color:var(--fg);padding:10px 14px}
-
-/* Sonuç */
-.result{text-align:center;justify-items:center}
-.big-score{font-family:var(--display);font-weight:800;font-size:3rem;line-height:1;font-variant-numeric:tabular-nums}
-.scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;width:100%}
-.scores div{border:1px solid var(--line);border-radius:12px;padding:10px}
-.scores b{font-family:var(--display);font-size:1.4rem;display:block;font-variant-numeric:tabular-nums}
-.todo{list-style:none;padding:0;display:grid;gap:8px;text-align:left;width:100%}
-.todo li{background:var(--warn-soft);border-left:4px solid var(--warn);padding:8px 12px;border-radius:6px}
-.allgood{background:var(--ok-soft);padding:12px;border-radius:10px;width:100%}
-textarea.copybox{width:100%;min-height:140px;font-family:var(--body);font-size:.9rem;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg);color:var(--fg);box-sizing:border-box}
+  --bg:#121933; --grid:#1D2650; --paper:#1A2346; --fg:#E8EDFF; --muted:#AAB6DC; --line:#36437A; --edge:#8294D8;
+  --note:#4A4318; --note-edge:#2C280C; --tape:#2D5D7D; --star-off:#4C5A8C; color-scheme:dark}
 
 html{-webkit-text-size-adjust:100%}
-button,.btn,.opt,label.item,summary{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-/* Tablet (iPad) */
-@media (min-width:700px){
-  body{font-size:18px;line-height:1.65;padding-block:28px 64px}
-  .wrap{max-width:860px;gap:20px}
-  .paper{padding:30px 34px;gap:18px;border-radius:20px}
-  h1{font-size:2.1rem} h2{font-size:1.55rem} h3{font-size:1.25rem}
-  .lead{font-size:1.15rem}
-  .fig svg{min-width:0}
-  .fig text{font-size:14px}
-  table{font-size:1rem}
-  th,td{padding:10px 14px}
-  button,.btn{font-size:1.15rem;padding:14px 22px;min-height:52px}
-  .opts{grid-template-columns:1fr 1fr;gap:12px}
-  .opt{min-height:64px;font-size:1.08rem}
-  .pg{width:46px;height:46px;font-size:1.05rem;min-height:0;padding:0}
-  label.item{grid-template-columns:30px 1fr auto;padding:10px 8px;font-size:1.05rem}
-  label.item input{width:26px;height:26px}
-  .unit{grid-template-columns:64px 1fr auto;padding:18px}
-  .unit .no{width:64px;height:64px;font-size:1.9rem}
-  .unit h3{font-size:1.3rem}
-  .cards{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
-  .mini{padding:14px 16px}
-  details.yokla{padding:14px 18px}
-  .scorebar{padding:14px 22px}
-  .big-score{font-size:4rem}
-}
-@media (min-width:1000px){ .wrap{max-width:920px} }
-@media (prefers-reduced-motion:no-preference){.paper{animation:in .22s ease}}
-@keyframes in{from{transform:translateY(6px);opacity:.6}to{transform:none;opacity:1}}
-</style>
+body{margin:0;font-family:var(--body);font-size:17px;line-height:1.55;color:var(--fg);
+  background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;
+  padding:max(28px,env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) max(40px,env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left))}
+.wrap{max-width:760px;margin:0 auto;display:grid;gap:34px}
+h1,h2{font-family:var(--hand);font-weight:400;margin:0;line-height:1.05}
+h3,p{margin:0}
+a{color:var(--fg)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--fen);outline-offset:3px}
 
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap}
+.date{font-weight:700;color:var(--muted)}
+h1{font-size:3rem}
+.stars{display:flex;align-items:center;gap:8px;background:var(--paper);border:2px solid var(--edge);border-radius:999px;padding:7px 16px 7px 12px;font-weight:800}
+.stars svg{width:24px;height:24px}
+
+.today{position:relative;background:var(--note);padding:30px 30px 28px;transform:rotate(-1deg);box-shadow:0 10px 0 -4px var(--note-edge);display:grid;gap:14px}
+.today::before{content:"";position:absolute;top:-14px;left:50%;margin-left:-70px;width:140px;height:28px;background:var(--tape);opacity:.85;transform:rotate(2deg)}
+.today h2{font-size:2.3rem}
+.today p{font-size:1.15rem;max-width:34em}
+.acts{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-block;text-decoration:none;font-weight:800;font-size:1.1rem;padding:13px 22px;border-radius:14px;min-height:48px;box-sizing:border-box}
+.btn.dark{background:var(--fg);color:var(--paper)}
+.btn.plain{padding-inline:8px}
+
+.sec{display:grid;gap:16px}
+.sec h2{font-size:2.3rem}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.card{text-decoration:none;color:var(--fg);background:var(--paper);border:2px solid var(--edge);border-radius:6px;box-shadow:6px 6px 0 var(--edge);display:flex;flex-direction:column;overflow:hidden}
+.card:hover{transform:translate(-1px,-1px);box-shadow:7px 7px 0 var(--edge)}
+.card .band{height:14px;border-bottom:2px solid var(--edge)}
+.card .body{padding:18px 20px 20px;display:grid;gap:8px}
+.card h3{font-size:1.55rem;font-weight:800;line-height:1.2}
+.card .sub{color:var(--muted);font-size:.98rem}
+.row{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.row svg{width:30px;height:30px}
+.card .say{font-family:var(--hand);font-size:1.35rem}
+
+.soon h2{font-size:1.9rem;color:var(--muted)}
+.soonlist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.soonlist div{border:2px dashed var(--line);border-radius:6px;padding:16px;background:var(--paper);opacity:.9;display:grid;gap:2px}
+.soonlist b{font-size:1.15rem}
+.soonlist span{font-family:var(--hand);font-size:1.2rem;color:var(--muted)}
+
+.foot{display:flex;justify-content:center}
+.themebtn{font:inherit;font-weight:800;font-size:.95rem;color:var(--fg);background:var(--paper);border:2px solid var(--edge);border-radius:999px;padding:8px 16px;cursor:pointer}
+
+@media (max-width:600px){ h1{font-size:2.5rem} .cards{grid-template-columns:1fr} .soonlist{grid-template-columns:1fr 1fr} .today{padding:26px 22px 24px} }
+@media (min-width:700px){ body{font-size:18px} }
+@media (prefers-reduced-motion:reduce){ .card:hover{transform:none} }
+</style>
 </head>
 <body>
-<div class="wrap" id="app"></div>
-
+<main class="wrap" id="app" aria-live="polite"></main>
 <script>
-/* ---------- ÇİZİM YARDIMCILARI ---------- */
-function planetSVG(belt){
-  const P=[["Merkür",72,4,"#9a8f86"],["Venüs",102,7,"#d9b26a"],["Dünya",134,7.5,"#3c86d6"],["Mars",164,5,"#c8553a"],
-           ["Jüpiter",272,26,"#d3a273"],["Satürn",378,21,"#e2c88a"],["Uranüs",482,13,"#7fc6cf"],["Neptün",590,12.5,"#4a6fd1"]];
-  let s=`<svg viewBox="0 0 660 165" role="img" aria-label="Güneş ve sırasıyla sekiz gezegen">`;
-  s+=`<circle cx="-38" cy="80" r="80" fill="var(--sun)"/><text x="6" y="160">Güneş</text>`;
-  let seed=7; const rnd=()=>{seed=(seed*9301+49297)%233280;return seed/233280};
-  for(let i=0;i<46;i++){ s+=`<circle cx="${184+rnd()*44}" cy="${48+rnd()*64}" r="${0.8+rnd()*1.6}" fill="var(--muted)"/>`; }
-  s+=`<text x="206" y="34" text-anchor="middle" style="font-size:${belt==='?'?20:12}px">${belt==='?'?'?':'Asteroit kuşağı'}</text>`;
-  P.forEach(([n,x,r,c],i)=>{
-    if(i>=4){
-      const tilt = n==="Uranüs" ? ` transform="rotate(80 ${x} 80)"` : ` transform="rotate(-12 ${x} 80)"`;
-      const w = n==="Satürn"?3:1.4;
-      s+=`<ellipse cx="${x}" cy="80" rx="${r*1.75}" ry="${r*0.42}" fill="none" stroke="${c}" stroke-width="${w}" opacity=".9"${tilt}/>`;
-    }
-    s+=`<circle cx="${x}" cy="80" r="${r}" fill="${c}"/>`;
-    if(n==="Jüpiter") s+=`<ellipse cx="${x+8}" cy="88" rx="5" ry="3" fill="#b1442c"/>`;
-    const ly = i<4 ? (i%2===0?148:126) : 132;
-    s+=`<text x="${x}" y="${ly}" text-anchor="middle">${n}</text>`;
-  });
-  return `<div class="fig">${s}</svg></div><p class="cap">Görsel ölçekli değildir.</p>`;
-}
-function eclipseSVG(type){
-  let s=`<svg viewBox="0 0 520 180" role="img" aria-label="${type==='ay'?'Güneş, Dünya, Ay sıralaması: Ay tutulması':'Güneş, Ay, Dünya sıralaması: Güneş tutulması'}">`;
-  s+=`<g stroke="var(--sun)" stroke-width="2" opacity=".5"><line x1="100" y1="66" x2="240" y2="74"/><line x1="100" y1="114" x2="240" y2="106"/></g>`;
-  s+=`<circle cx="62" cy="90" r="52" fill="var(--sun)"/><text x="62" y="168" text-anchor="middle">Güneş</text>`;
-  if(type==='ay'){
-    s+=`<polygon points="262,67 262,113 480,98 480,82" fill="var(--shadow)"/>`;
-    s+=`<circle cx="262" cy="90" r="24" fill="#3c86d6"/><path d="M262 66 a24 24 0 0 1 0 48 z" fill="var(--shadow)"/>`;
-    s+=`<circle cx="430" cy="90" r="11" fill="#b5534a"/><circle cx="430" cy="90" r="11" fill="var(--shadow)"/>`;
-    s+=`<text x="262" y="136" text-anchor="middle">Dünya</text><text x="430" y="126" text-anchor="middle">Ay</text>`;
-    s+=`<text x="380" y="60" text-anchor="middle" style="font-size:11px;fill:var(--muted)">Dünya'nın gölgesi</text>`;
-  } else {
-    s+=`<polygon points="252,81 400,88 400,92 252,99" fill="var(--shadow)"/>`;
-    s+=`<circle cx="252" cy="90" r="9" fill="#a9b1bf"/><path d="M252 81 a9 9 0 0 1 0 18 z" fill="var(--shadow)"/>`;
-    s+=`<circle cx="430" cy="90" r="30" fill="#3c86d6"/><circle cx="401" cy="90" r="4" fill="#111a2e"/>`;
-    s+=`<text x="252" y="122" text-anchor="middle">Ay</text><text x="430" y="140" text-anchor="middle">Dünya</text>`;
-    s+=`<text x="326" y="68" text-anchor="middle" style="font-size:11px;fill:var(--muted)">Ay'ın gölgesi</text>`;
-  }
-  return `<div class="fig">${s}</svg></div><p class="cap">Görsel ölçekli değildir.</p>`;
-}
-function arrow(x1,y,x2){
-  const d = x2>x1?1:-1;
-  return `<line x1="${x1}" y1="${y}" x2="${x2-d*12}" y2="${y}" stroke="var(--force)" stroke-width="4" stroke-linecap="round"/>`+
-         `<path d="M${x2} ${y} L${x2-d*15} ${y-7} L${x2-d*15} ${y+7} Z" fill="var(--force)"/>`;
-}
-function forceSVG(forces,obj){
-  obj = obj||'kutu';
-  const bx1=255,bx2=345,by1=70,by2=130, max=Math.max(...forces.map(f=>f.v));
-  const len=v=>40+(v/max)*150;
-  let s=`<svg viewBox="0 0 600 ${obj==='araba'?178:168}" role="img" aria-label="Cisme etki eden kuvvetler">`;
-  s+=`<text x="16" y="22" style="fill:var(--muted)">◀ Batı</text><text x="584" y="22" text-anchor="end" style="fill:var(--muted)">Doğu ▶</text>`;
-  if(obj==='araba'){
-    s+=`<line x1="40" y1="157" x2="560" y2="157" stroke="var(--line)" stroke-width="2"/>`;
-    s+=`<rect x="${bx1}" y="${by1+10}" width="${bx2-bx1}" height="52" rx="10" fill="var(--box)"/>`;
-    s+=`<circle cx="${bx1+22}" cy="145" r="11" fill="var(--fg)"/><circle cx="${bx2-22}" cy="145" r="11" fill="var(--fg)"/>`;
-  } else {
-    s+=`<rect x="${bx1}" y="${by1}" width="${bx2-bx1}" height="${by2-by1}" rx="6" fill="var(--box)"/>`;
-  }
-  const east=forces.filter(f=>f.d==='D'), west=forces.filter(f=>f.d==='B');
-  const ys=n=>n===1?[102]:[90,118];
-  const lab=f=>f.lab||(f.n?`${f.n} = ${f.v} N`:`${f.v} N`);
-  east.forEach((f,i)=>{const y=ys(east.length)[i],x2=bx2+len(f.v); s+=arrow(bx2,y,x2)+`<text x="${(bx2+x2)/2}" y="${y-9}" text-anchor="middle">${lab(f)}</text>`;});
-  west.forEach((f,i)=>{const y=ys(west.length)[i],x2=bx1-len(f.v); s+=arrow(bx1,y,x2)+`<text x="${(bx1+x2)/2}" y="${y-9}" text-anchor="middle">${lab(f)}</text>`;});
-  return `<div class="fig">${s}</svg></div>`;
-}
-const tbl=(head,rows)=>`<div class="tbl-wrap"><table><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>c===''?'<td class="blank"></td>':`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
-const qs=items=>`<ol class="qs">${items.map(([l,t,p])=>`<li><span class="ql">${l}</span><span>${t} <span class="pts">(${p} puan)</span></span></li>`).join('')}</ol>`;
+const STAR_ON='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1 6.3-5.6-3-5.6 3 1-6.3L2.9 9.4l6.3-.9z" fill="var(--star)" stroke="var(--edge)" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+const STAR_OFF='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1 6.3-5.6-3-5.6 3 1-6.3L2.9 9.4l6.3-.9z" fill="none" stroke="var(--star-off)" stroke-width="1.6" stroke-linejoin="round"/></svg>';
 
-/* ---------- EK ÇİZİMLER ---------- */
-function phasesSVG(){
-  const moon=(cx,cy)=>`<circle cx="${cx}" cy="${cy}" r="11" fill="#4a5163"/><path d="M${cx} ${cy-11} a11 11 0 0 0 0 22 z" fill="#efe9d4"/>`;
-  let s=`<svg viewBox="0 0 600 225" role="img" aria-label="Ay'ın yeni ay ve dolunay evrelerindeki konumu">`;
-  s+=`<g stroke="var(--sun)" stroke-width="2" opacity=".45"><line x1="60" y1="60" x2="200" y2="70"/><line x1="60" y1="120" x2="200" y2="110"/></g>`;
-  s+=`<circle cx="-15" cy="90" r="68" fill="var(--sun)"/><text x="12" y="182">Güneş</text>`;
-  s+=`<circle cx="330" cy="90" r="100" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="5 6"/>`;
-  s+=`<circle cx="330" cy="90" r="22" fill="#3c86d6"/><path d="M330 68 a22 22 0 0 1 0 44 z" fill="var(--shadow)"/><text x="330" y="132" text-anchor="middle">Dünya</text>`;
-  s+=moon(230,90)+moon(430,90);
-  s+=`<text x="230" y="68" text-anchor="middle">Yeni ay</text><text x="430" y="68" text-anchor="middle">Dolunay</text>`;
-  s+=`<text x="300" y="168" text-anchor="middle" style="fill:var(--muted);font-size:12px">Dünya'dan bakınca:</text>`;
-  s+=`<circle cx="230" cy="190" r="12" fill="#4a5163" stroke="var(--muted)" stroke-width="1.5"/><text x="230" y="218" text-anchor="middle" style="font-size:12px">Görünmez</text>`;
-  s+=`<circle cx="430" cy="190" r="12" fill="#efe9d4" stroke="var(--muted)" stroke-width="1.5"/><text x="430" y="218" text-anchor="middle" style="font-size:12px">Tam yuvarlak</text>`;
-  return `<div class="fig">${s}</svg></div><p class="cap">Ay'ın Güneş'e bakan yarısı hep aydınlıktır. Görselde ölçek yoktur.</p>`;
-}
-function dinamoSVG(v){
-  const px=130+v*34;
-  let s=`<svg viewBox="0 0 600 120" role="img" aria-label="${v} N gösteren dinamometre">`;
-  s+=`<rect x="20" y="42" width="60" height="46" rx="6" fill="var(--box)"/><line x1="80" y1="65" x2="112" y2="65" stroke="var(--fg)" stroke-width="3"/>`;
-  s+=`<rect x="110" y="45" width="380" height="40" rx="8" fill="none" stroke="var(--muted)" stroke-width="2"/>`;
-  let z=`M115 65`; const step=(px-115)/12; for(let i=1;i<=12;i++){ z+=` L${115+i*step} ${i%2?57:73}`; }
-  s+=`<path d="${z}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>`;
-  for(let i=0;i<=10;i++){ const x=130+i*34; s+=`<line x1="${x}" y1="45" x2="${x}" y2="${i%5===0?57:52}" stroke="var(--muted)" stroke-width="1.5"/><text x="${x}" y="104" text-anchor="middle" style="font-size:12px">${i}</text>`; }
-  s+=`<line x1="${px}" y1="38" x2="${px}" y2="92" stroke="var(--force)" stroke-width="3"/><text x="${px}" y="30" text-anchor="middle" style="fill:var(--force)">${v} N</text>`;
-  s+=`<line x1="${px}" y1="65" x2="495" y2="65" stroke="var(--fg)" stroke-width="3"/>`+arrow(495,65,580);
-  s+=`<text x="540" y="52" text-anchor="middle">Çek</text>`;
-  return `<div class="fig">${s}</svg></div><p class="cap">Ölçekteki sayılar Newton (N) cinsindendir.</p>`;
-}
-function gridArrowSVG(){
-  let s=`<svg viewBox="0 0 600 175" role="img" aria-label="Kareli kağıtta kuvvet okları">`;
-  for(let x=30;x<=570;x+=30) s+=`<line x1="${x}" y1="20" x2="${x}" y2="140" stroke="var(--line)" stroke-width="1"/>`;
-  for(let y=20;y<=140;y+=30) s+=`<line x1="30" y1="${y}" x2="570" y2="${y}" stroke="var(--line)" stroke-width="1"/>`;
-  s+=`<circle cx="270" cy="50" r="4" fill="var(--force)"/>`+arrow(270,50,360)+`<text x="315" y="42" text-anchor="middle">3 N, doğu</text>`;
-  s+=`<circle cx="330" cy="110" r="4" fill="var(--force)"/>`+arrow(330,110,180)+`<text x="255" y="102" text-anchor="middle">5 N, batı</text>`;
-  s+=`<text x="16" y="166" style="fill:var(--muted)">1 kare = 1 N</text><text x="584" y="166" text-anchor="end" style="fill:var(--muted)">◀ Batı · Doğu ▶</text>`;
-  return `<div class="fig">${s}</svg></div>`;
-}
-const yok=(q,a)=>`<details class="yokla"><summary><span class="eyebrow">Kendini yokla</span>${q}</summary><p>${a}</p></details>`;
-
-/* ---------- KONU ANLATIMLARI (sayfa sayfa) ---------- */
-const KONU=[
-/* ===== BÖLÜM 1: GEZEGENLER ===== */
-[
-{t:"Güneş'in ailesi",h:`
-<p class="lead">Gece gökyüzüne baktığında gördüğün parlak noktaların bazıları aslında yıldız değil, gezegendir. Hadi bizim "mahallemiz" olan Güneş sistemini tanıyalım.</p>
-<p><b>Güneş sistemi</b>, ortadaki Güneş ve onun etrafında dolanan gök cisimlerinden oluşur. Bunların en büyükleri <b>gezegenlerdir</b>.</p>
-<p>Gezegenlerin kendi ışıkları yoktur. Güneş'ten gelen ışığı yansıttıkları için parlak görünürler. Her gezegen Güneş'in etrafında kendine ait bir yolda, yani <b>yörüngesinde</b> döner.</p>
-<p>Güneş sisteminde <b>8 gezegen</b> vardır. Güneş'e yakından uzağa doğru sıraları şöyledir:</p>
-${planetSVG()}
-<div class="rule"><span class="eyebrow">Sırayı akılda tutmanın yolu</span><b>Me-Ve-Dü-Ma · Jü-Sa-Ur-Ne</b><span>Merkür, Venüs, Dünya, Mars · Jüpiter, Satürn, Uranüs, Neptün. Bunu bir tekerleme gibi iki kez yüksek sesle söyle. Sınavda sıralama sorulursa önce kağıdın kenarına bunu yaz.</span></div>
-${yok("Dünya, Güneş'e yakınlık sırasına göre kaçıncı gezegendir?","<b>3.</b> gezegendir. Me-Ve-<b>Dü</b>: Merkür, Venüs, Dünya.")}
-${yok("Güneş'e en uzak gezegen hangisidir?","<b>Neptün.</b> Tekerlemenin son hecesi: Ne.")}`},
-{t:"İki mahalle: iç ve dış gezegenler",h:`
-<p class="lead">Mars ile Jüpiter arasında bir "sınır" var: <b>asteroit kuşağı</b>. Bu kuşak, gezegenleri iki mahalleye ayırır.</p>
-<h3>İç gezegenler: Merkür, Venüs, Dünya, Mars</h3>
-<p>Asteroit kuşağının <b>iç tarafındadırlar</b>, yani Güneş'e daha yakındırlar. <b>Kayaç ve metallerden</b> oluşurlar ve katı bir yüzeyleri vardır. Dünya'ya, yani "kara"ya benzedikleri için bunlara <b>karasal gezegenler</b> denir. Küçüktürler ve <b>halkaları yoktur</b>.</p>
-<h3>Dış gezegenler: Jüpiter, Satürn, Uranüs, Neptün</h3>
-<p>Asteroit kuşağının <b>dış tarafındadırlar</b>. Büyük ölçüde <b>gazlardan</b> oluştukları için <b>gazsal gezegenler</b> denir. Dev gibidirler ve <b>dördünün de halkası vardır</b>. Satürn'ün halkaları en belirgin olduğu için akılda kalır ama tek halkalı gezegen o değildir.</p>
-${tbl(["","İç gezegenler","Dış gezegenler"],[
- ["Gezegenler","Merkür, Venüs, Dünya, Mars","Jüpiter, Satürn, Uranüs, Neptün"],
- ["Neyden oluşur?","Kayaç ve metal → <b>karasal</b>","Büyük ölçüde gaz → <b>gazsal</b>"],
- ["Büyüklük","Küçük","Büyük"],
- ["Halka","Yok → <b>halkasız</b>","Var → <b>halkalı</b>"],
- ["Yeri","Asteroit kuşağının iç tarafı","Asteroit kuşağının dış tarafı"]])}
-<p>Gördüğün gibi aynı dört gezegene üç farklı ad verilebilir: <b>iç–dış</b>, <b>karasal–gazsal</b>, <b>halkasız–halkalı</b>. Hangisini kullanırsan kullan doğrudur; önemli olan gerekçesini yazmaktır.</p>
-<h3>Asteroit kuşağı nedir?</h3>
-<p>Farklı büyüklükte <b>kaya ve metal parçalarından</b> oluşan bir bölgedir. Bazı parçalar çakıl taşı kadar küçük, bazıları kocaman bir dağ kadar büyüktür. <b>Gezegen değildir</b>; sadece iki grubu birbirinden ayıran bir kuşaktır.</p>
-${yok("Venüs karasal mı, gazsal mı bir gezegendir?","<b>Karasal.</b> Çünkü kayaç ve metallerden oluşur. (Me-Ve-Dü-Ma'nın içinde.)")}
-${yok("Halkası olan gezegenler hangileridir?","<b>Jüpiter, Satürn, Uranüs ve Neptün.</b> Yani dış gezegenlerin hepsi.")}`},
-{t:"Her gezegeni tanı",h:`
-<p class="lead">Yazılıda bazen gezegenin adı yerine bir özelliği verilir: "Kızıl Gezegen olarak bilinir" gibi. O yüzden her gezegenin bir kimlik kartı olsun.</p>
-<div class="cards">
-<div class="mini"><b>Merkür</b><span class="muted">İç · karasal</span><br>Güneş'e en yakın ve <b>hacmi en küçük</b> gezegen. Yüzeyi <b>kraterlerle</b> dolu.</div>
-<div class="mini"><b>Venüs</b><span class="muted">İç · karasal</span><br><b>Kalın bir atmosferi</b> var. Bu kalın örtü ısıyı hapseder, çok sıcaktır.</div>
-<div class="mini"><b>Dünya</b><span class="muted">İç · karasal</span><br>Üzerinde <b>yaşam olduğu bilinen tek</b> gezegen.</div>
-<div class="mini"><b>Mars</b><span class="muted">İç · karasal</span><br>Toprağının rengi yüzünden <b>"Kızıl Gezegen"</b> denir.</div>
-<div class="mini"><b>Jüpiter</b><span class="muted">Dış · gazsal · halkalı</span><br><b>Hacmi en büyük</b> gezegen. <b>Büyük Kırmızı Leke</b> adlı dev bir fırtınası var.</div>
-<div class="mini"><b>Satürn</b><span class="muted">Dış · gazsal · halkalı</span><br><b>Halkaları en belirgin</b> görünen gezegen.</div>
-<div class="mini"><b>Uranüs</b><span class="muted">Dış · gazsal · halkalı</span><br>Dönme ekseni çok eğik olduğu için <b>yan yatmış gibi döner</b>.</div>
-<div class="mini"><b>Neptün</b><span class="muted">Dış · gazsal · halkalı</span><br><b>Mavi</b> görünür. Güneş'e <b>en uzak</b> gezegen.</div>
-</div>
-<div class="rule"><span class="eyebrow">Ne kadar büyük?</span><span>Jüpiter o kadar büyük ki içine <b>1000'den fazla Dünya</b> sığabilir. En küçük gezegen olan Merkür ise Dünya'dan bile küçüktür.</span></div>
-${yok("\"Yüzeyinde çok sayıda krater bulunur, Güneş'e en yakındır.\" Bu hangi gezegen?","<b>Merkür.</b>")}
-${yok("\"Dev bir fırtınası vardır.\" Bu hangi gezegen ve hangi gruptadır?","<b>Jüpiter.</b> Gazsal (dış, halkalı) bir gezegendir.")}`},
-{t:"Yazılıda nasıl sorulur?",h:`
-<p class="lead">Gezegen soruları genelde iki şekilde gelir: bir <b>görsel</b> ya da bir <b>tablo</b>. İkisinin de püf noktalarını öğrenelim.</p>
-<h3>1. Görsel sorusu</h3>
-<ul>
-<li><b>Büyük çizilen</b> gezegenin hacmi büyüktür: en büyük Jüpiter, en küçük Merkür.</li>
-<li>Etrafında <b>halka</b> çizilmiş gezegenler halkalıdır; dördü de dış gezegendir.</li>
-<li>Mars ile Jüpiter arasında <b>"?" ya da noktacıklar</b> varsa cevap: <b>asteroit kuşağı</b>.</li>
-<li>Asteroit kuşağının Güneş tarafındakiler karasal, diğer tarafındakiler gazsaldır.</li>
-</ul>
-<h3>2. Tablo sorusu: "Gruplandırınız"</h3>
-<div class="ornek"><span class="eyebrow">Çözümlü örnek</span>
-<p>Tabloda Venüs, Neptün, Mars ve Satürn'ün özellikleri veriliyor. "Ortak bir özelliğe göre gruplandırınız" deniyor.</p>
-<ol><li>Ortak özelliği bul: hangileri <b>kayaç ve metal</b>, hangileri <b>gaz</b>? (Ya da hangilerinin <b>halkası</b> var?)</li>
-<li>İki grup kur ve grubun <b>adını</b> yaz.</li>
-<li>Gezegenleri yerleştir.</li></ol>
-${tbl(["Grup adı","Gruptaki gezegenler"],[["Karasal gezegenler","Venüs, Mars"],["Gazsal gezegenler","Neptün, Satürn"]])}</div>
-<h3>3. Gerekçe yazma</h3>
-<div class="rule"><span class="eyebrow">Gerekçe kalıbı</span><b>[Gezegen] [grup] gezegendir, çünkü [özellik].</b></div>
-<ul>
-<li>Mars <b>karasal</b> gezegendir, <b>çünkü</b> kayaç ve metallerden oluşur.</li>
-<li>Satürn <b>halkalı</b> gezegendir, <b>çünkü</b> etrafında halkası vardır.</li>
-<li>Neptün <b>dış</b> gezegendir, <b>çünkü</b> asteroit kuşağının dış tarafındadır.</li>
-</ul>
-<div class="hata"><b>Sık yapılan hatalar:</b>
-<ul><li>"Halkası olan tek gezegen Satürn'dür" demek. Dördünün de halkası var!</li>
-<li>Gruplandırmada sadece gezegenleri yazıp grubun <b>adını</b> yazmayı unutmak.</li>
-<li>Asteroit kuşağını bir gezegen sanmak.</li></ul></div>`}
-],
-/* ===== BÖLÜM 2: TUTULMALAR ===== */
-[
-{t:"Önce gölge ve Ay'ın evreleri",h:`
-<p class="lead">Karanlık bir odada bir topa el feneri tutarsan topun arkasında bir gölge oluşur. Uzayda da aynısı olur: el feneri Güneş, toplar ise Dünya ve Ay.</p>
-<p>Güneş kendi ışığını üretir. Dünya ve Ay ise ışık üretmez. Güneş'ten gelen ışık onların bir yarısını aydınlatır, arkalarında da bir <b>gölge</b> oluşur.</p>
-<p>Ay, Dünya'nın etrafında yaklaşık bir ayda bir tur atar. Döndükçe aydınlık yüzünü bize farklı açılardan gösterir; bazen ince bir hilal, bazen yarım, bazen tam yuvarlak görürüz. Buna <b>Ay'ın evreleri</b> denir. Tutulmaları anlamak için iki evreyi bilmen yeter:</p>
-${phasesSVG()}
-<div class="cards">
-<div class="mini"><b>Yeni ay</b>Ay, Güneş ile Dünya'nın <b>arasındadır</b>. Ay'ın aydınlık yüzü Güneş'e döner, bize karanlık yüzü bakar. Bu yüzden Ay'ı <b>göremeyiz</b>.</div>
-<div class="mini"><b>Dolunay</b>Dünya, Güneş ile Ay'ın <b>arasındadır</b>. Ay'ın aydınlık yüzünün <b>tamamını</b> görürüz; Ay tam yuvarlak ve parlaktır.</div>
-</div>
-<div class="rule"><span class="eyebrow">Bunu bilirsen evreyi ezberlemene gerek kalmaz</span><b>Yeni ay → Ay ortada. Dolunay → Dünya ortada.</b></div>
-${yok("Dolunayda Güneş, Dünya ve Ay nasıl sıralanır?","<b>Güneş – Dünya – Ay.</b> Dünya ortadadır.")}`},
-{t:"Güneş tutulması",h:`
-<p class="lead">Düşün: öğle vakti, güneşli bir gün. Birden hava kararmaya başlıyor, kuşlar susuyor, sokak lambaları yanıyor. Bu bir <b>Güneş tutulması</b>.</p>
-<p><b>Ne olur?</b> Ay, Güneş ile Dünya'nın <b>tam arasına</b> girer ve Güneş'in önünü kapatır. Ay'ın gölgesi Dünya'ya düşer. Gölgenin düştüğü yerdeki insanlar Güneş'i kısmen ya da tamamen kapanmış görür.</p>
-${eclipseSVG('gunes')}
-<div class="rule"><span class="eyebrow">Sıralama</span><b>Güneş – Ay – Dünya</b><span>Ay ortada → Ay'ın gölgesi Dünya'ya düşer → Güneş "tutulur".</span></div>
-<h3>Neden yeni ay evresinde olur?</h3>
-<p>Çünkü Ay ortadadır. Az önce öğrendiğin gibi, Ay ortadayken <b>yeni ay</b> evresindedir.</p>
-<h3>Neden gündüz olur?</h3>
-<p>Güneş'i ancak gündüz görebiliriz. Güneş'in kapandığını da ancak <b>gündüz</b> fark ederiz.</p>
-<h3>Neden dar bir alandan görülür ve kısa sürer?</h3>
-<p>Ay, Dünya'dan çok küçüktür. Bu yüzden gölgesi Dünya'nın üzerinde <b>küçük bir leke</b> gibi kalır; tutulmayı sadece o lekenin düştüğü yerdekiler görür. Ay hareket ettikçe bu leke kayar ve bir yerde ancak <b>birkaç dakika</b> kalır.</p>
-<div class="hata"><b>Dikkat!</b> Güneş tutulmasına asla çıplak gözle bakma. Güneş ışığı çok güçlüdür; tutulma sırasında bile gözüne kalıcı zarar verebilir. Sadece <b>özel tutulma gözlüğüyle</b> bakılır.</div>
-${yok("Güneş tutulması neden Dünya'nın her yerinden görülmez?","Çünkü Ay küçüktür ve gölgesi Dünya'nın sadece <b>küçük bir bölgesine</b> düşer.")}`},
-{t:"Ay tutulması",h:`
-<p class="lead">Bir gece dolunaya bakıyorsun. Ay yavaş yavaş kararıyor, sonra kızılımsı bir renge bürünüyor. Bu bir <b>Ay tutulması</b>.</p>
-<p><b>Ne olur?</b> Dünya, Güneş ile Ay'ın <b>tam arasına</b> girer. Dünya'nın gölgesi Ay'ın üzerine düşer ve Ay kararır.</p>
-${eclipseSVG('ay')}
-<div class="rule"><span class="eyebrow">Sıralama</span><b>Güneş – Dünya – Ay</b><span>Dünya ortada → Dünya'nın gölgesi Ay'a düşer → Ay "tutulur".</span></div>
-<h3>Neden dolunayda olur?</h3>
-<p>Çünkü Dünya ortadadır. Dünya ortadayken Ay <b>dolunay</b> evresindedir.</p>
-<h3>Neden gece olur?</h3>
-<p>Ay, Dünya'nın Güneş'e bakmayan tarafındadır. Dünya'nın Güneş'e bakmayan tarafında ise <b>gece</b> yaşanır. Yani Ay tutulmasını ancak gece olan yerler görür.</p>
-<h3>Neden geniş bir alandan görülür ve uzun sürer?</h3>
-<p>Dünya, Ay'dan çok büyüktür; gölgesi de çok büyüktür. Ay bu kocaman gölgenin içinden geçerken <b>uzun süre</b> gölgede kalır (tam kararma yaklaşık bir saate kadar sürebilir). Kararan şey Ay'ın kendisi olduğu için Ay'ı görebilen <b>gece olan her yerden</b> tutulma izlenir.</p>
-<p><b>Neden kızıl?</b> Dünya'nın havasından (atmosferinden) geçen az miktarda ışık Ay'a ulaşır ve Ay'ı kızılımsı gösterir.</p>
-<p>Ay tutulmasını <b>çıplak gözle</b> rahatça izleyebilirsin; gözlerine zararı yoktur.</p>
-${yok("Türkiye'de gündüz olduğu bir saatte Ay tutulması oluyor. Türkiye'den izlenebilir mi?","<b>Hayır.</b> Ay tutulması gece olan yerlerden görülür. Gündüz olan yerde Ay ufkun altındadır.")}`},
-{t:"Yan yana koy, farkı gör",h:`
-<p class="lead">İki tutulmayı yan yana koyalım. Bu tablo yazılıda en çok işine yarayacak sayfa.</p>
-${tbl(["","Güneş tutulması","Ay tutulması"],[
- ["Sıralama","Güneş – Ay – Dünya","Güneş – Dünya – Ay"],
- ["Ortadaki","Ay","Dünya"],
- ["Gölge","Ay'ın gölgesi Dünya'ya düşer","Dünya'nın gölgesi Ay'a düşer"],
- ["Ay'ın evresi","Yeni ay","Dolunay"],
- ["Ne zaman?","Gündüz","Gece"],
- ["Görüldüğü alan","Dar (küçük bölge)","Geniş (gece olan her yer)"],
- ["Süre","Kısa (birkaç dakika)","Uzun"],
- ["Çıplak gözle","Bakılmaz, göze zarar verir","İzlenebilir"]])}
-<p><b>İkisinin ortak özellikleri:</b> Güneş, Dünya ve Ay <b>aynı hizadadır</b>. Bir gök cisminin <b>gölgesi</b> başka bir gök cisminin üzerine düşer.</p>
-<h3>Peki neden her ay tutulma olmaz?</h3>
-<p>Her ay bir yeni ay ve bir dolunay olur. O zaman her ay iki tutulma olması gerekmez mi? <b>Hayır!</b></p>
-<p>Ay'ın Dünya etrafındaki yolu biraz <b>eğiktir</b>. Bu yüzden Ay çoğu ay, Güneş ile Dünya'nın tam hizasının <b>biraz üstünden ya da altından</b> geçer ve gölge hedefi ıskalar. Tutulma için üçünün <b>tam aynı hizaya</b> gelmesi gerekir; bu da her ay olmaz.</p>
-<div class="rule"><span class="eyebrow">Unutma</span><b>Yeni ay ve dolunay tutulma için gerekli ama yeterli değil.</b><span>Tam hizalanma da gerekir.</span></div>
-${yok("\"Her yeni ayda Güneş tutulması olur.\" Bu görüş doğru mu?","<b>Yanlış.</b> Güneş tutulması yeni ayda olur ama her yeni ayda olmaz, çünkü üç gök cismi her ay tam aynı hizaya gelmez.")}`},
-{t:"Yazılıda nasıl sorulur?",h:`
-<p class="lead">Tutulma soruları genelde üç şekilde gelir. Her birinin bir püf noktası var.</p>
-<h3>1. Metinden çıkarım yapma</h3>
-<p>Bir haber ya da hikâye verilir, "Hangi çıkarımlarda bulunabiliriz?" diye sorulur. Metindeki ipucu kelimelerin altını çiz:</p>
-${tbl(["Metinde görürsen","Ne anlatır?"],[
- ["gündüz / gece","Güneş tutulması / Ay tutulması"],
- ["yeni ay / dolunay","Güneş tutulması / Ay tutulması"],
- ["birkaç dakika / yaklaşık bir saat","Güneş tutulması kısa, Ay tutulması uzun sürer"],
- ["küçük bölge / birçok ülke","Güneş tutulması dar, Ay tutulması geniş alandan görülür"]])}
-<div class="ornek"><span class="eyebrow">Çözümlü örnek</span>
-<p>Metin: "Tutulma gece yaşandı. Dolunay hâlindeki Ay yaklaşık bir saat boyunca karanlıkta kaldı."</p>
-<p>Çıkarım: <b>Bu bir Ay tutulmasıdır, çünkü gece gözlemlenmiştir ve Ay dolunay evresindedir. Uzun sürmesi de Ay tutulmasının özelliğidir.</b></p></div>
-<h3>2. Kartları sınıflandırma</h3>
-<p>Her karta tek bir soru sor: <b>"Bu sadece Güneş tutulmasında mı, sadece Ay tutulmasında mı, yoksa ikisinde de mi var?"</b></p>
-${tbl(["Kart","Grup"],[["Gündüz gözlemlenir.","Güneş tutulması"],["Güneş, Dünya ve Ay aynı hizadadır.","Ortak"],["Dünya'nın gölgesi Ay'a düşer.","Ay tutulması"]])}
-<h3>3. Bir görüşü değerlendirme</h3>
-<div class="rule"><span class="eyebrow">Kalıp</span><b>"Bu görüş doğru / yanlıştır. Çünkü ..."</b></div>
-<div class="ornek"><p>Görüş: "Her dolunayda Ay tutulması olur."</p>
-<p>Cevap: <b>Bu görüş yanlıştır. Ay tutulması dolunayda olur ama her dolunayda olmaz. Çünkü tutulma için Güneş, Dünya ve Ay'ın tam aynı hizada olması gerekir ve bu her ay gerçekleşmez.</b></p></div>
-<div class="hata"><b>Sık yapılan hatalar:</b>
-<ul><li>"Güneş tutulmasında Dünya ortadadır" demek. Güneş tutulmasında <b>Ay</b> ortadadır!</li>
-<li>Yeni ay ile dolunayı karıştırmak. Hatırla: Ay ortada → yeni ay.</li>
-<li>Cevabın sonuna "çünkü..." ile gerekçe yazmamak.</li></ul></div>`}
-],
-/* ===== BÖLÜM 3: BİLEŞKE KUVVET ===== */
-[
-{t:"Kuvvet nedir, nasıl ölçülür?",h:`
-<p class="lead">Kapıyı itiyorsun, çekmeceyi çekiyorsun, topa tekme atıyorsun. Hepsinde bir <b>kuvvet</b> uyguluyorsun.</p>
-<p><b>Kuvvet</b>, bir cisme uygulanan <b>itme ya da çekmedir</b>. Kuvvet bir cismi hareket ettirebilir, durdurabilir, hızlandırabilir, yavaşlatabilir ya da şeklini değiştirebilir.</p>
-<p>Kuvvetin birimi <b>Newton</b>'dur, kısaca <b>N</b> yazılır. Kuvveti ölçen alete <b>dinamometre</b> denir.</p>
-${dinamoSVG(6)}
-<h3>Dinamometre nasıl çalışır?</h3>
-<p>İçinde bir <b>yay</b> vardır. Ucundan ne kadar güçlü çekersen yay o kadar uzar. Yayın ucundaki gösterge, ölçekteki bir sayıya denk gelir; o sayı uygulanan kuvvettir.</p>
-<h3>Nasıl okunur?</h3>
-<p>Göstergenin hizasındaki sayıyı oku ve yanına birimini (N) yaz. Yukarıdaki dinamometre <b>6 N</b> gösteriyor.</p>
-${yok("Kuvvetin birimi nedir, hangi aletle ölçülür?","Birimi <b>Newton (N)</b>'dur. <b>Dinamometre</b> ile ölçülür.")}`},
-{t:"Kuvveti okla göstermek",h:`
-<p class="lead">Kuvvet gözle görülmez. Bu yüzden kağıt üzerinde onu bir <b>okla</b> gösteririz.</p>
-<p>Bir ok, kuvvet hakkında dört bilgi verir:</p>
-<ul>
-<li><b>Uygulama noktası:</b> okun başladığı yer, yani kuvvetin cisme uygulandığı nokta.</li>
-<li><b>Yön:</b> okun ucunun gösterdiği taraf.</li>
-<li><b>Doğrultu:</b> okun üzerinde bulunduğu çizgi.</li>
-<li><b>Büyüklük:</b> okun uzunluğu. Uzun ok büyük kuvvet, kısa ok küçük kuvvet demektir.</li>
-</ul>
-${gridArrowSVG()}
-<p>Kareli kağıtta genelde "1 kare = 1 N" gibi bir ölçek verilir. Yukarıda 3 kare doğuya çizilen ok <b>3 N, doğu</b>; 5 kare batıya çizilen ok <b>5 N, batı</b> demektir.</p>
-<h3>Yön mü, doğrultu mu? (En çok karışan konu)</h3>
-<div class="rule"><span class="eyebrow">Tren rayı örneği</span><span>Bir tren rayı düşün. <b>Ray, doğrultudur</b>: doğu–batı. Tren bu rayda doğuya da gidebilir, batıya da. <b>Trenin gittiği taraf ise yöndür</b>.</span></div>
-<p>Bu yüzden doğuya ve batıya uygulanan iki kuvvetin <b>yönleri farklı</b>, <b>doğrultuları aynıdır</b>: ikisi de doğu–batı doğrultusundadır.</p>
-${yok("Batıya uygulanan 4 N'luk bir kuvvetin yönü ve doğrultusu nedir?","Yönü: <b>batı</b>. Doğrultusu: <b>doğu–batı</b>.")}`},
-{t:"Bileşke kuvvet: takım arkadaşları ve rakipler",h:`
-<p class="lead">Bir cisme aynı anda birden fazla kuvvet etki edebilir. Peki sonuçta cisme ne olur?</p>
-<p>Bir cisme etki eden bütün kuvvetlerin yaptığı etkiyi <b>tek başına</b> yapan kuvvete <b>bileşke kuvvet</b> denir. Yani bileşke, "Bütün bu kuvvetlerin sonucu ne?" sorusunun cevabıdır.</p>
-<h3>Aynı yönde: takım arkadaşları güç birleştirir</h3>
-<p>İki arkadaş bozulan bir arabayı aynı yöne itiyorsa güçleri toplanır.</p>
-${forceSVG([{v:6,d:'D'},{v:4,d:'D'}])}
-<p>6 N + 4 N = <b>10 N</b>, yönü yine <b>doğu</b>.</p>
-<h3>Zıt yönde: rakipler</h3>
-<p>Halat çekmede iki takım zıt yönlere çeker. Büyük kuvvetten küçüğü çıkarırız. Kazanan, büyük kuvvetin tarafıdır.</p>
-${forceSVG([{v:7,d:'D'},{v:4,d:'B'}])}
-<p>7 N − 4 N = <b>3 N</b>. Yönü büyük kuvvetin yönüdür: <b>doğu</b>.</p>
-<h3>Eşit ve zıt: berabere</h3>
-${forceSVG([{v:5,d:'D'},{v:5,d:'B'}])}
-<p>5 N − 5 N = <b>0 N</b>. Bileşke sıfırdır, sanki hiç kuvvet yokmuş gibi. Bölüm 4'te buna <b>dengelenmiş kuvvet</b> diyeceğiz.</p>
-<div class="rule"><span class="eyebrow">İki altın kural</span><b>Aynı yön → topla.<br>Zıt yön → büyükten küçüğü çıkar, yön büyüğün yönü.</b></div>
-${yok("Bir cisme batıya 8 N ve doğuya 3 N kuvvet uygulanıyor. Bileşke kuvvet nedir?","8 − 3 = <b>5 N, batı</b>.")}`},
-{t:"Üç kuvvet ve ters sorular",h:`
-<p class="lead">Şimdi biraz zorlaştıralım. Merak etme, aynı iki kuralı kullanacağız.</p>
-<h3>Üç kuvvet: önce takımları kur</h3>
-${forceSVG([{n:'F1',v:12,d:'B'},{n:'F2',v:8,d:'B'},{n:'F3',v:15,d:'D'}])}
-<div class="ornek"><span class="eyebrow">Adım adım</span>
-<ol><li>Aynı yöndekileri topla (takım arkadaşları): batıya 12 + 8 = <b>20 N</b></li>
-<li>Diğer takım: doğuya <b>15 N</b></li>
-<li>Büyükten küçüğü çıkar: 20 − 15 = <b>5 N</b></li>
-<li>Yön, büyük tarafın yönü: <b>batı</b></li></ol>
-${tbl(["Büyüklüğü","Yönü","Doğrultusu"],[["5 N","Batı","Doğu–batı"]])}</div>
-<h3>Ters soru: "Kaç N uygulamalı?"</h3>
-<div class="ornek"><span class="eyebrow">Çözümlü örnek</span>
-<p>Bir kutuya doğuya 5 N uygulanıyor. Bileşkenin <b>3 N, batı</b> olması isteniyor. Batıya kaç N uygulanmalı?</p>
-<ol><li>Bileşke batıya olacaksa batıdaki kuvvet <b>daha büyük</b> olmalı.</li>
-<li>Batıdaki kuvvet − 5 = 3</li>
-<li>Batıdaki kuvvet = 5 + 3 = <b>8 N</b></li></ol>
-<p>Kontrol et: 8 − 5 = 3 N, batı. ✓</p></div>
-<div class="rule"><span class="eyebrow">Kısa yol</span><span>Bileşke <b>karşı tarafa</b> isteniyorsa: istenen + mevcut kuvvet.<br>Bileşke <b>aynı tarafa</b> isteniyorsa: istenen − mevcut kuvvet. (Doğuya 10 N var, 16 N doğu isteniyor → doğuya 6 N.)</span></div>
-<h3>Dinamometreli soru</h3>
-${forceSVG([{v:4,d:'B',lab:'1. dinamometre: 4 N'},{v:7,d:'D',lab:'2. dinamometre: 7 N'}],'araba')}
-<p>İki dinamometre arabayı zıt yönlerde çekiyor: 7 N − 4 N = <b>3 N, doğu</b>. Dinamometre sadece kuvvetin değerini gösteriyor; hesap aynı.</p>
-${yok("Doğuya 10 N uygulanıyor. Bileşkenin 4 N batı olması için ne yapılmalı?","Batıya <b>14 N</b> uygulanmalı. Kontrol: 14 − 10 = 4 N, batı.")}`},
-{t:"Yazılıda nasıl sorulur?",h:`
-<p class="lead">Bileşke soruları hep aynı üç şeyi ister. Bunları alışkanlık hâline getirirsen puan kaybetmezsin.</p>
-<h3>1. Tabloyu doldurmak</h3>
-<p>Tablo her zaman <b>üç satır</b> ister. Üçünü de doldur:</p>
-${tbl(["Bileşke kuvvetin özelliği","Örnek cevap"],[["Büyüklüğü","(30 + 15) − 20 = 25 N"],["Yönü","Batı"],["Doğrultusu","Doğu–batı"]])}
-<h3>2. Bileşkeyi okla çizmek</h3>
-<ol><li>Oku <b>cismin üzerinden</b> başlat.</li>
-<li>Bileşkenin <b>yönüne</b> doğru çiz.</li>
-<li>Kareli kağıt varsa büyüklük kadar <b>kare say</b>.</li>
-<li>Okun üzerine <b>büyüklüğünü yaz</b> (örneğin 3 N).</li></ol>
-<h3>3. İşlemi göstermek</h3>
-<p>Sadece sonucu yazma, işlemi de yaz: <b>(30 + 15) − 20 = 25 N</b>. Sonuç yanlış çıksa bile işlemden puan alabilirsin.</p>
-<div class="hata"><b>Sık yapılan hatalar:</b>
-<ul><li>Zıt yöndeki kuvvetleri <b>toplamak</b>. Zıt yön → çıkar!</li>
-<li>Doğrultu sorulunca sadece "doğu" yazmak. Doğrultu: <b>doğu–batı</b>.</li>
-<li>Okun üzerine büyüklüğünü yazmayı unutmak.</li>
-<li>Üç kuvvette aynı yöndekileri toplamadan işleme başlamak.</li></ul></div>`}
-],
-/* ===== BÖLÜM 4: DENGELENMİŞ KUVVETLER ===== */
-[
-{t:"Kuvvetler berabere kalınca",h:`
-<p class="lead">Kol güreşi yapan iki arkadaş düşün. İkisi de aynı güçle bastırıyor ve kolları hiç kıpırdamıyor. Kuvvet var ama hareket yok!</p>
-<p>Bir cisme etki eden kuvvetlerin <b>bileşkesi sıfır</b> ise bu kuvvetlere <b>dengelenmiş kuvvetler</b> denir. Kuvvetler birbirini götürür; sanki cisme hiç kuvvet uygulanmıyormuş gibi olur.</p>
-<div class="cards">
-<div class="mini"><b>Masadaki kitap</b>Dünya kitabı aşağı çeker, masa kitabı yukarı iter. Kuvvetler dengelenmiştir, kitap durur.</div>
-<div class="mini"><b>Berabere halat çekme</b>İki takım eşit kuvvetle çekerse halat kıpırdamaz.</div>
-<div class="mini"><b>Tavandaki avize</b>İp avizeyi yukarı, Dünya aşağı çeker. Avize asılı durur.</div>
-</div>
-<div class="rule"><span class="eyebrow">Kural</span><b>Dengelenmiş kuvvetler cismin hareket durumunu değiştirmez.</b><span>Duran bir cisim <b>durmaya devam eder</b>.</span></div>
-${yok("Bir kutuya doğuya 6 N, batıya 6 N kuvvet uygulanıyor. Kuvvetler dengelenmiş mi?","<b>Evet.</b> Bileşke 6 − 6 = 0 N olduğu için kuvvetler dengelenmiştir.")}`},
-{t:"Dengelenmiş ama hareket ediyor mu?",h:`
-<p class="lead">Çok önemli bir soru: Dengelenmiş kuvvetlerin etki ettiği her cisim durur mu? <b>Hayır!</b> Bunu anlamak için önce sürtünmeyi tanıyalım.</p>
-<h3>Sürtünme nedir?</h3>
-<p>İki yüzey birbirine sürtündüğünde harekete karşı koyan bir kuvvet oluşur: <b>sürtünme kuvveti</b>. Halıda bir topu yuvarlarsan çabucak durur; buz pistinde kaydırdığın bir disk ise çok uzağa gider. Çünkü buzda sürtünme çok azdır.</p>
-<h3>"Sürtünmeler ihmal edilmiştir" ne demek?</h3>
-<p>Yazılıda bu cümleyi sık sık göreceksin. Anlamı: <b>"Sürtünme yokmuş gibi düşün."</b> Böylece sadece soruda verilen kuvvetlere bakarsın.</p>
-<h3>Sürtünme yoksa ne olur?</h3>
-<p>Sürtünmesiz bir yerde <b>hareket eden</b> bir cisme dengelenmiş kuvvetler etki ediyorsa cisim <b>aynı süratle, aynı yönde</b> gitmeye devam eder. Onu yavaşlatacak hiçbir şey yoktur!</p>
-<div class="rule"><span class="eyebrow">Dengelenmiş kuvvet → hareket değişmez</span><b>Duruyorsa durmaya devam eder.<br>Hareket ediyorsa aynı süratle, aynı yönde devam eder.</b></div>
-<div class="hata"><b>Sık yapılan hata:</b> "Dengelenmiş kuvvet etki eden cisim mutlaka durur." Yanlış! Hareket eden cisim aynı süratle hareketine devam eder.</div>
-${yok("Sürtünmesiz zeminde doğuya giden bir arabaya doğuya 4 N, batıya 4 N kuvvet uygulanıyor. Araba ne yapar?","Kuvvetler dengelenmiştir. Araba <b>aynı süratle doğuya gitmeye devam eder</b>.")}`},
-{t:"Dengelenmemiş kuvvetler: hareket değişir",h:`
-<p class="lead">Duran bir topa tekme attığında top harekete geçer. Bisiklette pedal çevirince hızlanırsın, fren yapınca yavaşlarsın. Hepsinde hareket değişiyor.</p>
-<p>Bileşke kuvvet <b>sıfır değilse</b> kuvvetler <b>dengelenmemiştir</b>. Dengelenmemiş kuvvetler cismin <b>hareket durumunu değiştirir</b>:</p>
-${tbl(["Cismin durumu","Bileşke kuvvet","Ne olur?"],[
- ["Duruyor","Bir yöne doğru","O yöne doğru <b>harekete başlar</b>"],
- ["Hareket ediyor","Hareketle aynı yönde","<b>Hızlanır</b> (pedal çevirmek gibi)"],
- ["Hareket ediyor","Harekete zıt yönde","<b>Yavaşlar</b>, durabilir, sonra ters yöne gidebilir (fren gibi)"]])}
-<h3>Halat çekmede</h3>
-${tbl(["Durum","Bileşke","Kuvvetler","Halat"],[
- ["İki takım eşit kuvvetle çekiyor","0","Dengelenmiş","Hareket etmez"],
- ["Bir takım daha güçlü çekiyor","0'dan farklı","Dengelenmemiş","Güçlü takımın tarafına gider"]])}
-<div class="rule"><span class="eyebrow">Tek cümlede bütün konu</span><b>Bileşke 0 → hareket değişmez.<br>Bileşke 0 değil → hareket değişir.</b></div>
-${yok("Doğuya giden bir arabaya batıya doğru bir bileşke kuvvet etki ediyor. Araba ne yapar?","<b>Yavaşlar.</b> Çünkü bileşke kuvvet hareket yönüne zıttır.")}`},
-{t:"Tablodan hareketi okumak",h:`
-<p class="lead">Yazılıda arabanın hareketi genelde bir tabloyla verilir: her 1 saniyede aldığı yol. Bu sayılara bakarak arabanın ne yaptığını anlayabilirsin.</p>
-<p><b>Sürat</b>, bir cismin birim zamanda (örneğin 1 saniyede) aldığı yoldur. Her saniyede aldığı yol artıyorsa sürati de artıyordur.</p>
-${tbl(["Eşit sürelerde alınan yol","Ne oluyor?","Kuvvetler"],[
- ["0 cm, 0 cm","Duruyor","Dengelenmiş"],
- ["5 cm, 5 cm (eşit)","Sabit süratle gidiyor","Dengelenmiş"],
- ["5 cm, 10 cm (artıyor)","Hızlanıyor","Dengelenmemiş, bileşke hareket yönünde"],
- ["10 cm, 5 cm (azalıyor)","Yavaşlıyor","Dengelenmemiş, bileşke harekete zıt"]])}
-<div class="ornek"><span class="eyebrow">Çözümlü örnek 1</span>
-<p>Duran bir arabaya doğuya 4 N, batıya 2 N uygulanıyor. Araba 0–1 s arasında 5 cm, 1–2 s arasında 10 cm yol alıyor.</p>
-<ol><li>Bileşke: 4 − 2 = <b>2 N, doğu</b>.</li>
-<li>Bileşke sıfır değil → kuvvetler <b>dengelenmemiş</b>.</li>
-<li>Eşit sürelerde aldığı yol artmış → sürati artmış.</li>
-<li>Sonuç: Araba doğuya doğru <b>hızlanmıştır</b>.</li></ol></div>
-<div class="ornek"><span class="eyebrow">Çözümlü örnek 2</span>
-<p>Doğuya giden bir araba her saniyede sırasıyla 9 cm, 6 cm, 3 cm yol alıyor.</p>
-<ol><li>Eşit sürelerde aldığı yol azalıyor → sürati <b>azalıyor</b>.</li>
-<li>Hareket değiştiği için kuvvetler <b>dengelenmemiş</b>.</li>
-<li>Araba yavaşladığına göre bileşke harekete zıt: <b>batı</b>.</li></ol></div>
-${yok("Bir araba her saniyede 7 cm yol alıyor. Kuvvetler hakkında ne söylenebilir?","Eşit sürelerde eşit yol aldığı için <b>sabit süratle</b> gidiyor. Kuvvetler <b>dengelenmiştir</b>.")}`},
-{t:"Deney tasarlamak",h:`
-<p class="lead">Yazılıda "Bu deneyi nasıl yaparsınız?" diye sorulabilir. Korkma; bir yemek tarifi anlatır gibi adım adım yazman yeterli.</p>
-<h3>Malzemeler ve görevleri</h3>
-${tbl(["Malzeme","Ne işe yarar?"],[
- ["Oyuncak araba","Kuvvet uygulanan cisim"],
- ["İki dinamometre","Arabayı zıt yönlerde çekmek ve kuvveti ölçmek"],
- ["Kronometre","Süreyi ölçmek"],
- ["Cetvel","Arabanın aldığı yolu ölçmek"]])}
-<h3>Adımlar</h3>
-<ol><li>Arabaya iki dinamometre bağla ve zıt yönlerde çek.</li>
-<li>Önce <b>eşit</b> kuvvetlerle çek (örneğin 2 N ve 2 N). Kronometreyi başlat, her saniyede arabanın aldığı yolu cetvelle ölç ve tabloya yaz.</li>
-<li>Sonra <b>farklı</b> kuvvetlerle (örneğin 4 N ve 2 N) aynı şeyi tekrarla.</li>
-<li>Tabloları karşılaştır: Eşit kuvvetlerde ne oldu? Farklı kuvvetlerde ne oldu?</li></ol>
-<h3>Değişkenler</h3>
-<div class="rule"><span class="eyebrow">Kek örneği</span><span>Kek yaparken sadece şeker miktarını değiştirip tadın nasıl değiştiğine bakıyorsun. <b>Şeker</b> bağımsız değişkendir (değiştirdiğin). <b>Tat</b> bağımlı değişkendir (ölçtüğün). <b>Un, yumurta, fırın sıcaklığı</b> kontrol değişkenleridir (hep aynı tuttukların).</span></div>
-${tbl(["Değişken","Anlamı","Bu deneyde"],[
- ["Bağımsız","Değiştirdiğim","Uygulanan kuvvetler"],
- ["Bağımlı","Ölçtüğüm","Arabanın aldığı yol (hareketi)"],
- ["Kontrol","Aynı tuttuğum","Aynı araba (kütlesi), aynı zemin"]])}
-${yok("Deneyde iki denemede de aynı arabayı kullanmak hangi değişkene örnektir?","<b>Kontrol değişkeni.</b> Arabanın kütlesi sabit tutulmuştur.")}
-<div class="hata"><b>Sık yapılan hatalar:</b>
-<ul><li>Kronometre ile cetvelin görevini karıştırmak. Kronometre → <b>süre</b>, cetvel → <b>yol</b>.</li>
-<li>Kontrol değişkeni sorulunca "kuvvet" yazmak. Kuvvet değiştirilen şeydir, yani <b>bağımsız</b> değişkendir.</li></ul></div>`}
-]
+/* Her dersin bilgisi; ilerleme kaydı dersin kendi sayfası tarafından tutulur */
+const DERSLER=[
+  {id:'fen',ad:'Fen Bilimleri',kisa:'Fen',url:'fen/',key:'nisaFen',renk:'var(--fen)',sub:'Gezegenler, tutulmalar, kuvvet',
+   bolum:['Güneş Sistemi ve Gezegenler','Güneş ve Ay Tutulmaları','Bileşke Kuvvet','Dengelenmiş ve Dengelenmemiş Kuvvetler'],sayfa:[4,5,5,5],tatbikat:2,tatSoru:7},
+  {id:'mat',ad:'Matematik',kisa:'Matematik',url:'matematik/',key:'nisaMat',renk:'var(--mat)',sub:'Çarpan, bölünebilme, asal, olasılık',
+   bolum:['Çarpanlar ve Katlar','Bölünebilme Kuralları','Asal Sayılar','Ortak Kat ve Ortak Bölen','Olasılık'],sayfa:[4,5,4,5,3],tatbikat:1,tatSoru:10}
 ];
+const YAKINDA=['Türkçe','İngilizce','Sosyal Bilgiler'];
 
-/* ---------- İÇERİK: BÖLÜMLER ---------- */
-const B=[
-{ ad:"Güneş Sistemi ve Gezegenler", kisa:"Gezegenleri sınıflandırma",
-test:[
- {q:"Güneş'e en yakın gezegen hangisidir?",o:["Venüs","Merkür","Mars","Dünya"],a:1,n:"Sıra: Me-Ve-Dü-Ma · Jü-Sa-Ur-Ne. İlk sıradaki Merkür, Güneş'e en yakın gezegendir."},
- {q:"Aşağıdakilerden hangisi gazsal gezegendir?",o:["Mars","Venüs","Merkür","Uranüs"],a:3,n:"Gazsal gezegenler dış gezegenlerdir: Jüpiter, Satürn, Uranüs, Neptün. Mars, Venüs ve Merkür karasaldır."},
- {q:"\"Halkası olan tek gezegen Satürn'dür.\" Bu ifade doğru mu?",o:["Doğru","Yanlış"],a:1,n:"Dört dış gezegenin de (Jüpiter, Satürn, Uranüs, Neptün) halkası vardır. Satürn'ünki en belirgin olanıdır."},
- {q:"Mars ile Jüpiter arasında bulunan, kaya ve metal parçalarından oluşan bölgenin adı nedir?",o:["Samanyolu","Asteroit kuşağı","Kuyruklu yıldız","Büyük Kırmızı Leke"],a:1,n:"Asteroit kuşağı Mars ile Jüpiter arasındadır ve iç gezegenleri dış gezegenlerden ayırır."},
- {q:"\"Kayaç ve metallerden oluşur. Kızıl Gezegen olarak bilinir.\" Bu hangi gezegendir?",o:["Jüpiter","Venüs","Mars","Neptün"],a:2,n:"Mars, rengi nedeniyle Kızıl Gezegen olarak bilinir ve karasal bir gezegendir."}
-],
-yazili:{
- soru:`<p>Aşağıdaki kartlarda dört gezegen hakkında bilgi verilmiştir.</p>
-${tbl(["Kart","Gezegenin özellikleri","Halkası"],[
- ["A","Kayaç ve metallerden oluşur. Yüzeyinde çok sayıda krater bulunur.","Yok"],
- ["B","Büyük ölçüde gazlardan oluşur. Yan yatmış gibi döner.","Var"],
- ["C","Kayaç ve metallerden oluşur. Üzerinde yaşam bulunduğu bilinen tek gezegendir.","Yok"],
- ["D","Büyük ölçüde gazlardan oluşur. Büyük Kırmızı Leke adı verilen dev bir fırtınası vardır.","Var"]])}
-${qs([["a)","A, B, C ve D gezegenlerini ortak bir özelliğe göre iki gruba ayırınız. Grupların adlarını ve her gruptaki kartları yazınız.",4],
- ["b)","Bir gezegen seçiniz. Bu gezegenin neden o grupta olduğunu kartlardaki bilgiyi kullanarak açıklayınız.",3],
- ["c)","Bu gezegenlerden hangileri asteroit kuşağının iç tarafında bulunur? Neden?",3]])}`,
- kontrol:[
-  {b:"a) Gruplandırma",m:"<b>Karasal gezegenler:</b> A, C · <b>Gazsal gezegenler:</b> B, D<br>(ya da <b>Halkasız:</b> A, C · <b>Halkalı:</b> B, D)",
-   i:[["İki grubun adını doğru yazdı (karasal–gazsal ya da halkasız–halkalı)",2,"Grup adları: karasal–gazsal, halkasız–halkalı, iç–dış."],
-      ["A ve C'yi bir gruba, B ve D'yi diğer gruba koydu",2,"Kayaç ve metal olanlar (A, C) bir grup; gaz olanlar (B, D) diğer grup."]]},
-  {b:"b) Gerekçe",m:"Örnek: <b>A karasal gezegendir, çünkü kayaç ve metallerden oluşur.</b> / <b>D gazsal gezegendir, çünkü büyük ölçüde gazlardan oluşur.</b>",
-   i:[["Seçtiği gezegenin grubunu doğru yazdı",1,"Gezegenin hangi grupta olduğunu doğru belirleme."],
-      ["Gerekçeyi karttaki özellikle yazdı (kayaç ve metal / gaz / halka)",2,"Gerekçe kalıbı: [Gezegen] [grup] gezegendir, çünkü [özellik]."]]},
-  {b:"c) Asteroit kuşağının iç tarafı",m:"<b>A ve C.</b> Çünkü karasal (iç) gezegenlerdir; iç gezegenler asteroit kuşağının iç tarafında yer alır.",
-   i:[["A ve C'yi yazdı",2,"Asteroit kuşağının iç tarafında karasal gezegenler vardır."],
-      ["Karasal / iç gezegen oldukları için diye açıkladı",1,"Cevaba 'çünkü...' ile gerekçe ekleme."]]}
- ]}
-},
-{ ad:"Güneş ve Ay Tutulmaları", kisa:"Tutulmalarla ilgili çıkarım yapma",
-test:[
- {q:"Güneş tutulması sırasında gök cisimleri nasıl sıralanır?",o:["Güneş – Dünya – Ay","Güneş – Ay – Dünya","Ay – Güneş – Dünya","Dünya – Güneş – Ay"],a:1,n:"Ortada duran gölge yapar. Güneş tutulmasında Ay ortadadır: Güneş – Ay – Dünya."},
- {q:"Ay tutulması sırasında Ay hangi evrededir?",o:["Yeni ay","İlk dördün","Dolunay","Son dördün"],a:2,n:"Ay tutulmasında Ay dolunay, Güneş tutulmasında yeni ay evresindedir."},
- {q:"\"Güneş tutulması gece gözlemlenir.\" Bu ifade doğru mu?",o:["Doğru","Yanlış"],a:1,n:"Güneş tutulması gündüz, Ay tutulması gece gözlemlenir."},
- {q:"Aşağıdakilerden hangisi iki tutulmanın ortak özelliğidir?",o:["Gündüz gözlemlenmesi","Ay'ın dolunay evresinde olması","Güneş, Dünya ve Ay'ın aynı hizada olması","Çıplak gözle bakmanın göze zarar vermesi"],a:2,n:"Ortak özellikler: üç gök cismi aynı hizadadır ve bir cismin gölgesi diğerine düşer. Diğer seçenekler tek bir tutulmaya aittir."},
- {q:"\"Her yeni ay evresinde Güneş tutulması olur.\" Bu ifade doğru mu?",o:["Doğru","Yanlış"],a:1,n:"Güneş tutulması yeni ayda olur ama her yeni ayda olmaz. Tutulma için üç gök cisminin tam aynı hizaya gelmesi gerekir."}
-],
-yazili:{
- soru:`<p>Aşağıdaki görselde Güneş, Dünya ve Ay'ın bir tutulma sırasındaki konumları gösterilmiştir. Görseli inceleyerek soruları cevaplayınız.</p>
-${eclipseSVG('ay')}
-${qs([["a)","Görselde hangi tutulma gösterilmektedir? Yazınız.",2],["b)","Bu tutulma sırasında Ay hangi evrededir?",2],
- ["c)","Bu tutulma gündüz mü, gece mi gözlemlenir? Gerekçenizi açıklayınız.",3],["ç)","Ali, \"Her dolunayda bu tutulma gerçekleşir.\" diyor. Ali'nin görüşünü değerlendiriniz.",3]])}`,
- kontrol:[
-  {b:"a) Hangi tutulma?",m:"<b>Ay tutulması.</b> Dünya, Güneş ile Ay'ın arasında; Dünya'nın gölgesi Ay'ın üzerine düşüyor.",
-   i:[["\"Ay tutulması\" yazdı",2,"Tutulma türünü sıralamadan bulma: Dünya ortadaysa Ay tutulması."]]},
-  {b:"b) Ay'ın evresi",m:"<b>Dolunay.</b>",i:[["\"Dolunay\" yazdı",2,"Ay tutulmasında Ay dolunay, Güneş tutulmasında yeni ay evresindedir."]]},
-  {b:"c) Gündüz mü, gece mi?",m:"<b>Gece.</b> Ay tutulmasında Ay, Dünya'nın Güneş'e göre arka tarafındadır; Ay'ı Dünya'nın gece olan tarafından görürüz.",
-   i:[["\"Gece\" yazdı",1,"Ay tutulması gece, Güneş tutulması gündüz gözlenir."],
-      ["Gerekçe yazdı (Ay, Dünya'nın gece olan tarafından görülür / Ay, Dünya'nın arkasındadır)",2,"Cevaba 'çünkü...' diye gerekçe cümlesi ekleme."]]},
-  {b:"ç) Ali'nin görüşü",m:"<b>Ali'nin görüşü yanlıştır.</b> Ay tutulması dolunayda olur ama her dolunayda olmaz. Tutulma için Güneş, Dünya ve Ay'ın tam aynı hizaya gelmesi gerekir; bu her ay gerçekleşmez.",
-   i:[["Görüşün yanlış olduğunu söyledi",1,"'Değerlendiriniz' sorularında önce doğru mu yanlış mı olduğunu açıkça yazma."],
-      ["Üç cismin aynı hizada olması gerektiğini yazdı",1,"Tutulmanın şartı: Güneş, Dünya ve Ay aynı hizada olmalı."],
-      ["Bu hizalanmanın her ay olmadığını yazdı",1,"Her dolunayda / her yeni ayda tutulma olmaz, çünkü tam hizalanma her ay olmaz."]]}
- ]}
-},
-{ ad:"Bileşke Kuvvet", kisa:"Aynı doğrultudaki kuvvetleri birleştirme",
-test:[
- {q:"Bir cisme doğuya 5 N ve doğuya 3 N kuvvet uygulanıyor. Bileşke kuvvet nedir?",o:["2 N, doğu","8 N, doğu","8 N, batı","2 N, batı"],a:1,n:"Aynı yöndeki kuvvetler toplanır: 5 + 3 = 8 N, yönü yine doğu."},
- {q:"Bir cisme batıya 9 N, doğuya 4 N kuvvet uygulanıyor. Bileşke kuvvet nedir?",o:["13 N, batı","5 N, doğu","5 N, batı","13 N, doğu"],a:2,n:"Zıt yöndeki kuvvetlerde büyükten küçük çıkarılır: 9 − 4 = 5 N. Yön büyük kuvvetin yönü: batı."},
- {q:"\"Doğu–batı\" ifadesi bir kuvvetin neyini gösterir?",o:["Yönünü","Büyüklüğünü","Doğrultusunu","Birimini"],a:2,n:"Doğu–batı doğrultudur (çizgi). Yön bu çizgide tek bir taraftır: doğu ya da batı."},
- {q:"Doğuya 10 N, batıya 6 N ve batıya 2 N kuvvet uygulanıyor. Bileşke kuvvet nedir?",o:["2 N, doğu","18 N, doğu","14 N, doğu","2 N, batı"],a:0,n:"Önce aynı yöndekileri topla: batıya 6 + 2 = 8 N. Sonra 10 − 8 = 2 N, büyük tarafın yönü: doğu."},
- {q:"Bir kutuya doğuya 6 N uygulanıyor. Bileşkenin sıfır olması için ne yapılmalı?",o:["Doğuya 6 N uygulanmalı","Batıya 12 N uygulanmalı","Batıya 3 N uygulanmalı","Batıya 6 N uygulanmalı"],a:3,n:"Bileşke sıfır olması için aynı büyüklükte (6 N) ve zıt yönde (batı) kuvvet gerekir."}
-],
-yazili:{
- soru:`<p>Bir öğrenci, oyuncak arabaya bağladığı iki dinamometreyi zıt yönlerde çekiyor. 1. dinamometre 5 N, 2. dinamometre 9 N değerini gösteriyor. (İpler yataydır, sürtünmeler ihmal edilmiştir.)</p>
-${forceSVG([{v:5,d:'B',lab:'1. dinamometre: 5 N'},{v:9,d:'D',lab:'2. dinamometre: 9 N'}],'araba')}
-${qs([["a)","Arabaya etki eden bileşke kuvvetin büyüklüğünü, yönünü ve doğrultusunu tabloya yazınız.",4]])}
-${tbl(["Büyüklüğü","Yönü","Doğrultusu"],[["","",""]])}
-${qs([["b)","Bileşke kuvveti araba üzerinde bir okla gösteriniz.",2],
- ["c)","Öğrenci 2. dinamometreyi değiştirmeden bileşke kuvvetin 3 N büyüklüğünde ve batı yönünde olmasını istiyor. 1. dinamometreyi hangi yönde ve kaç N ile çekmelidir? İşleminizi gösteriniz.",4]])}`,
- kontrol:[
-  {b:"a) Bileşke tablosu",m:"9 − 5 = <b>4 N</b> · Yönü: <b>doğu</b> · Doğrultusu: <b>doğu–batı</b>",
-   i:[["Büyüklüğü 4 N buldu (9 − 5)",2,"Zıt yönlü kuvvetlerde büyükten küçüğü çıkarma."],
-      ["Yönü doğu yazdı",1,"Bileşkenin yönü büyük kuvvetin yönüdür."],
-      ["Doğrultuyu doğu–batı yazdı",1,"Doğrultu çizgidir: doğu–batı. Yön ile karıştırma."]]},
-  {b:"b) Okla gösterim",m:"Arabanın üzerinde <b>doğuya</b> bakan bir ok, üzerinde <b>4 N</b> yazılı.",
-   i:[["Oku doğuya doğru çizdi",1,"Bileşke okunun yönü bileşkenin yönüyle aynı olmalı."],
-      ["Okun üzerine 4 N yazdı",1,"Çizdiğin okun üzerine büyüklüğünü yazmayı unutma."]]},
-  {b:"c) İstenen bileşke",m:"1. dinamometre <b>batıya 12 N</b> ile çekilmeli. İşlem: 12 − 9 = 3 N, batı.",
-   i:[["Yönü batı yazdı",1,"Bileşke batıya isteniyorsa batıdaki kuvvet daha büyük olmalı."],
-      ["12 N buldu",2,"Ters soru: istenen bileşke + karşı taraftaki kuvvet (3 + 9 = 12)."],
-      ["İşlemi gösterdi (12 − 9 = 3 ya da 9 + 3 = 12)",1,"Yazılıda işlemi mutlaka yaz, sadece sonucu yazma."]]}
- ]}
-},
-{ ad:"Dengelenmiş ve Dengelenmemiş Kuvvetler", kisa:"Kuvvetlerin harekete etkisi ve deney",
-test:[
- {q:"Bir deneyde iki denemede de aynı oyuncak araba kullanılıyor. Arabanın kütlesi bu deneyde hangi değişkendir?",o:["Bağımsız değişken","Bağımlı değişken","Kontrol değişkeni","Hiçbiri"],a:2,n:"Deney boyunca sabit tutulan şey kontrol değişkenidir. Aynı arabayı kullanmak, kütlesini sabit tutmak demektir."},
- {q:"Duran bir cisme dengelenmiş kuvvetler etki ederse cisim ne yapar?",o:["Harekete başlar","Durmaya devam eder","Hızlanır","Yön değiştirir"],a:1,n:"Bileşke 0 ise hareket durumu değişmez: duran cisim durmaya devam eder."},
- {q:"\"Dengelenmiş kuvvetlerin etkisindeki bir cisim mutlaka durur.\" Bu ifade doğru mu?",o:["Doğru","Yanlış"],a:1,n:"Hareket eden bir cisim, dengelenmiş kuvvetlerin etkisinde aynı süratle hareketine devam eder."},
- {q:"Halat çekmede bir takım 200 N, diğer takım 250 N kuvvetle çekiyor. Ne olur?",o:["Halat hareket etmez, kuvvetler dengelenmiştir","Halat 250 N'luk takımın tarafına gider, kuvvetler dengelenmemiştir","Halat 200 N'luk takımın tarafına gider","Bileşke kuvvet 450 N olur"],a:1,n:"Zıt yönlü kuvvetler: 250 − 200 = 50 N. Bileşke sıfır değil, dengelenmemiş; halat büyük kuvvetin tarafına gider."},
- {q:"Bir araba 1. saniyede 4 cm, 2. saniyede 8 cm yol alıyor. Ne söylenebilir?",o:["Sabit süratle gidiyor, kuvvetler dengelenmiş","Yavaşlıyor","Hızlanıyor, kuvvetler dengelenmemiş","Duruyor"],a:2,n:"Eşit sürelerde alınan yol artıyorsa cisim hızlanıyordur. Hareket değiştiği için kuvvetler dengelenmemiştir."}
-],
-yazili:{
- soru:`<p>Sürtünmesiz yatay bir zeminde oyuncak arabayla iki deneme yapılıyor. Kuvvetler uygulanmadan önce araba her iki denemede de hareketsizdir.</p>
-${tbl(["Deneme","Batıya uygulanan","Doğuya uygulanan","0–1 s alınan yol","1–2 s alınan yol"],[
- ["1. deneme","3 N","3 N","0 cm","0 cm"],["2. deneme","3 N","5 N","4 cm","8 cm"]])}
-${qs([["a)","Her denemedeki bileşke kuvvetin büyüklüğünü yazınız. Sıfırdan farklıysa yönünü de belirtiniz.",3],
- ["b)","Her denemede kuvvetlerin dengelenmiş mi, dengelenmemiş mi olduğunu yazınız. Tablodaki verilerden yararlanarak kuvvetlerin arabanın hareketine etkisini açıklayınız.",4],
- ["c)","Bu deneyde cetvel ve kronometre ne için kullanılır? Deneydeki bir kontrol değişkenini yazınız.",3]])}`,
- kontrol:[
-  {b:"a) Bileşke kuvvetler",m:"1. deneme: 3 − 3 = <b>0 N</b> · 2. deneme: 5 − 3 = <b>2 N, doğu</b>",
-   i:[["1. denemede 0 N buldu",1,"Eşit ve zıt kuvvetlerin bileşkesi sıfırdır."],
-      ["2. denemede 2 N buldu",1,"Zıt yönlü kuvvetlerde büyükten küçüğü çıkarma."],
-      ["2. denemede yönü doğu yazdı",1,"Bileşkenin yönü büyük kuvvetin yönüdür."]]},
-  {b:"b) Dengelenmiş mi?",m:"1. deneme <b>dengelenmiş</b>: araba iki aralıkta da 0 cm yol aldı, hareketsiz kaldı. 2. deneme <b>dengelenmemiş</b>: eşit sürelerde aldığı yol 4 cm'den 8 cm'ye çıktı, araba doğuya doğru hızlandı.",
-   i:[["1. deneme için \"dengelenmiş\" dedi",1,"Bileşke 0 ise kuvvetler dengelenmiştir."],
-      ["1. denemede arabanın hareketsiz kaldığını (0 cm) yazdı",1,"Duran cisme dengelenmiş kuvvet etki ederse durmaya devam eder."],
-      ["2. deneme için \"dengelenmemiş\" dedi",1,"Bileşke 0 değilse kuvvetler dengelenmemiştir."],
-      ["2. denemede yolun arttığını, arabanın hızlandığını yazdı",1,"Eşit sürelerde alınan yol artıyorsa cisim hızlanıyordur."]]},
-  {b:"c) Araçlar ve kontrol değişkeni",m:"Kronometre <b>süreyi</b>, cetvel <b>alınan yolu</b> ölçmek için kullanılır. Kontrol değişkeni: <b>aynı araba (kütlesi)</b> ya da <b>aynı zemin</b>.",
-   i:[["Kronometrenin süreyi ölçtüğünü yazdı",1,"Deneyde kronometre süreyi ölçer."],
-      ["Cetvelin alınan yolu ölçtüğünü yazdı",1,"Deneyde cetvel alınan yolu ölçer."],
-      ["Bir kontrol değişkeni yazdı (aynı araba / kütle / zemin)",1,"Kontrol değişkeni: deneyde sabit tutulan şey."]]}
- ]}
+const oku=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}};
+function durum(d){
+  const P=oku(d.key)||{}; const b=P.b||{}, t=P.t||{};
+  const bitti=d.bolum.map((_,i)=>b[i+1]&&b[i+1].yazili!=null);
+  const tat=[...Array(d.tatbikat)].map((_,i)=>t[i+1]);
+  const basladi=Object.keys(b).length>0||Object.keys(t).length>0;
+  let sira=null;
+  for(let i=0;i<d.bolum.length;i++) if(!bitti[i]){sira={tip:'bolum',n:i+1,asama:(b[i+1]&&b[i+1].test!=null)?'yazili':'konu'};break;}
+  if(!sira){const j=tat.findIndex(x=>x==null); if(j>=0) sira={tip:'tat',n:j+1};}
+  return {bitti,tat,basladi,sira,sayi:bitti.filter(Boolean).length};
 }
-];
 
-/* ---------- İÇERİK: TATBİKATLAR (her soru 10 puan) ---------- */
-const T=[
-{ ad:"Sınav Tatbikatı 1", sorular:[
- {k:1,h:`<p>Aşağıdaki görselde Güneş sistemi gösterilmiştir.</p>${planetSVG('?')}
-${qs([["a)","Halkası olmayan gezegenleri yazınız.",3],["b)","\"?\" ile gösterilen bölgenin adını yazınız.",2],["c)","Hacmi en büyük gezegeni yazınız.",2],["ç)","Neptün karasal mı, gazsal mı bir gezegendir? Gerekçesiyle yazınız.",3]])}`,
-  c:[{b:"a) Halkasız gezegenler",m:"<b>Merkür, Venüs, Dünya, Mars</b>",i:[["Dört gezegeni de doğru yazdı",3,"Halkasız gezegenler: iç gezegenler (Merkür, Venüs, Dünya, Mars)."]]},
-     {b:"b) \"?\" bölgesi",m:"<b>Asteroit kuşağı</b>",i:[["\"Asteroit kuşağı\" yazdı",2,"Mars ile Jüpiter arasındaki bölge: asteroit kuşağı."]]},
-     {b:"c) En büyük gezegen",m:"<b>Jüpiter</b>",i:[["\"Jüpiter\" yazdı",2,"Hacmi en büyük gezegen Jüpiter, en küçük Merkür."]]},
-     {b:"ç) Neptün",m:"<b>Gazsal gezegendir, çünkü büyük ölçüde gazlardan oluşur.</b>",i:[["\"Gazsal\" yazdı",1,"Dış gezegenlerin hepsi gazsaldır."],["Gerekçe: gazlardan oluştuğu için",2,"Gerekçe kalıbı: [Gezegen] [grup] gezegendir, çünkü [özellik]."]]}]},
- {k:2,h:`<p>Ece şöyle diyor: "Güneş tutulmasını Dünya'nın sadece küçük bir bölgesinden birkaç dakika izleyebiliyoruz. Ay tutulmasını ise gece olan her yerden ve çok daha uzun süre izleyebiliyoruz."</p>
-${qs([["a)","Ay tutulması neden çok daha geniş bir bölgeden gözlemlenebilir? Açıklayınız.",4],["b)","Ay tutulması sırasında Ay hangi evrededir? Güneş, Dünya ve Ay nasıl sıralanır?",3],["c)","Güneş tutulmasını izlemek isteyen birine ne önerirsiniz? Neden?",3]])}`,
-  c:[{b:"a) Neden daha geniş bölge?",m:"Güneş tutulmasında <b>Ay'ın gölgesi Dünya'nın küçük bir bölgesine</b> düşer; tutulmayı sadece orası görür. Ay tutulmasında <b>Ay'ın kendisi Dünya'nın gölgesine girer</b>; Ay'ı gören, yani <b>gece olan her yerden</b> kararmış Ay görülür.",
-      i:[["Güneş tutulmasında Ay'ın gölgesinin Dünya'nın küçük bir bölgesine düştüğünü yazdı",2,"Güneş tutulmasında Ay'ın gölgesi Dünya'da dar bir alana düşer."],["Ay tutulmasını gece olan her yerden görebileceğimizi yazdı",2,"Ay tutulmasında Ay Dünya'nın gölgesine girer; gece olan her yerden görülür."]]},
-     {b:"b) Evre ve sıralama",m:"<b>Dolunay</b> · <b>Güneş – Dünya – Ay</b>",i:[["\"Dolunay\" yazdı",1,"Ay tutulmasında Ay dolunay evresindedir."],["Güneş – Dünya – Ay sıralamasını yazdı",2,"Ay tutulmasında Dünya ortadadır."]]},
-     {b:"c) Güvenli izleme",m:"<b>Çıplak gözle bakmamalı</b>, çünkü göze zarar verir. <b>Özel tutulma gözlüğü</b> kullanmalı.",i:[["Çıplak gözle bakılmaması gerektiğini yazdı",2,"Güneş tutulmasına çıplak gözle bakmak göze zarar verir."],["Özel gözlük / filtre önerdi",1,"Güneş tutulması özel tutulma gözlüğüyle izlenir."]]}]},
- {k:2,h:`<p>Aşağıdaki kartlarda tutulmalarla ilgili bilgiler verilmiştir.</p>
-${tbl(["Kart","Bilgi"],[["1","Ay, Güneş ile Dünya arasındadır."],["2","Dünya'nın gölgesi Ay'a düşer."],["3","Güneş, Dünya ve Ay aynı hizadadır."],["4","Ay yeni ay evresindedir."],["5","Gece gözlemlenir."],["6","Ay'ın gölgesi Dünya'ya düşer."],["7","Ay dolunay evresindedir."],["8","Bir gök cisminin gölgesi başka bir gök cisminin üzerine düşer."]])}
-${qs([["a)","Kartları \"Güneş tutulmasına ait\", \"Her iki tutulmanın ortak özelliği\" ve \"Ay tutulmasına ait\" olarak sınıflandırınız.",6],["b)","Türkiye'de gündüz olduğu bir saatte gerçekleşen Ay tutulması Türkiye'den izlenebilir mi? Açıklayınız.",4]])}`,
-  c:[{b:"a) Sınıflandırma",m:"Güneş tutulması: <b>1, 4, 6</b> · Ortak: <b>3, 8</b> · Ay tutulması: <b>2, 5, 7</b>",
-      i:[["Güneş tutulması grubu doğru (1, 4, 6)",2,"Güneş tutulması: Ay ortada, Ay'ın gölgesi Dünya'ya düşer, yeni ay."],["Ortak grup doğru (3, 8)",2,"Ortak: aynı hiza ve gölgenin başka bir cisme düşmesi."],["Ay tutulması grubu doğru (2, 5, 7)",2,"Ay tutulması: Dünya'nın gölgesi Ay'a düşer, gece, dolunay."]]},
-     {b:"b) Gündüz izlenebilir mi?",m:"<b>Hayır.</b> Ay tutulması gece gözlemlenir. Gündüz olan yerde Ay ufkun altındadır, görülemez.",i:[["\"Hayır\" dedi",1,"Ay tutulması gündüz olan yerden izlenemez."],["Gerekçe: Ay tutulması gece gözlemlenir / Ay gündüz ufkun altındadır",3,"Ay tutulmasını sadece gece olan yerler görebilir."]]}]},
- {k:3,h:`<p>Görselde bir kutuya etki eden F1, F2 ve F3 kuvvetleri gösterilmiştir.</p>
-${forceSVG([{n:'F1',v:18,d:'D'},{n:'F2',v:7,d:'B'},{n:'F3',v:5,d:'B'}])}
-${qs([["a)","Bileşke kuvvetin büyüklüğünü, yönünü ve doğrultusunu işlemle birlikte tabloya yazınız.",6]])}
-${tbl(["Büyüklüğü","Yönü","Doğrultusu"],[["","",""]])}
-${qs([["b)","F3 kuvveti kaldırılırsa bileşke kuvvetin büyüklüğü ve yönü ne olur?",4]])}`,
-  c:[{b:"a) Bileşke tablosu",m:"Batı: 7 + 5 = 12 N · 18 − 12 = <b>6 N</b> · Yön: <b>doğu</b> · Doğrultu: <b>doğu–batı</b>",
-      i:[["Aynı yöndekileri topladı (7 + 5 = 12)",1,"Üç kuvvette önce aynı yöndekileri topla."],["6 N buldu (18 − 12)",2,"Sonra büyükten küçüğü çıkar."],["Yönü doğu yazdı",2,"Bileşkenin yönü büyük tarafın yönüdür."],["Doğrultuyu doğu–batı yazdı",1,"Doğrultu: doğu–batı (yön ile karıştırma)."]]},
-     {b:"b) F3 kaldırılırsa",m:"18 − 7 = <b>11 N, doğu</b>",i:[["11 N buldu",2,"Kalan kuvvetlerle yeniden hesapla: 18 − 7."],["Yönü doğu yazdı",2,"Bileşkenin yönü büyük kuvvetin yönüdür."]]}]},
- {k:3,h:`<p>Halat çekme oyununda A takımı halatı batıya 300 N, B takımı doğuya 250 N kuvvetle çekiyor.</p>
-${qs([["a)","Halata etki eden bileşke kuvvetin büyüklüğünü ve yönünü yazınız.",4],["b)","B takımına yeni bir oyuncu katılıyor. Bileşke kuvvetin sıfır olması için bu oyuncu hangi yönde, kaç N kuvvet uygulamalıdır?",3],["c)","Bileşke kuvvet sıfır olduğunda halat ne olur? Kuvvetler dengelenmiş midir?",3]])}`,
-  c:[{b:"a) Bileşke",m:"300 − 250 = <b>50 N, batı</b>",i:[["50 N buldu",2,"Zıt yönlü kuvvetlerde büyükten küçüğü çıkar."],["Yönü batı yazdı",2,"Bileşke büyük kuvvet uygulayan takımın yönündedir."]]},
-     {b:"b) Yeni oyuncu",m:"<b>Doğuya 50 N.</b> 250 + 50 = 300 N, 300 − 300 = 0.",i:[["50 N buldu",2,"Bileşkeyi sıfırlamak için iki taraf eşit olmalı."],["Yönü doğu yazdı",1,"B takımına katılan oyuncu B'nin yönünde (doğu) çeker."]]},
-     {b:"c) Bileşke sıfırken",m:"Halat <b>hareket etmez</b>. Kuvvetler <b>dengelenmiştir</b>.",i:[["Halatın hareket etmediğini yazdı",2,"Eşit ve zıt kuvvetlerde halat hareket etmez."],["\"Dengelenmiş\" dedi",1,"Bileşke 0 ise kuvvetler dengelenmiştir."]]}]},
- {k:4,h:`<p>Sürtünmesiz yatay zeminde doğuya doğru <b>sabit süratle</b> hareket eden bir arabaya aşağıdaki kuvvetler uygulanmaya başlıyor. Tabloda kuvvetler uygulandıktan sonra arabanın aldığı yollar verilmiştir.</p>
-${forceSVG([{v:4,d:'B'},{v:4,d:'D'}],'araba')}
-${tbl(["0–1 s alınan yol","1–2 s alınan yol"],[["6 cm","6 cm"]])}
-${qs([["a)","Arabaya etki eden bileşke kuvvet kaç N'dur?",2],["b)","Kuvvetler dengelenmiş midir, dengelenmemiş midir?",2],["c)","Tablodan yararlanarak arabanın hareketini açıklayınız.",4],["ç)","Batıya uygulanan kuvvet 2 N'a düşerse arabanın hareketi nasıl değişir?",2]])}`,
-  c:[{b:"a) Bileşke",m:"4 − 4 = <b>0 N</b>",i:[["0 N buldu",2,"Eşit ve zıt kuvvetlerin bileşkesi sıfırdır."]]},
-     {b:"b) Dengelenmiş mi?",m:"<b>Dengelenmiş.</b>",i:[["\"Dengelenmiş\" dedi",2,"Bileşke 0 ise kuvvetler dengelenmiştir."]]},
-     {b:"c) Hareket",m:"Araba eşit sürelerde <b>eşit yol</b> (6 cm) aldı; yani <b>sabit süratle hareketine devam etti</b>. Dengelenmiş kuvvetler hareket eden cismi durdurmaz.",i:[["Eşit sürelerde eşit yol aldığını yazdı",2,"Tabloda yollar eşitse sürat değişmiyor demektir."],["Sabit süratle hareketine devam ettiğini yazdı",2,"Dengelenmiş kuvvet etkisindeki hareketli cisim aynı süratle devam eder."]]},
-     {b:"ç) Batıdaki kuvvet 2 N olursa",m:"Bileşke 4 − 2 = 2 N, doğu (hareket yönünde) olur. Araba <b>hızlanır</b>.",i:[["Arabanın hızlanacağını yazdı",2,"Bileşke hareket yönündeyse cisim hızlanır."]]}]},
- {k:4,h:`<p>Dengelenmiş ve dengelenmemiş kuvvetlerin oyuncak bir arabanın hareketine etkisini incelemek için bir deney tasarlayacaksınız. Kullanabileceğiniz malzemeler: oyuncak araba, iki dinamometre, cetvel, kronometre.</p>
-${qs([["a)","Deneyi nasıl yapacağınızı adım adım açıklayınız.",5],["b)","Deneyin bağımsız, bağımlı ve kontrol değişkenlerini yazınız.",3],["c)","Dengelenmemiş kuvvet uyguladığınızda tabloda ne görmeyi beklersiniz?",2]])}`,
-  c:[{b:"a) Deney adımları",m:"Arabaya iki dinamometre bağlarım ve <b>zıt yönlerde</b> çekerim. Kronometreyle <b>süreyi</b>, cetvelle her saniyede <b>alınan yolu</b> ölçerim. Ölçümleri <b>tabloya</b> yazarım. Önce eşit, sonra farklı kuvvetlerle denerim.",
-      i:[["Dinamometrelerle zıt yönlerde kuvvet uyguladığını yazdı",2,"Deneyde kuvvetler dinamometreyle, zıt yönlerde uygulanır."],["Kronometreyle süre ölçtüğünü yazdı",1,"Kronometre süreyi ölçer."],["Cetvelle alınan yolu ölçtüğünü yazdı",1,"Cetvel alınan yolu ölçer."],["Ölçümleri tabloya kaydettiğini yazdı",1,"Deney sonuçları tabloya yazılır."]]},
-     {b:"b) Değişkenler",m:"Bağımsız: <b>uygulanan kuvvetler</b> · Bağımlı: <b>arabanın aldığı yol / hareketi</b> · Kontrol: <b>aynı araba (kütle), aynı zemin</b>",
-      i:[["Bağımsız değişkeni doğru yazdı",1,"Bağımsız değişken: deneyde değiştirdiğin şey (kuvvetler)."],["Bağımlı değişkeni doğru yazdı",1,"Bağımlı değişken: ölçtüğün şey (alınan yol)."],["Kontrol değişkenini doğru yazdı",1,"Kontrol değişkeni: sabit tuttuğun şey (aynı araba, aynı zemin)."]]},
-     {b:"c) Beklenen sonuç",m:"Eşit sürelerde alınan yolun <b>değişmesi</b> (örneğin artması). Bu, arabanın hızlandığını gösterir.",i:[["Eşit sürelerde alınan yolun değişeceğini (artacağını) yazdı",2,"Dengelenmemiş kuvvette hareket değişir; tablodaki yollar eşit olmaz."]]}]}
-]},
-{ ad:"Sınav Tatbikatı 2", sorular:[
- {k:1,h:`<p>Tabloda dört gezegenin bazı özellikleri verilmiştir.</p>
-${tbl(["Gezegen","Özellikleri","Halkası"],[["Venüs","Kayaç ve metallerden oluşur. Kalın bir atmosferi vardır.","Yok"],["Satürn","Büyük ölçüde gazlardan oluşur. Halkaları belirgin görünür.","Var"],["Merkür","Kayaç ve metallerden oluşur. Güneş'e en yakın gezegendir.","Yok"],["Neptün","Büyük ölçüde gazlardan oluşur. Mavi görünür.","Var"]])}
-${qs([["a)","Gezegenleri halkası olup olmamasına göre iki gruba ayırınız. Grupların adlarını ve gezegenleri yazınız.",4],["b)","Bir gezegen seçiniz. Bu gezegenin karasal mı, gazsal mı olduğunu tablodaki bilgiyle açıklayınız.",3],["c)","Bu gezegenleri Güneş'e yakından uzağa doğru sıralayınız.",3]])}`,
-  c:[{b:"a) Halkaya göre gruplar",m:"<b>Halkasız:</b> Venüs, Merkür · <b>Halkalı:</b> Satürn, Neptün",i:[["Grup adlarını yazdı (halkalı / halkasız)",2,"Grubun adını yazmayı unutma."],["Gezegenleri doğru gruba koydu",2,"İç gezegenler halkasız, dış gezegenler halkalıdır."]]},
-     {b:"b) Karasal mı, gazsal mı?",m:"Örnek: <b>Neptün gazsal gezegendir, çünkü büyük ölçüde gazlardan oluşur.</b>",i:[["Seçtiği gezegeni doğru gruba koydu",1,"Kayaç ve metal → karasal, gaz → gazsal."],["Gerekçeyi tablodaki özellikle yazdı",2,"Gerekçe kalıbı: [Gezegen] [grup] gezegendir, çünkü [özellik]."]]},
-     {b:"c) Sıralama",m:"<b>Merkür – Venüs – Satürn – Neptün</b>",i:[["Sıralamayı doğru yazdı",3,"Sıra: Me-Ve-Dü-Ma · Jü-Sa-Ur-Ne."]]}]},
- {k:2,h:`<p>Bir gece gökyüzüne bakan Zeynep, dolunay hâlindeki Ay'ın yavaş yavaş karardığını ve kızılımsı bir renge büründüğünü gördü. Olay yaklaşık bir saat sürdü.</p>
-${qs([["a)","Zeynep hangi gök olayını gözlemlemiştir?",2],["b)","Bu olay sırasında Güneş, Dünya ve Ay'ın konumlarını çizerek gösteriniz. Gölgenin hangi cisme düştüğünü belirtiniz.",4],["c)","Metindeki hangi ipuçları cevabınızı destekler? Açıklayınız.",4]])}`,
-  c:[{b:"a) Gök olayı",m:"<b>Ay tutulması</b>",i:[["\"Ay tutulması\" yazdı",2,"Gece, dolunay ve kararan Ay → Ay tutulması."]]},
-     {b:"b) Çizim",m:"Sıralama <b>Güneş – Dünya – Ay</b>; Dünya'nın gölgesi <b>Ay'a</b> düşer.",i:[["Güneş – Dünya – Ay sıralamasıyla çizdi",3,"Ay tutulmasında Dünya ortadadır."],["Gölgenin Ay'a düştüğünü belirtti",1,"Ay tutulmasında Dünya'nın gölgesi Ay'a düşer."]]},
-     {b:"c) İpuçları",m:"<b>Gece</b> olması, Ay'ın <b>dolunay</b> evresinde olması ve olayın <b>uzun sürmesi</b> (yaklaşık bir saat) Ay tutulmasını gösterir.",
-      i:[["\"Gece\" ipucunu yazdı",1,"Ay tutulması gece gözlemlenir."],["\"Dolunay\" ipucunu yazdı",1,"Ay tutulmasında Ay dolunay evresindedir."],["\"Uzun sürmesi\" ipucunu yazdı",1,"Ay tutulması Güneş tutulmasından uzun sürer."],["İpuçlarını tutulmayla ilişkilendirerek açıkladı",1,"Her ipucundan sonra 'çünkü Ay tutulması...' diye bağlantı kur."]]}]},
- {k:2,h:`<p>Aşağıdaki tabloyu Güneş ve Ay tutulmalarının özelliklerine göre doldurunuz. <span class="pts">(Her kutu 1 puan, toplam 10 puan)</span></p>
-${tbl(["Özellik","Güneş tutulması","Ay tutulması"],[["Sıralama","",""],["Ortada bulunan gök cismi","",""],["Ay'ın evresi","",""],["Gözlem zamanı (gündüz/gece)","",""],["Çıplak gözle bakılabilir mi?","",""]])}`,
-  c:[{b:"Karşılaştırma tablosu",m:"Sıralama: Güneş–Ay–Dünya / Güneş–Dünya–Ay · Ortada: Ay / Dünya · Evre: yeni ay / dolunay · Zaman: gündüz / gece · Çıplak göz: hayır / evet",
-      i:[["Güneş tutulması sıralaması (Güneş – Ay – Dünya)",1,"Güneş tutulması: Güneş – Ay – Dünya."],["Ay tutulması sıralaması (Güneş – Dünya – Ay)",1,"Ay tutulması: Güneş – Dünya – Ay."],["Güneş tutulmasında ortada: Ay",1,"Ortada duran gölge yapar: Güneş tutulmasında Ay."],["Ay tutulmasında ortada: Dünya",1,"Ortada duran gölge yapar: Ay tutulmasında Dünya."],["Güneş tutulması: yeni ay",1,"Güneş tutulmasında Ay yeni ay evresindedir."],["Ay tutulması: dolunay",1,"Ay tutulmasında Ay dolunay evresindedir."],["Güneş tutulması: gündüz",1,"Güneş tutulması gündüz gözlenir."],["Ay tutulması: gece",1,"Ay tutulması gece gözlenir."],["Güneş tutulması: çıplak gözle bakılmaz",1,"Güneş tutulmasına çıplak gözle bakmak göze zarar verir."],["Ay tutulması: çıplak gözle izlenebilir",1,"Ay tutulması çıplak gözle izlenebilir."]]}]},
- {k:3,h:`<p>Görselde bir kutuya etki eden F1, F2 ve F3 kuvvetleri gösterilmiştir.</p>
-${forceSVG([{n:'F1',v:12,d:'D'},{n:'F2',v:8,d:'D'},{n:'F3',v:25,d:'B'}])}
-${qs([["a)","Bileşke kuvvetin büyüklüğünü, yönünü ve doğrultusunu işlemle birlikte tabloya yazınız.",6]])}
-${tbl(["Büyüklüğü","Yönü","Doğrultusu"],[["","",""]])}
-${qs([["b)","Bileşke kuvveti kutu üzerinde okla gösteriniz.",2],["c)","F1 ve F2 değişmeden bileşke kuvvetin sıfır olması için F3 kaç N olmalıdır?",2]])}`,
-  c:[{b:"a) Bileşke tablosu",m:"Doğu: 12 + 8 = 20 N · 25 − 20 = <b>5 N</b> · Yön: <b>batı</b> · Doğrultu: <b>doğu–batı</b>",
-      i:[["Aynı yöndekileri topladı (12 + 8 = 20)",1,"Üç kuvvette önce aynı yöndekileri topla."],["5 N buldu (25 − 20)",2,"Sonra büyükten küçüğü çıkar."],["Yönü batı yazdı",2,"Bileşkenin yönü büyük tarafın yönüdür."],["Doğrultuyu doğu–batı yazdı",1,"Doğrultu: doğu–batı (yön ile karıştırma)."]]},
-     {b:"b) Okla gösterim",m:"Kutu üzerinde <b>batıya</b> bakan ok, üzerinde <b>5 N</b>.",i:[["Oku batıya çizdi",1,"Bileşke okunun yönü bileşkenin yönüyle aynı olmalı."],["Okun üzerine 5 N yazdı",1,"Okun üzerine büyüklüğünü yazmayı unutma."]]},
-     {b:"c) F3 kaç N olmalı?",m:"<b>20 N</b> (doğudaki toplamla eşit olmalı).",i:[["20 N buldu",2,"Bileşke sıfır için zıt taraftaki toplamlar eşit olmalı."]]}]},
- {k:3,h:`<p>Bir kutuya doğuya 10 N kuvvet uygulanıyor. Ayşe kutuya ikinci bir kuvvet daha uygulayacak.</p>
-${qs([["a)","Bileşke kuvvetin 4 N büyüklüğünde ve batı yönünde olması için Ayşe hangi yönde, kaç N kuvvet uygulamalıdır? İşleminizi gösteriniz.",4],["b)","Bileşke kuvvetin 16 N büyüklüğünde ve doğu yönünde olması için Ayşe hangi yönde, kaç N kuvvet uygulamalıdır?",3],["c)","Bu iki durumda bileşke kuvvetin doğrultusu değişir mi? Açıklayınız.",3]])}`,
-  c:[{b:"a) 4 N batı için",m:"<b>Batıya 14 N.</b> 14 − 10 = 4 N, batı.",i:[["Yönü batı yazdı",2,"Bileşke batıya isteniyorsa batıdaki kuvvet daha büyük olmalı."],["14 N buldu",2,"Ters soru: istenen bileşke + karşı taraftaki kuvvet (4 + 10 = 14)."]]},
-     {b:"b) 16 N doğu için",m:"<b>Doğuya 6 N.</b> 10 + 6 = 16 N, doğu.",i:[["Yönü doğu yazdı",1,"Bileşke büyüyecekse kuvvetler aynı yönde olmalı."],["6 N buldu",2,"Aynı yönde: 16 − 10 = 6."]]},
-     {b:"c) Doğrultu değişir mi?",m:"<b>Değişmez.</b> İki durumda da doğrultu <b>doğu–batı</b>dır; değişen sadece <b>yön</b>dür (batı / doğu).",i:[["\"Değişmez\" dedi",1,"Aynı doğrultudaki kuvvetlerin bileşkesi de aynı doğrultudadır."],["Doğrultunun doğu–batı kaldığını, yönün değiştiğini açıkladı",2,"Yön (doğu/batı) ile doğrultu (doğu–batı) farkı."]]}]},
- {k:4,h:`<p>Sürtünmesiz zeminde bir oyuncak arabayla üç deneme yapılıyor.</p>
-${tbl(["Deneme","Kuvvetler uygulanmadan önce","Doğuya","Batıya"],[["A","Araba duruyor","5 N","5 N"],["B","Araba duruyor","6 N","2 N"],["C","Araba doğuya sabit süratle gidiyor","3 N","3 N"]])}
-${qs([["a)","Her denemede kuvvetlerin dengelenmiş mi, dengelenmemiş mi olduğunu yazınız.",3],["b)","Her denemede kuvvetlerin arabanın hareketine etkisini açıklayınız. Bileşke kuvvet sıfırdan farklıysa büyüklüğünü ve yönünü yazınız.",7]])}`,
-  c:[{b:"a) Dengelenmiş mi?",m:"A: <b>dengelenmiş</b> · B: <b>dengelenmemiş</b> · C: <b>dengelenmiş</b>",i:[["A için \"dengelenmiş\"",1,"Eşit ve zıt kuvvetler: dengelenmiş."],["B için \"dengelenmemiş\"",1,"Kuvvetler eşit değilse dengelenmemiş."],["C için \"dengelenmiş\"",1,"Hareket ediyor olsa da kuvvetler eşit ve zıtsa dengelenmiştir."]]},
-     {b:"b) Harekete etkisi",m:"A: araba <b>durmaya devam eder</b>. B: bileşke <b>4 N, doğu</b>; araba doğuya doğru <b>harekete başlar ve hızlanır</b>. C: araba <b>aynı süratle doğuya gitmeye devam eder</b>.",
-      i:[["A: durmaya devam ettiğini yazdı",2,"Duran cisme dengelenmiş kuvvet etki ederse durmaya devam eder."],["B: bileşkeyi 4 N, doğu buldu",1,"6 − 2 = 4 N, yönü büyük kuvvetin yönü."],["B: harekete başlayıp hızlandığını yazdı",2,"Dengelenmemiş kuvvet duran cismi harekete geçirir."],["C: aynı süratle devam ettiğini yazdı",2,"Hareket eden cisme dengelenmiş kuvvet etki ederse aynı süratle devam eder."]]}]},
- {k:4,h:`<p>Doğuya doğru hareket eden bir oyuncak arabaya bazı kuvvetler uygulanmaya başlıyor. Arabanın eşit zaman aralıklarında aldığı yollar tabloda verilmiştir.</p>
-${tbl(["0–1 s","1–2 s","2–3 s"],[["12 cm","8 cm","4 cm"]])}
-${qs([["a)","Arabanın sürati nasıl değişmektedir?",2],["b)","Arabaya etki eden kuvvetler dengelenmiş midir, dengelenmemiş midir?",2],["c)","Bileşke kuvvetin yönü nedir? Neden?",3],["ç)","Bu deneydeki bir kontrol değişkenini yazınız.",3]])}`,
-  c:[{b:"a) Sürat",m:"Eşit sürelerde alınan yol azalıyor → sürati <b>azalıyor</b> (yavaşlıyor).",i:[["Süratin azaldığını / yavaşladığını yazdı",2,"Eşit sürelerde alınan yol azalıyorsa cisim yavaşlıyordur."]]},
-     {b:"b) Dengelenmiş mi?",m:"<b>Dengelenmemiş.</b>",i:[["\"Dengelenmemiş\" dedi",2,"Hareket değişiyorsa (yavaşlama) kuvvetler dengelenmemiştir."]]},
-     {b:"c) Bileşkenin yönü",m:"<b>Batı.</b> Çünkü araba yavaşlıyor; bileşke hareket yönüne (doğuya) zıt olmalı.",i:[["Yönü batı yazdı",2,"Yavaşlayan cisimde bileşke harekete zıt yöndedir."],["Harekete zıt olduğu için yavaşladığını açıkladı",1,"Bileşke hareket yönündeyse hızlanır, zıt yöndeyse yavaşlar."]]},
-     {b:"ç) Kontrol değişkeni",m:"<b>Aynı araba (kütlesi)</b> ya da <b>aynı zemin</b>.",i:[["Bir kontrol değişkeni yazdı",3,"Kontrol değişkeni: deneyde sabit tutulan şey."]]}]}
-]}
-];
-const KONU_AD=["Gezegenler","Tutulmalar","Bileşke kuvvet","Dengelenmiş kuvvet"];
+function oneri(S){
+  const son=oku('nisaSon');
+  const sirali=[...DERSLER].sort((a,b)=>(son&&a.id===son.d?-1:0)-(son&&b.id===son.d?-1:0));
+  let sec=sirali.find(d=>S[d.id].sira&&S[d.id].sira.tip==='bolum')
+       || sirali.find(d=>S[d.id].sira);
+  if(son){const sd=DERSLER.find(d=>d.id===son.d); if(sd&&S[sd.id].sira) sec=sd;}
+  if(!sec) return {baslik:'Hepsini bitirdin!',metin:'Bütün bölümler ve tatbikatlar tamam. Sınavdan önce Son Tekrar sayfalarına bir göz at.',link:'fen/#tekrar',dugme:'Fen Son Tekrar\'ı aç'};
+  const r=S[sec.id].sira, herhangi=DERSLER.some(d=>S[d.id].basladi);
+  const dugme=herhangi?'Kaldığım yerden devam et':'Hadi başlayalım';
+  if(r.tip==='tat') return {baslik:'Bugün ne çalışsam?',metin:`${sec.ad}'in bütün bölümleri bitti! Sırada Sınav Tatbikatı ${r.n} var: gerçek sınav gibi ${sec.tatSoru} soru.`,link:`${sec.url}#t${r.n}-soru`,dugme};
+  const ad=sec.bolum[r.n-1];
+  if(r.asama==='yazili') return {baslik:'Bugün ne çalışsam?',metin:`${sec.ad}, ${r.n}. bölüm: <b>${ad}</b>. Testi bitirdin, sırada yazılı sorusu var. Kağıt kalemini hazırla.`,link:`${sec.url}#b${r.n}-yazili`,dugme};
+  return {baslik:'Bugün ne çalışsam?',metin:`${sec.ad}, ${r.n}. bölüm: <b>${ad}</b>. Önce konuyu oku (${sec.sayfa[r.n-1]} sayfa), sonra 5 soruluk testi çöz.`,link:`${sec.url}#b${r.n}-konu`,dugme};
+}
 
-/* ---------- DURUM ---------- */
-const app=document.getElementById('app');
-const S={test:{},checks:{},tIdx:{},page:{}};
-let P=(()=>{try{return JSON.parse(localStorage.getItem('nisaFen'))||{b:{},t:{}}}catch(e){return {b:{},t:{}}}})();
-P.b=P.b||{}; P.t=P.t||{};
-function save(){try{localStorage.setItem('nisaFen',JSON.stringify(P))}catch(e){}}
-/* tema: oto / acik / koyu */
-const HOST_THEME=document.documentElement.getAttribute('data-theme');
-let THEME=(()=>{try{return localStorage.getItem('nisaTema')||'oto'}catch(e){return 'oto'}})();
+/* tema: oto / açık / koyu (ders sayfalarıyla aynı kayıt) */
 const THEME_AD={oto:'Otomatik',acik:'Açık',koyu:'Koyu'};
-function applyTheme(){const r=document.documentElement;
-  if(THEME==='oto'){HOST_THEME?r.setAttribute('data-theme',HOST_THEME):r.removeAttribute('data-theme');}
-  else r.setAttribute('data-theme',THEME==='acik'?'light':'dark');}
-const themeBtn=()=>`<button class="ghost themebtn" data-act="theme" aria-label="Temayı değiştir">Tema: ${THEME_AD[THEME]}</button>`;
+let THEME=(()=>{try{return localStorage.getItem('nisaTema')||'oto'}catch(e){return 'oto'}})();
+function applyTheme(){const r=document.documentElement; if(THEME==='oto') r.removeAttribute('data-theme'); else r.setAttribute('data-theme',THEME==='acik'?'light':'dark');}
 applyTheme();
 
-/* kontrol grupları ve maddeler */
-function blocks(key){
-  const n=+key.slice(1);
-  if(key[0]==='b') return [{si:0,k:n,groups:B[n-1].yazili.kontrol}];
-  return T[n-1].sorular.map((s,i)=>({si:i,k:s.k,groups:s.c}));
-}
-function items(key){
-  const out=[];
-  blocks(key).forEach(bl=>bl.groups.forEach((g,gi)=>g.i.forEach((it,ii)=>out.push({id:`${key}.${bl.si}.${gi}.${ii}`,t:it[0],p:it[1],fix:it[2],k:bl.k}))));
-  return out;
-}
-const checkedSet=key=>S.checks[key]||(S.checks[key]=new Set());
-function scoreOf(key){const c=checkedSet(key);return items(key).filter(i=>c.has(i.id)).reduce((s,i)=>s+i.p,0)}
-const maxOf=key=>items(key).reduce((s,i)=>s+i.p,0);
-
-/* ---------- ORTAK PARÇALAR ---------- */
-function topBar(crumbs,cur){
-  return `<div class="top"><a class="back" href="#ana">← Bölümler</a>${crumbs?`<div class="crumbs">${crumbs.map((c,i)=>`<span class="crumb ${i===cur?'on':i<cur?'done':''}">${c}</span>`).join('')}</div>`:''}${themeBtn()}</div>`;
-}
-const BC=["Konu","Test","Yazılı","Sonuç"];
-function sendBox(msg){
-  const url='https://wa.me/?text='+encodeURIComponent(msg);
-  return `<div class="actions center"><a class="btn wa" href="${url}" target="_blank" rel="noopener">Abime WhatsApp'tan gönder</a>
-  <button class="ghost" data-act="copy">Metni kopyala</button></div>
-  <textarea class="copybox" id="copybox" readonly hidden>${msg}</textarea>`;
-}
-
-/* ---------- SAYFALAR ---------- */
-function vAna(){
-  const doneCount=[1,2,3,4].filter(n=>P.b[n]&&P.b[n].yazili!=null).length;
-  let h=`<header class="home-head"><div class="top"><span class="eyebrow">6. Sınıf Fen Bilimleri · 1. Dönem 1. Yazılı</span>${themeBtn()}</div><h1>Nisa'nın Fen Çalışması</h1>
-  <p class="muted">Sınavda 7 soru var: Gezegenler 1, Tutulmalar 2, Bileşke kuvvet 2, Dengelenmiş kuvvet 2.</p></header>
-  <ol class="how"><li>Konuyu oku</li><li>Testi çöz, site anında kontrol eder</li><li>Yazılı sorusunu kağıda çöz</li><li>Babam kontrol etsin, sonucu abime gönder</li></ol>
-  <h2>Bölümler</h2><div class="list">`;
-  B.forEach((b,i)=>{const n=i+1,p=P.b[n]||{};const done=p.yazili!=null;
-    const chip=p.test!=null||done?`<span class="chip ${done?'ok':''}">${p.test!=null?`Test ${p.test}/5`:''}${p.test!=null&&done?' · ':''}${done?`Yazılı ${p.yazili}/10`:''}</span>`:`<span class="chip">Başlanmadı</span>`;
-    h+=`<a class="unit ${done?'done':''}" style="--unit:var(--c${n});--unit-soft:var(--c${n}-soft)" href="#b${n}-konu"><span class="no">${n}</span><span><h3>${b.ad}</h3><span class="sub">${b.kisa}</span></span>${chip}</a>`;});
-  h+=`</div><h2>Sınav tatbikatları</h2><div class="list">`;
-  T.forEach((t,i)=>{const n=i+1,p=P.t[n];
-    const chip=p!=null?`<span class="chip ok">${p}/100</span>`:doneCount<4?`<span class="chip">Önce bölümler (${doneCount}/4)</span>`:`<span class="chip">Hazır</span>`;
-    h+=`<a class="unit ${p!=null?'done':''}" href="#t${n}-soru"><span class="no">T${n}</span><span><h3>${t.ad}</h3><span class="sub">Gerçek sınav gibi 7 soru, baba kontrollü</span></span>${chip}</a>`;});
-  h+=`<a class="unit" href="#tekrar"><span class="no">★</span><span><h3>Son Tekrar</h3><span class="sub">Sınav sabahı için bütün kurallar tek sayfada</span></span><span class="chip">1 sayfa</span></a></div>
-  <h2>Diğer dersler</h2><div class="list"><a class="unit" href="matematik/"><span class="no">÷</span><span><h3>Matematik Çalışması</h3><span class="sub">Çarpan, bölünebilme, asal, ortak kat-bölen, olasılık</span></span><span class="chip">Geç →</span></a></div>
-  <div class="actions center" id="resetZone"><button class="ghost" data-act="reset1">İlerlemeyi sıfırla</button></div>`;
-  return h;
-}
-function vKonu(n){
-  const b=B[n-1], pages=KONU[n-1], L=pages.length, i=Math.min(S.page[n]||0,L-1), pg=pages[i];
-  return topBar(BC,0)+`<article class="paper"><div class="top"><span class="eyebrow">Bölüm ${n} · ${b.ad}</span><span class="eyebrow">Sayfa ${i+1}/${L}</span></div>
-  <div class="progress"><span style="width:${(i+1)/L*100}%"></span></div>
-  <nav class="pages" aria-label="Sayfalar">${pages.map((p,j)=>`<button class="pg ${j===i?'on':j<i?'done':''}" data-act="pg" data-p="${j}" title="${p.t}">${j+1}</button>`).join('')}</nav>
-  <h1>${pg.t}</h1>${pg.h}
-  <div class="actions">${i>0?`<button class="ghost" data-act="pprev">← Önceki</button>`:''}${i<L-1?`<button class="primary" data-act="pnext">Sonraki sayfa →</button>`:`<button class="primary" data-act="startTest" data-n="${n}">Teste geç →</button>`}</div></article>`;
-}
-function vTest(n){
-  const b=B[n-1],st=S.test[n]||(S.test[n]={i:0,ans:[]}),Q=b.test;
-  if(st.i<Q.length){
-    const q=Q[st.i],a=st.ans[st.i],answered=a!=null;
-    let h=topBar(BC,1)+`<section class="paper"><div class="top"><span class="eyebrow">Bölüm ${n} · Test</span><span class="eyebrow">Soru ${st.i+1}/${Q.length}</span></div>
-    <div class="progress"><span style="width:${(st.i+(answered?1:0))/Q.length*100}%"></span></div><h2>${q.q}</h2><div class="opts">`;
-    q.o.forEach((o,j)=>{let cls='';if(answered){if(j===q.a)cls='right';else if(j===a)cls='wrong';}
-      h+=`<button class="opt ${cls}" data-act="ans" data-j="${j}" ${answered?'disabled':''}>${String.fromCharCode(65+j)}) ${o}</button>`;});
-    h+=`</div>`;
-    if(answered){h+=a===q.a?`<div class="fb good"><b>Doğru!</b> ${q.n}</div>`:`<div class="fb bad"><b>Doğru cevap: ${q.o[q.a]}.</b> ${q.n}</div>`;
-      h+=`<div class="actions"><button class="primary" data-act="next">${st.i+1<Q.length?'Sonraki soru →':'Test sonucunu gör →'}</button></div>`;}
-    return h+`</section>`;
-  }
-  const sc=Q.filter((q,i)=>st.ans[i]===q.a).length, wrong=Q.filter((q,i)=>st.ans[i]!==q.a);
-  let h=topBar(BC,1)+`<section class="paper result"><span class="eyebrow">Bölüm ${n} · Test sonucu</span><div class="big-score">${sc}/${Q.length}</div>`;
-  h+=wrong.length?`<p>Yanlış yaptığın konular için kısa notların:</p><ul class="todo">${wrong.map(q=>`<li><b>${q.q}</b><br>${q.n}</li>`).join('')}</ul>`:`<div class="allgood">Hepsi doğru! Yazılı sorusuna geçebilirsin.</div>`;
-  h+=`<div class="actions center"><button class="ghost" data-act="startTest" data-n="${n}">Testi tekrar çöz</button><a class="btn primary" href="#b${n}-yazili">Yazılı sorusuna geç →</a></div></section>`;
-  return h;
-}
-function vYazili(n){
-  const b=B[n-1];
-  return topBar(BC,2)+`<section class="paper"><span class="eyebrow">Bölüm ${n} · Yazılı sorusu</span><h1>Sınavdaki gibi</h1>
-  <div class="note">Nisa, cevaplarını <b>kağıda</b> yaz. Tablo varsa kağıda çizip doldur. Bitince telefonu babana ver.</div>
-  ${b.yazili.soru}
-  <div class="actions"><a class="btn primary" href="#b${n}-kontrol">Bitirdim, babama veriyorum →</a></div></section>`;
-}
-function vKontrol(key){
-  const n=+key.slice(1), isB=key[0]==='b', set=checkedSet(key);
-  let h=topBar(isB?BC:null,2)+`<section class="paper"><span class="eyebrow">${isB?`Bölüm ${n}`:T[n-1].ad} · Baba kontrolü</span>
-  <div class="note">Babacığım, Nisa'nın kağıdına bak. Yazdığı her madde için kutuyu işaretle. Aynı anlamı kendi cümlesiyle yazdıysa da say.</div>`;
-  blocks(key).forEach(bl=>{
-    if(!isB) h+=`<div class="qhead">Soru ${bl.si+1} · ${KONU_AD[bl.k-1]}</div>`;
-    bl.groups.forEach((g,gi)=>{
-      h+=`<div class="grp ${gi===0?'first':''}"><h3>${g.b}</h3><div class="model">${g.m}</div>`;
-      g.i.forEach((it,ii)=>{const id=`${key}.${bl.si}.${gi}.${ii}`;
-        h+=`<label class="item" for="${id}"><input type="checkbox" id="${id}" data-id="${id}" ${set.has(id)?'checked':''}><span>${it[0]}</span><span class="p">${it[1]} p</span></label>`;});
-      h+=`</div>`;
-    });
-  });
-  h+=`</section><div class="scorebar"><span>Puan <span class="big" id="score">${scoreOf(key)}</span> / ${maxOf(key)}</span><a class="btn" style="background:var(--paper);color:var(--fg);padding:10px 14px" href="#${key}-sonuc">Sonucu gör</a></div>`;
-  return h;
-}
-function vSonucB(n){
-  const key='b'+n, s=scoreOf(key), mx=maxOf(key), c=checkedSet(key);
-  P.b[n]=Object.assign({},P.b[n],{yazili:s}); save();
-  const test=P.b[n].test, miss=items(key).filter(i=>!c.has(i.id)).map(i=>i.fix);
-  const msg=`Nisa · Fen Bölüm ${n}: ${B[n-1].ad}\nTest: ${test!=null?test+'/5':'çözülmedi'}\nYazılı: ${s}/${mx}`+(miss.length?`\nTekrar edilecekler:\n- ${miss.join('\n- ')}`:'\nEksik yok.');
-  let h=topBar(BC,3)+`<section class="paper result"><span class="eyebrow">Bölüm ${n} · Sonuç</span><h1>${B[n-1].ad}</h1>
-  <div class="scores"><div>Test<b>${test!=null?test+'/5':'—'}</b></div><div>Yazılı<b>${s}/${mx}</b></div></div>`;
-  h+=miss.length?`<span class="eyebrow">Tekrar edilecekler</span><ul class="todo">${miss.map(m=>`<li>${m}</li>`).join('')}</ul>`:`<div class="allgood">Eksik yok, harika!</div>`;
-  h+=sendBox(msg)+`<div class="actions center"><a class="btn ghost" href="#b${n}-kontrol">Kontrole dön</a>${n<4?`<a class="btn primary" href="#b${n+1}-konu">Sonraki bölüm →</a>`:`<a class="btn primary" href="#ana">Bölümlere dön</a>`}</div></section>`;
-  return h;
-}
-function vTSoru(n){
-  const t=T[n-1],i=S.tIdx[n]||0,q=t.sorular[i],L=t.sorular.length;
-  let h=topBar(null)+`<section class="paper"><div class="top"><span class="eyebrow">${t.ad} · ${KONU_AD[q.k-1]}</span><span class="eyebrow">Soru ${i+1}/${L}</span></div>
-  <div class="progress"><span style="width:${(i+1)/L*100}%"></span></div>
-  ${i===0?`<div class="note">Gerçek sınav gibi çöz: cevapları kağıda, soru numarasıyla yaz. Bitince telefonu babana ver.</div>`:''}
-  <h2>${i+1}. Soru</h2>${q.h}
-  <div class="actions">${i>0?`<button class="ghost" data-act="tprev" data-n="${n}">← Önceki</button>`:''}
-  ${i<L-1?`<button class="primary" data-act="tnext" data-n="${n}">Sonraki soru →</button>`:`<a class="btn primary" href="#t${n}-kontrol">Bitirdim, babama veriyorum →</a>`}</div></section>`;
-  return h;
-}
-function vSonucT(n){
-  const key='t'+n, c=checkedSet(key), all=items(key), s=scoreOf(key), mx=maxOf(key), p100=Math.round(s/mx*100);
-  P.t[n]=p100; save();
-  const per=[1,2,3,4].map(k=>{const its=all.filter(i=>i.k===k);return [its.filter(i=>c.has(i.id)).reduce((a,i)=>a+i.p,0),its.reduce((a,i)=>a+i.p,0)]});
-  const miss=all.filter(i=>!c.has(i.id)).map(i=>i.fix);
-  const uniq=[...new Set(miss)];
-  const msg=`Nisa · Fen ${T[n-1].ad}\nPuan: ${p100}/100\n`+per.map((v,i)=>`${KONU_AD[i]}: ${v[0]}/${v[1]}`).join('\n')+(uniq.length?`\nTekrar edilecekler:\n- ${uniq.join('\n- ')}`:'\nEksik yok.');
-  let h=topBar(null)+`<section class="paper result"><span class="eyebrow">${T[n-1].ad} · Sonuç</span><div class="big-score">${p100}<span class="muted" style="font-size:1.2rem">/100</span></div>
-  <div class="scores">${per.map((v,i)=>`<div>${KONU_AD[i]}<b>${v[0]}/${v[1]}</b></div>`).join('')}</div>`;
-  h+=uniq.length?`<span class="eyebrow">Tekrar edilecekler</span><ul class="todo">${uniq.map(m=>`<li>${m}</li>`).join('')}</ul>`:`<div class="allgood">Eksik yok, sınava hazırsın!</div>`;
-  h+=sendBox(msg)+`<div class="actions center"><a class="btn ghost" href="#t${n}-kontrol">Kontrole dön</a><a class="btn primary" href="#ana">Ana sayfa</a></div></section>`;
-  return h;
-}
-function vTekrar(){
-  const R=[
-   ["Gezegenler",["Sıra: Me-Ve-Dü-Ma · Jü-Sa-Ur-Ne","İç = karasal = halkasız: Merkür, Venüs, Dünya, Mars","Dış = gazsal = halkalı: Jüpiter, Satürn, Uranüs, Neptün","Mars ile Jüpiter arası: asteroit kuşağı","En küçük Merkür, en büyük Jüpiter","Gerekçe: [Gezegen] [grup] gezegendir, çünkü [özellik]."]],
-   ["Tutulmalar",["Ortada duran gölge yapar.","Güneş tutulması: Güneş – Ay – Dünya, gündüz, yeni ay, dar alan, kısa, çıplak gözle bakılmaz","Ay tutulması: Güneş – Dünya – Ay, gece, dolunay, geniş alan, uzun","Ortak: üçü aynı hizada, bir cismin gölgesi diğerine düşer","Her ay tutulma olmaz, çünkü tam hizalanma her ay olmaz."]],
-   ["Bileşke kuvvet",["Tablo: Büyüklük (N) · Yön (doğu/batı) · Doğrultu (doğu–batı)","Aynı yön: topla. Zıt yön: büyükten küçüğü çıkar, yön büyüğün.","Üç kuvvet: önce aynı yöndekileri topla.","Ters soru: istenen bileşke + karşı taraftaki kuvvet.","Oku çiz, üzerine büyüklüğünü yaz. İşlemi göster."]],
-   ["Dengelenmiş kuvvet",["Bileşke 0 → dengelenmiş → hareket değişmez (duran durur, giden aynı süratle gider).","Bileşke 0 değil → dengelenmemiş → harekete başlar, hızlanır ya da yavaşlar.","Tablo: yollar eşit → sabit sürat; artıyor → hızlanıyor; azalıyor → yavaşlıyor.","Deney: dinamometre (kuvvet), kronometre (süre), cetvel (yol).","Kontrol değişkeni: aynı araba, aynı zemin."]]];
-  return topBar(null)+`<article class="paper"><span class="eyebrow">Sınav sabahı</span><h1>Son Tekrar</h1>${R.map(([t,l])=>`<section><h2>${t}</h2><ul>${l.map(x=>`<li>${x}</li>`).join('')}</ul></section>`).join('')}
-  <div class="rule"><b>Unutma:</b><span>Her cevabın sonuna "çünkü..." ile bir gerekçe ekle.</span></div></article>`;
-}
-
-/* ---------- YÖNLENDİRME ---------- */
 function render(){
-  const h=(location.hash||'#ana').slice(1); let html; let m;
-  const um=h.match(/^b([1-4])-/);
-  if(um){app.style.setProperty('--unit',`var(--c${um[1]})`);app.style.setProperty('--unit-soft',`var(--c${um[1]}-soft)`);app.dataset.unit=um[1];}
-  else{app.style.removeProperty('--unit');app.style.removeProperty('--unit-soft');delete app.dataset.unit;}
-  if((m=h.match(/^b([1-4])-(konu|test|yazili|kontrol|sonuc)$/))){const n=+m[1];
-    html={konu:()=>vKonu(n),test:()=>vTest(n),yazili:()=>vYazili(n),kontrol:()=>vKontrol('b'+n),sonuc:()=>vSonucB(n)}[m[2]]();}
-  else if((m=h.match(/^t([12])-(soru|kontrol|sonuc)$/))){const n=+m[1];
-    html={soru:()=>vTSoru(n),kontrol:()=>vKontrol('t'+n),sonuc:()=>vSonucT(n)}[m[2]]();}
-  else if(h==='tekrar') html=vTekrar();
-  else html=vAna();
-  app.innerHTML=html;
+  const S={}; DERSLER.forEach(d=>S[d.id]=durum(d));
+  const yildiz=DERSLER.reduce((a,d)=>a+S[d.id].sayi+S[d.id].tat.filter(x=>x!=null).length,0);
+  const o=oneri(S);
+  const tarih=new Date().toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long'});
+  let h=`<header class="head"><div><p class="date">${tarih}</p><h1>Merhaba Nisa!</h1></div>
+  <div class="stars" aria-label="${yildiz} yıldız">${STAR_ON}<span>${yildiz} yıldız</span></div></header>
+  <section class="today" aria-labelledby="bugun"><h2 id="bugun">${o.baslik}</h2><p>${o.metin}</p>
+  <div class="acts"><a class="btn dark" href="${o.link}">${o.dugme}</a><a class="btn plain" href="#dersler">Başka bir ders seç</a></div></section>
+  <section class="sec" id="dersler" aria-labelledby="dh"><h2 id="dh">Derslerim</h2><div class="cards">`;
+  DERSLER.forEach(d=>{const s=S[d.id], N=d.bolum.length;
+    const tatSon=s.tat.filter(x=>x!=null);
+    const ek=tatSon.length?` · Tatbikat ${tatSon[tatSon.length-1]}/100`:'';
+    const say=s.sayi===N?`${N} bölümün hepsi bitti${ek}`:s.sayi===0?`${N} bölüm, hadi ilkine başla`:`${N} bölümden ${s.sayi}${["'i","'si","'ü","'ü","'i"][s.sayi-1]} bitti${ek}`;
+    h+=`<a class="card" href="${d.url}"><span class="band" style="background:${d.renk}"></span><span class="body">
+    <h3>${d.ad}</h3><span class="sub">${d.sub}</span>
+    <span class="row" aria-hidden="true">${s.bitti.map(x=>x?STAR_ON:STAR_OFF).join('')}</span>
+    <span class="say">${say}</span></span></a>`;});
+  h+=`</div></section>
+  <section class="sec soon" aria-labelledby="yh"><h2 id="yh">Yakında eklenecek</h2><div class="soonlist">${YAKINDA.map(y=>`<div><b>${y}</b><span>Abim hazırlıyor</span></div>`).join('')}</div></section>
+  <footer class="foot"><button class="themebtn" id="tema" type="button">Tema: ${THEME_AD[THEME]}</button></footer>`;
+  document.getElementById('app').innerHTML=h;
+  document.getElementById('tema').onclick=()=>{THEME={oto:'acik',acik:'koyu',koyu:'oto'}[THEME];try{localStorage.setItem('nisaTema',THEME)}catch(e){}applyTheme();render();};
 }
-function goTop(){window.scrollTo(0,0)}
-window.addEventListener('hashchange',()=>{render();goTop();});
-app.addEventListener('click',e=>{
-  const el=e.target.closest('[data-act]'); if(!el) return;
-  const act=el.dataset.act;
-  if(act==='startTest'){const n=+el.dataset.n;S.test[n]={i:0,ans:[]};if(location.hash==='#b'+n+'-test'){render();goTop();}else location.hash='b'+n+'-test';}
-  else if(act==='ans'){const n=+location.hash.match(/b(\d)/)[1],st=S.test[n];st.ans[st.i]=+el.dataset.j;render();}
-  else if(act==='next'){const n=+location.hash.match(/b(\d)/)[1],st=S.test[n];st.i++;
-    if(st.i>=B[n-1].test.length){const sc=B[n-1].test.filter((q,i)=>st.ans[i]===q.a).length;P.b[n]=Object.assign({},P.b[n],{test:sc});save();}
-    render();goTop();}
-  else if(act==='pg'||act==='pnext'||act==='pprev'){const n=+location.hash.match(/b(\d)/)[1];const cur=S.page[n]||0;
-    S.page[n]=act==='pg'?+el.dataset.p:cur+(act==='pnext'?1:-1);render();goTop();}
-  else if(act==='theme'){THEME={oto:'acik',acik:'koyu',koyu:'oto'}[THEME];try{localStorage.setItem('nisaTema',THEME)}catch(e){}applyTheme();document.querySelectorAll('.themebtn').forEach(b=>b.textContent='Tema: '+THEME_AD[THEME]);}
-  else if(act==='reset1'){document.getElementById('resetZone').innerHTML=`<span>Bütün puanlar silinsin mi?</span><button class="ghost" data-act="reset0">Vazgeç</button><button class="primary" data-act="reset2">Evet, sıfırla</button>`;}
-  else if(act==='reset0'){render();}
-  else if(act==='reset2'){P={b:{},t:{}};save();S.test={};S.checks={};S.tIdx={};S.page={};render();goTop();}
-  else if(act==='tnext'||act==='tprev'){const n=+el.dataset.n;S.tIdx[n]=(S.tIdx[n]||0)+(act==='tnext'?1:-1);render();goTop();}
-  else if(act==='copy'){const box=document.getElementById('copybox');const txt=box.value;
-    const fallback=()=>{box.hidden=false;box.focus();box.select();el.textContent='Seç ve kopyala';};
-    try{navigator.clipboard.writeText(txt).then(()=>{el.textContent='Kopyalandı ✓';},fallback);}catch(err){fallback();}}
-});
-app.addEventListener('change',e=>{
-  const cb=e.target.closest('input[data-id]'); if(!cb) return;
-  const key=cb.dataset.id.split('.')[0], set=checkedSet(key);
-  cb.checked?set.add(cb.dataset.id):set.delete(cb.dataset.id);
-  const sc=document.getElementById('score'); if(sc) sc.textContent=scoreOf(key);
-});
 render();
+window.addEventListener('pageshow',render);
 </script>
-
 </body>
 </html>
