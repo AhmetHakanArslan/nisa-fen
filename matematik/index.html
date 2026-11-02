@@ -13,7 +13,7 @@
   --bg:#eef2f8; --paper:#ffffff; --fg:#1b2540; --muted:#5d6a86; --line:#d6deec;
   --accent:#2f5bd3; --accent-soft:#e6ecfc; --ok:#178a57; --ok-soft:#e0f3e9; --warn:#b5531a; --warn-soft:#fbeadf;
   --force:#d0452f; --box:#c7d2e6; --sun:#f4b733; --shadow:rgba(20,28,48,.30); --on-accent:#ffffff;
-  --c1:#4b46c7; --c1-soft:#e9e8fb; --c2:#c26510; --c2-soft:#fcecd9; --c3:#c93a2b; --c3-soft:#fbe3df; --c4:#1d8656; --c4-soft:#dcf2e6; --c5:#0b7f86; --c5-soft:#d8f1f2;
+  --c1:#4b46c7; --c1-soft:#e9e8fb; --c2:#c26510; --c2-soft:#fcecd9; --c3:#c93a2b; --c3-soft:#fbe3df; --c4:#1d8656; --c4-soft:#dcf2e6; --c5:#0b7f86; --c5-soft:#d8f1f2; --c6:#8a4fd6; --c6-soft:#efe6fb;
   --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
   --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
@@ -21,12 +21,12 @@
   --bg:#0e1424; --paper:#161f35; --fg:#e7ecf8; --muted:#9eabc6; --line:#2a3655;
   --accent:#86a8ff; --accent-soft:#1f2b4b; --ok:#4fd39a; --ok-soft:#163629; --warn:#f2a073; --warn-soft:#3b2518;
   --force:#ff7a62; --box:#3a4868; --sun:#f6c24f; --shadow:rgba(0,0,0,.55); --on-accent:#0e1424; color-scheme:dark;
-  --c1:#a9a4ff; --c1-soft:#25244b; --c2:#f2a54e; --c2-soft:#3a2a14; --c3:#ff8370; --c3-soft:#3f201c; --c4:#5fd39a; --c4-soft:#163629; --c5:#4fd2da; --c5-soft:#113538}}
+  --c1:#a9a4ff; --c1-soft:#25244b; --c2:#f2a54e; --c2-soft:#3a2a14; --c3:#ff8370; --c3-soft:#3f201c; --c4:#5fd39a; --c4-soft:#163629; --c5:#4fd2da; --c5-soft:#113538; --c6:#c5a3ff; --c6-soft:#2c2246}}
 :root[data-theme="dark"]{
   --bg:#0e1424; --paper:#161f35; --fg:#e7ecf8; --muted:#9eabc6; --line:#2a3655;
   --accent:#86a8ff; --accent-soft:#1f2b4b; --ok:#4fd39a; --ok-soft:#163629; --warn:#f2a073; --warn-soft:#3b2518;
   --force:#ff7a62; --box:#3a4868; --sun:#f6c24f; --shadow:rgba(0,0,0,.55); --on-accent:#0e1424; color-scheme:dark;
-  --c1:#a9a4ff; --c1-soft:#25244b; --c2:#f2a54e; --c2-soft:#3a2a14; --c3:#ff8370; --c3-soft:#3f201c; --c4:#5fd39a; --c4-soft:#163629; --c5:#4fd2da; --c5-soft:#113538}
+  --c1:#a9a4ff; --c1-soft:#25244b; --c2:#f2a54e; --c2-soft:#3a2a14; --c3:#ff8370; --c3-soft:#3f201c; --c4:#5fd39a; --c4-soft:#163629; --c5:#4fd2da; --c5-soft:#113538; --c6:#c5a3ff; --c6-soft:#2c2246}
 
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 48px}
@@ -168,6 +168,14 @@ textarea.copybox{width:100%;min-height:140px;font-family:var(--body);font-size:.
 .sieve span.p{background:var(--unit,var(--accent));color:var(--on-accent)}
 .sieve span.one{background:transparent;border:1px dashed var(--line)}
 .unit.other .no{font-size:1.3rem}
+.basamak{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) 18px repeat(3,minmax(0,1fr));gap:6px;max-width:640px;width:100%;margin:0 auto}
+.basamak .bs{border:2px solid var(--edge);border-radius:8px;background:var(--paper);display:grid;grid-template-rows:auto 1fr;text-align:center;overflow:hidden}
+.basamak .bs.ond{background:var(--unit-soft,var(--accent-soft))}
+.basamak .bs.bosb{opacity:.45}
+.basamak .ba{font-size:.72rem;font-weight:800;padding:4px 2px;border-bottom:2px solid var(--edge);line-height:1.25;color:var(--muted)}
+.basamak .br{font-family:var(--display);font-size:2.2rem;line-height:1.5;min-height:1.5em}
+.basamak .virgul{font-family:var(--display);font-size:2.8rem;display:grid;align-items:end;justify-content:center;line-height:1.1}
+.fig.yuz svg{max-width:250px;min-width:0;margin:0 auto}
 
 html{-webkit-text-size-adjust:100%}
 button,.btn,.opt,label.item,summary{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
@@ -248,6 +256,50 @@ details.yokla{border:2px solid var(--line);border-radius:8px;background:var(--pa
 .themebtn{border:2px solid var(--edge)}
 .todo li{border-radius:3px}
 @media (min-width:700px){ h1{font-size:2.8rem} h2{font-size:2rem} .rule b{font-size:1.6rem} }
+
+/* ===== Anlatım sayfaları: ferah düzen ve defter süsleri ===== */
+:root{--rl:#E3EAF6;--margin:#F3A6A6;--hl:rgba(255,232,64,.62)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--rl:#28336A;--margin:#7E4458;--hl:rgba(255,224,77,.24)}}
+:root[data-theme="dark"]{--rl:#28336A;--margin:#7E4458;--hl:rgba(255,224,77,.24)}
+article.paper{gap:22px}
+article.paper > p, article.paper > .lead{max-width:40em}
+article.paper h1{text-decoration-line:underline;text-decoration-style:wavy;text-decoration-color:var(--unit,var(--accent));text-decoration-thickness:2px;text-underline-offset:12px;text-decoration-skip-ink:none;padding-bottom:4px}
+article.paper h3{margin-top:4px}
+article.paper p b, article.paper li b{background:linear-gradient(transparent 56%,var(--hl) 56%);padding:0 2px;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.rule p b, .rule li b, .hata p b, .hata li b{background:none;padding:0}
+.ornek{position:relative;display:block;background-color:var(--paper);background-image:linear-gradient(90deg,transparent 34px,var(--margin) 34px,var(--margin) 36px,transparent 36px),repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rl) 31px,var(--rl) 32px);background-position:0 12px;border:2px solid var(--edge);border-radius:6px;box-shadow:4px 4px 0 var(--edge);padding:12px 18px 14px 50px;line-height:32px}
+.ornek > *{margin:0;line-height:32px}
+.ornek .eyebrow{display:block;color:var(--unit,var(--accent))}
+.ornek .tbl-wrap,.ornek .fig{margin:8px 0;line-height:1.5}
+.ornek .tbl-wrap *{line-height:1.5}
+.rule{position:relative;transform:rotate(-.4deg);padding:20px 20px 18px;margin-top:6px}
+.rule::before{content:"";position:absolute;top:-11px;left:24px;width:84px;height:22px;background:var(--tape);opacity:.8;transform:rotate(-3deg)}
+article.paper > .fig{background:var(--paper);border:2px solid var(--edge);border-radius:6px;padding:14px 12px}
+.hata{background:var(--warn-soft);border:2px dashed var(--warn);border-radius:6px;padding:14px 16px}
+.mini{border:2px solid var(--edge);border-radius:8px;background:var(--paper);box-shadow:3px 3px 0 var(--edge)}
+.mini > b:first-child{font-family:var(--hand);font-weight:400;font-size:1.35rem;margin-bottom:2px}
+details.yokla{background:var(--accent-soft);border:2px dashed var(--edge)}
+details.yokla[open]{background:var(--paper);border-style:solid}
+.adimlar{border:2px solid var(--edge);border-radius:10px;background:var(--paper);padding:16px 18px;display:grid;gap:12px;box-shadow:4px 4px 0 var(--edge)}
+.adimlar .eyebrow{color:var(--unit,var(--accent))}
+.adimlar ol{list-style:none;padding:0;margin:0;display:grid;gap:10px;counter-reset:a}
+.adimlar li{counter-increment:a;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:center}
+.adimlar li::before{content:counter(a);width:32px;height:32px;border-radius:50%;background:var(--unit,var(--accent));color:var(--on-accent);display:grid;place-items:center;font-family:var(--hand);font-size:1.2rem}
+.adimlar .actions{justify-content:flex-start}
+.birlikte{border:2px dashed var(--unit,var(--accent));border-radius:10px;background:var(--unit-soft,var(--accent-soft));padding:16px 18px;display:grid;gap:10px}
+.birlikte .eyebrow{color:var(--fg)}
+.birlikte .satir{font-size:1.12rem;line-height:2.3}
+.birlikte .actions{justify-content:flex-start}
+input.bos{font:inherit;font-weight:800;width:3em;text-align:center;border:none;border-bottom:3px solid var(--fg);background:var(--paper);color:var(--fg);border-radius:6px 6px 0 0;padding:1px 4px;margin:0 3px;line-height:1.4}
+input.bos.genis{width:5em}
+.frac input.bos{width:2.4em;margin:0 0 2px}
+input.bos.dogru{background:var(--ok-soft);border-bottom-color:var(--ok)}
+input.bos.yanlis{background:var(--warn-soft);border-bottom-color:var(--warn)}
+.bfb{font-weight:800} .bfb.iyi{color:var(--ok)} .bfb.kotu{color:var(--warn)}
+@media (prefers-reduced-motion:no-preference){.adimlar li.yeni{animation:adim .35s ease}}
+@keyframes adim{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@media (min-width:700px){ .wrap{max-width:940px} article.paper{padding:40px 52px 44px;gap:26px} #app[data-unit] article.paper{padding-top:48px} }
+@media (min-width:1000px){ .wrap{max-width:980px} }
 </style>
 
 </head>
@@ -256,6 +308,10 @@ details.yokla{border:2px solid var(--line);border-radius:8px;background:var(--pa
 
 <script>
 const DERS='mat';
+/* ---------- ETKİLEŞİMLİ ANLATIM KUTULARI ---------- */
+const adimAdim=(baslik,adimlar)=>`<div class="adimlar"><span class="eyebrow">${baslik}</span><ol>${adimlar.map((a,i)=>`<li${i?' hidden':''}><span>${a}</span></li>`).join('')}</ol><div class="actions"><button class="primary" data-act="adim">Sonraki adım</button></div></div>`;
+const bosluk=(cevap,genis)=>`<input class="bos${genis?' genis':''}" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Boşluk" data-c="${cevap}">`;
+const birlikte=(satirlar)=>`<div class="birlikte"><span class="eyebrow">Birlikte yapalım: boşlukları doldur</span>${satirlar.map(s=>`<div class="satir">${s}</div>`).join('')}<div class="actions"><button class="ghost" data-act="kontrol">Kontrol et</button></div><p class="bfb" hidden></p></div>`;
 /* ---------- ÇİZİM YARDIMCILARI ---------- */
 const tbl=(head,rows)=>`<div class="tbl-wrap"><table><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>c===''?'<td class="blank"></td>':`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 const qs=items=>`<ol class="qs">${items.map(([l,t,p])=>`<li><span class="ql">${l}</span><span>${t} <span class="pts">(${p} puan)</span></span></li>`).join('')}</ol>`;
@@ -338,6 +394,21 @@ function probSVG(){
   });
   s+=`<text x="180" y="${y-18}" text-anchor="middle" style="fill:var(--muted)">az olası</text><text x="420" y="${y-18}" text-anchor="middle" style="fill:var(--muted)">çok olası</text>`;
   return `<div class="fig">${s}</svg></div>`;
+}
+
+/* Ondalık: basamak tablosu */
+function basamak(s){
+  const [t,o='']=s.split(',');
+  const ad=['Yüzler','Onlar','Birler','Onda birler','Yüzde birler','Binde birler'];
+  const h=[...t.padStart(3,' ').slice(-3),...o.padEnd(3,' ').slice(0,3)];
+  return `<div class="basamak" role="img" aria-label="${s} sayısının basamak tablosu">${ad.map((a,i)=>`<div class="bs${i>2?' ond':''}${h[i].trim()?'':' bosb'}"><span class="ba">${a}</span><span class="br">${h[i].trim()}</span></div>${i===2?'<div class="virgul">,</div>':''}`).join('')}</div>`;
+}
+/* Ondalık: 100'lük kare */
+function yuzluk(n){
+  let s=`<svg viewBox="0 0 240 240" role="img" aria-label="100 kareden ${n} tanesi boyalı">`;
+  for(let i=0;i<100;i++){const x=10+(i%10)*22,y=10+Math.floor(i/10)*22;
+    s+=`<rect x="${x}" y="${y}" width="20" height="20" rx="3" fill="${i<n?'var(--unit,var(--accent))':'var(--bg)'}" stroke="var(--edge)" stroke-width="1"/>`;}
+  return `<div class="fig yuz">${s}</svg></div>`;
 }
 
 const KONU=[
@@ -561,6 +632,72 @@ ${tbl(["Renk","Gelme sayısı","Deneysel olasılık"],[["Mavi","25",`${fr(25,50)
 <div class="rule"><span class="eyebrow">Tahmin ≠ kesinlik</span><b>"Mavi gelir" değil, "mavi gelmesi daha olasıdır" deriz</b><span>Deneme sayısı arttıkça tahminimiz daha güvenilir olur.</span></div>
 <p>Bütün sonuçların deneysel olasılıklarının toplamı <b>1</b> eder (yukarıda 25 + 15 + 10 = 50, yani 50/50). Hesabını böyle kontrol edebilirsin.</p>
 ${yok("Bir torbadan, her seferinde geri atılarak 40 kez top çekildi: 28 beyaz, 12 siyah. Bir daha çekilirse hangisi daha olası?",`Beyaz: ${fr(28,40)} = ${fr(7,10)}, siyah: ${fr(12,40)} = ${fr(3,10)}. <b>Beyaz gelmesi daha olasıdır</b>, çünkü deneyde çok daha fazla geldi.`)}`}
+],
+/* ===== BÖLÜM 6: ONDALIK GÖSTERİMLER ===== */
+[
+{t:"Virgülün sağındaki dünya",h:`
+<p class="lead">Markette bir çikolatanın fiyatı <b>12,75 TL</b>. Virgülün solu kaç tam lira olduğunu, sağı ise liradan küçük parçaları, yani kuruşları söyler. İşte buna <b>ondalık gösterim</b> diyoruz.</p>
+<p>Bir bütünü düşün: bir çikolata, bir pizza, 1 metre ip. Bunu eşit parçalara bölelim.</p>
+<div class="cards">
+<div class="mini"><b>10 eşit parça</b>Her parça bir bütünün <b>onda biri</b>dir. ${fr(1,10)} = 0,1</div>
+<div class="mini"><b>100 eşit parça</b>Her parça <b>yüzde bir</b>dir. ${fr(1,100)} = 0,01</div>
+<div class="mini"><b>1000 eşit parça</b>Her parça <b>binde bir</b>dir. ${fr(1,1000)} = 0,001</div>
+</div>
+<p>Aşağıdaki karede 100 küçük kare var. Boyalı olanları say:</p>
+${yuzluk(37)}
+<p class="cap">100 kareden 37'si boyalı: ${fr(37,100)} = 0,37. Dikkat et: 3 tam sıra (3 onda bir) ve 7 tek kare (7 yüzde bir).</p>
+<div class="rule"><span class="eyebrow">Unutma</span><b>Virgül, bütün ile parçaları ayırır</b><span>Virgülün solunda birler, onlar, yüzler… Sağında onda birler, yüzde birler, binde birler var.</span></div>
+${yok("0,1 mi büyük, 0,01 mi?","<b>0,1</b> daha büyük. 0,1, bir bütünün 10 parçasından biri; 0,01 ise 100 parçasından biri. Parça sayısı arttıkça her parça küçülür.")}`},
+{t:"Basamak adı ve basamak değeri",h:`
+<p class="lead">4,375 sayısındaki her rakamın bir <b>adresi</b> (basamak adı) ve bir <b>değeri</b> (basamak değeri) var. Önce adresleri bir tabloya yerleştirelim.</p>
+${basamak("4,375")}
+<p>Şimdi her rakamın değerini tek tek bulalım. Her adımda "Sonraki adım"a dokun:</p>
+${adimAdim("Adım adım · 4,375'in basamak değerleri",[
+ "<b>4</b> birler basamağında. Değeri: <b>4</b>",
+ `<b>3</b> onda birler basamağında. Değeri: 3 tane onda bir = ${fr(3,10)} = <b>0,3</b>`,
+ `<b>7</b> yüzde birler basamağında. Değeri: 7 tane yüzde bir = ${fr(7,100)} = <b>0,07</b>`,
+ `<b>5</b> binde birler basamağında. Değeri: 5 tane binde bir = ${fr(5,1000)} = <b>0,005</b>`,
+ "Kontrol: 4 + 0,3 + 0,07 + 0,005 = <b>4,375</b>. Tuttu!"])}
+<div class="cards">
+<div class="mini"><b>Basamak adı</b>Rakamın durduğu yer. 4,375'te 7'nin basamak adı: yüzde birler.</div>
+<div class="mini"><b>Basamak değeri</b>Rakamın o yerde gösterdiği değer. 4,375'te 7'nin basamak değeri: 0,07.</div>
+</div>
+<div class="hata"><b>Sık yapılan hata:</b> "4,375'te 7'nin basamak değeri 7'dir" demek. 7, yüzde birler basamağında durduğu için değeri <b>0,07</b>'dir. Rakam aynı, yeri değişince değeri değişir.</div>
+${yok("6,28 sayısında 8'in basamak değeri nedir?",`8 yüzde birler basamağında: ${fr(8,100)} = <b>0,08</b>.`)}
+${yok("9,4'te 4'ün basamak adı nedir?","<b>Onda birler</b> basamağı. Virgülden hemen sonraki ilk basamak.")}`},
+{t:"Kesirlerle açarak yazmak",h:`
+<p class="lead">Sınavda "paydası 10, 100 ve 1000 olan kesirlerin toplamı olarak yazınız" diye sorulur. Bu, sayıyı basamaklarına ayırmak demek. Buna <b>çözümleme</b> denir.</p>
+<div class="ornek"><span class="eyebrow">Örnek · 4,375'i çözümleyelim</span>
+<p>4 tam → <b>4</b></p>
+<p>3 onda bir → ${fr(3,10)} · 7 yüzde bir → ${fr(7,100)} · 5 binde bir → ${fr(5,1000)}</p>
+<p>4,375 = 4 + ${fr(3,10)} + ${fr(7,100)} + ${fr(5,1000)}</p>
+</div>
+<div class="rule"><span class="eyebrow">Paydayı bulmanın yolu</span><b>Onda birler → 10 · Yüzde birler → 100 · Binde birler → 1000</b><span>Rakam paya, basamağın adı paydaya yazılır.</span></div>
+<div class="ornek"><span class="eyebrow">Örnek · İçinde 0 olan sayı</span>
+<p>2,06 = 2 + ${fr(0,10)} + ${fr(6,100)}</p>
+<p>0 tane onda bir, hiç yok demek. O yüzden kısaca 2 + ${fr(6,100)} de yazabilirsin.</p>
+</div>
+${birlikte([
+ `5,48 = 5 + ${fr(bosluk('4'),10)} + ${fr(bosluk('8'),100)}`,
+ `7,25 = 7 + ${fr(2,bosluk('10'))} + ${fr(5,bosluk('100'))}`,
+ `0,903 = ${fr(bosluk('9'),10)} + ${fr(bosluk('0'),100)} + ${fr(3,bosluk('1000'))}`])}
+${yok("3,091 sayısını kesirlerin toplamı olarak yaz.",`3 + ${fr(0,10)} + ${fr(9,100)} + ${fr(1,1000)}, kısaca <b>3 + ${fr(9,100)} + ${fr(1,1000)}</b>`)}`},
+{t:"Kesirden ondalık sayıya",h:`
+<p class="lead">Tersini de yapabilmelisin: kesirlerin toplamı verilince ondalık sayıyı yazmak.</p>
+${adimAdim(`Adım adım · 5 + ${fr(8,10)} + ${fr(2,1000)} = ?`,[
+ "Bir basamak tablosu düşün ve virgülü koy: <b>__ , __ __ __</b>",
+ "5 tam → birler basamağına <b>5</b>",
+ `${fr(8,10)} → onda birler basamağına <b>8</b>`,
+ "Paydası 100 olan kesir yok → yüzde birler basamağına <b>0</b> yaz!",
+ `${fr(2,1000)} → binde birler basamağına <b>2</b>`,
+ "Sonuç: <b>5,802</b>"])}
+${basamak("5,802")}
+<div class="hata"><b>Sık yapılan hata:</b> Boş basamağa 0 yazmayı unutup <b>5,82</b> yazmak. O zaman 2, yüzde birler basamağına kayar ve sayı değişir: 5,82 ile 5,802 farklı sayılardır.</div>
+<div class="rule"><span class="eyebrow">Kendi cümlenle açıklama kalıbı</span><b>[Rakam], [basamak adı] basamağındadır; değeri [kesir], yani [ondalık]'tır.</b><span>Örnek: "3,47'deki 4, onda birler basamağındadır; değeri 4/10, yani 0,4'tür."</span></div>
+${birlikte([
+ `6 + ${fr(3,10)} + ${fr(9,100)} = ${bosluk('6,39',1)}`,
+ `1 + ${fr(7,100)} = ${bosluk('1,07',1)}`,
+ `${fr(4,10)} + ${fr(5,1000)} = ${bosluk('0,405',1)}`])}`}
 ]
 ];
 
@@ -698,6 +835,31 @@ ${qs([["a)","Kırmızı gelmesinin deneysel olasılığını bulup sadeleştirin
   {b:"ç) Tahmin",m:"<b>Kırmızı</b>, çünkü deneyde en çok kırmızı geldi (olasılığı 1/2, en büyük).",
    i:[["Kırmızı dedi ve gerekçe yazdı",2,"Tahmin: en çok gelen daha olasıdır, ama kesin değildir."]]}
  ]}
+},
+{ ad:"Ondalık Gösterimler", kisa:"Basamak değerleri ve kesirlerle çözümleme",
+test:[
+ {q:"7,52 sayısında 5'in basamak değeri nedir?",o:["5","0,5","0,05","50"],a:1,n:"5, onda birler basamağında. Değeri 5/10 = 0,5."},
+ {q:"3 + 4/10 + 6/1000 toplamı hangi sayıya eşittir?",o:["3,46","3,406","3,046","34,6"],a:1,n:"Paydası 100 olan kesir yok, yüzde birler basamağına 0 yazılır: 3,406."},
+ {q:"0,25 sayısı hangi kesirlerin toplamıdır?",o:["2/10 + 5/100","2/100 + 5/1000","25/10","2 + 5/10"],a:0,n:"2 onda birler, 5 yüzde birler basamağında: 2/10 + 5/100."},
+ {q:"8,104 sayısının binde birler basamağındaki rakam hangisidir?",o:["8","1","0","4"],a:3,n:"Virgülden sonra sırasıyla onda birler (1), yüzde birler (0), binde birler (4)."},
+ {q:"\"0,1 sayısı 0,01 sayısından küçüktür.\" Bu ifade doğru mu?",o:["Doğru","Yanlış"],a:1,n:"0,1 = 10/100, 0,01 = 1/100. Yani 0,1 daha büyüktür."}
+],
+yazili:{
+ soru:`<p>Bir koşucu 100 metreyi <b>12,48 saniyede</b> koşmuştur.</p>
+${qs([["a)","12,48 sayısındaki her rakamın basamak adını ve basamak değerini yazınız.",4],
+ ["b)","12,48 sayısını, paydası 10 ve 100 olan kesirlerin toplamı olarak yazınız.",3],
+ ["c)",`2 + ${fr(7,10)} + ${fr(3,1000)} toplamını ondalık gösterimle yazınız. Yazdığınız 0'ın neden gerektiğini kendi cümlenizle açıklayınız.`,3]])}`,
+ kontrol:[
+  {b:"a) Basamak adları ve değerleri",m:"1 → onlar, 10 · 2 → birler, 2 · 4 → onda birler, 0,4 (4/10) · 8 → yüzde birler, 0,08 (8/100)",
+   i:[["Dört rakamın basamak adlarını doğru yazdı",2,"Virgülün sağı: onda birler, yüzde birler, binde birler."],
+      ["Onda birler ve yüzde birlerin değerlerini doğru yazdı (0,4 ve 0,08)",2,"Basamak değeri: rakam × basamak; 8 yüzde birlerde ise 0,08."]]},
+  {b:"b) Çözümleme",m:`12,48 = 12 + ${fr(4,10)} + ${fr(8,100)} (ya da 10 + 2 + ${fr(4,10)} + ${fr(8,100)})`,
+   i:[["4/10 ve 8/100 kesirlerini doğru yazdı",2,"Rakam paya, basamağın adı paydaya: onda birler → 10, yüzde birler → 100."],
+      ["Tam kısmı (12) ekledi",1,"Çözümlemede tam kısmı unutma."]]},
+  {b:"c) Kesirden ondalığa",m:"<b>2,703</b>. Paydası 100 olan kesir olmadığı için yüzde birler basamağında hiç yüzde bir yoktur; oraya 0 yazılır, yoksa 3 yanlış basamağa kayar.",
+   i:[["2,703 yazdı",2,"Boş basamağa 0 yaz: 2 + 7/10 + 3/1000 = 2,703."],
+      ["0'ın nedenini açıkladı",1,"Kalıp: yüzde birler basamağında hiç parça yok, bu yüzden 0 yazılır."]]}
+ ]}
 }
 ];
 
@@ -708,22 +870,10 @@ ${qs([["a)","Bu dikdörtgenlerin çevrelerinin birbirine eşit olup olmayacağı
   c:[{b:"a) Tahmin",m:"Örnek: <b>Çevreler eşit olmayabilir.</b> (Tahmin yanlış olsa da b şıkkında karşılaştırdıysa puanı ver.)",i:[["Bir tahmin cümlesi yazdı",2,"Tahmin sorusunda boş bırakma, bir cümle yaz."]]},
      {b:"b) Dikdörtgenler ve çevreler",m:"1 × 30 → 62 cm · 2 × 15 → 34 cm · 3 × 10 → 26 cm · 5 × 6 → 22 cm",i:[["Dört kenar çiftini de buldu",3,"Alan verilince kenarlar = çarpan çiftleri; 1'den başlayıp sırayla dene."],["Dört çevreyi de doğru hesapladı",3,"Çevre = 2 × (kısa kenar + uzun kenar)."]]},
      {b:"c) Genelleme",m:"<b>Alanları eşit olan dikdörtgenlerin çevreleri farklı olabilir; kenarlar birbirine yaklaştıkça çevre küçülür.</b>",i:[["Genellemeyi yazdı",2,"Genelleme: kenarlar yaklaştıkça çevre küçülür."]]}]},
- {k:1,h:`<p>Bir koşu parkurunda bir tur 7 km'dir. Selim her zaman tam tur koşmaktadır. Selim bu hafta toplam 60 km'den fazla, 70 km'den az koşmuştur.</p>
-${qs([["a)","Selim bu hafta kaç km koşmuştur? 7'nin katlarını yazarak gösteriniz.",4],["b)","Selim kaç tur atmıştır?",2]])}`,
-  c:[{b:"a) Toplam yol",m:"7, 14, 21, 28, 35, 42, 49, 56, <b>63</b>, 70 → 60 ile 70 arasında yalnızca <b>63 km</b> (70, 70'ten az değil).",i:[["7'nin katlarını yazdı",2,"Katları sırayla yazma: 7 × 1, 7 × 2, …"],["63 km buldu",2,"\"70'ten az\" demek 70 olmaz; koşula uyan katı seç."]]},
-     {b:"b) Tur sayısı",m:"63 ÷ 7 = <b>9 tur</b>",i:[["9 tur buldu",2,"Tur sayısı = toplam yol ÷ bir tur."]]}]},
- {k:2,h:`<p>Bir kütüphanedeki kitapların dört basamaklı numaraları vardır. Bir kitabın numarasındaki bir rakam silinmiştir: <span class="num">2${blot}74</span>. Bu numaranın 3 ile kalansız bölündüğü bilinmektedir.</p>
-${qs([["a)","Silinen rakam yerine gelebilecek rakamları bulunuz.",4],["b)","Bulduğunuz numaralardan hangisi 9 ile de kalansız bölünür? Gerekçesiyle yazınız.",3]])}`,
-  c:[{b:"a) Kayıp rakam",m:"2 + 7 + 4 = 13. 13 + ? → 15, 18, 21 → <b>2, 5 ya da 8</b>",i:[["Bilinen rakamları topladı (13)",1,"Kayıp rakam: önce bilinen rakamları topla."],["2, 5 ve 8'in üçünü de buldu",3,"3'ün katına tamamla, sonra 3'er ekle."]]},
-     {b:"b) 9 ile bölünen",m:"<b>2 574</b>, çünkü 2 + 5 + 7 + 4 = 18, 9'un katı.",i:[["2 574 yazdı",2,"9 kuralı: rakamlar toplamı 9'un katı."],["Gerekçesini yazdı",1,"Cevaba \"çünkü...\" ile gerekçe ekleme."]]}]},
  {k:2,h:`<p>Kerem'in <span class="num">2${ph("A")}${ph("B")}</span> tane fındığı vardır. Kerem fındıklarını ikişerli, üçerli ve beşerli gruplara ayırdığında hiç fındık artmamaktadır.</p>
 ${qs([["a)","B yerine gelebilecek rakamı bulunuz. Hem 2'ye hem 5'e kalansız bölünebilen sayıların birler basamağı hakkında bir genelleme yazınız.",4],["b)","A yerine gelebilecek rakamları bulunuz. Bu rakamların neden uygun olduğunu bölünebilme kuralıyla açıklayınız.",4]])}`,
   c:[{b:"a) B rakamı",m:"<b>B = 0.</b> 2 için son rakam çift, 5 için 0 ya da 5 olmalı; ikisi birden → <b>son rakam 0</b>.",i:[["B = 0 buldu",2,"Hem 2'ye hem 5'e bölünüyorsa son rakam 0."],["Genellemeyi yazdı",2,"Genelleme: hem 2'ye hem 5'e bölünen sayıların birler basamağı 0'dır."]]},
      {b:"b) A rakamı",m:"2 + A + 0 = 2 + A → 3, 6 ya da 9 olmalı → <b>A = 1, 4 ya da 7</b> (210, 240, 270)",i:[["1, 4 ve 7'yi buldu",3,"3 kuralı: rakamlar toplamı 3'ün katı."],["3 kuralıyla açıkladı",1,"Gerekçede kuralı ve rakam toplamını yaz."]]}]},
- {k:2,h:`<p>Bir okulda numarası hem 4'e hem 9'a kalansız bölünen dolaplara yeşil etiket yapıştırılacaktır. Dolap numaraları: <b>2 916 · 3 420 · 6 132 · 7 362</b></p>
-${qs([["a)","Hangi dolaplara yeşil etiket yapıştırılacağını, her numarayı kurallarla kontrol ederek belirleyiniz.",8]])}`,
-  c:[{b:"a) Yeşil etiket",m:"2 916: 16 ✓, 18 ✓ → <b>Evet</b> · 3 420: 20 ✓, 9 ✓ → <b>Evet</b> · 6 132: 32 ✓, 12 ✗ → Hayır · 7 362: 62 ✗ → Hayır",
-     i:[["4 kuralını son iki basamakla kontrol etti",2,"4 kuralı: son iki basamak 4'ün katı ya da 00."],["9 kuralını rakamlar toplamıyla kontrol etti",2,"9 kuralı: rakamlar toplamı 9'un katı."],["2 916 ve 3 420'yi buldu, diğerlerini eledi",4,"\"Hem ... hem ...\" iki kuralın ikisi de sağlanmalı."]]}]},
  {k:3,h:`<p>Bir sınıftaki bazı öğrencilerin okul numaraları şunlardır: <b>11 · 15 · 19 · 21 · 27 · 31 · 33 · 37 · 39 · 47</b></p>
 ${qs([["a)","Numarası asal sayı olan öğrencilerin numaralarını yazınız.",4],["b)","60 sayısını asal çarpan algoritmasıyla asal çarpanlarına ayırınız ve asal çarpanlarını yazınız.",4]])}`,
   c:[{b:"a) Asal numaralar",m:"<b>11, 19, 31, 37, 47.</b> (15 = 3 × 5, 21 = 3 × 7, 27 = 3 × 9, 33 = 3 × 11, 39 = 3 × 13)",i:[["Beş asal sayının hepsini yazdı",3,"Asal sayı: yalnızca 1'e ve kendisine bölünür."],["Asal olmayanları listeye eklemedi",1,"Tuzaklar: 21, 27, 33, 39 tek ama 3'e bölünür."]]},
@@ -732,23 +882,25 @@ ${qs([["a)","Numarası asal sayı olan öğrencilerin numaralarını yazınız."
 ${qs([["a)","Bir kasa kaç kg ürün almaktadır? Ortak bölenleri bularak gösteriniz.",8]])}`,
   c:[{b:"a) Kasa",m:"60: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60 · 84: 1, 2, 3, 4, 6, 7, 12, 14, 21, 28, 42, 84 · Ortak bölenler: 1, 2, 3, 4, 6, 12 · 12 kg → 60 ÷ 12 = 5, 84 ÷ 12 = 7, 5 + 7 = 12 kasa ✓ → <b>12 kg</b>",
      i:[["İki sayının bölenlerini yazdı",2,"Bölenleri çarpan çiftleriyle bulma."],["Ortak bölenleri buldu",2,"Ortak bölen: iki listede de olan sayılar."],["Deneyerek 12 kg'ı buldu (5 + 7 = 12 kasa)",4,"Paylaştırma sorusu: ortak bölenleri tek tek dene, kasa sayısını kontrol et."]]}]},
- {k:4,h:`<p>Bir parkta mavi lamba 6 saniyede bir, sarı lamba 8 saniyede bir yanmaktadır. İki lamba şu anda aynı anda yandı.</p>
-${qs([["a)","İki lamba ilk kez kaç saniye sonra yine birlikte yanar?",4],["b)","Bu andan itibaren 1 dakika içinde kaç kez birlikte yanarlar?",3]])}`,
-  c:[{b:"a) İlk birlikte yanma",m:"6: 6, 12, 18, <b>24</b> · 8: 8, 16, <b>24</b> → <b>24 saniye sonra</b>",i:[["Katları yazıp 24'ü buldu",4,"\"Birlikte, aynı anda\" → ortak kat."]]},
-     {b:"b) 1 dakikada",m:"Ortak katlar: 24, 48, 72, … 1 dakika = 60 saniye → 24 ve 48 → <b>2 kez</b>",i:[["2 kez buldu",3,"1 dakika = 60 saniye; ortak katlardan 60'ı geçmeyenleri say."]]}]},
- {k:4,h:`<p>Uzunlukları 36 cm ve 54 cm olan iki tahta çıta, hiç parça artmayacak şekilde, santimetre cinsinden doğal sayı uzunluğunda ve birbirine eşit uzunlukta parçalara ayrılacaktır.</p>
-${qs([["a)","Her iki çıta için uygun ortak parça uzunluklarını belirleyiniz.",3],["b)","En az kesim yapmak için parçalar kaç cm olmalıdır? Toplam kaç kesim yapılır? Gerekçesiyle açıklayınız.",5]])}`,
-  c:[{b:"a) Uygun uzunluklar",m:"36: 1, 2, 3, 4, 6, 9, 12, 18, 36 · 54: 1, 2, 3, 6, 9, 18, 27, 54 → Ortak bölenler: <b>1, 2, 3, 6, 9, 18</b>",i:[["Ortak bölenlerin hepsini buldu",3,"Kesme sorusu → ortak bölen."]]},
-     {b:"b) En az kesim",m:"En uzun parça = en büyük ortak bölen = <b>18 cm</b>. 36 ÷ 18 = 2 parça (1 kesim), 54 ÷ 18 = 3 parça (2 kesim) → <b>3 kesim</b>",i:[["18 cm buldu",2,"En az kesim → en uzun parça → en büyük ortak bölen."],["Parça sayılarını buldu",1,"Parça sayısı = uzunluk ÷ parça uzunluğu."],["3 kesim buldu",2,"Kesim sayısı = parça sayısı − 1."]]}]},
  {k:5,h:`<p>Bir torbadan, her seferinde geri atılarak 60 kez top çekilmiştir. 36 kez yeşil, 24 kez beyaz top gelmiştir. Üç öğrenci yeşil top gelmesinin deneysel olasılığı için şunları söylemiştir:</p>
 <ul><li><b>Can:</b> "Olasılık 36'dır."</li><li><b>Ece:</b> "36'yı 60'a bölmeliyiz."</li><li><b>Ali:</b> "60'ı 36'ya bölmeliyiz."</li></ul>
 ${qs([["a)","Hangi öğrencinin yöntemi doğrudur? Diğerlerinin neden yanlış olduğunu açıklayınız.",4],["b)","Yeşil top gelmesinin deneysel olasılığını bulup sadeleştiriniz.",3],["c)","Bir kez daha top çekilirse hangi rengin gelmesinin daha olası olduğunu tahmin ediniz. Gerekçesini yazınız.",3]])}`,
   c:[{b:"a) Doğru yöntem",m:"<b>Ece</b> doğru. Can yalnızca gelme sayısını yazmış. Ali ters bölmüş, sonuç 1'den büyük çıkar.",i:[["Ece'yi seçti",2,"Deneysel olasılık = gelme sayısı ÷ toplam deneme."],["Can'ın ve Ali'nin hatasını açıkladı",2,"Gelme sayısı tek başına olasılık değildir; olasılık 1'den büyük olamaz."]]},
      {b:"b) Yeşil",m:`${fr(36,60)} = <b>${fr(3,5)}</b> (12'ye böl)`,i:[["36/60 yazdı",2,"Önce kesri kur: gelme sayısı / toplam deneme."],["3/5 diye sadeleştirdi",1,"Sadeleştirme: pay ve paydayı aynı sayıya böl."]]},
-     {b:"c) Tahmin",m:"<b>Yeşil</b>, çünkü deneyde daha çok geldi (36 > 24); olasılığı daha büyük.",i:[["Yeşil dedi ve gerekçe yazdı",3,"Tahmin: en çok gelen daha olasıdır, ama kesin değildir."]]}]}
+     {b:"c) Tahmin",m:"<b>Yeşil</b>, çünkü deneyde daha çok geldi (36 > 24); olasılığı daha büyük.",i:[["Yeşil dedi ve gerekçe yazdı",3,"Tahmin: en çok gelen daha olasıdır, ama kesin değildir."]]}]},
+ {k:5,h:`<p>Deniz ve Ege aynı zarla deney yapmıştır. Sonuçlar tabloda verilmiştir.</p>
+${tbl(["Öğrenci","Atış sayısı","6 gelme sayısı"],[["Deniz","20","5"],["Ege","200","34"]])}
+${qs([["a)","Her öğrenci için zarda 6 gelmesinin deneysel olasılığını bulunuz.",4],["b)","Zarın 6 gelme olasılığını tahmin etmek için hangi öğrencinin sonucu daha güvenilirdir? Gerekçesiyle açıklayınız.",4]])}`,
+  c:[{b:"a) Deneysel olasılıklar",m:`Deniz: ${fr(5,20)} = <b>${fr(1,4)}</b> · Ege: ${fr(34,200)} = <b>${fr(17,100)}</b>`,i:[["Deniz için 5/20 = 1/4 buldu",2,"Deneysel olasılık = gelme sayısı ÷ toplam atış."],["Ege için 34/200 = 17/100 buldu",2,"Kesri sadeleştir: 34/200, 2'ye bölünce 17/100."]]},
+     {b:"b) Güvenilir sonuç",m:"<b>Ege</b>, çünkü çok daha fazla atış yapmıştır (200 > 20). Deneme sayısı arttıkça deneysel olasılık daha güvenilir bir tahmin verir.",i:[["Ege'yi seçti",2,"Daha çok deneme yapanın sonucu daha güvenilirdir."],["Deneme sayısının fazla olmasını gerekçe gösterdi",2,"Gerekçe: deneme sayısı arttıkça tahmin güçlenir."]]}]},
+ {k:6,h:`<p>Bir kumaşın uzunluğu <b>3,075 metre</b>dir.</p>
+${qs([["a)","3,075 sayısındaki her rakamın basamak değerini yazınız.",4],["b)","3,075 sayısını, paydası 10, 100 ve 1000 olan kesirlerin toplamı olarak yazınız.",3],["c)",`Ali, "3,075 = 3 + ${fr(75,100)}" diyor. Ali haklı mı? Açıklayınız.`,3]])}`,
+  c:[{b:"a) Basamak değerleri",m:"3 → 3 (birler) · 0 → 0 (onda birler) · 7 → 0,07 (yüzde birler) · 5 → 0,005 (binde birler)",i:[["7 ve 5'in basamak değerlerini (0,07 ve 0,005) doğru yazdı",3,"Basamak değeri: 7 yüzde birlerde → 7/100 = 0,07."],["0'ın onda birler basamağında olduğunu belirtti",1,"Virgülden sonraki ilk basamak onda birlerdir."]]},
+     {b:"b) Çözümleme",m:`3 + ${fr(0,10)} + ${fr(7,100)} + ${fr(5,1000)} (kısaca 3 + ${fr(7,100)} + ${fr(5,1000)})`,i:[["Kesirleri doğru paydalarla yazdı",3,"Rakam paya, basamak adı paydaya: yüzde birler → 100, binde birler → 1000."]]},
+     {b:"c) Ali'nin iddiası",m:`<b>Haklı değil.</b> ${fr(75,100)} = 0,75 olur, yani 3 + ${fr(75,100)} = 3,75. Doğrusu 3 + ${fr(7,100)} + ${fr(5,1000)} = 3,075.`,i:[["Ali'nin haklı olmadığını yazdı",1,"Önce iddiaya net cevap ver: haklı / haklı değil."],["75/100 = 0,75 olduğunu ya da doğru çözümlemeyi gösterdi",2,"Gerekçe: 0 olan onda birler basamağı atlanırsa rakamlar yanlış basamağa kayar."]]}]}
 ]}
 ];
-const KONU_AD=["Çarpan ve kat","Bölünebilme","Asal sayılar","Ortak kat ve bölen","Olasılık"];
+const KONU_AD=["Çarpan ve kat","Bölünebilme","Asal sayılar","Ortak kat ve bölen","Olasılık","Ondalık gösterim"];
 
 
 /* ---------- DURUM ---------- */
@@ -796,9 +948,9 @@ function sendBox(msg){
 
 /* ---------- SAYFALAR ---------- */
 function vAna(){
-  const doneCount=[1,2,3,4,5].filter(n=>P.b[n]&&P.b[n].yazili!=null).length;
+  const doneCount=[1,2,3,4,5,6].filter(n=>P.b[n]&&P.b[n].yazili!=null).length;
   let h=`<header class="home-head"><div class="top"><a class="back" href="../">← Ana sayfa</a>${themeBtn()}</div><span class="eyebrow">6. Sınıf Matematik · 1. Dönem 1. Yazılı</span><h1>Nisa'nın Matematik Çalışması</h1>
-  <p class="muted">Sınavda 5 konu var: çarpan ve katlar, bölünebilme, asal sayılar, ortak kat ve ortak bölen, olasılık. Her bölümü sırayla bitir.</p></header>
+  <p class="muted">Sınavda 7 soru var: çarpan-kat 1, bölünebilme 1, asal sayılar 1, ortak kat-bölen 1, olasılık 2, ondalık gösterim 1.</p></header>
   <ol class="how"><li>Konuyu oku</li><li>Testi çöz, site anında kontrol eder</li><li>Yazılı sorusunu kağıda, işlemleriyle çöz</li><li>Babam kontrol etsin, sonucu abime gönder</li></ol>
   <h2>Bölümler</h2><div class="list">`;
   B.forEach((b,i)=>{const n=i+1,p=P.b[n]||{};const done=p.yazili!=null;
@@ -806,7 +958,7 @@ function vAna(){
     h+=`<a class="unit ${done?'done':''}" style="--unit:var(--c${n});--unit-soft:var(--c${n}-soft)" href="#b${n}-konu"><span class="no">${n}</span><span><h3>${b.ad}</h3><span class="sub">${b.kisa}</span></span>${chip}</a>`;});
   h+=`</div><h2>Sınav tatbikatları</h2><div class="list">`;
   T.forEach((t,i)=>{const n=i+1,p=P.t[n];
-    const chip=p!=null?`<span class="chip ok">${p}/100</span>`:doneCount<5?`<span class="chip">Önce bölümler (${doneCount}/5)</span>`:`<span class="chip">Hazır</span>`;
+    const chip=p!=null?`<span class="chip ok">${p}/100</span>`:doneCount<6?`<span class="chip">Önce bölümler (${doneCount}/6)</span>`:`<span class="chip">Hazır</span>`;
     h+=`<a class="unit ${p!=null?'done':''}" href="#t${n}-soru"><span class="no">T${n}</span><span><h3>${t.ad}</h3><span class="sub">${t.sorular.length} soru, gerçek sınav gibi, baba kontrollü</span></span>${chip}</a>`;});
   h+=`<a class="unit" href="#tekrar"><span class="no">★</span><span><h3>Son Tekrar</h3><span class="sub">Sınav sabahı için bütün kurallar tek sayfada</span></span><span class="chip">1 sayfa</span></a></div>
   <div class="actions center" id="resetZone"><button class="ghost" data-act="reset1">İlerlemeyi sıfırla</button></div>`;
@@ -870,7 +1022,7 @@ function vSonucB(n){
   let h=topBar(BC,3)+`<section class="paper result"><span class="eyebrow">Bölüm ${n} · Sonuç</span><h1>${B[n-1].ad}</h1>
   <div class="scores"><div>Test<b>${test!=null?test+'/5':'—'}</b></div><div>Yazılı<b>${s}/${mx}</b></div></div>`;
   h+=miss.length?`<span class="eyebrow">Tekrar edilecekler</span><ul class="todo">${miss.map(m=>`<li>${m}</li>`).join('')}</ul>`:`<div class="allgood">Eksik yok, harika!</div>`;
-  h+=sendBox(msg)+`<div class="actions center"><a class="btn ghost" href="#b${n}-kontrol">Kontrole dön</a>${n<5?`<a class="btn primary" href="#b${n+1}-konu">Sonraki bölüm →</a>`:`<a class="btn primary" href="#ana">Bölümlere dön</a>`}</div></section>`;
+  h+=sendBox(msg)+`<div class="actions center"><a class="btn ghost" href="#b${n}-kontrol">Kontrole dön</a>${n<6?`<a class="btn primary" href="#b${n+1}-konu">Sonraki bölüm →</a>`:`<a class="btn primary" href="#ana">Bölümlere dön</a>`}</div></section>`;
   return h;
 }
 function vTSoru(n){
@@ -902,7 +1054,8 @@ function vTekrar(){
    ["Bölünebilme",["2: son rakam çift · 5: 0 ya da 5 · 10: 0","3: rakamlar toplamı 3'ün katı · 9: 9'un katı","4: son iki basamak 4'ün katı ya da 00","6: hem 2'ye hem 3'e","Hem 2'ye hem 5'e → son rakam 0","Kayıp rakam: bilinenleri topla, 3'ün (9'un) katına tamamla, 3 (9) ekleyerek devam et."]],
    ["Asal sayılar",["Asal: tam iki çarpanı var, 1 ve kendisi. 1 asal değil, 2 tek çift asal.","50'ye kadar: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47","Asal çarpan algoritması: en küçük asalla böl, 1 kalana kadar devam et.","\"Asal çarpanlarını yaz\" → tekrar edeni bir kez yaz: 18 → 2 ve 3."]],
    ["Ortak kat ve ortak bölen",["Tekrar eden, birlikte olan, paketlenince artmayan → ortak KAT (cevap büyük).","Kesilen, paylaştırılan, eşit parçalara ayrılan → ortak BÖLEN (cevap küçük).","En az kesim → en uzun parça → en büyük ortak bölen.","Kesim sayısı = parça sayısı − 1","İlk ortak kat her zaman cevap değil: koşulu kontrol et."]],
-   ["Olasılık",["Deneysel olasılık = gelme sayısı ÷ toplam deneme sayısı","Kesri sadeleştir. Sonuç 0 ile 1 arasında olmalı.","En çok gelen daha olasıdır ama \"kesin gelir\" denmez.","Bütün olasılıkların toplamı 1."]]
+   ["Olasılık",["Deneysel olasılık = gelme sayısı ÷ toplam deneme sayısı","Kesri sadeleştir. Sonuç 0 ile 1 arasında olmalı.","En çok gelen daha olasıdır ama \"kesin gelir\" denmez.","Bütün olasılıkların toplamı 1.","Deneme sayısı arttıkça tahmin daha güvenilir olur."]],
+   ["Ondalık gösterim",["Virgülün sağı: onda birler (1/10), yüzde birler (1/100), binde birler (1/1000).","Basamak değeri: 4,375'te 7 → 7/100 = 0,07","Çözümleme: 4,375 = 4 + 3/10 + 7/100 + 5/1000","Boş basamağa 0 yaz: 5 + 8/10 + 2/1000 = 5,802","Kalıp: [Rakam] [basamak adı] basamağındadır, değeri [kesir] yani [ondalık]."]]
   ];
   return topBar(null)+`<article class="paper"><span class="eyebrow">Sınav sabahı</span><h1>Son Tekrar</h1>${R.map(([t,l])=>`<section><h2>${t}</h2><ul>${l.map(x=>`<li>${x}</li>`).join('')}</ul></section>`).join('')}
   <div class="rule"><b>Unutma:</b><span>İşlemini mutlaka kağıda yaz, sonucu birimiyle yaz (cm, cm², kg) ve "çünkü..." ile açıkla.</span></div></article>`;
@@ -912,10 +1065,10 @@ function vTekrar(){
 function render(){
   const h=(location.hash||'#ana').slice(1); let html; let m;
   try{const bm=h.match(/^b(\d)-/),tm=h.match(/^t(\d)-/);if(bm)localStorage.setItem('nisaSon',JSON.stringify({d:DERS,b:+bm[1],t:Date.now()}));else if(tm)localStorage.setItem('nisaSon',JSON.stringify({d:DERS,tt:+tm[1],t:Date.now()}));}catch(e){}
-  const um=h.match(/^b([1-5])-/);
+  const um=h.match(/^b([1-6])-/);
   if(um){app.style.setProperty('--unit',`var(--c${um[1]})`);app.style.setProperty('--unit-soft',`var(--c${um[1]}-soft)`);app.dataset.unit=um[1];}
   else{app.style.removeProperty('--unit');app.style.removeProperty('--unit-soft');delete app.dataset.unit;}
-  if((m=h.match(/^b([1-5])-(konu|test|yazili|kontrol|sonuc)$/))){const n=+m[1];
+  if((m=h.match(/^b([1-6])-(konu|test|yazili|kontrol|sonuc)$/))){const n=+m[1];
     html={konu:()=>vKonu(n),test:()=>vTest(n),yazili:()=>vYazili(n),kontrol:()=>vKontrol('b'+n),sonuc:()=>vSonucB(n)}[m[2]]();}
   else if((m=h.match(/^t([1-9])-(soru|kontrol|sonuc)$/))){const n=+m[1];
     html={soru:()=>vTSoru(n),kontrol:()=>vKontrol('t'+n),sonuc:()=>vSonucT(n)}[m[2]]();}
@@ -940,6 +1093,8 @@ app.addEventListener('click',e=>{
   else if(act==='reset0'){render();}
   else if(act==='reset2'){P={b:{},t:{}};save();S.test={};S.checks={};S.tIdx={};S.page={};render();goTop();}
   else if(act==='tnext'||act==='tprev'){const n=+el.dataset.n;S.tIdx[n]=(S.tIdx[n]||0)+(act==='tnext'?1:-1);render();goTop();}
+  else if(act==='adim'){const box=el.closest('.adimlar'),nx=box.querySelector('li[hidden]');if(nx){nx.hidden=false;nx.classList.add('yeni');}if(!box.querySelector('li[hidden]')){el.textContent='Çözüm tamam';el.disabled=true;el.className='ghost';}}
+  else if(act==='kontrol'){const box=el.closest('.birlikte'),ins=[...box.querySelectorAll('input.bos')];const nz=v=>String(v).trim().replace(/\s+/g,'').replace(/\./g,',').toLowerCase();let ok=0;ins.forEach(i=>{const d=i.dataset.c.split('|').some(c=>nz(c)===nz(i.value));i.classList.toggle('dogru',d);i.classList.toggle('yanlis',!d);if(d)ok++;});const fb=box.querySelector('.bfb');fb.hidden=false;fb.className='bfb '+(ok===ins.length?'iyi':'kotu');fb.textContent=ok===ins.length?'Harika, hepsi doğru!':(ins.length-ok)+' boşluk yanlış. Kırmızı olanları düzeltip tekrar dene.';}
   else if(act==='copy'){const box=document.getElementById('copybox');const txt=box.value;
     const fallback=()=>{box.hidden=false;box.focus();box.select();el.textContent='Seç ve kopyala';};
     try{navigator.clipboard.writeText(txt).then(()=>{el.textContent='Kopyalandı ✓';},fallback);}catch(err){fallback();}}
