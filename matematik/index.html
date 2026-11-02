@@ -1,0 +1,908 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Nisa Matematik Çalışması</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/* Matematik · Layout: tek sütun "çalışma defteri"; sayfalama hash ile (ana → bölüm: konu → test → yazılı → baba kontrolü → sonuç; tatbikat: 7 soru → kontrol → sonuç) */
+:root{
+  --bg:#eef2f8; --paper:#ffffff; --fg:#1b2540; --muted:#5d6a86; --line:#d6deec;
+  --accent:#2f5bd3; --accent-soft:#e6ecfc; --ok:#178a57; --ok-soft:#e0f3e9; --warn:#b5531a; --warn-soft:#fbeadf;
+  --force:#d0452f; --box:#c7d2e6; --sun:#f4b733; --shadow:rgba(20,28,48,.30); --on-accent:#ffffff;
+  --c1:#4b46c7; --c1-soft:#e9e8fb; --c2:#c26510; --c2-soft:#fcecd9; --c3:#c93a2b; --c3-soft:#fbe3df; --c4:#1d8656; --c4-soft:#dcf2e6; --c5:#0b7f86; --c5-soft:#d8f1f2;
+  --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e1424; --paper:#161f35; --fg:#e7ecf8; --muted:#9eabc6; --line:#2a3655;
+  --accent:#86a8ff; --accent-soft:#1f2b4b; --ok:#4fd39a; --ok-soft:#163629; --warn:#f2a073; --warn-soft:#3b2518;
+  --force:#ff7a62; --box:#3a4868; --sun:#f6c24f; --shadow:rgba(0,0,0,.55); --on-accent:#0e1424; color-scheme:dark;
+  --c1:#a9a4ff; --c1-soft:#25244b; --c2:#f2a54e; --c2-soft:#3a2a14; --c3:#ff8370; --c3-soft:#3f201c; --c4:#5fd39a; --c4-soft:#163629; --c5:#4fd2da; --c5-soft:#113538}}
+:root[data-theme="dark"]{
+  --bg:#0e1424; --paper:#161f35; --fg:#e7ecf8; --muted:#9eabc6; --line:#2a3655;
+  --accent:#86a8ff; --accent-soft:#1f2b4b; --ok:#4fd39a; --ok-soft:#163629; --warn:#f2a073; --warn-soft:#3b2518;
+  --force:#ff7a62; --box:#3a4868; --sun:#f6c24f; --shadow:rgba(0,0,0,.55); --on-accent:#0e1424; color-scheme:dark;
+  --c1:#a9a4ff; --c1-soft:#25244b; --c2:#f2a54e; --c2-soft:#3a2a14; --c3:#ff8370; --c3-soft:#3f201c; --c4:#5fd39a; --c4-soft:#163629; --c5:#4fd2da; --c5-soft:#113538}
+
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 48px}
+.wrap{max-width:680px;margin:0 auto;display:grid;gap:16px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;line-height:1.2}
+h1{font-size:1.7rem;font-weight:800}
+h2{font-size:1.3rem;font-weight:800}
+h3{font-size:1.08rem;font-weight:700}
+p{margin:0}
+ul,ol{margin:0;padding-left:1.3em;display:grid;gap:4px}
+a{color:var(--accent)}
+.eyebrow{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:800}
+.muted{color:var(--muted)}
+
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.back{font-weight:700;text-decoration:none;font-size:.95rem}
+.crumbs{display:flex;gap:6px;flex-wrap:wrap}
+.crumb{font-size:.8rem;font-weight:700;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:var(--paper)}
+.crumb.on{background:var(--unit,var(--accent));border-color:var(--unit,var(--accent));color:var(--on-accent)}
+.crumb.done{color:var(--ok);border-color:var(--ok)}
+
+.paper{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:14px;min-width:0}
+.paper > section{display:grid;gap:10px}
+.rule{background:var(--accent-soft);border-radius:12px;padding:14px 16px;display:grid;gap:4px}
+.rule b{font-family:var(--display);font-size:1.15rem}
+.ornek{border:2px dashed var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:6px}
+.ornek .eyebrow{color:var(--accent)}
+.hata{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:12px 14px}
+.hata b:first-child{color:var(--warn)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.mini{border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.95rem}
+.mini > b:first-child{font-family:var(--display);font-size:1.05rem;display:block}
+
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:420px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);font-weight:800}
+td.blank{height:2.2em}
+
+.fig{overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:320px}
+.fig text{font-family:var(--body);font-weight:700;font-size:13px;fill:var(--fg)}
+.cap{font-size:.82rem;color:var(--muted);text-align:center}
+
+.qs{list-style:none;padding:0;display:grid;gap:10px}
+.qs li{display:grid;grid-template-columns:30px 1fr;gap:6px}
+.ql{font-family:var(--display);font-weight:800;color:var(--accent);font-size:1.1rem;line-height:1.5}
+.pts{color:var(--muted);font-size:.85rem;white-space:nowrap}
+.note{background:var(--accent-soft);border-radius:12px;padding:12px 14px;font-size:.95rem}
+
+button,.btn{font-family:var(--display);font-weight:700;font-size:1.05rem;border:0;border-radius:12px;padding:12px 18px;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
+.primary{background:var(--accent);color:var(--on-accent)}
+.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
+.wa{background:#1f9d55;color:#fff}
+button:focus-visible,.btn:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.actions.center{justify-content:center}
+
+.lead{font-size:1.05rem;border-left:4px solid var(--unit,var(--accent));padding:4px 0 4px 14px;color:var(--fg)}
+details.yokla{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--bg)}
+details.yokla summary{cursor:pointer;font-weight:700;display:grid;gap:2px}
+details.yokla summary .eyebrow{color:var(--accent)}
+details.yokla summary::after{content:"Cevabı görmek için dokun";font-weight:600;font-size:.82rem;color:var(--muted)}
+details.yokla[open] summary::after{content:""}
+details.yokla p{margin-top:8px;background:var(--ok-soft);border-radius:8px;padding:8px 10px}
+.pages{display:flex;gap:6px;flex-wrap:wrap}
+.pg{width:36px;height:36px;padding:0;border-radius:50%;font-size:.95rem;background:var(--paper);color:var(--muted);border:1px solid var(--line)}
+.pg.on{background:var(--unit,var(--accent));color:var(--on-accent);border-color:var(--unit,var(--accent))}
+.pg.done{color:var(--ok);border-color:var(--ok)}
+.hata ul{margin-top:6px}
+.themebtn{min-height:0;padding:6px 12px;font-size:.85rem;border-radius:999px;margin-left:auto}
+/* Ana sayfa */
+.home-head{display:grid;gap:6px}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;list-style:none;padding:0;counter-reset:h}
+.how li{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.9rem;counter-increment:h}
+.how li::before{content:counter(h);font-family:var(--display);font-weight:800;color:var(--accent);font-size:1.3rem;display:block;line-height:1}
+.unit{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px;text-decoration:none;color:var(--fg)}
+.unit:hover{border-color:var(--unit,var(--accent))}
+.unit .no{font-family:var(--display);font-weight:800;font-size:1.6rem;width:52px;height:52px;border-radius:12px;display:grid;place-items:center;background:var(--unit-soft,var(--accent-soft));color:var(--unit,var(--accent))}
+.unit h3{font-size:1.1rem}
+.unit .sub{font-size:.85rem;color:var(--muted)}
+.chip{font-size:.8rem;font-weight:800;padding:4px 10px;border-radius:999px;background:var(--bg);color:var(--muted);white-space:nowrap}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.list{display:grid;gap:10px}
+
+/* Test */
+.opts{display:grid;gap:8px}
+.opt{background:var(--paper);color:var(--fg);border:2px solid var(--line);text-align:left;font-family:var(--body);font-weight:700;font-size:1rem}
+.opt:hover:not([disabled]){border-color:var(--accent)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--warn);background:var(--warn-soft)}
+.opt[disabled]{cursor:default}
+.fb{border-radius:12px;padding:12px 14px}
+.fb.good{background:var(--ok-soft)} .fb.good b{color:var(--ok)}
+.fb.bad{background:var(--warn-soft)} .fb.bad b{color:var(--warn)}
+.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.progress span{display:block;height:100%;background:var(--unit,var(--accent));border-radius:99px}
+#app[data-unit] .paper{border-top:5px solid var(--unit)}
+
+/* Kontrol */
+.grp{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:14px}
+.grp.first{border-top:0;padding-top:0}
+.qhead{font-family:var(--display);font-weight:800;font-size:1.2rem;color:var(--accent);margin-top:6px}
+.model{background:var(--ok-soft);border-radius:10px;padding:10px 12px;font-size:.95rem}
+label.item{display:grid;grid-template-columns:24px 1fr auto;gap:10px;align-items:start;cursor:pointer;padding:6px 4px;border-radius:8px}
+label.item:hover{background:var(--accent-soft)}
+label.item input{width:20px;height:20px;margin:3px 0 0;accent-color:var(--ok)}
+.item .p{font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
+.scorebar{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--paper);border-radius:14px;padding:12px 16px;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:800}
+.scorebar .big{font-family:var(--display);font-size:1.4rem;font-variant-numeric:tabular-nums}
+.scorebar button{background:var(--paper);color:var(--fg);padding:10px 14px}
+
+/* Sonuç */
+.result{text-align:center;justify-items:center}
+.big-score{font-family:var(--display);font-weight:800;font-size:3rem;line-height:1;font-variant-numeric:tabular-nums}
+.scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;width:100%}
+.scores div{border:1px solid var(--line);border-radius:12px;padding:10px}
+.scores b{font-family:var(--display);font-size:1.4rem;display:block;font-variant-numeric:tabular-nums}
+.todo{list-style:none;padding:0;display:grid;gap:8px;text-align:left;width:100%}
+.todo li{background:var(--warn-soft);border-left:4px solid var(--warn);padding:8px 12px;border-radius:6px}
+.allgood{background:var(--ok-soft);padding:12px;border-radius:10px;width:100%}
+textarea.copybox{width:100%;min-height:140px;font-family:var(--body);font-size:.9rem;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg);color:var(--fg);box-sizing:border-box}
+
+/* Matematik ekleri */
+.num{font-family:var(--display);font-size:1.35em;font-weight:800;letter-spacing:.06em;white-space:nowrap}
+.blot{display:inline-block;width:1em;height:1.05em;border-radius:48% 52% 40% 60%/55% 45% 55% 45%;background:var(--fg);vertical-align:-.12em;margin:0 2px}
+.ph{display:inline-grid;place-items:center;min-width:1.4em;height:1.4em;padding:0 3px;border:2px dashed var(--unit,var(--accent));border-radius:6px;font-size:.75em;margin:0 2px;color:var(--unit,var(--accent));font-weight:800;vertical-align:middle;box-sizing:border-box;letter-spacing:0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;font-weight:800;line-height:1.15;margin:0 3px;font-variant-numeric:tabular-nums}
+.frac span:first-child{border-bottom:2px solid currentColor;padding:0 4px}
+.algo-row{display:flex;gap:32px;flex-wrap:wrap;justify-content:center;padding:4px 0}
+.algo-box{display:grid;gap:6px;justify-items:center}
+.algo{display:grid;grid-template-columns:auto auto;font-family:var(--display);font-size:1.3rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.55}
+.algo span{padding:0 14px}
+.algo span:nth-child(odd){border-right:3px solid var(--fg);text-align:right}
+.algo span:nth-child(even){color:var(--unit,var(--accent))}
+.sieve{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;max-width:560px;width:100%;margin:0 auto}
+.sieve span{aspect-ratio:1;display:grid;place-items:center;border-radius:8px;font-weight:800;font-size:.85rem;background:var(--bg);color:var(--muted);font-variant-numeric:tabular-nums}
+.sieve span.p{background:var(--unit,var(--accent));color:var(--on-accent)}
+.sieve span.one{background:transparent;border:1px dashed var(--line)}
+.unit.other .no{font-size:1.3rem}
+
+html{-webkit-text-size-adjust:100%}
+button,.btn,.opt,label.item,summary{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* Tablet (iPad) */
+@media (min-width:700px){
+  body{font-size:18px;line-height:1.65;padding-block:28px 64px}
+  .wrap{max-width:860px;gap:20px}
+  .paper{padding:30px 34px;gap:18px;border-radius:20px}
+  h1{font-size:2.1rem} h2{font-size:1.55rem} h3{font-size:1.25rem}
+  .lead{font-size:1.15rem}
+  .fig svg{min-width:0}
+  .fig text{font-size:14px}
+  table{font-size:1rem}
+  th,td{padding:10px 14px}
+  button,.btn{font-size:1.15rem;padding:14px 22px;min-height:52px}
+  .opts{grid-template-columns:1fr 1fr;gap:12px}
+  .opt{min-height:64px;font-size:1.08rem}
+  .pg{width:46px;height:46px;font-size:1.05rem;min-height:0;padding:0}
+  label.item{grid-template-columns:30px 1fr auto;padding:10px 8px;font-size:1.05rem}
+  label.item input{width:26px;height:26px}
+  .unit{grid-template-columns:64px 1fr auto;padding:18px}
+  .unit .no{width:64px;height:64px;font-size:1.9rem}
+  .unit h3{font-size:1.3rem}
+  .cards{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+  .mini{padding:14px 16px}
+  details.yokla{padding:14px 18px}
+  .scorebar{padding:14px 22px}
+  .big-score{font-size:4rem}
+}
+@media (min-width:1000px){ .wrap{max-width:920px} }
+@media (prefers-reduced-motion:no-preference){.paper{animation:in .22s ease}}
+@keyframes in{from{transform:translateY(6px);opacity:.6}to{transform:none;opacity:1}}
+</style>
+
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+/* ---------- ÇİZİM YARDIMCILARI ---------- */
+const tbl=(head,rows)=>`<div class="tbl-wrap"><table><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>c===''?'<td class="blank"></td>':`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+const qs=items=>`<ol class="qs">${items.map(([l,t,p])=>`<li><span class="ql">${l}</span><span>${t} <span class="pts">(${p} puan)</span></span></li>`).join('')}</ol>`;
+const yok=(q,a)=>`<details class="yokla"><summary><span class="eyebrow">Kendini yokla</span><span>${q}</span></summary><p>${a}</p></details>`;
+/* kesir, kayıp rakam kutusu, mürekkep lekesi */
+const fr=(a,b)=>`<span class="frac"><span>${a}</span><span>${b}</span></span>`;
+const ph=t=>`<span class="ph">${t}</span>`;
+const blot=`<span class="blot" aria-label="silinmiş rakam"></span>`;
+
+/* Alanı aynı dikdörtgenler (kareli) */
+function rectSVG(pairs){
+  const maxL=Math.max(...pairs.map(p=>p[1])), u=Math.min(22,540/maxL), x=30;
+  let y=6, b='';
+  pairs.forEach(([a,c])=>{
+    const w=c*u,h=a*u;
+    b+=`<text x="${x}" y="${y+16}">${a} cm × ${c} cm · Çevre = 2 × (${a} + ${c}) = ${2*(a+c)} cm</text>`; y+=24;
+    b+=`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="var(--unit-soft,var(--accent-soft))" stroke="var(--unit,var(--accent))" stroke-width="2"/>`;
+    for(let i=1;i<c;i++) b+=`<line x1="${x+i*u}" y1="${y}" x2="${x+i*u}" y2="${y+h}" stroke="var(--unit,var(--accent))" stroke-opacity=".3"/>`;
+    for(let j=1;j<a;j++) b+=`<line x1="${x}" y1="${y+j*u}" x2="${x+w}" y2="${y+j*u}" stroke="var(--unit,var(--accent))" stroke-opacity=".3"/>`;
+    y+=h+16;
+  });
+  return `<div class="fig"><svg viewBox="0 0 600 ${y}" role="img" aria-label="Alanları aynı, kenarları farklı dikdörtgenler">${b}</svg></div><p class="cap">Her küçük kare 1 cm². Dikdörtgenlerin hepsi aynı sayıda kareden oluşuyor.</p>`;
+}
+
+/* Çubuk kesme */
+function stickSVG(bars){
+  const maxL=Math.max(...bars.map(b=>b[0])), sc=500/maxL, x=50;
+  let y=22, s='';
+  bars.forEach(([L,p])=>{
+    const w=L*sc, n=L/p;
+    s+=`<text x="${x}" y="${y}">${L} cm → ${n} parça · ${n-1} kesim</text>`; y+=12;
+    s+=`<rect x="${x}" y="${y}" width="${w}" height="28" rx="5" fill="var(--unit-soft,var(--accent-soft))" stroke="var(--unit,var(--accent))" stroke-width="2"/>`;
+    for(let i=0;i<n;i++) s+=`<text x="${x+(i+.5)*p*sc}" y="${y+19}" text-anchor="middle" style="font-size:12px">${p} cm</text>`;
+    for(let i=1;i<n;i++){const cx=x+i*p*sc;
+      s+=`<line x1="${cx}" y1="${y-6}" x2="${cx}" y2="${y+34}" stroke="var(--warn)" stroke-width="2.5" stroke-dasharray="5 3"/><text x="${cx}" y="${y+54}" text-anchor="middle" style="fill:var(--warn);font-size:16px">✂</text>`;}
+    y+=86;
+  });
+  return `<div class="fig"><svg viewBox="0 0 600 ${y-30}" role="img" aria-label="Çubukların eşit parçalara kesilmesi">${s}</svg></div><p class="cap">Kesik çizgiler kesim yerleri. Makasları say: kesim sayısı, parça sayısından 1 eksik.</p>`;
+}
+
+/* Asal çarpan algoritması (bölme tablosu) */
+function algo(n){
+  const rows=[]; let x=n,p=2;
+  while(x>1){while(x%p)p++; rows.push([x,p]); x/=p;}
+  rows.push([1,'']);
+  const parts=rows.filter(r=>r[1]).map(r=>r[1]);
+  return `<div class="algo-box"><div class="algo">${rows.map(([a,b])=>`<span>${a}</span><span>${b}</span>`).join('')}</div><div class="cap"><b>${n} = ${parts.join(' × ')}</b></div></div>`;
+}
+
+/* Asal sayı elek tablosu */
+function sieve(max){
+  const isP=n=>{if(n<2)return false;for(let d=2;d*d<=n;d++)if(n%d===0)return false;return true};
+  let s='<div class="sieve" role="img" aria-label="1\'den '+max+'\'e kadar sayılar, asal olanlar renkli">';
+  for(let i=1;i<=max;i++) s+=`<span class="${i===1?'one':isP(i)?'p':''}">${i}</span>`;
+  return s+'</div>';
+}
+
+/* Çark */
+function spinnerSVG(){
+  const cx=150,cy=105,r=88, seg=[["Mavi","#3c86d6"],["Sarı","#e9a619"],["Mavi","#3c86d6"],["Kırmızı","#d0452f"]];
+  let s=`<svg viewBox="0 0 600 215" role="img" aria-label="Dört bölmeli renkli bir çark">`;
+  seg.forEach(([n,c],i)=>{
+    const a0=(i*90-90)*Math.PI/180, a1=((i+1)*90-90)*Math.PI/180, am=(a0+a1)/2;
+    s+=`<path d="M${cx} ${cy} L${cx+r*Math.cos(a0)} ${cy+r*Math.sin(a0)} A${r} ${r} 0 0 1 ${cx+r*Math.cos(a1)} ${cy+r*Math.sin(a1)} Z" fill="${c}" stroke="var(--paper)" stroke-width="3"/>`;
+    s+=`<text x="${cx+r*.58*Math.cos(am)}" y="${cy+r*.58*Math.sin(am)+5}" text-anchor="middle" style="fill:#fff;font-size:13px">${n}</text>`;
+  });
+  s+=`<circle cx="${cx}" cy="${cy}" r="7" fill="var(--fg)"/><path d="M${cx-11} 2 L${cx+11} 2 L${cx} 24 Z" fill="var(--fg)"/>`;
+  s+=`<text x="300" y="70">60 kez çevrildi:</text><text x="300" y="100" style="fill:#d0452f">24 kez kırmızı geldi</text><text x="300" y="130">36 kez başka renk geldi</text>`;
+  return `<div class="fig">${s}</svg></div>`;
+}
+
+/* Olasılık doğrusu */
+function probSVG(){
+  const x0=60,x1=540,y=80;
+  let s=`<svg viewBox="0 0 600 150" role="img" aria-label="0'dan 1'e olasılık doğrusu">`;
+  s+=`<line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}" stroke="var(--unit,var(--accent))" stroke-width="5" stroke-linecap="round"/>`;
+  [[x0,"0","İmkânsız"],[300,"1/2","Eşit olası"],[x1,"1","Kesin"]].forEach(([x,v,l])=>{
+    s+=`<circle cx="${x}" cy="${y}" r="9" fill="var(--paper)" stroke="var(--unit,var(--accent))" stroke-width="4"/>`;
+    s+=`<text x="${x}" y="${y+34}" text-anchor="middle" style="font-size:16px">${v}</text><text x="${x}" y="${y+54}" text-anchor="middle" style="fill:var(--muted)">${l}</text>`;
+  });
+  s+=`<text x="180" y="${y-18}" text-anchor="middle" style="fill:var(--muted)">az olası</text><text x="420" y="${y-18}" text-anchor="middle" style="fill:var(--muted)">çok olası</text>`;
+  return `<div class="fig">${s}</svg></div>`;
+}
+
+const KONU=[
+/* ===== BÖLÜM 1: ÇARPANLAR VE KATLAR ===== */
+[
+{t:"Çarpan ne demek?",h:`
+<p class="lead">12 kurabiyeyi tabaklara eşit ve hiç artmadan paylaştırmak istiyorsun. Kaç farklı şekilde yapabilirsin? Çarpanlar tam olarak bunu anlatır.</p>
+<p>12'yi iki doğal sayının çarpımı olarak yazalım:</p>
+<div class="cards"><div class="mini"><b>1 × 12</b>1 tabakta 12 kurabiye</div><div class="mini"><b>2 × 6</b>2 tabakta 6'şar kurabiye</div><div class="mini"><b>3 × 4</b>3 tabakta 4'er kurabiye</div></div>
+<p>Bu çarpımlardaki sayıların hepsi 12'nin <b>çarpanıdır</b>: <b>1, 2, 3, 4, 6, 12</b>. Yani 12'nin 6 çarpanı var.</p>
+<p>Çarpan, bir sayıyı <b>kalansız bölen</b> doğal sayıdır. 12 ÷ 4 = 3, kalan yok, o hâlde 4, 12'nin çarpanıdır. 12 ÷ 5 kalanlıdır, 5 çarpan değildir.</p>
+<div class="rule"><span class="eyebrow">Hiç çarpan kaçırmamanın yolu</span><b>1'den başla, çiftleri yaz</b><span>1 × …, 2 × …, 3 × … diye sırayla dene. Kalanlı bölünen sayıyı atla. Çiftler birbirine yaklaşıp buluşunca dur.</span></div>
+<div class="ornek"><span class="eyebrow">Örnek · 30'un çarpanları</span>
+<p>1 × 30 · 2 × 15 · 3 × 10 · 5 × 6 <span class="muted">(4 olmaz, 30 ÷ 4 kalanlı)</span></p>
+<p>Sıradaki 6 zaten 5 × 6'da var, burada dururuz.</p>
+<p><b>30'un çarpanları: 1, 2, 3, 5, 6, 10, 15, 30.</b> Toplam 8 çarpan.</p></div>
+<div class="rule"><span class="eyebrow">Unutma</span><b>En küçük çarpan 1, en büyük çarpan sayının kendisi</b><span>Soruda "en büyük çarpanı 30" yazıyorsa, o sayı 30'dur.</span></div>
+${yok("18'in çarpanları nelerdir?","1 × 18, 2 × 9, 3 × 6 → <b>1, 2, 3, 6, 9, 18.</b>")}
+${yok("Bir sayının bilinen çarpanları 2, 5, 10 ve en büyük çarpanı 20. Verilmeyen çarpanlar hangileri?","En büyük çarpan 20 olduğu için sayı 20. 20'nin çarpanları: 1, 2, 4, 5, 10, 20. Verilmeyenler: <b>1 ve 4.</b>")}`},
+{t:"Çarpanlar ve dikdörtgenler",h:`
+<p class="lead">24 tane kare kartın var. Hepsini kullanarak dikdörtgen yapacaksın. Kaç farklı dikdörtgen çıkar?</p>
+<p>Dikdörtgenin <b>alanı = kısa kenar × uzun kenar</b>. Alanı 24 cm² olan dikdörtgenlerin kenarları, çarpımı 24 olan sayı çiftleridir. Yani <b>24'ün çarpan çiftleri</b>.</p>
+${rectSVG([[1,24],[2,12],[3,8],[4,6]])}
+<p>Dördünün de alanı 24 cm². Peki çevreleri de aynı mı? <b>Çevre = 2 × (kısa kenar + uzun kenar)</b></p>
+${tbl(["Kenarlar","Alan","Çevre"],[["1 cm ve 24 cm","24 cm²","50 cm"],["2 cm ve 12 cm","24 cm²","28 cm"],["3 cm ve 8 cm","24 cm²","22 cm"],["4 cm ve 6 cm","24 cm²","20 cm"]])}
+<div class="rule"><span class="eyebrow">Genelleme</span><b>Alanlar eşit olsa da çevreler farklı olabilir</b><span>Kenarlar birbirine <b>yaklaştıkça</b> çevre <b>küçülür</b>. Kenarlar arasındaki fark büyüdükçe çevre büyür. 1 ile 24 çok farklı, çevre 50 cm. 4 ile 6 birbirine yakın, çevre 20 cm.</span></div>
+<div class="hata"><b>Sık yapılan hata:</b> Alanı ve çevreyi karıştırmak. Alan için kenarları <b>çarparsın</b>, birimi cm². Çevre için dört kenarı <b>toplarsın</b>, birimi cm.</div>
+${yok("Alanı 16 cm² olan dikdörtgenlerden hangisinin çevresi en küçüktür?","1 × 16 → 34 cm, 2 × 8 → 20 cm, 4 × 4 → 16 cm. En küçük çevre <b>4 cm × 4 cm</b> olanda. Bu bir karedir; kare de bir dikdörtgendir.")}`},
+{t:"Katlar",h:`
+<p class="lead">Bir paket sakızda 4 sakız var. 1 paket alırsan 4, 2 paket alırsan 8, 3 paket alırsan 12 sakızın olur. Bu sayılar 4'ün katlarıdır.</p>
+<p>Bir sayının <b>katları</b>, o sayıyı 1, 2, 3, 4, … ile çarparak bulunur.</p>
+${tbl(["","× 1","× 2","× 3","× 4","× 5","× 6","…"],[["4'ün katları","4","8","12","16","20","24","…"],["15'in katları","15","30","45","60","75","90","…"]])}
+<p>Katlar <b>sonsuza kadar</b> devam eder. Bu yüzden bir sayının <b>en büyük katı yoktur</b>.</p>
+<div class="rule"><span class="eyebrow">Çarpan ile kat kardeştir</span><b>3, 12'nin çarpanıdır ⟷ 12, 3'ün katıdır</b><span>Aynı ilişkiyi iki taraftan söylüyoruz. 12 ÷ 3 kalansız olduğu için ikisi de doğru.</span></div>
+<div class="cards"><div class="mini"><b>Çarpanlar</b>Sayıdan küçük ya da sayıya eşit. Sayısı belli, bir yerde bitiyor.</div><div class="mini"><b>Katlar</b>Sayıdan büyük ya da sayıya eşit. Sonsuz tane, hiç bitmiyor.</div></div>
+${yok("7'nin katlarını 50'ye kadar yaz.","<b>7, 14, 21, 28, 35, 42, 49.</b>")}
+${yok("\"Her sayı, kendisinin hem çarpanı hem katıdır.\" Doğru mu?","<b>Doğru.</b> 9 ÷ 9 = 1, kalan yok: 9, 9'un çarpanı. 9 × 1 = 9: 9, 9'un katı.")}`},
+{t:"Katlarla problem çözme",h:`
+<p class="lead">Sınavda katlar genelde bir hikâyenin içinde gelir. Yöntem hep aynı: katları sırayla yaz, koşula uyanı seç.</p>
+<div class="ornek"><span class="eyebrow">Örnek 1 · Arasında olan kat</span>
+<p>Bir kitaplıkta kitaplar raflara 9'ar 9'ar diziliyor ve hiç kitap artmıyor. Kitap sayısı 50'den fazla, 60'tan az. Kaç kitap var?</p>
+<p>Kitap sayısı 9'un katı olmalı: 9, 18, 27, 36, 45, <b>54</b>, 63, …</p>
+<p>50 ile 60 arasında yalnızca 54 var. <b>Cevap: 54 kitap.</b></p></div>
+<div class="ornek"><span class="eyebrow">Örnek 2 · "En az kaç gün?"</span>
+<p>Ege, başta boş olan kumbarasına her gün 12 TL atıyor. Parasının 100 TL'den fazla olması için en az kaç gün gerekir?</p>
+${tbl(["Gün","1","2","3","4","5","6","7","8","9"],[["Para (TL)","12","24","36","48","60","72","84","96","108"]])}
+<p>8 günde 96 TL olur, 100'den az. 9 günde 108 TL olur, 100'den fazla. <b>Cevap: en az 9 gün.</b></p></div>
+<div class="hata"><b>Dikkat:</b> "100 TL'den fazla" demek 100 olmaz, 100'ü <b>geçmeli</b> demektir. Bir kişinin sözünü kontrol eden sorularda ("… doğru mu?") tabloyu yaz ve sonucu "doğrudur, çünkü …" ya da "yanlıştır, çünkü …" diye açıkla.</div>
+${yok("Müzikli bir yolda şarkı her 6 km'de baştan başlıyor. Şarkı yarıda kalmasın diye yolun uzunluğu 75 km'den fazla, 80 km'den az olmalı. Yol kaç km?","6'nın katları: …, 72, <b>78</b>, 84. 75 ile 80 arasında yalnızca <b>78 km</b> var.")}`}
+],
+/* ===== BÖLÜM 2: BÖLÜNEBİLME KURALLARI ===== */
+[
+{t:"2, 5 ve 10: son rakama bak",h:`
+<p class="lead">Bir sayının kalansız bölünüp bölünmediğini, bölme yapmadan anlayabilirsin! Bunlara <b>bölünebilme kuralları</b> denir.</p>
+<p>2, 5 ve 10 için yalnızca <b>birler basamağına</b>, yani son rakama bakarız:</p>
+<div class="cards"><div class="mini"><b>2 ile</b>Son rakam 0, 2, 4, 6 ya da 8 (çift sayı). Örnek: 3 57<b>4</b> ✓</div><div class="mini"><b>5 ile</b>Son rakam 0 ya da 5. Örnek: 1 23<b>5</b> ✓</div><div class="mini"><b>10 ile</b>Son rakam 0. Örnek: 4 89<b>0</b> ✓</div></div>
+<div class="rule"><span class="eyebrow">Süper ipucu</span><b>Hem 2'ye hem 5'e bölünen sayının son rakamı 0'dır</b><span>2 için son rakam çift, 5 için 0 ya da 5 olmalı. İkisinde birden olan tek rakam 0. Bu sayılar 10'a da bölünür.</span></div>
+${yok("Hangileri 5 ile kalansız bölünür? 340 · 527 · 1 005 · 2 552","<b>340 ve 1 005.</b> Son rakamları 0 ve 5.")}
+${yok("Bir sayı 2'ye bölünüyor ama 5'e bölünmüyor. Son rakamı ne olabilir?","Çift olmalı ama 0 olmamalı: <b>2, 4, 6 ya da 8.</b>")}`},
+{t:"3 ve 9: rakamları topla",h:`
+<p class="lead">3 ve 9 için son rakam işe yaramaz. Burada sayının bütün rakamlarını toplarız.</p>
+<div class="cards"><div class="mini"><b>3 ile</b>Rakamlar toplamı 3'ün katı olmalı. 2 151 → 2 + 1 + 5 + 1 = 9 ✓</div><div class="mini"><b>9 ile</b>Rakamlar toplamı 9'un katı olmalı. 7 650 → 7 + 6 + 5 + 0 = 18 ✓</div></div>
+<p>9'a bölünen her sayı 3'e de bölünür, çünkü 9, 3'ün katıdır. Ama tersi her zaman doğru değil: 12 → 1 + 2 = 3. 12, 3'e bölünür ama 9'a bölünmez.</p>
+<div class="ornek"><span class="eyebrow">Örnek · Kayıp rakam</span>
+<p>Elif'in okul numarası şöyle görünüyor: <span class="num">12${blot}8</span>. Bir rakamın üstüne mürekkep damlamış. Numara 3 ile kalansız bölünüyor. Lekenin altında hangi rakam olabilir?</p>
+<p>Bilinen rakamları topla: 1 + 2 + 8 = 11.</p>
+<p>11 + ? toplamı 3'ün katı olmalı. 11'den sonra gelen 3'ün katları: 12, 15, 18. (Rakam en fazla 9 olur, toplam 20'yi geçemez.)</p>
+<p>12 − 11 = 1 · 15 − 11 = 4 · 18 − 11 = 7</p>
+<p><b>Cevap: 1, 4 ya da 7.</b></p></div>
+<div class="rule"><span class="eyebrow">Kayıp rakam yöntemi</span><b>Bilinenleri topla → 3'ün katına tamamla</b><span>İlk rakamı bulduktan sonra 3 ekleyerek devam et: 1, 4, 7. 9 kuralında 9 eklersin.</span></div>
+${yok(`<span class="num">5${ph("?")}4</span> sayısı 9 ile kalansız bölünüyor. Kutuya hangi rakamlar gelebilir?`,"5 + 4 = 9. 9 + ? toplamı 9 ya da 18 olmalı. <b>0 ya da 9</b> (504 ve 594).")}`},
+{t:"4: son iki basamağa bak",h:`
+<p class="lead">4 kuralı biraz farklı: bu sefer son <b>iki</b> rakama bakıyoruz.</p>
+<div class="rule"><span class="eyebrow">4 kuralı</span><b>Son iki basamağın oluşturduğu sayı 4'ün katıysa ya da 00 ise, sayı 4'e bölünür</b></div>
+<div class="ornek"><span class="eyebrow">Örnekler</span>
+<p>1 4<b>84</b> → 84 = 4 × 21 ✓ → 4'e bölünür.</p>
+<p>3 0<b>06</b> → 6, 4'ün katı değil ✗ → 4'e bölünmez.</p>
+<p>6 3<b>00</b> → son iki basamak 00 ✓ → 4'e bölünür.</p></div>
+<p>Son iki basamak için 4'ün katlarını tanımak işini hızlandırır: 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96.</p>
+<div class="hata"><b>Sık yapılan hata:</b> "Son rakamı 4 ise 4'e bölünür" sanmak. 14 ve 34, 4'e bölünmez! Son <b>iki</b> rakama bakmalısın.</div>
+${yok("Hangileri 4 ile kalansız bölünür? 2 316 · 5 130 · 1 700 · 9 054","<b>2 316</b> (16 ✓) ve <b>1 700</b> (00 ✓). 5 130 → 30 ✗, 9 054 → 54 ✗.")}`},
+{t:"6 kuralı ve hepsi bir arada",h:`
+<p class="lead">6 = 2 × 3. Bu yüzden 6 kuralı, iki kuralın birleşimidir.</p>
+<div class="rule"><span class="eyebrow">6 kuralı</span><b>Hem 2'ye hem 3'e bölünen sayı 6'ya bölünür</b><span>Önce çift mi diye bak, sonra rakamları topla.</span></div>
+<div class="ornek"><span class="eyebrow">Örnekler</span>
+<p>1 410 → çift ✓, 1 + 4 + 1 + 0 = 6 ✓ → 6'ya bölünür.</p>
+<p>1 233 → tek ✗ → 6'ya bölünmez (rakam toplamına bakmaya gerek yok).</p></div>
+${tbl(["Sayı","Neye bakarım?","Kural"],[["2","Son rakam","0, 2, 4, 6, 8"],["3","Rakamlar toplamı","3'ün katı"],["4","Son iki basamak","4'ün katı ya da 00"],["5","Son rakam","0 ya da 5"],["6","2 ve 3 kuralı","İkisi birden"],["9","Rakamlar toplamı","9'un katı"],["10","Son rakam","0"]])}
+<div class="ornek"><span class="eyebrow">Örnek · "Hem 4'e hem 9'a"</span>
+<p>Seri numarası hem 4'e hem 9'a bölünen fidanlara kuş evi asılacak. Hangilerine asılır?</p>
+${tbl(["Numara","4? (son iki)","9? (toplam)","Kuş evi"],[["2 340","40 ✓","2+3+4+0 = 9 ✓","<b>Evet</b>"],["3 150","50 ✗","3+1+5+0 = 9 ✓","Hayır"],["4 128","28 ✓","4+1+2+8 = 15 ✗","Hayır"],["1 476","76 ✓","1+4+7+6 = 18 ✓","<b>Evet</b>"]])}
+<p><b>Cevap: 2 340 ve 1 476.</b> "Hem … hem …" demek, iki kuralın ikisinin de sağlanması demek.</p></div>`},
+{t:"İki kayıp rakam",h:`
+<p class="lead">Bazen iki rakam birden kayıptır. Hangi ipucunun hangi rakamı bulduracağına bakarız.</p>
+<div class="ornek"><span class="eyebrow">Örnek</span>
+<p>Ali'nin <span class="num">3${ph("A")}${ph("B")}</span> tane bilyesi var. Bilyelerini ikişerli, üçerli ve beşerli gruplara ayırınca hiç bilye artmıyor. A ve B kaçtır?</p>
+<p><b>1. adım:</b> İkişerli ve beşerli → sayı hem 2'ye hem 5'e bölünür → son rakam 0 → <b>B = 0</b>.</p>
+<p><b>2. adım:</b> Üçerli → rakamlar toplamı 3'ün katı. 3 + A + 0 = 3 + A → 3, 6, 9 ya da 12 olmalı → <b>A = 0, 3, 6 ya da 9</b>.</p>
+<p>Olası sayılar: 300, 330, 360, 390.</p></div>
+<div class="rule"><span class="eyebrow">Sıralama</span><b>Önce son rakamı bul (2, 5, 10), sonra toplamı tamamla (3, 9)</b><span>Son rakamı bilmeden rakamları toplayamazsın. O yüzden önce son rakam.</span></div>
+${yok(`<span class="num">2${ph("A")}5${ph("B")}</span> sayısı hem 10 ile hem 9 ile kalansız bölünüyor. A ve B kaçtır?`,"10 → <b>B = 0</b>. Toplam: 2 + A + 5 + 0 = 7 + A. 9'un katı olmalı: 7 + A = 9 → <b>A = 2</b>. (18 olamaz, A 11 olmaz.) Sayı <b>2 250</b>.")}`}
+],
+/* ===== BÖLÜM 3: ASAL SAYILAR ===== */
+[
+{t:"Asal sayı nedir?",h:`
+<p class="lead">Bazı sayılar çok inatçıdır: yalnızca 1'e ve kendilerine bölünürler. Bunlara <b>asal sayı</b> denir.</p>
+<p><b>Asal sayı</b>, tam olarak <b>iki</b> çarpanı olan sayıdır: <b>1 ve kendisi</b>.</p>
+${tbl(["Sayı","Çarpanları","Kaç çarpan?","Asal mı?"],[["7","1, 7","2","Evet ✓"],["13","1, 13","2","Evet ✓"],["9","1, 3, 9","3","Hayır"],["12","1, 2, 3, 4, 6, 12","6","Hayır"],["1","1","1","Hayır!"]])}
+<div class="rule"><span class="eyebrow">İki önemli bilgi</span><b>1 asal değildir · 2 tek çift asaldır</b><span>1'in yalnızca bir çarpanı var, asal olmak için iki tane gerekir. 2'den büyük bütün çift sayılar 2'ye bölündüğü için asal değildir.</span></div>
+${yok("15 asal mıdır?","<b>Hayır.</b> 15 = 3 × 5. Çarpanları 1, 3, 5, 15; ikiden fazla.")}
+${yok("\"Bütün tek sayılar asaldır.\" Doğru mu?","<b>Yanlış.</b> 9, 15, 21, 25, 27 tek ama asal değil. Örneğin 21 = 3 × 7.")}`},
+{t:"Asal sayıları bulmak",h:`
+<p class="lead">100'e kadar olan asal sayıları bulmanın kolay bir yolu var: ele, ele, ele!</p>
+<p>1'i at. 2'yi bırak, 2'nin diğer katlarını sil. 3'ü bırak, 3'ün katlarını sil. Aynısını 5 ve 7 için yap. Geriye kalanlar asal sayılardır.</p>
+${sieve(100)}
+<p class="cap">Renkli olanlar 100'e kadar olan 25 asal sayı.</p>
+<div class="rule"><span class="eyebrow">Ezber listesi</span><b>2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47</b><span>Bunlar 50'ye kadar olan asal sayılar. Bir sayıyı kontrol ederken 2, 3, 5 ve 7 kurallarıyla dene. 100'e kadar sayılar için bu dördü yeterli.</span></div>
+<div class="hata"><b>Tuzak sayılar:</b> 51 = 3 × 17 (5 + 1 = 6, 3'e bölünür), 57 = 3 × 19, 49 = 7 × 7, 91 = 7 × 13. Asal gibi görünürler ama değildirler.</div>
+${yok("Plaka kodları 1'den 81'e kadar. Kaç tanesi asal sayı?","2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79 → <b>22 tane.</b>")}`},
+{t:"Asal çarpan algoritması",h:`
+<p class="lead">Her sayı, asal sayıların çarpımı olarak yazılabilir. Bunu bulmak için bir bölme tablosu kullanırız.</p>
+<ol><li>Sayıyı çizginin soluna yaz.</li><li>Sayıyı bölen <b>en küçük asal sayıyı</b> sağa yaz. Böl, sonucu alta yaz.</li><li>Sonuç <b>1</b> olana kadar devam et.</li></ol>
+<div class="algo-row">${algo(18)}${algo(30)}${algo(60)}</div>
+<p>Sağ sütundaki sayılar asal çarpanlardır. Ama soruyu dikkatli oku:</p>
+<div class="cards"><div class="mini"><b>"Asal çarpanlarına ayırınız"</b>Hepsini çarpım olarak yaz: 18 = 2 × 3 × 3</div><div class="mini"><b>"Asal çarpanlarını yazınız"</b>Tekrar edenleri <b>bir kez</b> yaz: 18'in asal çarpanları 2 ve 3</div></div>
+<div class="hata"><b>Sık yapılan hata:</b> 18'in asal çarpanlarını "2, 3, 3" diye yazmak. Asal çarpanlar listesinde aynı sayı bir kez yazılır: <b>2 ve 3.</b></div>
+${yok("36'yı asal çarpanlarına ayır.",`<b>36 = 2 × 2 × 3 × 3.</b> Tablo: 36 | 2 → 18 | 2 → 9 | 3 → 3 | 3 → 1. Asal çarpanları 2 ve 3.`)}`},
+{t:"Ortak asal çarpanlar",h:`
+<p class="lead">İki sayının asal çarpanlarını bulunca, hangilerinin ortak olduğunu kolayca görürsün.</p>
+<div class="ornek"><span class="eyebrow">Örnek · 18 ve 30</span>
+<p>18 = 2 × 3 × 3 → asal çarpanları <b>2, 3</b></p>
+<p>30 = 2 × 3 × 5 → asal çarpanları <b>2, 3, 5</b></p>
+<p><b>Ortak olanlar:</b> 2 ve 3 · <b>Ortak olmayan:</b> 5 (yalnızca 30'da)</p></div>
+<div class="ornek"><span class="eyebrow">Örnek · Kenarları asal olan dikdörtgen</span>
+<p>Çevresi 32 cm olan bir dikdörtgenin kenar uzunlukları asal sayıdır.</p>
+<p>Çevre = 2 × (kısa + uzun) → kısa + uzun = 32 ÷ 2 = <b>16</b>.</p>
+<p>Toplamı 16 olan asal sayı çiftleri: <b>3 + 13</b> ve <b>5 + 11</b>. (1 + 15 olmaz, 1 asal değil. 7 + 9 olmaz, 9 asal değil.)</p>
+${tbl(["Kenarlar","Alan","Alanın asal çarpanları"],[["3 cm ve 13 cm","39 cm²","39 = 3 × 13"],["5 cm ve 11 cm","55 cm²","55 = 5 × 11"]])}
+<p>Alanı en küçük olan: <b>3 cm × 13 cm, alanı 39 cm²</b>.</p></div>
+<div class="rule"><span class="eyebrow">Fark ettin mi?</span><b>Kenarlar asal ise alanın asal çarpanları tam olarak kenarlardır</b><span>Çünkü alan = kenar × kenar ve iki kenar da zaten asal sayı.</span></div>
+${yok("Çevresi 20 cm, kenarları asal sayı olan dikdörtgenler hangileri?","Kısa + uzun = 10. Asal çiftler: <b>3 ve 7</b>, <b>5 ve 5</b>. Alanlar 21 cm² ve 25 cm²; en küçüğü 21 cm².")}`}
+],
+/* ===== BÖLÜM 4: ORTAK KAT VE ORTAK BÖLEN ===== */
+[
+{t:"Ortak katlar",h:`
+<p class="lead">İki arkadaş düşün: biri 4 günde bir, öteki 6 günde bir yüzmeye gidiyor. Bugün ikisi de havuzdaydı. Hangi günler yine karşılaşırlar?</p>
+${tbl(["","Katları"],[["4","4, 8, <b>12</b>, 16, 20, <b>24</b>, 28, 32, <b>36</b>, …"],["6","6, <b>12</b>, 18, <b>24</b>, 30, <b>36</b>, …"]])}
+<p>İki listede de olan sayılar <b>ortak katlardır</b>: 12, 24, 36, … Yani 12. günde, 24. günde, 36. günde karşılaşırlar.</p>
+<div class="rule"><span class="eyebrow">En küçük ortak kat</span><b>İki listede de olan ilk sayı</b><span>4 ve 6 için 12. Diğer ortak katlar onun katlarıdır: 12, 24, 36, 48 … Katlar sonsuz olduğu için <b>en büyük ortak kat yoktur</b>.</span></div>
+${yok("3 ve 5'in en küçük ortak katı kaçtır?","3: 3, 6, 9, 12, <b>15</b> · 5: 5, 10, <b>15</b> → <b>15.</b>")}
+${yok("Bir çiçekçideki güller 7'şerli ya da 8'erli paketlenince hiç artmıyor. En fazla kaç gül olabilir?","Gül sayısı 7 ve 8'in ortak katı: 56, 112, 168, … Katlar sonsuza gider, bu yüzden <b>en fazla sayı belirlenemez.</b> En az 56 gül vardır.")}`},
+{t:"Ortak bölenler",h:`
+<p class="lead">12 elma ve 18 armudu, her tabakta aynı sayıda meyve olacak şekilde, karıştırmadan ve hiç artmadan tabaklara koymak istiyorsun.</p>
+${tbl(["","Bölenleri (çarpanları)"],[["12","<b>1</b>, <b>2</b>, <b>3</b>, 4, <b>6</b>, 12"],["18","<b>1</b>, <b>2</b>, <b>3</b>, <b>6</b>, 9, 18"]])}
+<p>İki listede de olanlar <b>ortak bölenlerdir</b>: 1, 2, 3, 6. Yani her tabağa 1, 2, 3 ya da 6 meyve koyabilirsin.</p>
+<div class="rule"><span class="eyebrow">En büyük ortak bölen</span><b>Listedeki en büyük ortak sayı</b><span>12 ve 18 için 6. 1 her sayıyı böler, bu yüzden 1 her zaman ortak bölendir.</span></div>
+${yok("16 ve 24'ün ortak bölenleri nelerdir?","16: 1, 2, 4, 8, 16 · 24: 1, 2, 3, 4, 6, 8, 12, 24 → Ortak: <b>1, 2, 4, 8.</b> En büyüğü 8.")}`},
+{t:"Kat mı, bölen mi?",h:`
+<p class="lead">Bu konunun en önemli sorusu bu! Problemi okuyunca önce hangisini kullanacağına karar ver.</p>
+<div class="cards"><div class="mini"><b>Ortak KAT</b>Bir şey <b>tekrar ediyor</b>, sayılar <b>büyüyor</b>. "Birlikte, aynı anda, tekrar ne zaman", "…'şerli paketlenince artmıyor", "en az kaç tane". Cevap, verilen sayılardan <b>büyüktür</b>.</div><div class="mini"><b>Ortak BÖLEN</b>Bir şey <b>bölünüyor, kesiliyor, paylaştırılıyor</b>. "Eşit parçalara ayırmak, poşetlere koymak, hiç artmadan", "en uzun parça". Cevap, verilen sayılardan <b>küçüktür</b>.</div></div>
+<div class="ornek"><span class="eyebrow">Örnek · Kat</span>
+<p>Kalemler 6'şarlı ya da 9'arlı kutulara konunca hiç artmıyor. En az kaç kalem var?</p>
+<p>Kalem sayısı hem 6'nın hem 9'un katı. 6: 6, 12, <b>18</b> · 9: 9, <b>18</b> → <b>En az 18 kalem.</b></p></div>
+<div class="ornek"><span class="eyebrow">Örnek · Bölen</span>
+<p>30 cm ve 45 cm'lik iki kurdele, hiç artmadan eşit parçalara kesilecek. Bir parça en fazla kaç cm olabilir?</p>
+<p>30: 1, 2, 3, 5, 6, 10, <b>15</b>, 30 · 45: 1, 3, 5, 9, <b>15</b>, 45 → Ortak bölenler 1, 3, 5, 15 → <b>En fazla 15 cm.</b></p></div>
+<div class="hata"><b>Kendini kontrol et:</b> Bölen sorusunda cevabın verilen sayılardan büyük çıktıysa, ya da kat sorusunda küçük çıktıysa, yanlış yöntemi seçmişsin demektir.</div>`},
+{t:"Kesme ve paylaştırma",h:`
+<p class="lead">Ortak bölen sorularının iki ünlü tipi var: çubuk kesmek ve poşetlere paylaştırmak.</p>
+<div class="ornek"><span class="eyebrow">Örnek · Çubuk kesme</span>
+<p>Uzunlukları 60 cm ve 90 cm olan iki çubuk, hiç artmadan, eşit ve doğal sayı uzunluğunda parçalara kesilecek. En az kesimle yapılırsa kaç kesim gerekir?</p>
+<p>60'ın bölenleri: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60</p>
+<p>90'ın bölenleri: 1, 2, 3, 5, 6, 9, 10, 15, 18, 30, 45, 90</p>
+<p>Ortak bölenler: 1, 2, 3, 5, 6, 10, 15, 30. Bunların hepsi uygun parça uzunluğu.</p>
+<p>En az kesim için parçalar <b>en uzun</b> olmalı → en büyük ortak bölen → <b>30 cm</b>.</p>
+${stickSVG([[60,30],[90,30]])}
+<p>60 ÷ 30 = 2 parça → 1 kesim · 90 ÷ 30 = 3 parça → 2 kesim · <b>Toplam 3 kesim.</b></p></div>
+<div class="rule"><span class="eyebrow">Kesim kuralı</span><b>Kesim sayısı = parça sayısı − 1</b><span>Bir çubuğu 3 parçaya ayırmak için 2 kez kesmen yeter.</span></div>
+<div class="ornek"><span class="eyebrow">Örnek · Poşetlere paylaştırma</span>
+<p>24 kg fındık ve 36 kg ceviz, karıştırılmadan ve hiç artmadan, eşit kilogram alan poşetlere konuyor. Toplam 5 poşet kullanılıyor. Bir poşet kaç kg alır?</p>
+<p>Poşet, iki miktarı da bölmeli. 24 ve 36'nın ortak bölenleri: 1, 2, 3, 4, 6, 12. Deneyelim:</p>
+${tbl(["Bir poşet","Fındık","Ceviz","Toplam poşet"],[["4 kg","24 ÷ 4 = 6","36 ÷ 4 = 9","15 ✗"],["6 kg","24 ÷ 6 = 4","36 ÷ 6 = 6","10 ✗"],["12 kg","24 ÷ 12 = 2","36 ÷ 12 = 3","5 ✓"]])}
+<p><b>Cevap: 12 kg.</b></p></div>
+${yok("80 cm ve 100 cm'lik iki çubuk, en az kesimle eşit parçalara ayrılırsa toplam kaç kesim yapılır?","En büyük ortak bölen 20. 80 ÷ 20 = 4 parça (3 kesim), 100 ÷ 20 = 5 parça (4 kesim). <b>Toplam 7 kesim.</b>")}`},
+{t:"Koşullu ortak kat soruları",h:`
+<p class="lead">Bazen ortak katlardan ilkini değil, sorudaki koşula uyanı seçmen gerekir.</p>
+<div class="ornek"><span class="eyebrow">Örnek · Otobüsler</span>
+<p>Bir duraktan A otobüsü 12 dakikada bir, B otobüsü 18 dakikada bir kalkıyor. Saat 09.00'da birlikte kalktılar. Tekrar ilk ne zaman birlikte kalkarlar?</p>
+<p>12: 12, 24, <b>36</b>, 48 · 18: 18, <b>36</b>, 54 → En küçük ortak kat 36 → <b>09.36'da.</b></p></div>
+<div class="ornek"><span class="eyebrow">Örnek · Kitap</span>
+<p>Zeynep bir kitabı her gün 15 sayfa okuyarak da, her gün 20 sayfa okuyarak da 5 günden fazla sürede bitirebiliyor. Kitap en az kaç sayfadır?</p>
+<p>Sayfa sayısı 15 ve 20'nin ortak katı: 60, 120, 180, …</p>
+${tbl(["Sayfa","15'er okursa","20'şer okursa","5 günden fazla mı?"],[["60","4 gün","3 gün","✗"],["120","8 gün","6 gün","✓ ikisi de"]])}
+<p><b>Cevap: en az 120 sayfa.</b></p></div>
+<div class="hata"><b>Dikkat:</b> İlk ortak katı hemen cevap diye yazma. Sorudaki koşulu ("5 günden fazla", "40 ile 70 arası") mutlaka kontrol et.</div>
+${yok("Cevizler 4'erli ya da 5'erli gruplara ayrılınca hiç artmıyor. Ceviz sayısı 30 ile 50 arasında. Kaç ceviz var?","4 ve 5'in ortak katları: 20, <b>40</b>, 60. 30 ile 50 arasında yalnızca <b>40</b> var.")}`}
+],
+/* ===== BÖLÜM 5: OLASILIK ===== */
+[
+{t:"Ne kadar mümkün?",h:`
+<p class="lead">"Yarın yağmur yağar mı?", "Zarda 6 gelir mi?" <b>Olasılık</b>, bir olayın olma ihtimalini anlatır.</p>
+${probSVG()}
+<div class="cards"><div class="mini"><b>Kesin (1)</b>Bir zar atınca 7'den küçük bir sayı gelmesi.</div><div class="mini"><b>İmkânsız (0)</b>Bir zarda 8 gelmesi.</div><div class="mini"><b>Eşit olası (1/2)</b>Madenî para atınca tura gelmesi.</div></div>
+<p>Olasılık her zaman <b>0 ile 1 arasında</b> bir sayıdır. 1'den büyük ya da 0'dan küçük olamaz.</p>
+${yok("İçinde yalnızca kırmızı toplar olan bir torbadan mavi top çekmek nasıl bir olaydır?","<b>İmkânsız.</b> Torbada mavi top yok, olasılığı 0.")}`},
+{t:"Deneysel olasılık",h:`
+<p class="lead">Çarkı çevirmeden ne geleceğini bilemeyiz. Ama çok kez çevirip sonuçları sayarsak bir tahmin yapabiliriz.</p>
+${spinnerSVG()}
+<div class="rule"><span class="eyebrow">Formül</span><b>Deneysel olasılık = olayın gözlenme sayısı ÷ toplam deneme sayısı</b><span>Kesir olarak yaz, sonra sadeleştir.</span></div>
+<div class="ornek"><span class="eyebrow">Örnek</span>
+<p>Kırmızı gelmesinin deneysel olasılığı: ${fr(24,60)} = ${fr(2,5)}</p>
+<p>Sadeleştirmek için pay ve paydayı aynı sayıya böl: 24 ÷ 12 = 2, 60 ÷ 12 = 5.</p></div>
+<div class="hata"><b>Üç öğrencinin cevabı:</b><ul><li>Ali: "24" → <b>yanlış</b>. Bu sadece kırmızının kaç kez geldiği.</li><li>Can: "60 ÷ 24" → <b>yanlış</b>. Ters bölmüş. Sonuç 1'den büyük çıkar, olasılık 1'den büyük olamaz!</li><li>Ece: "24 ÷ 60" → <b style="color:var(--ok)">doğru.</b></li></ul></div>
+${yok("Bir para 50 kez atıldı, 30 kez tura geldi. Tura gelmesinin deneysel olasılığı nedir?",`${fr(30,50)} → 10'a böl → <b>${fr(3,5)}</b>`)}`},
+{t:"Sonuçlardan tahmin yapmak",h:`
+<p class="lead">Deney sonuçları, bir sonraki denemede neyin daha olası olduğunu tahmin etmemize yardım eder.</p>
+<div class="ornek"><span class="eyebrow">Örnek</span>
+<p>Bir çark 50 kez çevrildi:</p>
+${tbl(["Renk","Gelme sayısı","Deneysel olasılık"],[["Mavi","25",`${fr(25,50)} = ${fr(1,2)}`],["Sarı","15",`${fr(15,50)} = ${fr(3,10)}`],["Kırmızı","10",`${fr(10,50)} = ${fr(1,5)}`],["Toplam","50","1"]])}
+<p>Mavi en çok geldiği için, çark bir kez daha çevrilirse <b>mavi gelmesinin daha olası</b> olduğunu tahmin ederiz.</p></div>
+<div class="rule"><span class="eyebrow">Tahmin ≠ kesinlik</span><b>"Mavi gelir" değil, "mavi gelmesi daha olasıdır" deriz</b><span>Deneme sayısı arttıkça tahminimiz daha güvenilir olur.</span></div>
+<p>Bütün sonuçların deneysel olasılıklarının toplamı <b>1</b> eder (yukarıda 25 + 15 + 10 = 50, yani 50/50). Hesabını böyle kontrol edebilirsin.</p>
+${yok("Bir torbadan, her seferinde geri atılarak 40 kez top çekildi: 28 beyaz, 12 siyah. Bir daha çekilirse hangisi daha olası?",`Beyaz: ${fr(28,40)} = ${fr(7,10)}, siyah: ${fr(12,40)} = ${fr(3,10)}. <b>Beyaz gelmesi daha olasıdır</b>, çünkü deneyde çok daha fazla geldi.`)}`}
+]
+];
+
+const B=[
+{ ad:"Çarpanlar ve Katlar", kisa:"Çarpan, kat ve dikdörtgenler",
+test:[
+ {q:"20'nin çarpanları hangi seçenekte eksiksiz verilmiştir?",o:["1, 2, 4, 5, 10, 20","1, 2, 4, 10, 20","2, 4, 5, 10","20, 40, 60, 80"],a:0,n:"Çiftler: 1 × 20, 2 × 10, 4 × 5. Çarpanlar: 1, 2, 4, 5, 10, 20. Son seçenektekiler çarpan değil, kat."},
+ {q:"Aşağıdakilerden hangisi 7'nin katı değildir?",o:["21","35","47","56"],a:2,n:"7'nin katları: 7, 14, 21, 28, 35, 42, 49, 56. 47 bu listede yok, 47 ÷ 7 kalanlıdır."},
+ {q:"Alanı 18 cm² olan, kenarları doğal sayı olan dikdörtgenlerden çevresi en küçük olanın kenarları nedir?",o:["1 cm ve 18 cm","2 cm ve 9 cm","3 cm ve 6 cm","4 cm ve 5 cm"],a:2,n:"Çevreler: 1 × 18 → 38 cm, 2 × 9 → 22 cm, 3 × 6 → 18 cm. Kenarlar en yakın olanın çevresi en küçük. 4 × 5'in alanı 20, 18 değil."},
+ {q:"Bir sayının bilinen çarpanları 2, 3, 9 ve en büyük çarpanı 18'dir. Verilmeyen çarpanlar hangileridir?",o:["1 ve 6","6 ve 12","1, 4 ve 6","4 ve 6"],a:0,n:"En büyük çarpan 18 → sayı 18. 18'in çarpanları: 1, 2, 3, 6, 9, 18. Verilmeyenler 1 ve 6."},
+ {q:"\"Bir sayının katları sonsuz tanedir.\" Bu ifade doğru mu?",o:["Doğru","Yanlış"],a:0,n:"Sayıyı 1, 2, 3, … ile çarpmaya sonsuza kadar devam edebilirsin. Bu yüzden en büyük kat yoktur."}
+],
+yazili:{
+ soru:`<p>Alanı 36 cm² olan, kenar uzunlukları santimetre cinsinden doğal sayı olan farklı dikdörtgenler çizilecektir.</p>
+${qs([["a)","Çizilebilecek bütün dikdörtgenlerin kenar uzunluklarını yazınız.",3],
+ ["b)","Bu dikdörtgenlerin çevrelerini hesaplayınız. Çevresi en küçük olan dikdörtgeni belirleyiniz.",3],
+ ["c)","Sonuçlarına göre, alanları eşit olan dikdörtgenlerin çevreleri hakkında bir genelleme yazınız.",1]])}
+<p>Ece, başlangıçta boş olan kumbarasına her gün 15 TL atmaktadır.</p>
+${qs([["ç)","Kumbarada 100 TL'den fazla para olması için en az kaç gün gerektiğini 15'in katlarını yazarak bulunuz.",3]])}`,
+ kontrol:[
+  {b:"a) Dikdörtgenler",m:"1 × 36 · 2 × 18 · 3 × 12 · 4 × 9 · 6 × 6",
+   i:[["En az üç kenar çiftini doğru yazdı",1,"Alan verilince kenarlar = çarpan çiftleri."],
+      ["Beş çiftin hepsini eksiksiz yazdı",2,"Çarpan çiftlerini kaçırmamak için 1, 2, 3, 4, 5, 6 diye sırayla dene."]]},
+  {b:"b) Çevreler",m:"74 cm · 40 cm · 30 cm · 26 cm · 24 cm. En küçük: <b>6 cm × 6 cm, çevre 24 cm</b>.",
+   i:[["Çevreleri doğru hesapladı",2,"Çevre = 2 × (kısa kenar + uzun kenar)."],
+      ["En küçük çevreli olarak 6 × 6'yı seçti",1,"Kenarları birbirine en yakın olan dikdörtgenin çevresi en küçüktür."]]},
+  {b:"c) Genelleme",m:"<b>Alanları eşit olsa da çevreler farklı olabilir. Kenarlar birbirine yaklaştıkça çevre küçülür.</b>",
+   i:[["Bu genellemeyi kendi cümlesiyle yazdı",1,"Genelleme: kenarlar yaklaştıkça çevre küçülür."]]},
+  {b:"ç) Kumbara",m:"15, 30, 45, 60, 75, 90, 105 → 6 günde 90 TL (az), 7 günde 105 TL (fazla). <b>En az 7 gün.</b>",
+   i:[["15'in katlarını sırayla yazdı",1,"Katları liste ya da tablo hâlinde yazma."],
+      ["7 gün buldu",2,"\"Fazla\" demek sınırı geçen ilk kat; eşit olmaz."]]}
+ ]}
+},
+{ ad:"Bölünebilme Kuralları", kisa:"2, 3, 4, 5, 6, 9 ve 10 ile bölünebilme",
+test:[
+ {q:"Aşağıdakilerden hangisi 5 ile kalansız bölünür?",o:["342","1 205","558","7 001"],a:1,n:"5 kuralı: son rakam 0 ya da 5. 1 205'in son rakamı 5."},
+ {q:"4■7 sayısı 9 ile kalansız bölünebiliyor. ■ yerine hangi rakam gelmelidir?",o:["2","5","7","9"],a:2,n:"4 + 7 = 11. Toplam 18 olmalı: 18 − 11 = 7. Sayı 477 olur."},
+ {q:"Aşağıdakilerden hangisi 4 ile kalansız bölünür?",o:["1 234","2 514","3 316","5 210"],a:2,n:"4 kuralı: son iki basamak. 34 ✗, 14 ✗, 16 ✓, 10 ✗. Son rakamın 4 olması yetmez!"},
+ {q:"Hem 2'ye hem 5'e kalansız bölünen bir sayının birler basamağı kaçtır?",o:["0","2","5","0 ya da 5"],a:0,n:"2 için çift, 5 için 0 ya da 5 olmalı. İkisinde de olan tek rakam 0."},
+ {q:"Bir sayının 6 ile kalansız bölünmesi için ne gerekir?",o:["Hem 2'ye hem 3'e bölünmesi","Son rakamının 6 olması","Rakamları toplamının 6 olması","Son iki basamağının 6'nın katı olması"],a:0,n:"6 = 2 × 3. Sayı çift olmalı ve rakamları toplamı 3'ün katı olmalı."}
+],
+yazili:{
+ soru:`<p>Can'ın kilidinin şifresi üç basamaklıdır: <span class="num">5${ph("?")}2</span>. Can ortadaki rakamı unutmuştur ama şifrenin 3 ile kalansız bölündüğünü hatırlamaktadır.</p>
+${qs([["a)","Ortadaki rakam yerine gelebilecek rakamları bulunuz.",3],
+ ["b)","Bulduğunuz şifrelerden hangisi 9 ile de kalansız bölünür? Gerekçesiyle yazınız.",3]])}
+<p>Bir fidanlıkta seri numarası hem 4'e hem 9'a kalansız bölünen fidanlara kuş evi asılacaktır. Fidanların numaraları: <b>1 260 · 2 484 · 3 510 · 4 732</b></p>
+${qs([["c)","Hangi fidanlara kuş evi asılacağını, her numarayı kurallarla kontrol ederek belirleyiniz.",4]])}`,
+ kontrol:[
+  {b:"a) Kayıp rakam",m:"5 + 2 = 7. 7 + ? → 9, 12, 15 → <b>2, 5 ya da 8</b> (522, 552, 582)",
+   i:[["Bilinen rakamları topladı (7)",1,"Kayıp rakam: önce bilinen rakamları topla."],
+      ["2, 5 ve 8'in üçünü de buldu",2,"3'ün katına tamamla, sonra 3'er ekleyerek devam et."]]},
+  {b:"b) 9 ile bölünen",m:"<b>522</b>, çünkü 5 + 2 + 2 = 9, 9'un katı.",
+   i:[["522 yazdı",2,"9 kuralı: rakamlar toplamı 9'un katı."],
+      ["Rakamlar toplamını gerekçe olarak yazdı",1,"Cevaba \"çünkü...\" ile gerekçe ekleme."]]},
+  {b:"c) Kuş evi",m:"1 260: 60 ✓, 9 ✓ → <b>Evet</b> · 2 484: 84 ✓, 18 ✓ → <b>Evet</b> · 3 510: 10 ✗ → Hayır · 4 732: 32 ✓, 16 ✗ → Hayır",
+   i:[["4 kuralını son iki basamakla kontrol etti",1,"4 kuralı: son iki basamak 4'ün katı ya da 00."],
+      ["9 kuralını rakamlar toplamıyla kontrol etti",1,"9 kuralı: rakamlar toplamı 9'un katı."],
+      ["1 260 ve 2 484'ü buldu, diğerlerini eledi",2,"\"Hem ... hem ...\" iki kuralın ikisi de sağlanmalı."]]}
+ ]}
+},
+{ ad:"Asal Sayılar", kisa:"Asal sayılar ve asal çarpanlar",
+test:[
+ {q:"Aşağıdakilerden hangisi asal sayıdır?",o:["21","27","29","33"],a:2,n:"29'un yalnızca iki çarpanı var: 1 ve 29. 21 = 3 × 7, 27 = 3 × 9, 33 = 3 × 11."},
+ {q:"\"1 bir asal sayıdır.\" Bu ifade doğru mu?",o:["Doğru","Yanlış"],a:1,n:"Asal sayının tam iki çarpanı olmalı. 1'in yalnızca bir çarpanı var, bu yüzden asal değildir."},
+ {q:"24 sayısının asal çarpanlarına ayrılmış hâli hangisidir?",o:["2 × 2 × 2 × 3","2 × 3 × 4","4 × 6","2 × 12"],a:0,n:"Bütün çarpanlar asal olmalı. 4, 6 ve 12 asal değil. 24 | 2 → 12 | 2 → 6 | 2 → 3 | 3 → 1."},
+ {q:"45 sayısının asal çarpanları hangileridir?",o:["3 ve 5","3, 3 ve 5","5 ve 9","1, 3 ve 5"],a:0,n:"45 = 3 × 3 × 5. Asal çarpanlar sorulunca tekrar eden bir kez yazılır: 3 ve 5. 9 ve 1 asal değil."},
+ {q:"20 ile 30 arasındaki asal sayılar hangileridir?",o:["23 ve 29","21, 23 ve 29","23, 27 ve 29","21 ve 25"],a:0,n:"21 = 3 × 7, 25 = 5 × 5, 27 = 3 × 9 asal değil. Geriye 23 ve 29 kalır."}
+],
+yazili:{
+ soru:`<p>Aşağıdaki sayıları inceleyiniz: <b>2 · 9 · 15 · 17 · 21 · 23 · 27 · 31 · 39 · 41</b></p>
+${qs([["a)","Asal olan sayıları yazınız. Asal olmayan iki sayının neden asal olmadığını açıklayınız.",3],
+ ["b)","36 ve 42 sayılarını asal çarpan algoritmasını kullanarak asal çarpanlarına ayırınız.",4],
+ ["c)","36 ve 42'nin ortak olan ve ortak olmayan asal çarpanlarını yazınız.",3]])}`,
+ kontrol:[
+  {b:"a) Asal sayılar",m:"<b>2, 17, 23, 31, 41.</b> Örnek açıklama: 9 = 3 × 3, 21 = 3 × 7; 1 ve kendisinden başka çarpanları var.",
+   i:[["Beş asal sayının hepsini yazdı, fazladan sayı yazmadı",2,"50'ye kadar asal sayılar: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47."],
+      ["İki sayının asal olmadığını çarpanlarıyla gösterdi",1,"Asal olmadığını göstermek için bir çarpım yaz: 21 = 3 × 7."]]},
+  {b:"b) Asal çarpan algoritması",m:`<div class="algo-row">${algo(36)}${algo(42)}</div>`,
+   i:[["36'yı doğru ayırdı (2 × 2 × 3 × 3)",2,"Asal çarpan algoritması: en küçük asalla böl, 1 kalana kadar devam et."],
+      ["42'yi doğru ayırdı (2 × 3 × 7)",2,"Bölme tablosunda sağ sütuna yalnızca asal sayı yazılır."]]},
+  {b:"c) Ortak asal çarpanlar",m:"Ortak: <b>2 ve 3</b> · Ortak olmayan: <b>7</b> (yalnızca 42'de)",
+   i:[["Ortak asal çarpanları 2 ve 3 diye yazdı",2,"Ortak asal çarpan: iki sayıda da olan asal sayılar."],
+      ["7'yi ortak olmayan olarak yazdı",1,"Ortak olmayan: yalnızca bir sayıda olan asal çarpan."]]}
+ ]}
+},
+{ ad:"Ortak Kat ve Ortak Bölen", kisa:"Günlük hayat problemleri",
+test:[
+ {q:"6 ve 8'in en küçük ortak katı kaçtır?",o:["12","24","48","14"],a:1,n:"6: 6, 12, 18, 24 · 8: 8, 16, 24. İlk ortak sayı 24. 48 de ortak kat ama en küçüğü değil."},
+ {q:"16 ve 24'ün ortak bölenleri hangi seçenekte eksiksiz verilmiştir?",o:["1, 2, 4, 8","1, 2, 4, 8, 16","2, 4, 6, 8","1, 2, 3, 4, 8"],a:0,n:"16: 1, 2, 4, 8, 16 · 24: 1, 2, 3, 4, 6, 8, 12, 24. İkisinde de olanlar 1, 2, 4, 8."},
+ {q:"\"Bir çubuğu hiç artmadan eşit parçalara kesmek\" ile ilgili bir problemde ne kullanılır?",o:["Ortak bölen","Ortak kat","Toplama","Asal sayılar"],a:0,n:"Kesmek, paylaştırmak, eşit parçalara ayırmak → ortak bölen. Cevap verilen uzunluklardan küçük çıkar."},
+ {q:"40 cm'lik bir çubuk 10 cm'lik eşit parçalara kesilirse kaç kesim yapılır?",o:["3","4","5","10"],a:0,n:"40 ÷ 10 = 4 parça. Kesim sayısı = parça sayısı − 1 = 3."},
+ {q:"15 ve 20'nin en küçük ortak katı 60'tır. Aşağıdakilerden hangisi 15 ve 20'nin ortak katı değildir?",o:["120","180","200","240"],a:2,n:"Ortak katlar 60'ın katlarıdır: 60, 120, 180, 240. 200, 15'e bölünmez."}
+],
+yazili:{
+ soru:`<p>Bir fırında poğaçalar 6'şarlı ya da 10'arlı paketlendiğinde hiç poğaça artmamaktadır. Poğaça sayısı 40 ile 70 arasındadır.</p>
+${qs([["a)","Fırında kaç poğaça olduğunu katları yazarak bulunuz.",4]])}
+<p>Uzunlukları 48 cm ve 72 cm olan iki kurdele, hiç artmadan, eşit uzunlukta ve olabilecek en uzun parçalara kesilecektir.</p>
+${qs([["b)","Bir parça kaç cm olur? Toplam kaç parça elde edilir? Bölenleri yazarak gösteriniz.",4],
+ ["c)","Bu iş için toplam kaç kesim yapılır?",2]])}`,
+ kontrol:[
+  {b:"a) Poğaçalar",m:"6: 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66 · 10: 10, 20, 30, 40, 50, 60, 70 · Ortak katlar 30, 60, 90 → 40 ile 70 arasında <b>60 poğaça</b>.",
+   i:[["İki sayının katlarını yazıp ortak katları buldu",2,"\"Paketlenince artmıyor\" → ortak kat."],
+      ["Koşula uyan 60'ı seçti",2,"İlk ortak katı hemen yazma, koşulu (40 ile 70 arası) kontrol et."]]},
+  {b:"b) Kurdeleler",m:"48: 1, 2, 3, 4, 6, 8, 12, 16, 24, 48 · 72: 1, 2, 3, 4, 6, 8, 9, 12, 18, 24, 36, 72 · En büyük ortak bölen <b>24 cm</b>. 48 ÷ 24 = 2, 72 ÷ 24 = 3 → <b>5 parça</b>.",
+   i:[["Parça uzunluğunu 24 cm buldu",2,"En uzun eşit parça → en büyük ortak bölen."],
+      ["Toplam 5 parça buldu",2,"Parça sayısı = uzunluk ÷ parça uzunluğu."]]},
+  {b:"c) Kesim sayısı",m:"(2 − 1) + (3 − 1) = <b>3 kesim</b>",
+   i:[["3 kesim buldu",2,"Kesim sayısı = parça sayısı − 1 (her çubuk için ayrı)."]]}
+ ]}
+},
+{ ad:"Olasılık", kisa:"Deneysel olasılık ve tahmin",
+test:[
+ {q:"Bir zar 40 kez atılmış, 8 kez 6 gelmiştir. 6 gelmesinin deneysel olasılığı nedir?",o:["8","40/8","8/40 = 1/5","1/8"],a:2,n:"Gelme sayısı ÷ toplam deneme: 8/40. 8'e bölünce 1/5."},
+ {q:"Aşağıdakilerden hangisi bir deneysel olasılık değeri olamaz?",o:["0","1/2","1","3/2"],a:3,n:"Olasılık 0 ile 1 arasındadır. 3/2, 1'den büyük olduğu için olasılık olamaz."},
+ {q:"Bir torbadan geri atılarak 30 kez top çekildi: 18 kırmızı, 9 mavi, 3 yeşil. Bir kez daha çekilirse hangi rengin gelmesi daha olasıdır?",o:["Kırmızı","Mavi","Yeşil","Hepsi eşit olası"],a:0,n:"Kırmızı en çok geldi (18/30 = 3/5), bu yüzden kırmızı gelmesi daha olasıdır. Ama kesin değildir."},
+ {q:"\"Bir para 10 kez atıldı, 7 kez tura geldi. O hâlde bir sonraki atış kesinlikle tura gelir.\" Bu ifade doğru mu?",o:["Doğru","Yanlış"],a:1,n:"Deney sonuçları yalnızca tahmin yaptırır, kesinlik vermez. \"Tura gelmesi daha olası\" diyebiliriz, \"kesin gelir\" diyemeyiz."},
+ {q:"\"Bir zar atıldığında 7 gelmesi\" nasıl bir olaydır?",o:["Kesin","İmkânsız","Eşit olası","Çok olası"],a:1,n:"Zarda 1'den 6'ya kadar sayılar var. 7 gelemez, olasılığı 0."}
+],
+yazili:{
+ soru:`<p>Bir çark 80 kez çevrilmiş ve sonuçlar tabloya yazılmıştır.</p>
+${tbl(["Renk","Kırmızı","Mavi","Sarı"],[["Gelme sayısı","40","24","16"]])}
+${qs([["a)","Kırmızı gelmesinin deneysel olasılığını bulup sadeleştiriniz.",3],
+ ["b)","Selin, \"Mavi gelmesinin olasılığı 80'i 24'e bölerek bulunur.\" diyor. Selin haklı mı? Açıklayınız ve doğru olasılığı bulunuz.",3],
+ ["c)","Sarı gelmesinin deneysel olasılığını bulup sadeleştiriniz.",2],
+ ["ç)","Çark bir kez daha çevrilirse hangi rengin gelmesi daha olasıdır? Gerekçesiyle yazınız.",2]])}`,
+ kontrol:[
+  {b:"a) Kırmızı",m:`${fr(40,80)} = <b>${fr(1,2)}</b>`,
+   i:[["40/80 yazdı",2,"Deneysel olasılık = gelme sayısı ÷ toplam deneme."],
+      ["1/2 diye sadeleştirdi",1,"Sadeleştirmek: pay ve paydayı aynı sayıya böl."]]},
+  {b:"b) Selin'in yöntemi",m:`<b>Haklı değil.</b> Ters bölmüş; 80 ÷ 24 sonucu 1'den büyük çıkar, olasılık 1'den büyük olamaz. Doğrusu ${fr(24,80)} = <b>${fr(3,10)}</b>.`,
+   i:[["Selin'in yanlış olduğunu ve nedenini yazdı",2,"Olasılıkta gelme sayısı toplam denemeye bölünür, tersi değil."],
+      ["24/80 = 3/10 buldu",1,"Mavi: 24 ÷ 80, 8'e bölünce 3/10."]]},
+  {b:"c) Sarı",m:`${fr(16,80)} = <b>${fr(1,5)}</b>`,
+   i:[["16/80 = 1/5 buldu",2,"Sarı: 16 ÷ 80, 16'ya bölünce 1/5."]]},
+  {b:"ç) Tahmin",m:"<b>Kırmızı</b>, çünkü deneyde en çok kırmızı geldi (olasılığı 1/2, en büyük).",
+   i:[["Kırmızı dedi ve gerekçe yazdı",2,"Tahmin: en çok gelen daha olasıdır, ama kesin değildir."]]}
+ ]}
+}
+];
+
+const T=[
+{ ad:"Sınav Tatbikatı 1", sorular:[
+ {k:1,h:`<p>Alanı 30 cm² olan, kenar uzunlukları santimetre cinsinden doğal sayı olan farklı dikdörtgenler çizilecektir.</p>
+${qs([["a)","Bu dikdörtgenlerin çevrelerinin birbirine eşit olup olmayacağını tahmin ediniz.",2],["b)","Çizilebilecek bütün dikdörtgenlerin kenar uzunluklarını ve çevrelerini bulunuz. Sonucu tahmininizle karşılaştırınız.",6],["c)","Alanları eşit olan dikdörtgenlerin çevreleri hakkında bir genelleme yazınız.",2]])}`,
+  c:[{b:"a) Tahmin",m:"Örnek: <b>Çevreler eşit olmayabilir.</b> (Tahmin yanlış olsa da b şıkkında karşılaştırdıysa puanı ver.)",i:[["Bir tahmin cümlesi yazdı",2,"Tahmin sorusunda boş bırakma, bir cümle yaz."]]},
+     {b:"b) Dikdörtgenler ve çevreler",m:"1 × 30 → 62 cm · 2 × 15 → 34 cm · 3 × 10 → 26 cm · 5 × 6 → 22 cm",i:[["Dört kenar çiftini de buldu",3,"Alan verilince kenarlar = çarpan çiftleri; 1'den başlayıp sırayla dene."],["Dört çevreyi de doğru hesapladı",3,"Çevre = 2 × (kısa kenar + uzun kenar)."]]},
+     {b:"c) Genelleme",m:"<b>Alanları eşit olan dikdörtgenlerin çevreleri farklı olabilir; kenarlar birbirine yaklaştıkça çevre küçülür.</b>",i:[["Genellemeyi yazdı",2,"Genelleme: kenarlar yaklaştıkça çevre küçülür."]]}]},
+ {k:1,h:`<p>Bir koşu parkurunda bir tur 7 km'dir. Selim her zaman tam tur koşmaktadır. Selim bu hafta toplam 60 km'den fazla, 70 km'den az koşmuştur.</p>
+${qs([["a)","Selim bu hafta kaç km koşmuştur? 7'nin katlarını yazarak gösteriniz.",4],["b)","Selim kaç tur atmıştır?",2]])}`,
+  c:[{b:"a) Toplam yol",m:"7, 14, 21, 28, 35, 42, 49, 56, <b>63</b>, 70 → 60 ile 70 arasında yalnızca <b>63 km</b> (70, 70'ten az değil).",i:[["7'nin katlarını yazdı",2,"Katları sırayla yazma: 7 × 1, 7 × 2, …"],["63 km buldu",2,"\"70'ten az\" demek 70 olmaz; koşula uyan katı seç."]]},
+     {b:"b) Tur sayısı",m:"63 ÷ 7 = <b>9 tur</b>",i:[["9 tur buldu",2,"Tur sayısı = toplam yol ÷ bir tur."]]}]},
+ {k:2,h:`<p>Bir kütüphanedeki kitapların dört basamaklı numaraları vardır. Bir kitabın numarasındaki bir rakam silinmiştir: <span class="num">2${blot}74</span>. Bu numaranın 3 ile kalansız bölündüğü bilinmektedir.</p>
+${qs([["a)","Silinen rakam yerine gelebilecek rakamları bulunuz.",4],["b)","Bulduğunuz numaralardan hangisi 9 ile de kalansız bölünür? Gerekçesiyle yazınız.",3]])}`,
+  c:[{b:"a) Kayıp rakam",m:"2 + 7 + 4 = 13. 13 + ? → 15, 18, 21 → <b>2, 5 ya da 8</b>",i:[["Bilinen rakamları topladı (13)",1,"Kayıp rakam: önce bilinen rakamları topla."],["2, 5 ve 8'in üçünü de buldu",3,"3'ün katına tamamla, sonra 3'er ekle."]]},
+     {b:"b) 9 ile bölünen",m:"<b>2 574</b>, çünkü 2 + 5 + 7 + 4 = 18, 9'un katı.",i:[["2 574 yazdı",2,"9 kuralı: rakamlar toplamı 9'un katı."],["Gerekçesini yazdı",1,"Cevaba \"çünkü...\" ile gerekçe ekleme."]]}]},
+ {k:2,h:`<p>Kerem'in <span class="num">2${ph("A")}${ph("B")}</span> tane fındığı vardır. Kerem fındıklarını ikişerli, üçerli ve beşerli gruplara ayırdığında hiç fındık artmamaktadır.</p>
+${qs([["a)","B yerine gelebilecek rakamı bulunuz. Hem 2'ye hem 5'e kalansız bölünebilen sayıların birler basamağı hakkında bir genelleme yazınız.",4],["b)","A yerine gelebilecek rakamları bulunuz. Bu rakamların neden uygun olduğunu bölünebilme kuralıyla açıklayınız.",4]])}`,
+  c:[{b:"a) B rakamı",m:"<b>B = 0.</b> 2 için son rakam çift, 5 için 0 ya da 5 olmalı; ikisi birden → <b>son rakam 0</b>.",i:[["B = 0 buldu",2,"Hem 2'ye hem 5'e bölünüyorsa son rakam 0."],["Genellemeyi yazdı",2,"Genelleme: hem 2'ye hem 5'e bölünen sayıların birler basamağı 0'dır."]]},
+     {b:"b) A rakamı",m:"2 + A + 0 = 2 + A → 3, 6 ya da 9 olmalı → <b>A = 1, 4 ya da 7</b> (210, 240, 270)",i:[["1, 4 ve 7'yi buldu",3,"3 kuralı: rakamlar toplamı 3'ün katı."],["3 kuralıyla açıkladı",1,"Gerekçede kuralı ve rakam toplamını yaz."]]}]},
+ {k:2,h:`<p>Bir okulda numarası hem 4'e hem 9'a kalansız bölünen dolaplara yeşil etiket yapıştırılacaktır. Dolap numaraları: <b>2 916 · 3 420 · 6 132 · 7 362</b></p>
+${qs([["a)","Hangi dolaplara yeşil etiket yapıştırılacağını, her numarayı kurallarla kontrol ederek belirleyiniz.",8]])}`,
+  c:[{b:"a) Yeşil etiket",m:"2 916: 16 ✓, 18 ✓ → <b>Evet</b> · 3 420: 20 ✓, 9 ✓ → <b>Evet</b> · 6 132: 32 ✓, 12 ✗ → Hayır · 7 362: 62 ✗ → Hayır",
+     i:[["4 kuralını son iki basamakla kontrol etti",2,"4 kuralı: son iki basamak 4'ün katı ya da 00."],["9 kuralını rakamlar toplamıyla kontrol etti",2,"9 kuralı: rakamlar toplamı 9'un katı."],["2 916 ve 3 420'yi buldu, diğerlerini eledi",4,"\"Hem ... hem ...\" iki kuralın ikisi de sağlanmalı."]]}]},
+ {k:3,h:`<p>Bir sınıftaki bazı öğrencilerin okul numaraları şunlardır: <b>11 · 15 · 19 · 21 · 27 · 31 · 33 · 37 · 39 · 47</b></p>
+${qs([["a)","Numarası asal sayı olan öğrencilerin numaralarını yazınız.",4],["b)","60 sayısını asal çarpan algoritmasıyla asal çarpanlarına ayırınız ve asal çarpanlarını yazınız.",4]])}`,
+  c:[{b:"a) Asal numaralar",m:"<b>11, 19, 31, 37, 47.</b> (15 = 3 × 5, 21 = 3 × 7, 27 = 3 × 9, 33 = 3 × 11, 39 = 3 × 13)",i:[["Beş asal sayının hepsini yazdı",3,"Asal sayı: yalnızca 1'e ve kendisine bölünür."],["Asal olmayanları listeye eklemedi",1,"Tuzaklar: 21, 27, 33, 39 tek ama 3'e bölünür."]]},
+     {b:"b) 60'ın asal çarpanları",m:`<div class="algo-row">${algo(60)}</div>Asal çarpanları: <b>2, 3, 5</b>`,i:[["Bölme tablosunu doğru yaptı (60 = 2 × 2 × 3 × 5)",3,"Asal çarpan algoritması: en küçük asalla böl, 1 kalana kadar."],["Asal çarpanları 2, 3, 5 diye tekrar etmeden yazdı",1,"\"Asal çarpanları\" sorulunca tekrar eden sayı bir kez yazılır."]]}]},
+ {k:4,h:`<p>Bir manav 60 kg elma ile 84 kg armudu, birbirine karıştırmadan ve hiç artmayacak şekilde, her biri eşit kilogram ürün alan kasalara koymuştur. Bu iş için toplam 12 kasa kullanmıştır.</p>
+${qs([["a)","Bir kasa kaç kg ürün almaktadır? Ortak bölenleri bularak gösteriniz.",8]])}`,
+  c:[{b:"a) Kasa",m:"60: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60 · 84: 1, 2, 3, 4, 6, 7, 12, 14, 21, 28, 42, 84 · Ortak bölenler: 1, 2, 3, 4, 6, 12 · 12 kg → 60 ÷ 12 = 5, 84 ÷ 12 = 7, 5 + 7 = 12 kasa ✓ → <b>12 kg</b>",
+     i:[["İki sayının bölenlerini yazdı",2,"Bölenleri çarpan çiftleriyle bulma."],["Ortak bölenleri buldu",2,"Ortak bölen: iki listede de olan sayılar."],["Deneyerek 12 kg'ı buldu (5 + 7 = 12 kasa)",4,"Paylaştırma sorusu: ortak bölenleri tek tek dene, kasa sayısını kontrol et."]]}]},
+ {k:4,h:`<p>Bir parkta mavi lamba 6 saniyede bir, sarı lamba 8 saniyede bir yanmaktadır. İki lamba şu anda aynı anda yandı.</p>
+${qs([["a)","İki lamba ilk kez kaç saniye sonra yine birlikte yanar?",4],["b)","Bu andan itibaren 1 dakika içinde kaç kez birlikte yanarlar?",3]])}`,
+  c:[{b:"a) İlk birlikte yanma",m:"6: 6, 12, 18, <b>24</b> · 8: 8, 16, <b>24</b> → <b>24 saniye sonra</b>",i:[["Katları yazıp 24'ü buldu",4,"\"Birlikte, aynı anda\" → ortak kat."]]},
+     {b:"b) 1 dakikada",m:"Ortak katlar: 24, 48, 72, … 1 dakika = 60 saniye → 24 ve 48 → <b>2 kez</b>",i:[["2 kez buldu",3,"1 dakika = 60 saniye; ortak katlardan 60'ı geçmeyenleri say."]]}]},
+ {k:4,h:`<p>Uzunlukları 36 cm ve 54 cm olan iki tahta çıta, hiç parça artmayacak şekilde, santimetre cinsinden doğal sayı uzunluğunda ve birbirine eşit uzunlukta parçalara ayrılacaktır.</p>
+${qs([["a)","Her iki çıta için uygun ortak parça uzunluklarını belirleyiniz.",3],["b)","En az kesim yapmak için parçalar kaç cm olmalıdır? Toplam kaç kesim yapılır? Gerekçesiyle açıklayınız.",5]])}`,
+  c:[{b:"a) Uygun uzunluklar",m:"36: 1, 2, 3, 4, 6, 9, 12, 18, 36 · 54: 1, 2, 3, 6, 9, 18, 27, 54 → Ortak bölenler: <b>1, 2, 3, 6, 9, 18</b>",i:[["Ortak bölenlerin hepsini buldu",3,"Kesme sorusu → ortak bölen."]]},
+     {b:"b) En az kesim",m:"En uzun parça = en büyük ortak bölen = <b>18 cm</b>. 36 ÷ 18 = 2 parça (1 kesim), 54 ÷ 18 = 3 parça (2 kesim) → <b>3 kesim</b>",i:[["18 cm buldu",2,"En az kesim → en uzun parça → en büyük ortak bölen."],["Parça sayılarını buldu",1,"Parça sayısı = uzunluk ÷ parça uzunluğu."],["3 kesim buldu",2,"Kesim sayısı = parça sayısı − 1."]]}]},
+ {k:5,h:`<p>Bir torbadan, her seferinde geri atılarak 60 kez top çekilmiştir. 36 kez yeşil, 24 kez beyaz top gelmiştir. Üç öğrenci yeşil top gelmesinin deneysel olasılığı için şunları söylemiştir:</p>
+<ul><li><b>Can:</b> "Olasılık 36'dır."</li><li><b>Ece:</b> "36'yı 60'a bölmeliyiz."</li><li><b>Ali:</b> "60'ı 36'ya bölmeliyiz."</li></ul>
+${qs([["a)","Hangi öğrencinin yöntemi doğrudur? Diğerlerinin neden yanlış olduğunu açıklayınız.",4],["b)","Yeşil top gelmesinin deneysel olasılığını bulup sadeleştiriniz.",3],["c)","Bir kez daha top çekilirse hangi rengin gelmesinin daha olası olduğunu tahmin ediniz. Gerekçesini yazınız.",3]])}`,
+  c:[{b:"a) Doğru yöntem",m:"<b>Ece</b> doğru. Can yalnızca gelme sayısını yazmış. Ali ters bölmüş, sonuç 1'den büyük çıkar.",i:[["Ece'yi seçti",2,"Deneysel olasılık = gelme sayısı ÷ toplam deneme."],["Can'ın ve Ali'nin hatasını açıkladı",2,"Gelme sayısı tek başına olasılık değildir; olasılık 1'den büyük olamaz."]]},
+     {b:"b) Yeşil",m:`${fr(36,60)} = <b>${fr(3,5)}</b> (12'ye böl)`,i:[["36/60 yazdı",2,"Önce kesri kur: gelme sayısı / toplam deneme."],["3/5 diye sadeleştirdi",1,"Sadeleştirme: pay ve paydayı aynı sayıya böl."]]},
+     {b:"c) Tahmin",m:"<b>Yeşil</b>, çünkü deneyde daha çok geldi (36 > 24); olasılığı daha büyük.",i:[["Yeşil dedi ve gerekçe yazdı",3,"Tahmin: en çok gelen daha olasıdır, ama kesin değildir."]]}]}
+]}
+];
+const KONU_AD=["Çarpan ve kat","Bölünebilme","Asal sayılar","Ortak kat ve bölen","Olasılık"];
+
+
+/* ---------- DURUM ---------- */
+const app=document.getElementById('app');
+const S={test:{},checks:{},tIdx:{},page:{}};
+let P=(()=>{try{return JSON.parse(localStorage.getItem('nisaMat'))||{b:{},t:{}}}catch(e){return {b:{},t:{}}}})();
+P.b=P.b||{}; P.t=P.t||{};
+function save(){try{localStorage.setItem('nisaMat',JSON.stringify(P))}catch(e){}}
+/* tema: oto / acik / koyu */
+const HOST_THEME=document.documentElement.getAttribute('data-theme');
+let THEME=(()=>{try{return localStorage.getItem('nisaTema')||'oto'}catch(e){return 'oto'}})();
+const THEME_AD={oto:'Otomatik',acik:'Açık',koyu:'Koyu'};
+function applyTheme(){const r=document.documentElement;
+  if(THEME==='oto'){HOST_THEME?r.setAttribute('data-theme',HOST_THEME):r.removeAttribute('data-theme');}
+  else r.setAttribute('data-theme',THEME==='acik'?'light':'dark');}
+const themeBtn=()=>`<button class="ghost themebtn" data-act="theme" aria-label="Temayı değiştir">Tema: ${THEME_AD[THEME]}</button>`;
+applyTheme();
+
+/* kontrol grupları ve maddeler */
+function blocks(key){
+  const n=+key.slice(1);
+  if(key[0]==='b') return [{si:0,k:n,groups:B[n-1].yazili.kontrol}];
+  return T[n-1].sorular.map((s,i)=>({si:i,k:s.k,groups:s.c}));
+}
+function items(key){
+  const out=[];
+  blocks(key).forEach(bl=>bl.groups.forEach((g,gi)=>g.i.forEach((it,ii)=>out.push({id:`${key}.${bl.si}.${gi}.${ii}`,t:it[0],p:it[1],fix:it[2],k:bl.k}))));
+  return out;
+}
+const checkedSet=key=>S.checks[key]||(S.checks[key]=new Set());
+function scoreOf(key){const c=checkedSet(key);return items(key).filter(i=>c.has(i.id)).reduce((s,i)=>s+i.p,0)}
+const maxOf=key=>items(key).reduce((s,i)=>s+i.p,0);
+
+/* ---------- ORTAK PARÇALAR ---------- */
+function topBar(crumbs,cur){
+  return `<div class="top"><a class="back" href="#ana">← Bölümler</a>${crumbs?`<div class="crumbs">${crumbs.map((c,i)=>`<span class="crumb ${i===cur?'on':i<cur?'done':''}">${c}</span>`).join('')}</div>`:''}${themeBtn()}</div>`;
+}
+const BC=["Konu","Test","Yazılı","Sonuç"];
+function sendBox(msg){
+  const url='https://wa.me/?text='+encodeURIComponent(msg);
+  return `<div class="actions center"><a class="btn wa" href="${url}" target="_blank" rel="noopener">Abime WhatsApp'tan gönder</a>
+  <button class="ghost" data-act="copy">Metni kopyala</button></div>
+  <textarea class="copybox" id="copybox" readonly hidden>${msg}</textarea>`;
+}
+
+/* ---------- SAYFALAR ---------- */
+function vAna(){
+  const doneCount=[1,2,3,4,5].filter(n=>P.b[n]&&P.b[n].yazili!=null).length;
+  let h=`<header class="home-head"><div class="top"><span class="eyebrow">6. Sınıf Matematik · 1. Dönem 1. Yazılı</span>${themeBtn()}</div><h1>Nisa'nın Matematik Çalışması</h1>
+  <p class="muted">Sınavda 5 konu var: çarpan ve katlar, bölünebilme, asal sayılar, ortak kat ve ortak bölen, olasılık. Her bölümü sırayla bitir.</p></header>
+  <ol class="how"><li>Konuyu oku</li><li>Testi çöz, site anında kontrol eder</li><li>Yazılı sorusunu kağıda, işlemleriyle çöz</li><li>Babam kontrol etsin, sonucu abime gönder</li></ol>
+  <h2>Bölümler</h2><div class="list">`;
+  B.forEach((b,i)=>{const n=i+1,p=P.b[n]||{};const done=p.yazili!=null;
+    const chip=p.test!=null||done?`<span class="chip ${done?'ok':''}">${p.test!=null?`Test ${p.test}/5`:''}${p.test!=null&&done?' · ':''}${done?`Yazılı ${p.yazili}/10`:''}</span>`:`<span class="chip">Başlanmadı</span>`;
+    h+=`<a class="unit ${done?'done':''}" style="--unit:var(--c${n});--unit-soft:var(--c${n}-soft)" href="#b${n}-konu"><span class="no">${n}</span><span><h3>${b.ad}</h3><span class="sub">${b.kisa}</span></span>${chip}</a>`;});
+  h+=`</div><h2>Sınav tatbikatları</h2><div class="list">`;
+  T.forEach((t,i)=>{const n=i+1,p=P.t[n];
+    const chip=p!=null?`<span class="chip ok">${p}/100</span>`:doneCount<5?`<span class="chip">Önce bölümler (${doneCount}/5)</span>`:`<span class="chip">Hazır</span>`;
+    h+=`<a class="unit ${p!=null?'done':''}" href="#t${n}-soru"><span class="no">T${n}</span><span><h3>${t.ad}</h3><span class="sub">${t.sorular.length} soru, gerçek sınav gibi, baba kontrollü</span></span>${chip}</a>`;});
+  h+=`<a class="unit" href="#tekrar"><span class="no">★</span><span><h3>Son Tekrar</h3><span class="sub">Sınav sabahı için bütün kurallar tek sayfada</span></span><span class="chip">1 sayfa</span></a></div>
+  <h2>Diğer dersler</h2><div class="list"><a class="unit other" href="../"><span class="no">Fen</span><span><h3>Fen Çalışması</h3><span class="sub">Gezegenler, tutulmalar, kuvvet</span></span><span class="chip">Geç →</span></a></div>
+  <div class="actions center" id="resetZone"><button class="ghost" data-act="reset1">İlerlemeyi sıfırla</button></div>`;
+  return h;
+}
+function vKonu(n){
+  const b=B[n-1], pages=KONU[n-1], L=pages.length, i=Math.min(S.page[n]||0,L-1), pg=pages[i];
+  return topBar(BC,0)+`<article class="paper"><div class="top"><span class="eyebrow">Bölüm ${n} · ${b.ad}</span><span class="eyebrow">Sayfa ${i+1}/${L}</span></div>
+  <div class="progress"><span style="width:${(i+1)/L*100}%"></span></div>
+  <nav class="pages" aria-label="Sayfalar">${pages.map((p,j)=>`<button class="pg ${j===i?'on':j<i?'done':''}" data-act="pg" data-p="${j}" title="${p.t}">${j+1}</button>`).join('')}</nav>
+  <h1>${pg.t}</h1>${pg.h}
+  <div class="actions">${i>0?`<button class="ghost" data-act="pprev">← Önceki</button>`:''}${i<L-1?`<button class="primary" data-act="pnext">Sonraki sayfa →</button>`:`<button class="primary" data-act="startTest" data-n="${n}">Teste geç →</button>`}</div></article>`;
+}
+function vTest(n){
+  const b=B[n-1],st=S.test[n]||(S.test[n]={i:0,ans:[]}),Q=b.test;
+  if(st.i<Q.length){
+    const q=Q[st.i],a=st.ans[st.i],answered=a!=null;
+    let h=topBar(BC,1)+`<section class="paper"><div class="top"><span class="eyebrow">Bölüm ${n} · Test</span><span class="eyebrow">Soru ${st.i+1}/${Q.length}</span></div>
+    <div class="progress"><span style="width:${(st.i+(answered?1:0))/Q.length*100}%"></span></div><h2>${q.q}</h2><div class="opts">`;
+    q.o.forEach((o,j)=>{let cls='';if(answered){if(j===q.a)cls='right';else if(j===a)cls='wrong';}
+      h+=`<button class="opt ${cls}" data-act="ans" data-j="${j}" ${answered?'disabled':''}>${String.fromCharCode(65+j)}) ${o}</button>`;});
+    h+=`</div>`;
+    if(answered){h+=a===q.a?`<div class="fb good"><b>Doğru!</b> ${q.n}</div>`:`<div class="fb bad"><b>Doğru cevap: ${q.o[q.a]}.</b> ${q.n}</div>`;
+      h+=`<div class="actions"><button class="primary" data-act="next">${st.i+1<Q.length?'Sonraki soru →':'Test sonucunu gör →'}</button></div>`;}
+    return h+`</section>`;
+  }
+  const sc=Q.filter((q,i)=>st.ans[i]===q.a).length, wrong=Q.filter((q,i)=>st.ans[i]!==q.a);
+  let h=topBar(BC,1)+`<section class="paper result"><span class="eyebrow">Bölüm ${n} · Test sonucu</span><div class="big-score">${sc}/${Q.length}</div>`;
+  h+=wrong.length?`<p>Yanlış yaptığın konular için kısa notların:</p><ul class="todo">${wrong.map(q=>`<li><b>${q.q}</b><br>${q.n}</li>`).join('')}</ul>`:`<div class="allgood">Hepsi doğru! Yazılı sorusuna geçebilirsin.</div>`;
+  h+=`<div class="actions center"><button class="ghost" data-act="startTest" data-n="${n}">Testi tekrar çöz</button><a class="btn primary" href="#b${n}-yazili">Yazılı sorusuna geç →</a></div></section>`;
+  return h;
+}
+function vYazili(n){
+  const b=B[n-1];
+  return topBar(BC,2)+`<section class="paper"><span class="eyebrow">Bölüm ${n} · Yazılı sorusu</span><h1>Sınavdaki gibi</h1>
+  <div class="note">Nisa, cevaplarını <b>kağıda</b> yaz. Tablo varsa kağıda çizip doldur. Bitince telefonu babana ver.</div>
+  ${b.yazili.soru}
+  <div class="actions"><a class="btn primary" href="#b${n}-kontrol">Bitirdim, babama veriyorum →</a></div></section>`;
+}
+function vKontrol(key){
+  const n=+key.slice(1), isB=key[0]==='b', set=checkedSet(key);
+  let h=topBar(isB?BC:null,2)+`<section class="paper"><span class="eyebrow">${isB?`Bölüm ${n}`:T[n-1].ad} · Baba kontrolü</span>
+  <div class="note">Babacığım, Nisa'nın kağıdına bak. Yazdığı her madde için kutuyu işaretle. Aynı anlamı kendi cümlesiyle yazdıysa da say.</div>`;
+  blocks(key).forEach(bl=>{
+    if(!isB) h+=`<div class="qhead">Soru ${bl.si+1} · ${KONU_AD[bl.k-1]}</div>`;
+    bl.groups.forEach((g,gi)=>{
+      h+=`<div class="grp ${gi===0?'first':''}"><h3>${g.b}</h3><div class="model">${g.m}</div>`;
+      g.i.forEach((it,ii)=>{const id=`${key}.${bl.si}.${gi}.${ii}`;
+        h+=`<label class="item" for="${id}"><input type="checkbox" id="${id}" data-id="${id}" ${set.has(id)?'checked':''}><span>${it[0]}</span><span class="p">${it[1]} p</span></label>`;});
+      h+=`</div>`;
+    });
+  });
+  h+=`</section><div class="scorebar"><span>Puan <span class="big" id="score">${scoreOf(key)}</span> / ${maxOf(key)}</span><a class="btn" style="background:var(--paper);color:var(--fg);padding:10px 14px" href="#${key}-sonuc">Sonucu gör</a></div>`;
+  return h;
+}
+function vSonucB(n){
+  const key='b'+n, s=scoreOf(key), mx=maxOf(key), c=checkedSet(key);
+  P.b[n]=Object.assign({},P.b[n],{yazili:s}); save();
+  const test=P.b[n].test, miss=items(key).filter(i=>!c.has(i.id)).map(i=>i.fix);
+  const msg=`Nisa · Matematik Bölüm ${n}: ${B[n-1].ad}\nTest: ${test!=null?test+'/5':'çözülmedi'}\nYazılı: ${s}/${mx}`+(miss.length?`\nTekrar edilecekler:\n- ${miss.join('\n- ')}`:'\nEksik yok.');
+  let h=topBar(BC,3)+`<section class="paper result"><span class="eyebrow">Bölüm ${n} · Sonuç</span><h1>${B[n-1].ad}</h1>
+  <div class="scores"><div>Test<b>${test!=null?test+'/5':'—'}</b></div><div>Yazılı<b>${s}/${mx}</b></div></div>`;
+  h+=miss.length?`<span class="eyebrow">Tekrar edilecekler</span><ul class="todo">${miss.map(m=>`<li>${m}</li>`).join('')}</ul>`:`<div class="allgood">Eksik yok, harika!</div>`;
+  h+=sendBox(msg)+`<div class="actions center"><a class="btn ghost" href="#b${n}-kontrol">Kontrole dön</a>${n<5?`<a class="btn primary" href="#b${n+1}-konu">Sonraki bölüm →</a>`:`<a class="btn primary" href="#ana">Bölümlere dön</a>`}</div></section>`;
+  return h;
+}
+function vTSoru(n){
+  const t=T[n-1],i=S.tIdx[n]||0,q=t.sorular[i],L=t.sorular.length;
+  let h=topBar(null)+`<section class="paper"><div class="top"><span class="eyebrow">${t.ad} · ${KONU_AD[q.k-1]}</span><span class="eyebrow">Soru ${i+1}/${L}</span></div>
+  <div class="progress"><span style="width:${(i+1)/L*100}%"></span></div>
+  ${i===0?`<div class="note">Gerçek sınav gibi çöz: cevapları kağıda, soru numarasıyla yaz. Bitince telefonu babana ver.</div>`:''}
+  <h2>${i+1}. Soru</h2>${q.h}
+  <div class="actions">${i>0?`<button class="ghost" data-act="tprev" data-n="${n}">← Önceki</button>`:''}
+  ${i<L-1?`<button class="primary" data-act="tnext" data-n="${n}">Sonraki soru →</button>`:`<a class="btn primary" href="#t${n}-kontrol">Bitirdim, babama veriyorum →</a>`}</div></section>`;
+  return h;
+}
+function vSonucT(n){
+  const key='t'+n, c=checkedSet(key), all=items(key), s=scoreOf(key), mx=maxOf(key), p100=Math.round(s/mx*100);
+  P.t[n]=p100; save();
+  const per=KONU_AD.map((_,i)=>i+1).map(k=>{const its=all.filter(i=>i.k===k);return [its.filter(i=>c.has(i.id)).reduce((a,i)=>a+i.p,0),its.reduce((a,i)=>a+i.p,0)]});
+  const miss=all.filter(i=>!c.has(i.id)).map(i=>i.fix);
+  const uniq=[...new Set(miss)];
+  const msg=`Nisa · Matematik ${T[n-1].ad}\nPuan: ${p100}/100\n`+per.map((v,i)=>`${KONU_AD[i]}: ${v[0]}/${v[1]}`).join('\n')+(uniq.length?`\nTekrar edilecekler:\n- ${uniq.join('\n- ')}`:'\nEksik yok.');
+  let h=topBar(null)+`<section class="paper result"><span class="eyebrow">${T[n-1].ad} · Sonuç</span><div class="big-score">${p100}<span class="muted" style="font-size:1.2rem">/100</span></div>
+  <div class="scores">${per.map((v,i)=>`<div>${KONU_AD[i]}<b>${v[0]}/${v[1]}</b></div>`).join('')}</div>`;
+  h+=uniq.length?`<span class="eyebrow">Tekrar edilecekler</span><ul class="todo">${uniq.map(m=>`<li>${m}</li>`).join('')}</ul>`:`<div class="allgood">Eksik yok, sınava hazırsın!</div>`;
+  h+=sendBox(msg)+`<div class="actions center"><a class="btn ghost" href="#t${n}-kontrol">Kontrole dön</a><a class="btn primary" href="#ana">Ana sayfa</a></div></section>`;
+  return h;
+}
+function vTekrar(){
+  const R=[
+   ["Çarpan ve kat",["Çarpan sayıyı kalansız böler. En küçüğü 1, en büyüğü sayının kendisi.","Çarpanları bul: 1 × …, 2 × …, 3 × … çiftlerini yaz, çiftler buluşunca dur.","Kat: sayı × 1, 2, 3, … Katlar sonsuz, en büyük kat yok.","Alan = kısa × uzun · Çevre = 2 × (kısa + uzun)","Alanlar eşit → çevreler farklı olabilir. Kenarlar yaklaştıkça çevre küçülür.","\"Fazla\" eşit değildir: sınırı geçen ilk katı seç."]],
+   ["Bölünebilme",["2: son rakam çift · 5: 0 ya da 5 · 10: 0","3: rakamlar toplamı 3'ün katı · 9: 9'un katı","4: son iki basamak 4'ün katı ya da 00","6: hem 2'ye hem 3'e","Hem 2'ye hem 5'e → son rakam 0","Kayıp rakam: bilinenleri topla, 3'ün (9'un) katına tamamla, 3 (9) ekleyerek devam et."]],
+   ["Asal sayılar",["Asal: tam iki çarpanı var, 1 ve kendisi. 1 asal değil, 2 tek çift asal.","50'ye kadar: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47","Asal çarpan algoritması: en küçük asalla böl, 1 kalana kadar devam et.","\"Asal çarpanlarını yaz\" → tekrar edeni bir kez yaz: 18 → 2 ve 3."]],
+   ["Ortak kat ve ortak bölen",["Tekrar eden, birlikte olan, paketlenince artmayan → ortak KAT (cevap büyük).","Kesilen, paylaştırılan, eşit parçalara ayrılan → ortak BÖLEN (cevap küçük).","En az kesim → en uzun parça → en büyük ortak bölen.","Kesim sayısı = parça sayısı − 1","İlk ortak kat her zaman cevap değil: koşulu kontrol et."]],
+   ["Olasılık",["Deneysel olasılık = gelme sayısı ÷ toplam deneme sayısı","Kesri sadeleştir. Sonuç 0 ile 1 arasında olmalı.","En çok gelen daha olasıdır ama \"kesin gelir\" denmez.","Bütün olasılıkların toplamı 1."]]
+  ];
+  return topBar(null)+`<article class="paper"><span class="eyebrow">Sınav sabahı</span><h1>Son Tekrar</h1>${R.map(([t,l])=>`<section><h2>${t}</h2><ul>${l.map(x=>`<li>${x}</li>`).join('')}</ul></section>`).join('')}
+  <div class="rule"><b>Unutma:</b><span>İşlemini mutlaka kağıda yaz, sonucu birimiyle yaz (cm, cm², kg) ve "çünkü..." ile açıkla.</span></div></article>`;
+}
+
+/* ---------- YÖNLENDİRME ---------- */
+function render(){
+  const h=(location.hash||'#ana').slice(1); let html; let m;
+  const um=h.match(/^b([1-5])-/);
+  if(um){app.style.setProperty('--unit',`var(--c${um[1]})`);app.style.setProperty('--unit-soft',`var(--c${um[1]}-soft)`);app.dataset.unit=um[1];}
+  else{app.style.removeProperty('--unit');app.style.removeProperty('--unit-soft');delete app.dataset.unit;}
+  if((m=h.match(/^b([1-5])-(konu|test|yazili|kontrol|sonuc)$/))){const n=+m[1];
+    html={konu:()=>vKonu(n),test:()=>vTest(n),yazili:()=>vYazili(n),kontrol:()=>vKontrol('b'+n),sonuc:()=>vSonucB(n)}[m[2]]();}
+  else if((m=h.match(/^t([1-9])-(soru|kontrol|sonuc)$/))){const n=+m[1];
+    html={soru:()=>vTSoru(n),kontrol:()=>vKontrol('t'+n),sonuc:()=>vSonucT(n)}[m[2]]();}
+  else if(h==='tekrar') html=vTekrar();
+  else html=vAna();
+  app.innerHTML=html;
+}
+function goTop(){window.scrollTo(0,0)}
+window.addEventListener('hashchange',()=>{render();goTop();});
+app.addEventListener('click',e=>{
+  const el=e.target.closest('[data-act]'); if(!el) return;
+  const act=el.dataset.act;
+  if(act==='startTest'){const n=+el.dataset.n;S.test[n]={i:0,ans:[]};if(location.hash==='#b'+n+'-test'){render();goTop();}else location.hash='b'+n+'-test';}
+  else if(act==='ans'){const n=+location.hash.match(/b(\d)/)[1],st=S.test[n];st.ans[st.i]=+el.dataset.j;render();}
+  else if(act==='next'){const n=+location.hash.match(/b(\d)/)[1],st=S.test[n];st.i++;
+    if(st.i>=B[n-1].test.length){const sc=B[n-1].test.filter((q,i)=>st.ans[i]===q.a).length;P.b[n]=Object.assign({},P.b[n],{test:sc});save();}
+    render();goTop();}
+  else if(act==='pg'||act==='pnext'||act==='pprev'){const n=+location.hash.match(/b(\d)/)[1];const cur=S.page[n]||0;
+    S.page[n]=act==='pg'?+el.dataset.p:cur+(act==='pnext'?1:-1);render();goTop();}
+  else if(act==='theme'){THEME={oto:'acik',acik:'koyu',koyu:'oto'}[THEME];try{localStorage.setItem('nisaTema',THEME)}catch(e){}applyTheme();document.querySelectorAll('.themebtn').forEach(b=>b.textContent='Tema: '+THEME_AD[THEME]);}
+  else if(act==='reset1'){document.getElementById('resetZone').innerHTML=`<span>Bütün puanlar silinsin mi?</span><button class="ghost" data-act="reset0">Vazgeç</button><button class="primary" data-act="reset2">Evet, sıfırla</button>`;}
+  else if(act==='reset0'){render();}
+  else if(act==='reset2'){P={b:{},t:{}};save();S.test={};S.checks={};S.tIdx={};S.page={};render();goTop();}
+  else if(act==='tnext'||act==='tprev'){const n=+el.dataset.n;S.tIdx[n]=(S.tIdx[n]||0)+(act==='tnext'?1:-1);render();goTop();}
+  else if(act==='copy'){const box=document.getElementById('copybox');const txt=box.value;
+    const fallback=()=>{box.hidden=false;box.focus();box.select();el.textContent='Seç ve kopyala';};
+    try{navigator.clipboard.writeText(txt).then(()=>{el.textContent='Kopyalandı ✓';},fallback);}catch(err){fallback();}}
+});
+app.addEventListener('change',e=>{
+  const cb=e.target.closest('input[data-id]'); if(!cb) return;
+  const key=cb.dataset.id.split('.')[0], set=checkedSet(key);
+  cb.checked?set.add(cb.dataset.id):set.delete(cb.dataset.id);
+  const sc=document.getElementById('score'); if(sc) sc.textContent=scoreOf(key);
+});
+render();
+</script>
+
+</body>
+</html>
