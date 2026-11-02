@@ -892,6 +892,7 @@ function vAna(){
     const chip=p!=null?`<span class="chip ok">${p}/100</span>`:doneCount<4?`<span class="chip">Önce bölümler (${doneCount}/4)</span>`:`<span class="chip">Hazır</span>`;
     h+=`<a class="unit ${p!=null?'done':''}" href="#t${n}-soru"><span class="no">T${n}</span><span><h3>${t.ad}</h3><span class="sub">Gerçek sınav gibi 7 soru, baba kontrollü</span></span>${chip}</a>`;});
   h+=`<a class="unit" href="#tekrar"><span class="no">★</span><span><h3>Son Tekrar</h3><span class="sub">Sınav sabahı için bütün kurallar tek sayfada</span></span><span class="chip">1 sayfa</span></a></div>
+  <h2>Diğer dersler</h2><div class="list"><a class="unit" href="matematik/"><span class="no">÷</span><span><h3>Matematik Çalışması</h3><span class="sub">Çarpan, bölünebilme, asal, ortak kat-bölen, olasılık</span></span><span class="chip">Geç →</span></a></div>
   <div class="actions center" id="resetZone"><button class="ghost" data-act="reset1">İlerlemeyi sıfırla</button></div>`;
   return h;
 }
