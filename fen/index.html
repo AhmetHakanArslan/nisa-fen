@@ -241,6 +241,8 @@ article.paper h1{text-decoration-line:underline;text-decoration-style:wavy;text-
 article.paper h3{margin-top:4px}
 article.paper p b, article.paper li b{background:linear-gradient(transparent 56%,var(--hl) 56%);padding:0 2px;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .rule p b, .rule li b, .hata p b, .hata li b{background:none;padding:0}
+article.paper .deney p b{background:none;padding:0}
+.rule span b{font-family:inherit;font-size:inherit;font-weight:800;line-height:inherit}
 .ornek{position:relative;display:block;background-color:var(--paper);background-image:linear-gradient(90deg,transparent 34px,var(--margin) 34px,var(--margin) 36px,transparent 36px),repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rl) 31px,var(--rl) 32px);background-position:0 12px;border:2px solid var(--edge);border-radius:6px;box-shadow:4px 4px 0 var(--edge);padding:12px 18px 14px 50px;line-height:32px}
 .ornek > *{margin:0;line-height:32px}
 .ornek .eyebrow{display:block;color:var(--unit,var(--accent))}
@@ -274,6 +276,44 @@ input.bos.yanlis{background:var(--warn-soft);border-bottom-color:var(--warn)}
 @keyframes adim{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 @media (min-width:700px){ .wrap{max-width:940px} article.paper{padding:40px 52px 44px;gap:26px} #app[data-unit] article.paper{padding-top:48px} }
 @media (min-width:1000px){ .wrap{max-width:980px} }
+
+
+.deney{border:2px solid var(--edge);border-radius:10px;background:var(--paper);padding:16px 18px;display:grid;gap:12px;box-shadow:4px 4px 0 var(--edge)}
+.deney .eyebrow{color:var(--unit,var(--accent))}
+.deney .actions{justify-content:flex-start}
+.dsonuc{display:grid;gap:8px;min-height:120px}
+.dbar{display:grid;grid-template-columns:70px 1fr 90px;gap:10px;align-items:center;font-weight:800}
+.dcub{height:22px;border:2px solid var(--edge);border-radius:6px;overflow:hidden;background:var(--bg)}
+.dcub span{display:block;height:100%;transition:width .4s ease}
+.dsay{font-family:var(--hand);font-size:1.25rem;font-weight:400;font-variant-numeric:tabular-nums}
+.dgecmis{margin:0;padding-left:1.3em;color:var(--muted);font-size:.95rem;display:grid;gap:2px}
+.dgecmis:empty{display:none}
+/* ===== Bölüm listesi sayfası ===== */
+.home-head .date{margin:6px 0 0;font-weight:700;color:var(--muted)}
+.ahead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.ahead h1{font-size:3rem}
+.stars{display:flex;align-items:center;gap:8px;background:var(--paper);border:2px solid var(--edge);border-radius:999px;padding:7px 16px 7px 12px;font-weight:800}
+svg.st{width:24px;height:24px;flex:none}
+svg.st path{fill:#FFC83D;stroke:var(--edge);stroke-width:1.6;stroke-linejoin:round}
+.today{position:relative;background:var(--note);padding:30px 28px 26px;transform:rotate(-.8deg);box-shadow:0 10px 0 -4px var(--note-edge);display:grid;gap:12px;margin:12px 0 6px}
+.today::before{content:"";position:absolute;top:-14px;left:50%;margin-left:-70px;width:140px;height:28px;background:var(--tape);opacity:.85;transform:rotate(2deg)}
+.today h2{font-size:2.2rem}
+.today p{font-size:1.1rem;max-width:36em}
+.acts{display:flex;gap:10px;flex-wrap:wrap}
+.bgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.bcard{text-decoration:none;color:var(--fg);background:var(--paper);border:2px solid var(--edge);border-radius:6px;box-shadow:6px 6px 0 var(--edge);display:flex;flex-direction:column;overflow:hidden}
+.bcard:hover{transform:translate(-1px,-1px);box-shadow:7px 7px 0 var(--edge)}
+.bcard .band{height:14px;background:var(--unit,var(--fg));border-bottom:2px solid var(--edge)}
+.bcard.tcard .band{background:repeating-linear-gradient(45deg,var(--note) 0 10px,var(--note-edge) 10px 20px)}
+.bbody{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:16px 18px 8px;align-items:start}
+.bno{width:48px;height:48px;border-radius:50%;border:2px solid var(--edge);background:var(--unit-soft,var(--accent-soft));color:var(--unit,var(--fg));display:grid;place-items:center;font-family:var(--hand);font-size:1.6rem}
+.btxt{display:grid;gap:2px}
+.bcard h3{font-size:1.2rem;line-height:1.25}
+.bcard .sub{font-size:.9rem;color:var(--muted)}
+.bdur{display:flex;align-items:center;gap:6px;padding:4px 18px 16px;font-family:var(--hand);font-size:1.15rem;margin-top:auto}
+.bcard.done .bdur{color:var(--ok)}
+@media (max-width:600px){.bgrid{grid-template-columns:1fr}.ahead h1{font-size:2.5rem}}
+@media (prefers-reduced-motion:reduce){.bcard:hover{transform:none}}
 </style>
 
 </head>
@@ -976,19 +1016,28 @@ function sendBox(msg){
 
 /* ---------- SAYFALAR ---------- */
 function vAna(){
-  const doneCount=[1,2,3,4].filter(n=>P.b[n]&&P.b[n].yazili!=null).length;
-  let h=`<header class="home-head"><div class="top"><a class="back" href="../">← Ana sayfa</a>${themeBtn()}</div><span class="eyebrow">6. Sınıf Fen Bilimleri · 1. Dönem 1. Yazılı</span><h1>Nisa'nın Fen Çalışması</h1>
+  const N=B.length, done=B.map((_,i)=>!!(P.b[i+1]&&P.b[i+1].yazili!=null)), doneCount=done.filter(Boolean).length;
+  const STAR='<svg class="st" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1 6.3-5.6-3-5.6 3 1-6.3L2.9 9.4l6.3-.9z"/></svg>';
+  const nx=done.indexOf(false); let not;
+  if(nx>=0){const n=nx+1,p=P.b[n]||{},b=B[nx],yz=p.test!=null;
+    not={b:'Sıradaki bölüm',m:`${n}. bölüm: <b>${b.ad}</b>. `+(yz?'Testi bitirdin, sırada yazılı sorusu var. Kağıt kalemini hazırla.':`Önce konuyu oku (${KONU[nx].length} sayfa), sonra ${b.test.length} soruluk testi çöz.`),l:`#b${n}-${yz?'yazili':'konu'}`,d:(doneCount||yz)?'Kaldığım yerden devam et':'Hadi başlayalım'};}
+  else{const tj=T.findIndex((_,i)=>P.t[i+1]==null);
+    not=tj>=0?{b:'Bütün bölümler bitti!',m:`Sırada <b>${T[tj].ad}</b> var: gerçek sınav gibi ${T[tj].sorular.length} soru. Kağıda çöz, sonra babana ver.`,l:`#t${tj+1}-soru`,d:'Tatbikata başla'}
+      :{b:'Hepsi tamam!',m:'Bütün bölümler ve tatbikatlar bitti. Sınav sabahı Son Tekrar sayfasına bir göz at.',l:'#tekrar',d:"Son Tekrar'ı aç"};}
+  let h=`<header class="home-head"><div class="top"><a class="back" href="../">← Ana sayfa</a>${themeBtn()}</div>
+  <div class="ahead"><div><p class="date">6. Sınıf · 1. Dönem 1. Yazılı</p><h1>Fen Bilimleri</h1></div><div class="stars">${STAR}<span>${doneCount}/${N} bölüm</span></div></div>
   <p class="muted">Sınavda 7 soru var: Gezegenler 1, Tutulmalar 2, Bileşke kuvvet 2, Dengelenmiş kuvvet 2.</p></header>
-  <ol class="how"><li>Konuyu oku</li><li>Testi çöz, site anında kontrol eder</li><li>Yazılı sorusunu kağıda çöz</li><li>Babam kontrol etsin, sonucu abime gönder</li></ol>
-  <h2>Bölümler</h2><div class="list">`;
-  B.forEach((b,i)=>{const n=i+1,p=P.b[n]||{};const done=p.yazili!=null;
-    const chip=p.test!=null||done?`<span class="chip ${done?'ok':''}">${p.test!=null?`Test ${p.test}/5`:''}${p.test!=null&&done?' · ':''}${done?`Yazılı ${p.yazili}/10`:''}</span>`:`<span class="chip">Başlanmadı</span>`;
-    h+=`<a class="unit ${done?'done':''}" style="--unit:var(--c${n});--unit-soft:var(--c${n}-soft)" href="#b${n}-konu"><span class="no">${n}</span><span><h3>${b.ad}</h3><span class="sub">${b.kisa}</span></span>${chip}</a>`;});
-  h+=`</div><h2>Sınav tatbikatları</h2><div class="list">`;
+  <section class="today"><h2>${not.b}</h2><p>${not.m}</p><div class="acts"><a class="btn primary" href="${not.l}">${not.d}</a></div></section>
+  <ol class="how"><li>Konuyu oku, kutuları doldur</li><li>Testi çöz, site anında kontrol eder</li><li>Yazılı sorusunu kağıda çöz</li><li>Babam kontrol etsin, sonucu abime gönder</li></ol>
+  <h2>Bölümler</h2><div class="bgrid">`;
+  B.forEach((b,i)=>{const n=i+1,p=P.b[n]||{},d=done[i],t=p.test!=null;
+    const durum=d?`${STAR}<span>Tamamlandı · Test ${p.test}/${b.test.length} · Yazılı ${p.yazili}/10</span>`:t?`<span>Test ${p.test}/${b.test.length} · sırada yazılı</span>`:`<span>${KONU[i].length} sayfa konu · ${b.test.length} soruluk test</span>`;
+    h+=`<a class="bcard${d?' done':''}" style="--unit:var(--c${n});--unit-soft:var(--c${n}-soft)" href="#b${n}-konu"><span class="band"></span><span class="bbody"><span class="bno">${n}</span><span class="btxt"><h3>${b.ad}</h3><span class="sub">${b.kisa}</span></span></span><span class="bdur">${durum}</span></a>`;});
+  h+=`</div><h2>Sınava hazırlık</h2><div class="bgrid">`;
   T.forEach((t,i)=>{const n=i+1,p=P.t[n];
-    const chip=p!=null?`<span class="chip ok">${p}/100</span>`:doneCount<4?`<span class="chip">Önce bölümler (${doneCount}/4)</span>`:`<span class="chip">Hazır</span>`;
-    h+=`<a class="unit ${p!=null?'done':''}" href="#t${n}-soru"><span class="no">T${n}</span><span><h3>${t.ad}</h3><span class="sub">Gerçek sınav gibi 7 soru, baba kontrollü</span></span>${chip}</a>`;});
-  h+=`<a class="unit" href="#tekrar"><span class="no">★</span><span><h3>Son Tekrar</h3><span class="sub">Sınav sabahı için bütün kurallar tek sayfada</span></span><span class="chip">1 sayfa</span></a></div>
+    const durum=p!=null?`${STAR}<span>Puan ${p}/100</span>`:doneCount<N?`<span>Önce bölümleri bitir (${doneCount}/${N})</span>`:`<span>Hazır, başlayabilirsin</span>`;
+    h+=`<a class="bcard tcard${p!=null?' done':''}" href="#t${n}-soru"><span class="band"></span><span class="bbody"><span class="bno">T${n}</span><span class="btxt"><h3>${t.ad}</h3><span class="sub">${t.sorular.length} soru, gerçek sınav gibi, baba kontrollü</span></span></span><span class="bdur">${durum}</span></a>`;});
+  h+=`<a class="bcard tcard" href="#tekrar"><span class="band"></span><span class="bbody"><span class="bno">★</span><span class="btxt"><h3>Son Tekrar</h3><span class="sub">Sınav sabahı için bütün kurallar tek sayfada</span></span></span><span class="bdur"><span>1 sayfa</span></span></a></div>
   <div class="actions center" id="resetZone"><button class="ghost" data-act="reset1">İlerlemeyi sıfırla</button></div>`;
   return h;
 }
@@ -1119,6 +1168,7 @@ app.addEventListener('click',e=>{
   else if(act==='reset2'){P={b:{},t:{}};save();S.test={};S.checks={};S.tIdx={};S.page={};render();goTop();}
   else if(act==='tnext'||act==='tprev'){const n=+el.dataset.n;S.tIdx[n]=(S.tIdx[n]||0)+(act==='tnext'?1:-1);render();goTop();}
   else if(act==='adim'){const box=el.closest('.adimlar'),nx=box.querySelector('li[hidden]');if(nx){nx.hidden=false;nx.classList.add('yeni');}if(!box.querySelector('li[hidden]')){el.textContent='Çözüm tamam';el.disabled=true;el.className='ghost';}}
+  else if(act==='deney'){const box=el.closest('.deney'),n=+el.dataset.n,c={'Mavi':0,'Sarı':0,'Kırmızı':0},renk={'Mavi':'#3c86d6','Sarı':'#e9a619','Kırmızı':'#d0452f'};for(let i=0;i<n;i++){const r=Math.floor(Math.random()*4);c[r<2?'Mavi':r===2?'Sarı':'Kırmızı']++;}box.querySelector('.dsonuc').innerHTML='<p><b>'+n+' kez çevrildi:</b></p>'+Object.keys(c).map(k=>'<div class="dbar"><span class="dad">'+k+'</span><span class="dcub"><span style="width:'+(c[k]/n*100)+'%;background:'+renk[k]+'"></span></span><span class="dsay">'+c[k]+'/'+n+'</span></div>').join('');box.querySelector('.dgecmis').insertAdjacentHTML('afterbegin','<li>'+n+' çevirme → mavi '+c['Mavi']+'/'+n+'</li>');}
   else if(act==='kontrol'){const box=el.closest('.birlikte'),ins=[...box.querySelectorAll('input.bos')];const nz=v=>String(v).trim().replace(/\s+/g,'').replace(/\./g,',').toLowerCase();let ok=0;ins.forEach(i=>{const d=i.dataset.c.split('|').some(c=>nz(c)===nz(i.value));i.classList.toggle('dogru',d);i.classList.toggle('yanlis',!d);if(d)ok++;});const fb=box.querySelector('.bfb');fb.hidden=false;fb.className='bfb '+(ok===ins.length?'iyi':'kotu');fb.textContent=ok===ins.length?'Harika, hepsi doğru!':(ins.length-ok)+' boşluk yanlış. Kırmızı olanları düzeltip tekrar dene.';}
   else if(act==='copy'){const box=document.getElementById('copybox');const txt=box.value;
     const fallback=()=>{box.hidden=false;box.focus();box.select();el.textContent='Seç ve kopyala';};
