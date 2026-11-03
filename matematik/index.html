@@ -267,6 +267,8 @@ article.paper h1{text-decoration-line:underline;text-decoration-style:wavy;text-
 article.paper h3{margin-top:4px}
 article.paper p b, article.paper li b{background:linear-gradient(transparent 56%,var(--hl) 56%);padding:0 2px;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .rule p b, .rule li b, .hata p b, .hata li b{background:none;padding:0}
+article.paper .deney p b{background:none;padding:0}
+.rule span b{font-family:inherit;font-size:inherit;font-weight:800;line-height:inherit}
 .ornek{position:relative;display:block;background-color:var(--paper);background-image:linear-gradient(90deg,transparent 34px,var(--margin) 34px,var(--margin) 36px,transparent 36px),repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rl) 31px,var(--rl) 32px);background-position:0 12px;border:2px solid var(--edge);border-radius:6px;box-shadow:4px 4px 0 var(--edge);padding:12px 18px 14px 50px;line-height:32px}
 .ornek > *{margin:0;line-height:32px}
 .ornek .eyebrow{display:block;color:var(--unit,var(--accent))}
@@ -300,6 +302,44 @@ input.bos.yanlis{background:var(--warn-soft);border-bottom-color:var(--warn)}
 @keyframes adim{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 @media (min-width:700px){ .wrap{max-width:940px} article.paper{padding:40px 52px 44px;gap:26px} #app[data-unit] article.paper{padding-top:48px} }
 @media (min-width:1000px){ .wrap{max-width:980px} }
+
+
+.deney{border:2px solid var(--edge);border-radius:10px;background:var(--paper);padding:16px 18px;display:grid;gap:12px;box-shadow:4px 4px 0 var(--edge)}
+.deney .eyebrow{color:var(--unit,var(--accent))}
+.deney .actions{justify-content:flex-start}
+.dsonuc{display:grid;gap:8px;min-height:120px}
+.dbar{display:grid;grid-template-columns:70px 1fr 90px;gap:10px;align-items:center;font-weight:800}
+.dcub{height:22px;border:2px solid var(--edge);border-radius:6px;overflow:hidden;background:var(--bg)}
+.dcub span{display:block;height:100%;transition:width .4s ease}
+.dsay{font-family:var(--hand);font-size:1.25rem;font-weight:400;font-variant-numeric:tabular-nums}
+.dgecmis{margin:0;padding-left:1.3em;color:var(--muted);font-size:.95rem;display:grid;gap:2px}
+.dgecmis:empty{display:none}
+/* ===== Bölüm listesi sayfası ===== */
+.home-head .date{margin:6px 0 0;font-weight:700;color:var(--muted)}
+.ahead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.ahead h1{font-size:3rem}
+.stars{display:flex;align-items:center;gap:8px;background:var(--paper);border:2px solid var(--edge);border-radius:999px;padding:7px 16px 7px 12px;font-weight:800}
+svg.st{width:24px;height:24px;flex:none}
+svg.st path{fill:#FFC83D;stroke:var(--edge);stroke-width:1.6;stroke-linejoin:round}
+.today{position:relative;background:var(--note);padding:30px 28px 26px;transform:rotate(-.8deg);box-shadow:0 10px 0 -4px var(--note-edge);display:grid;gap:12px;margin:12px 0 6px}
+.today::before{content:"";position:absolute;top:-14px;left:50%;margin-left:-70px;width:140px;height:28px;background:var(--tape);opacity:.85;transform:rotate(2deg)}
+.today h2{font-size:2.2rem}
+.today p{font-size:1.1rem;max-width:36em}
+.acts{display:flex;gap:10px;flex-wrap:wrap}
+.bgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.bcard{text-decoration:none;color:var(--fg);background:var(--paper);border:2px solid var(--edge);border-radius:6px;box-shadow:6px 6px 0 var(--edge);display:flex;flex-direction:column;overflow:hidden}
+.bcard:hover{transform:translate(-1px,-1px);box-shadow:7px 7px 0 var(--edge)}
+.bcard .band{height:14px;background:var(--unit,var(--fg));border-bottom:2px solid var(--edge)}
+.bcard.tcard .band{background:repeating-linear-gradient(45deg,var(--note) 0 10px,var(--note-edge) 10px 20px)}
+.bbody{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:16px 18px 8px;align-items:start}
+.bno{width:48px;height:48px;border-radius:50%;border:2px solid var(--edge);background:var(--unit-soft,var(--accent-soft));color:var(--unit,var(--fg));display:grid;place-items:center;font-family:var(--hand);font-size:1.6rem}
+.btxt{display:grid;gap:2px}
+.bcard h3{font-size:1.2rem;line-height:1.25}
+.bcard .sub{font-size:.9rem;color:var(--muted)}
+.bdur{display:flex;align-items:center;gap:6px;padding:4px 18px 16px;font-family:var(--hand);font-size:1.15rem;margin-top:auto}
+.bcard.done .bdur{color:var(--ok)}
+@media (max-width:600px){.bgrid{grid-template-columns:1fr}.ahead h1{font-size:2.5rem}}
+@media (prefers-reduced-motion:reduce){.bcard:hover{transform:none}}
 </style>
 
 </head>
@@ -370,16 +410,16 @@ function sieve(max){
 }
 
 /* Çark */
-function spinnerSVG(){
+function spinnerSVG(yazi=true){
   const cx=150,cy=105,r=88, seg=[["Mavi","#3c86d6"],["Sarı","#e9a619"],["Mavi","#3c86d6"],["Kırmızı","#d0452f"]];
-  let s=`<svg viewBox="0 0 600 215" role="img" aria-label="Dört bölmeli renkli bir çark">`;
+  let s=`<svg viewBox="0 0 ${yazi?600:300} 215" role="img" aria-label="Dört bölmeli renkli bir çark"${yazi?'':' style="max-width:320px;margin:0 auto"'}>`;
   seg.forEach(([n,c],i)=>{
     const a0=(i*90-90)*Math.PI/180, a1=((i+1)*90-90)*Math.PI/180, am=(a0+a1)/2;
     s+=`<path d="M${cx} ${cy} L${cx+r*Math.cos(a0)} ${cy+r*Math.sin(a0)} A${r} ${r} 0 0 1 ${cx+r*Math.cos(a1)} ${cy+r*Math.sin(a1)} Z" fill="${c}" stroke="var(--paper)" stroke-width="3"/>`;
     s+=`<text x="${cx+r*.58*Math.cos(am)}" y="${cy+r*.58*Math.sin(am)+5}" text-anchor="middle" style="fill:#fff;font-size:13px">${n}</text>`;
   });
   s+=`<circle cx="${cx}" cy="${cy}" r="7" fill="var(--fg)"/><path d="M${cx-11} 2 L${cx+11} 2 L${cx} 24 Z" fill="var(--fg)"/>`;
-  s+=`<text x="300" y="70">60 kez çevrildi:</text><text x="300" y="100" style="fill:#d0452f">24 kez kırmızı geldi</text><text x="300" y="130">36 kez başka renk geldi</text>`;
+  if(yazi) s+=`<text x="300" y="70">60 kez çevrildi:</text><text x="300" y="100" style="fill:#d0452f">24 kez kırmızı geldi</text><text x="300" y="130">36 kez başka renk geldi</text>`;
   return `<div class="fig">${s}</svg></div>`;
 }
 
@@ -411,6 +451,22 @@ function yuzluk(n){
   return `<div class="fig yuz">${s}</svg></div>`;
 }
 
+/* Ortak kat: sayı doğrusunda atlamalar */
+function atlamaSVG(a,b,max,la,lb){
+  const x0=30,W=560,sc=W/max; let s=`<svg viewBox="0 0 620 150" role="img" aria-label="${la} ve ${lb} atlamalar sayı doğrusunda, buluştukları yerler ortak katlar">`;
+  for(let i=0;i<max;i+=b){const x1=x0+i*sc,x2=x0+(i+b)*sc;s+=`<path d="M${x1} 86 Q${(x1+x2)/2} -4 ${x2} 86" fill="none" stroke="var(--c2)" stroke-width="2.5"/>`;}
+  for(let i=0;i<max;i+=a){const x1=x0+i*sc,x2=x0+(i+a)*sc;s+=`<path d="M${x1} 86 Q${(x1+x2)/2} 36 ${x2} 86" fill="none" stroke="var(--c1)" stroke-width="2.5"/>`;}
+  s+=`<line x1="${x0}" y1="90" x2="${x0+W}" y2="90" stroke="var(--fg)" stroke-width="2"/>`;
+  for(let i=0;i<=max;i++){const x=x0+i*sc,k=i%a===0||i%b===0,o=i>0&&i%a===0&&i%b===0;
+    s+=`<line x1="${x}" y1="${k?84:87}" x2="${x}" y2="${k?96:93}" stroke="var(--fg)" stroke-width="1.5"/>`;
+    if(k) s+=`<text x="${x}" y="114" text-anchor="middle" style="font-size:${o?16:12}px${o?';fill:var(--warn)':''}">${i}</text>`;
+    if(o) s+=`<circle cx="${x}" cy="90" r="7" fill="var(--note,#FFF06A)" stroke="var(--warn)" stroke-width="2.5"/>`;}
+  s+=`<text x="${x0}" y="140" style="fill:var(--c1)">— ${la} atlama</text><text x="${x0+160}" y="140" style="fill:var(--c2)">— ${lb} atlama</text>`;
+  return `<div class="fig">${s}</svg></div><p class="cap">Sarı yuvarlaklarda iki atlama buluşuyor: bunlar ortak katlar (12, 24, 36).</p>`;
+}
+/* Olasılık: çark deneyi kutusu */
+const deneyKutu=()=>`<div class="deney"><span class="eyebrow">Deney: çarkı çevir</span><p>Çarkın 4 eşit parçasından 2'si mavi, 1'i sarı, 1'i kırmızı. Kaç kez çevirelim?</p><div class="actions"><button class="primary" data-act="deney" data-n="10">10 kez</button><button class="primary" data-act="deney" data-n="100">100 kez</button><button class="primary" data-act="deney" data-n="1000">1000 kez</button></div><div class="dsonuc"><p class="muted">Bir düğmeye dokun, sonuçlar burada görünecek.</p></div><ol class="dgecmis" aria-label="Önceki deneyler"></ol></div>`;
+
 const KONU=[
 /* ===== BÖLÜM 1: ÇARPANLAR VE KATLAR ===== */
 [
@@ -426,6 +482,10 @@ const KONU=[
 <p>Sıradaki 6 zaten 5 × 6'da var, burada dururuz.</p>
 <p><b>30'un çarpanları: 1, 2, 3, 5, 6, 10, 15, 30.</b> Toplam 8 çarpan.</p></div>
 <div class="rule"><span class="eyebrow">Unutma</span><b>En küçük çarpan 1, en büyük çarpan sayının kendisi</b><span>Soruda "en büyük çarpanı 30" yazıyorsa, o sayı 30'dur.</span></div>
+${birlikte([
+ `24'ün çarpan çiftleri: 1 × ${bosluk('24')} · 2 × ${bosluk('12')} · 3 × ${bosluk('8')} · 4 × ${bosluk('6')}`,
+ `4, 36'nın çarpanıdır, çünkü 4 × ${bosluk('9')} = 36`,
+ `20'nin çarpanları 1, 2, 4, 5, 10, 20. Yani 20'nin ${bosluk('6')} çarpanı var.`])}
 ${yok("18'in çarpanları nelerdir?","1 × 18, 2 × 9, 3 × 6 → <b>1, 2, 3, 6, 9, 18.</b>")}
 ${yok("Bir sayının bilinen çarpanları 2, 5, 10 ve en büyük çarpanı 20. Verilmeyen çarpanlar hangileri?","En büyük çarpan 20 olduğu için sayı 20. 20'nin çarpanları: 1, 2, 4, 5, 10, 20. Verilmeyenler: <b>1 ve 4.</b>")}`},
 {t:"Çarpanlar ve dikdörtgenler",h:`
@@ -436,6 +496,9 @@ ${rectSVG([[1,24],[2,12],[3,8],[4,6]])}
 ${tbl(["Kenarlar","Alan","Çevre"],[["1 cm ve 24 cm","24 cm²","50 cm"],["2 cm ve 12 cm","24 cm²","28 cm"],["3 cm ve 8 cm","24 cm²","22 cm"],["4 cm ve 6 cm","24 cm²","20 cm"]])}
 <div class="rule"><span class="eyebrow">Genelleme</span><b>Alanlar eşit olsa da çevreler farklı olabilir</b><span>Kenarlar birbirine <b>yaklaştıkça</b> çevre <b>küçülür</b>. Kenarlar arasındaki fark büyüdükçe çevre büyür. 1 ile 24 çok farklı, çevre 50 cm. 4 ile 6 birbirine yakın, çevre 20 cm.</span></div>
 <div class="hata"><b>Sık yapılan hata:</b> Alanı ve çevreyi karıştırmak. Alan için kenarları <b>çarparsın</b>, birimi cm². Çevre için dört kenarı <b>toplarsın</b>, birimi cm.</div>
+${birlikte([
+ `Alanı 12 cm²: 1 × 12 → çevre ${bosluk('26')} cm · 2 × 6 → çevre ${bosluk('16')} cm · 3 × 4 → çevre ${bosluk('14')} cm`,
+ `Bu üçünden çevresi en küçük olanın kısa kenarı ${bosluk('3')} cm`])}
 ${yok("Alanı 16 cm² olan dikdörtgenlerden hangisinin çevresi en küçüktür?","1 × 16 → 34 cm, 2 × 8 → 20 cm, 4 × 4 → 16 cm. En küçük çevre <b>4 cm × 4 cm</b> olanda. Bu bir karedir; kare de bir dikdörtgendir.")}`},
 {t:"Katlar",h:`
 <p class="lead">Bir paket sakızda 4 sakız var. 1 paket alırsan 4, 2 paket alırsan 8, 3 paket alırsan 12 sakızın olur. Bu sayılar 4'ün katlarıdır.</p>
@@ -444,6 +507,10 @@ ${tbl(["","× 1","× 2","× 3","× 4","× 5","× 6","…"],[["4'ün katları","4
 <p>Katlar <b>sonsuza kadar</b> devam eder. Bu yüzden bir sayının <b>en büyük katı yoktur</b>.</p>
 <div class="rule"><span class="eyebrow">Çarpan ile kat kardeştir</span><b>3, 12'nin çarpanıdır ⟷ 12, 3'ün katıdır</b><span>Aynı ilişkiyi iki taraftan söylüyoruz. 12 ÷ 3 kalansız olduğu için ikisi de doğru.</span></div>
 <div class="cards"><div class="mini"><b>Çarpanlar</b>Sayıdan küçük ya da sayıya eşit. Sayısı belli, bir yerde bitiyor.</div><div class="mini"><b>Katlar</b>Sayıdan büyük ya da sayıya eşit. Sonsuz tane, hiç bitmiyor.</div></div>
+${birlikte([
+ `6'nın katları: 6, 12, ${bosluk('18')}, ${bosluk('24')}, ${bosluk('30')}`,
+ `45, 5'in katıdır, çünkü 5 × ${bosluk('9')} = 45`,
+ `8'in 7. katı: ${bosluk('56')}`])}
 ${yok("7'nin katlarını 50'ye kadar yaz.","<b>7, 14, 21, 28, 35, 42, 49.</b>")}
 ${yok("\"Her sayı, kendisinin hem çarpanı hem katıdır.\" Doğru mu?","<b>Doğru.</b> 9 ÷ 9 = 1, kalan yok: 9, 9'un çarpanı. 9 × 1 = 9: 9, 9'un katı.")}`},
 {t:"Katlarla problem çözme",h:`
@@ -456,6 +523,15 @@ ${yok("\"Her sayı, kendisinin hem çarpanı hem katıdır.\" Doğru mu?","<b>Do
 <p>Ege, başta boş olan kumbarasına her gün 12 TL atıyor. Parasının 100 TL'den fazla olması için en az kaç gün gerekir?</p>
 ${tbl(["Gün","1","2","3","4","5","6","7","8","9"],[["Para (TL)","12","24","36","48","60","72","84","96","108"]])}
 <p>8 günde 96 TL olur, 100'den az. 9 günde 108 TL olur, 100'den fazla. <b>Cevap: en az 9 gün.</b></p></div>
+${adimAdim("Adım adım · Her gün 15 TL atan Defne: \"200 TL'yi geçmem için en az 14 gün gerekir.\" Doğru mu?",[
+ "Her gün 15 TL → kumbaradaki para hep 15'in katıdır.",
+ "13 gün: 15 × 13 = <b>195 TL</b> → 200'den az, yetmiyor.",
+ "14 gün: 15 × 14 = <b>210 TL</b> → 200'den fazla, yetiyor.",
+ "13 gün yetmiyor, 14 gün yetiyor. Yani en az 14 gün gerekir.",
+ "Cevap: <b>Doğrudur</b>, çünkü 13 günde 195 TL, 14 günde 210 TL birikir."])}
+${birlikte([
+ `7'nin katlarından 30 ile 40 arasında olan: ${bosluk('35')}`,
+ `Her gün 20 TL biriktiren biri, 150 TL'yi geçmek için en az ${bosluk('8')} gün biriktirmeli.`])}
 <div class="hata"><b>Dikkat:</b> "100 TL'den fazla" demek 100 olmaz, 100'ü <b>geçmeli</b> demektir. Bir kişinin sözünü kontrol eden sorularda ("… doğru mu?") tabloyu yaz ve sonucu "doğrudur, çünkü …" ya da "yanlıştır, çünkü …" diye açıkla.</div>
 ${yok("Müzikli bir yolda şarkı her 6 km'de baştan başlıyor. Şarkı yarıda kalmasın diye yolun uzunluğu 75 km'den fazla, 80 km'den az olmalı. Yol kaç km?","6'nın katları: …, 72, <b>78</b>, 84. 75 ile 80 arasında yalnızca <b>78 km</b> var.")}`}
 ],
@@ -465,13 +541,27 @@ ${yok("Müzikli bir yolda şarkı her 6 km'de baştan başlıyor. Şarkı yarıd
 <p class="lead">Bir sayının kalansız bölünüp bölünmediğini, bölme yapmadan anlayabilirsin! Bunlara <b>bölünebilme kuralları</b> denir.</p>
 <p>2, 5 ve 10 için yalnızca <b>birler basamağına</b>, yani son rakama bakarız:</p>
 <div class="cards"><div class="mini"><b>2 ile</b>Son rakam 0, 2, 4, 6 ya da 8 (çift sayı). Örnek: 3 57<b>4</b> ✓</div><div class="mini"><b>5 ile</b>Son rakam 0 ya da 5. Örnek: 1 23<b>5</b> ✓</div><div class="mini"><b>10 ile</b>Son rakam 0. Örnek: 4 89<b>0</b> ✓</div></div>
+<div class="ornek"><span class="eyebrow">Neden sadece son rakama bakıyoruz?</span>
+<p>3 574 sayısını ikiye ayıralım: 3 570 + 4.</p>
+<p>3 570, 10'un bir katıdır. 10 = 2 × 5 olduğu için 10'un her katı hem 2'ye hem 5'e bölünür.</p>
+<p>Geriye sadece son rakam (4) kalır. Bölünüp bölünmemeye <b>o</b> karar verir.</p></div>
 <div class="rule"><span class="eyebrow">Süper ipucu</span><b>Hem 2'ye hem 5'e bölünen sayının son rakamı 0'dır</b><span>2 için son rakam çift, 5 için 0 ya da 5 olmalı. İkisinde birden olan tek rakam 0. Bu sayılar 10'a da bölünür.</span></div>
+${birlikte([
+ `3 574'ün son rakamı ${bosluk('4')}, çift olduğu için sayı 2'ye bölünür.`,
+ `5'e bölünen bir sayının son rakamı 0 ya da ${bosluk('5')} olmalı.`,
+ `Hem 2'ye hem 5'e bölünen <span class="num">7${ph("?")}</span> sayısında kutuya ${bosluk('0')} gelir.`])}
 ${yok("Hangileri 5 ile kalansız bölünür? 340 · 527 · 1 005 · 2 552","<b>340 ve 1 005.</b> Son rakamları 0 ve 5.")}
 ${yok("Bir sayı 2'ye bölünüyor ama 5'e bölünmüyor. Son rakamı ne olabilir?","Çift olmalı ama 0 olmamalı: <b>2, 4, 6 ya da 8.</b>")}`},
 {t:"3 ve 9: rakamları topla",h:`
 <p class="lead">3 ve 9 için son rakam işe yaramaz. Burada sayının bütün rakamlarını toplarız.</p>
 <div class="cards"><div class="mini"><b>3 ile</b>Rakamlar toplamı 3'ün katı olmalı. 2 151 → 2 + 1 + 5 + 1 = 9 ✓</div><div class="mini"><b>9 ile</b>Rakamlar toplamı 9'un katı olmalı. 7 650 → 7 + 6 + 5 + 0 = 18 ✓</div></div>
 <p>9'a bölünen her sayı 3'e de bölünür, çünkü 9, 3'ün katıdır. Ama tersi her zaman doğru değil: 12 → 1 + 2 = 3. 12, 3'e bölünür ama 9'a bölünmez.</p>
+${adimAdim("Neden rakamları topluyoruz? · 51 örneği",[
+ "51 = 5 onluk + 1 birlik",
+ "Her onluk 9 + 1'dir. Yani 5 onluk = 5 × 9 + 5",
+ "O hâlde 51 = 5 × 9 + 5 + 1",
+ "5 × 9 her zaman 9'a ve 3'e bölünür. Geriye kalan: <b>5 + 1 = 6</b>, yani rakamların toplamı!",
+ "6, 3'e bölünür → 51 de 3'e bölünür (51 = 3 × 17). 6, 9'a bölünmez → 51 de 9'a bölünmez."])}
 <div class="ornek"><span class="eyebrow">Örnek · Kayıp rakam</span>
 <p>Elif'in okul numarası şöyle görünüyor: <span class="num">12${blot}8</span>. Bir rakamın üstüne mürekkep damlamış. Numara 3 ile kalansız bölünüyor. Lekenin altında hangi rakam olabilir?</p>
 <p>Bilinen rakamları topla: 1 + 2 + 8 = 11.</p>
@@ -479,6 +569,10 @@ ${yok("Bir sayı 2'ye bölünüyor ama 5'e bölünmüyor. Son rakamı ne olabili
 <p>12 − 11 = 1 · 15 − 11 = 4 · 18 − 11 = 7</p>
 <p><b>Cevap: 1, 4 ya da 7.</b></p></div>
 <div class="rule"><span class="eyebrow">Kayıp rakam yöntemi</span><b>Bilinenleri topla → 3'ün katına tamamla</b><span>İlk rakamı bulduktan sonra 3 ekleyerek devam et: 1, 4, 7. 9 kuralında 9 eklersin.</span></div>
+${birlikte([
+ `2 418 → 2 + 4 + 1 + 8 = ${bosluk('15')} → 3'e bölünür ama 9'a bölünmez.`,
+ `<span class="num">7${ph("?")}2</span> 3'e bölünüyor. Kutuya gelebilecek en küçük rakam: ${bosluk('0')}`,
+ `<span class="num">3${ph("?")}5</span> 9'a bölünüyor. Kutuya gelen rakam: ${bosluk('1')}`])}
 ${yok(`<span class="num">5${ph("?")}4</span> sayısı 9 ile kalansız bölünüyor. Kutuya hangi rakamlar gelebilir?`,"5 + 4 = 9. 9 + ? toplamı 9 ya da 18 olmalı. <b>0 ya da 9</b> (504 ve 594).")}`},
 {t:"4: son iki basamağa bak",h:`
 <p class="lead">4 kuralı biraz farklı: bu sefer son <b>iki</b> rakama bakıyoruz.</p>
@@ -487,8 +581,15 @@ ${yok(`<span class="num">5${ph("?")}4</span> sayısı 9 ile kalansız bölünüy
 <p>1 4<b>84</b> → 84 = 4 × 21 ✓ → 4'e bölünür.</p>
 <p>3 0<b>06</b> → 6, 4'ün katı değil ✗ → 4'e bölünmez.</p>
 <p>6 3<b>00</b> → son iki basamak 00 ✓ → 4'e bölünür.</p></div>
+<div class="ornek"><span class="eyebrow">Neden son iki basamak?</span>
+<p>1 484 sayısını ikiye ayıralım: 1 400 + 84.</p>
+<p>100 = 4 × 25 olduğu için 100'ün her katı (1 400 gibi) 4'e bölünür.</p>
+<p>Geriye son iki basamak (84) kalır. 84 = 4 × 21, o yüzden 1 484 de 4'e bölünür.</p></div>
 <p>Son iki basamak için 4'ün katlarını tanımak işini hızlandırır: 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96.</p>
 <div class="hata"><b>Sık yapılan hata:</b> "Son rakamı 4 ise 4'e bölünür" sanmak. 14 ve 34, 4'e bölünmez! Son <b>iki</b> rakama bakmalısın.</div>
+${birlikte([
+ `3 716 → son iki basamak ${bosluk('16')} = 4 × ${bosluk('4')} → 4'e bölünür.`,
+ `<span class="num">52${ph("?")}8</span> 4'e bölünüyor. Kutuya gelebilecek en küçük rakam: ${bosluk('0')}`])}
 ${yok("Hangileri 4 ile kalansız bölünür? 2 316 · 5 130 · 1 700 · 9 054","<b>2 316</b> (16 ✓) ve <b>1 700</b> (00 ✓). 5 130 → 30 ✗, 9 054 → 54 ✗.")}`},
 {t:"6 kuralı ve hepsi bir arada",h:`
 <p class="lead">6 = 2 × 3. Bu yüzden 6 kuralı, iki kuralın birleşimidir.</p>
@@ -500,7 +601,10 @@ ${tbl(["Sayı","Neye bakarım?","Kural"],[["2","Son rakam","0, 2, 4, 6, 8"],["3"
 <div class="ornek"><span class="eyebrow">Örnek · "Hem 4'e hem 9'a"</span>
 <p>Seri numarası hem 4'e hem 9'a bölünen fidanlara kuş evi asılacak. Hangilerine asılır?</p>
 ${tbl(["Numara","4? (son iki)","9? (toplam)","Kuş evi"],[["2 340","40 ✓","2+3+4+0 = 9 ✓","<b>Evet</b>"],["3 150","50 ✗","3+1+5+0 = 9 ✓","Hayır"],["4 128","28 ✓","4+1+2+8 = 15 ✗","Hayır"],["1 476","76 ✓","1+4+7+6 = 18 ✓","<b>Evet</b>"]])}
-<p><b>Cevap: 2 340 ve 1 476.</b> "Hem … hem …" demek, iki kuralın ikisinin de sağlanması demek.</p></div>`},
+<p><b>Cevap: 2 340 ve 1 476.</b> "Hem … hem …" demek, iki kuralın ikisinin de sağlanması demek.</p></div>
+${birlikte([
+ `2 154 → son rakam ${bosluk('4')}, çift · rakamlar toplamı ${bosluk('12')}, 3'ün katı → 6'ya bölünür.`,
+ `5 400 → rakamlar toplamı ${bosluk('9')} ve son iki basamak 00 → hem 4'e hem 9'a bölünür.`])}`},
 {t:"İki kayıp rakam",h:`
 <p class="lead">Bazen iki rakam birden kayıptır. Hangi ipucunun hangi rakamı bulduracağına bakarız.</p>
 <div class="ornek"><span class="eyebrow">Örnek</span>
@@ -509,6 +613,8 @@ ${tbl(["Numara","4? (son iki)","9? (toplam)","Kuş evi"],[["2 340","40 ✓","2+3
 <p><b>2. adım:</b> Üçerli → rakamlar toplamı 3'ün katı. 3 + A + 0 = 3 + A → 3, 6, 9 ya da 12 olmalı → <b>A = 0, 3, 6 ya da 9</b>.</p>
 <p>Olası sayılar: 300, 330, 360, 390.</p></div>
 <div class="rule"><span class="eyebrow">Sıralama</span><b>Önce son rakamı bul (2, 5, 10), sonra toplamı tamamla (3, 9)</b><span>Son rakamı bilmeden rakamları toplayamazsın. O yüzden önce son rakam.</span></div>
+${birlikte([
+ `<span class="num">4${ph("A")}${ph("B")}</span> hem 2'ye, hem 5'e, hem de 9'a bölünüyor. B = ${bosluk('0')}, A = ${bosluk('5')}`])}
 ${yok(`<span class="num">2${ph("A")}5${ph("B")}</span> sayısı hem 10 ile hem 9 ile kalansız bölünüyor. A ve B kaçtır?`,"10 → <b>B = 0</b>. Toplam: 2 + A + 5 + 0 = 7 + A. 9'un katı olmalı: 7 + A = 9 → <b>A = 2</b>. (18 olamaz, A 11 olmaz.) Sayı <b>2 250</b>.")}`}
 ],
 /* ===== BÖLÜM 3: ASAL SAYILAR ===== */
@@ -518,6 +624,10 @@ ${yok(`<span class="num">2${ph("A")}5${ph("B")}</span> sayısı hem 10 ile hem 9
 <p><b>Asal sayı</b>, tam olarak <b>iki</b> çarpanı olan sayıdır: <b>1 ve kendisi</b>.</p>
 ${tbl(["Sayı","Çarpanları","Kaç çarpan?","Asal mı?"],[["7","1, 7","2","Evet ✓"],["13","1, 13","2","Evet ✓"],["9","1, 3, 9","3","Hayır"],["12","1, 2, 3, 4, 6, 12","6","Hayır"],["1","1","1","Hayır!"]])}
 <div class="rule"><span class="eyebrow">İki önemli bilgi</span><b>1 asal değildir · 2 tek çift asaldır</b><span>1'in yalnızca bir çarpanı var, asal olmak için iki tane gerekir. 2'den büyük bütün çift sayılar 2'ye bölündüğü için asal değildir.</span></div>
+${birlikte([
+ `13'ün çarpanları 1 ve ${bosluk('13')}. Çarpan sayısı ${bosluk('2')}, yani 13 asaldır.`,
+ `21 = 3 × ${bosluk('7')} → asal değil`,
+ `27 = 3 × ${bosluk('9')} → asal değil`])}
 ${yok("15 asal mıdır?","<b>Hayır.</b> 15 = 3 × 5. Çarpanları 1, 3, 5, 15; ikiden fazla.")}
 ${yok("\"Bütün tek sayılar asaldır.\" Doğru mu?","<b>Yanlış.</b> 9, 15, 21, 25, 27 tek ama asal değil. Örneğin 21 = 3 × 7.")}`},
 {t:"Asal sayıları bulmak",h:`
@@ -527,15 +637,28 @@ ${sieve(100)}
 <p class="cap">Renkli olanlar 100'e kadar olan 25 asal sayı.</p>
 <div class="rule"><span class="eyebrow">Ezber listesi</span><b>2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47</b><span>Bunlar 50'ye kadar olan asal sayılar. Bir sayıyı kontrol ederken 2, 3, 5 ve 7 kurallarıyla dene. 100'e kadar sayılar için bu dördü yeterli.</span></div>
 <div class="hata"><b>Tuzak sayılar:</b> 51 = 3 × 17 (5 + 1 = 6, 3'e bölünür), 57 = 3 × 19, 49 = 7 × 7, 91 = 7 × 13. Asal gibi görünürler ama değildirler.</div>
+${birlikte([
+ `51 = 3 × ${bosluk('17')}`,
+ `91 = 7 × ${bosluk('13')}`,
+ `40 ile 50 arasında ${bosluk('3')} tane asal sayı var.`])}
 ${yok("Plaka kodları 1'den 81'e kadar. Kaç tanesi asal sayı?","2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79 → <b>22 tane.</b>")}`},
 {t:"Asal çarpan algoritması",h:`
 <p class="lead">Her sayı, asal sayıların çarpımı olarak yazılabilir. Bunu bulmak için bir bölme tablosu kullanırız.</p>
 <ol><li>Sayıyı çizginin soluna yaz.</li><li>Sayıyı bölen <b>en küçük asal sayıyı</b> sağa yaz. Böl, sonucu alta yaz.</li><li>Sonuç <b>1</b> olana kadar devam et.</li></ol>
 <div class="algo-row">${algo(18)}${algo(30)}${algo(60)}</div>
+${adimAdim("Adım adım · 36'yı asal çarpanlarına ayıralım",[
+ "36 çift sayı → en küçük asal 2 ile böl: 36 ÷ 2 = <b>18</b>",
+ "18 de çift → yine 2: 18 ÷ 2 = <b>9</b>",
+ "9 tek, 2'ye bölünmez → sıradaki asal 3: 9 ÷ 3 = <b>3</b>",
+ "3 ÷ 3 = <b>1</b> → 1'e ulaştık, dur!",
+ "Sağ sütun: 2, 2, 3, 3 → <b>36 = 2 × 2 × 3 × 3</b>. Asal çarpanları: <b>2 ve 3</b>"])}
 <p>Sağ sütundaki sayılar asal çarpanlardır. Ama soruyu dikkatli oku:</p>
 <div class="cards"><div class="mini"><b>"Asal çarpanlarına ayırınız"</b>Hepsini çarpım olarak yaz: 18 = 2 × 3 × 3</div><div class="mini"><b>"Asal çarpanlarını yazınız"</b>Tekrar edenleri <b>bir kez</b> yaz: 18'in asal çarpanları 2 ve 3</div></div>
 <div class="hata"><b>Sık yapılan hata:</b> 18'in asal çarpanlarını "2, 3, 3" diye yazmak. Asal çarpanlar listesinde aynı sayı bir kez yazılır: <b>2 ve 3.</b></div>
-${yok("36'yı asal çarpanlarına ayır.",`<b>36 = 2 × 2 × 3 × 3.</b> Tablo: 36 | 2 → 18 | 2 → 9 | 3 → 3 | 3 → 1. Asal çarpanları 2 ve 3.`)}`},
+${birlikte([
+ `42 ÷ 2 = ${bosluk('21')} · 21 ÷ 3 = ${bosluk('7')} · 7 ÷ 7 = ${bosluk('1')}`,
+ `42 = 2 × 3 × ${bosluk('7')}`])}
+${yok("48'i asal çarpanlarına ayır.","48 → 24 → 12 → 6 → 3 → 1 (dört kez 2, bir kez 3). <b>48 = 2 × 2 × 2 × 2 × 3.</b> Asal çarpanları 2 ve 3.")}`},
 {t:"Ortak asal çarpanlar",h:`
 <p class="lead">İki sayının asal çarpanlarını bulunca, hangilerinin ortak olduğunu kolayca görürsün.</p>
 <div class="ornek"><span class="eyebrow">Örnek · 18 ve 30</span>
@@ -549,6 +672,10 @@ ${yok("36'yı asal çarpanlarına ayır.",`<b>36 = 2 × 2 × 3 × 3.</b> Tablo: 
 ${tbl(["Kenarlar","Alan","Alanın asal çarpanları"],[["3 cm ve 13 cm","39 cm²","39 = 3 × 13"],["5 cm ve 11 cm","55 cm²","55 = 5 × 11"]])}
 <p>Alanı en küçük olan: <b>3 cm × 13 cm, alanı 39 cm²</b>.</p></div>
 <div class="rule"><span class="eyebrow">Fark ettin mi?</span><b>Kenarlar asal ise alanın asal çarpanları tam olarak kenarlardır</b><span>Çünkü alan = kenar × kenar ve iki kenar da zaten asal sayı.</span></div>
+${birlikte([
+ `Çevresi 24 cm, kenarları asal: kısa + uzun = ${bosluk('12')}`,
+ `Toplamı 12 olan asal çift: 5 ve ${bosluk('7')}`,
+ `Bu dikdörtgenin alanı ${bosluk('35')} cm²`])}
 ${yok("Çevresi 20 cm, kenarları asal sayı olan dikdörtgenler hangileri?","Kısa + uzun = 10. Asal çiftler: <b>3 ve 7</b>, <b>5 ve 5</b>. Alanlar 21 cm² ve 25 cm²; en küçüğü 21 cm².")}`}
 ],
 /* ===== BÖLÜM 4: ORTAK KAT VE ORTAK BÖLEN ===== */
@@ -556,8 +683,13 @@ ${yok("Çevresi 20 cm, kenarları asal sayı olan dikdörtgenler hangileri?","K�
 {t:"Ortak katlar",h:`
 <p class="lead">İki arkadaş düşün: biri 4 günde bir, öteki 6 günde bir yüzmeye gidiyor. Bugün ikisi de havuzdaydı. Hangi günler yine karşılaşırlar?</p>
 ${tbl(["","Katları"],[["4","4, 8, <b>12</b>, 16, 20, <b>24</b>, 28, 32, <b>36</b>, …"],["6","6, <b>12</b>, 18, <b>24</b>, 30, <b>36</b>, …"]])}
+${atlamaSVG(4,6,36,"4'er","6'şar")}
 <p>İki listede de olan sayılar <b>ortak katlardır</b>: 12, 24, 36, … Yani 12. günde, 24. günde, 36. günde karşılaşırlar.</p>
 <div class="rule"><span class="eyebrow">En küçük ortak kat</span><b>İki listede de olan ilk sayı</b><span>4 ve 6 için 12. Diğer ortak katlar onun katlarıdır: 12, 24, 36, 48 … Katlar sonsuz olduğu için <b>en büyük ortak kat yoktur</b>.</span></div>
+${birlikte([
+ `3 ve 4'ün en küçük ortak katı: ${bosluk('12')}`,
+ `6 ve 9'un en küçük ortak katı: ${bosluk('18')}`,
+ `5 ve 10'un ortak katlarından 40 ile 60 arasında olan: ${bosluk('50')}`])}
 ${yok("3 ve 5'in en küçük ortak katı kaçtır?","3: 3, 6, 9, 12, <b>15</b> · 5: 5, 10, <b>15</b> → <b>15.</b>")}
 ${yok("Bir çiçekçideki güller 7'şerli ya da 8'erli paketlenince hiç artmıyor. En fazla kaç gül olabilir?","Gül sayısı 7 ve 8'in ortak katı: 56, 112, 168, … Katlar sonsuza gider, bu yüzden <b>en fazla sayı belirlenemez.</b> En az 56 gül vardır.")}`},
 {t:"Ortak bölenler",h:`
@@ -565,6 +697,9 @@ ${yok("Bir çiçekçideki güller 7'şerli ya da 8'erli paketlenince hiç artmı
 ${tbl(["","Bölenleri (çarpanları)"],[["12","<b>1</b>, <b>2</b>, <b>3</b>, 4, <b>6</b>, 12"],["18","<b>1</b>, <b>2</b>, <b>3</b>, <b>6</b>, 9, 18"]])}
 <p>İki listede de olanlar <b>ortak bölenlerdir</b>: 1, 2, 3, 6. Yani her tabağa 1, 2, 3 ya da 6 meyve koyabilirsin.</p>
 <div class="rule"><span class="eyebrow">En büyük ortak bölen</span><b>Listedeki en büyük ortak sayı</b><span>12 ve 18 için 6. 1 her sayıyı böler, bu yüzden 1 her zaman ortak bölendir.</span></div>
+${birlikte([
+ `12 ve 20'nin ortak bölenleri: 1, 2, ${bosluk('4')}`,
+ `15 ve 25'in en büyük ortak böleni: ${bosluk('5')}`])}
 ${yok("16 ve 24'ün ortak bölenleri nelerdir?","16: 1, 2, 4, 8, 16 · 24: 1, 2, 3, 4, 6, 8, 12, 24 → Ortak: <b>1, 2, 4, 8.</b> En büyüğü 8.")}`},
 {t:"Kat mı, bölen mi?",h:`
 <p class="lead">Bu konunun en önemli sorusu bu! Problemi okuyunca önce hangisini kullanacağına karar ver.</p>
@@ -592,6 +727,10 @@ ${stickSVG([[60,30],[90,30]])}
 <p>Poşet, iki miktarı da bölmeli. 24 ve 36'nın ortak bölenleri: 1, 2, 3, 4, 6, 12. Deneyelim:</p>
 ${tbl(["Bir poşet","Fındık","Ceviz","Toplam poşet"],[["4 kg","24 ÷ 4 = 6","36 ÷ 4 = 9","15 ✗"],["6 kg","24 ÷ 6 = 4","36 ÷ 6 = 6","10 ✗"],["12 kg","24 ÷ 12 = 2","36 ÷ 12 = 3","5 ✓"]])}
 <p><b>Cevap: 12 kg.</b></p></div>
+${birlikte([
+ `48 cm ve 60 cm'lik çubuklar için en uzun eşit parça: ${bosluk('12')} cm`,
+ `Parça sayısı: 48 ÷ 12 = ${bosluk('4')} ve 60 ÷ 12 = ${bosluk('5')}`,
+ `Toplam kesim sayısı: ${bosluk('7')}`])}
 ${yok("80 cm ve 100 cm'lik iki çubuk, en az kesimle eşit parçalara ayrılırsa toplam kaç kesim yapılır?","En büyük ortak bölen 20. 80 ÷ 20 = 4 parça (3 kesim), 100 ÷ 20 = 5 parça (4 kesim). <b>Toplam 7 kesim.</b>")}`},
 {t:"Koşullu ortak kat soruları",h:`
 <p class="lead">Bazen ortak katlardan ilkini değil, sorudaki koşula uyanı seçmen gerekir.</p>
@@ -604,6 +743,9 @@ ${yok("80 cm ve 100 cm'lik iki çubuk, en az kesimle eşit parçalara ayrılırs
 ${tbl(["Sayfa","15'er okursa","20'şer okursa","5 günden fazla mı?"],[["60","4 gün","3 gün","✗"],["120","8 gün","6 gün","✓ ikisi de"]])}
 <p><b>Cevap: en az 120 sayfa.</b></p></div>
 <div class="hata"><b>Dikkat:</b> İlk ortak katı hemen cevap diye yazma. Sorudaki koşulu ("5 günden fazla", "40 ile 70 arası") mutlaka kontrol et.</div>
+${birlikte([
+ `A otobüsü 10, B otobüsü 15 dakikada bir kalkıyor. 08.00'de birlikte kalktılar. Tekrar birlikte: 08.${bosluk('30')}`,
+ `Bir kitap her gün 12'şer ya da 18'er sayfa okunarak tam bitiyor. Kitap en az ${bosluk('36')} sayfa.`])}
 ${yok("Cevizler 4'erli ya da 5'erli gruplara ayrılınca hiç artmıyor. Ceviz sayısı 30 ile 50 arasında. Kaç ceviz var?","4 ve 5'in ortak katları: 20, <b>40</b>, 60. 30 ile 50 arasında yalnızca <b>40</b> var.")}`}
 ],
 /* ===== BÖLÜM 5: OLASILIK ===== */
@@ -613,7 +755,10 @@ ${yok("Cevizler 4'erli ya da 5'erli gruplara ayrılınca hiç artmıyor. Ceviz s
 ${probSVG()}
 <div class="cards"><div class="mini"><b>Kesin (1)</b>Bir zar atınca 7'den küçük bir sayı gelmesi.</div><div class="mini"><b>İmkânsız (0)</b>Bir zarda 8 gelmesi.</div><div class="mini"><b>Eşit olası (1/2)</b>Madenî para atınca tura gelmesi.</div></div>
 <p>Olasılık her zaman <b>0 ile 1 arasında</b> bir sayıdır. 1'den büyük ya da 0'dan küçük olamaz.</p>
-${yok("İçinde yalnızca kırmızı toplar olan bir torbadan mavi top çekmek nasıl bir olaydır?","<b>İmkânsız.</b> Torbada mavi top yok, olasılığı 0.")}`},
+${yok("İçinde yalnızca kırmızı toplar olan bir torbadan mavi top çekmek nasıl bir olaydır?","<b>İmkânsız.</b> Torbada mavi top yok, olasılığı 0.")}
+${birlikte([
+ `Bir zarda 8 gelme olasılığı: ${bosluk('0')}`,
+ `Bir zar atınca 7'den küçük bir sayı gelme olasılığı: ${bosluk('1')}`])}`},
 {t:"Deneysel olasılık",h:`
 <p class="lead">Çarkı çevirmeden ne geleceğini bilemeyiz. Ama çok kez çevirip sonuçları sayarsak bir tahmin yapabiliriz.</p>
 ${spinnerSVG()}
@@ -622,7 +767,20 @@ ${spinnerSVG()}
 <p>Kırmızı gelmesinin deneysel olasılığı: ${fr(24,60)} = ${fr(2,5)}</p>
 <p>Sadeleştirmek için pay ve paydayı aynı sayıya böl: 24 ÷ 12 = 2, 60 ÷ 12 = 5.</p></div>
 <div class="hata"><b>Üç öğrencinin cevabı:</b><ul><li>Ali: "24" → <b>yanlış</b>. Bu sadece kırmızının kaç kez geldiği.</li><li>Can: "60 ÷ 24" → <b>yanlış</b>. Ters bölmüş. Sonuç 1'den büyük çıkar, olasılık 1'den büyük olamaz!</li><li>Ece: "24 ÷ 60" → <b style="color:var(--ok)">doğru.</b></li></ul></div>
-${yok("Bir para 50 kez atıldı, 30 kez tura geldi. Tura gelmesinin deneysel olasılığı nedir?",`${fr(30,50)} → 10'a böl → <b>${fr(3,5)}</b>`)}`},
+${yok("Bir para 50 kez atıldı, 30 kez tura geldi. Tura gelmesinin deneysel olasılığı nedir?",`${fr(30,50)} → 10'a böl → <b>${fr(3,5)}</b>`)}
+${birlikte([
+ `Çark 40 kez çevrildi, 10 kez kırmızı geldi: ${fr(bosluk('10'),bosluk('40'))} = ${fr(bosluk('1'),bosluk('4'))}`,
+ `Para 20 kez atıldı, 12 kez tura geldi: ${fr(bosluk('12'),bosluk('20'))} = ${fr(bosluk('3'),bosluk('5'))}`])}`},
+{t:"Çarkı sen çevir!",h:`
+<p class="lead">Bir çarkı az sayıda çevirince sonuçlar şaşırtıcı olabilir. Peki çok çevirince ne olur? Hadi deneyelim.</p>
+${spinnerSVG(false)}
+${deneyKutu()}
+<p>Her düğmeye birkaç kez dokun ve sonuçları karşılaştır. 10 kez çevirince mavi bazen 3/10, bazen 8/10 gelir. 1000 kez çevirince ise mavi hep 500/1000'e, yani yarıya çok yakın çıkar.</p>
+<div class="rule"><span class="eyebrow">Deneyin sırrı</span><b>Deneme sayısı arttıkça deneysel olasılık daha güvenilir olur</b><span>Az denemede şans çok etkilidir. Çok denemede sonuçlar dengelenir ve çarkın gerçek yapısına yaklaşır.</span></div>
+${birlikte([
+ `Mavi, çarkın 4 eşit parçasından ${bosluk('2')} tanesini kaplıyor.`,
+ `1000 çevirmede yaklaşık ${bosluk('500')} kez mavi gelmesini bekleriz.`])}
+${yok("Bir para 10 kez atılınca 8 kez tura geldi. Bu, paranın hileli olduğunu kesin gösterir mi?","<b>Hayır.</b> 10 deneme çok az; şans büyük rol oynar. Bunu anlamak için para yüzlerce kez atılmalı.")}`},
 {t:"Sonuçlardan tahmin yapmak",h:`
 <p class="lead">Deney sonuçları, bir sonraki denemede neyin daha olası olduğunu tahmin etmemize yardım eder.</p>
 <div class="ornek"><span class="eyebrow">Örnek</span>
@@ -631,7 +789,25 @@ ${tbl(["Renk","Gelme sayısı","Deneysel olasılık"],[["Mavi","25",`${fr(25,50)
 <p>Mavi en çok geldiği için, çark bir kez daha çevrilirse <b>mavi gelmesinin daha olası</b> olduğunu tahmin ederiz.</p></div>
 <div class="rule"><span class="eyebrow">Tahmin ≠ kesinlik</span><b>"Mavi gelir" değil, "mavi gelmesi daha olasıdır" deriz</b><span>Deneme sayısı arttıkça tahminimiz daha güvenilir olur.</span></div>
 <p>Bütün sonuçların deneysel olasılıklarının toplamı <b>1</b> eder (yukarıda 25 + 15 + 10 = 50, yani 50/50). Hesabını böyle kontrol edebilirsin.</p>
-${yok("Bir torbadan, her seferinde geri atılarak 40 kez top çekildi: 28 beyaz, 12 siyah. Bir daha çekilirse hangisi daha olası?",`Beyaz: ${fr(28,40)} = ${fr(7,10)}, siyah: ${fr(12,40)} = ${fr(3,10)}. <b>Beyaz gelmesi daha olasıdır</b>, çünkü deneyde çok daha fazla geldi.`)}`}
+${yok("Bir torbadan, her seferinde geri atılarak 40 kez top çekildi: 28 beyaz, 12 siyah. Bir daha çekilirse hangisi daha olası?",`Beyaz: ${fr(28,40)} = ${fr(7,10)}, siyah: ${fr(12,40)} = ${fr(3,10)}. <b>Beyaz gelmesi daha olasıdır</b>, çünkü deneyde çok daha fazla geldi.`)}
+${birlikte([
+ `Sarı 15 kez geldi (50 çevirmede): ${fr(15,50)} = ${fr(bosluk('3'),bosluk('10'))}`,
+ `Bir deneydeki bütün sonuçların deneysel olasılıkları toplamı: ${bosluk('1')}`])}`},
+{t:"Hangi deney daha güvenilir?",h:`
+<p class="lead">İki arkadaş aynı zarla deney yaptı ama farklı sonuçlar buldu. Hangisine güvenelim?</p>
+${tbl(["Öğrenci","Atış sayısı","6 gelme sayısı"],[["Ali","12","4"],["Zeynep","300","49"]])}
+${adimAdim("Adım adım · Kimin sonucu daha güvenilir?",[
+ `Ali'nin sonucu: ${fr(4,12)} → 4'e böl → <b>${fr(1,3)}</b>`,
+ `Zeynep'in sonucu: <b>${fr(49,300)}</b> (sadeleşmez)`,
+ "İki sonuç birbirinden çok farklı! Hangisi zarın gerçek davranışına daha yakın?",
+ "Zeynep 300 kez, Ali sadece 12 kez atmış. <b>Deneme sayısı fazla olan daha güvenilirdir.</b>",
+ "Cevap: <b>Zeynep'in sonucu daha güvenilirdir, çünkü deneme sayısı daha fazladır.</b>"])}
+<div class="rule"><span class="eyebrow">Sınavda gerekçe kalıbı</span><b>[Kişi]'nin sonucu daha güvenilirdir, çünkü deneme sayısı daha fazladır.</b><span>"Hangisi daha güvenilir?" sorusunda olasılığa değil, deneme sayısına bak.</span></div>
+<div class="hata"><b>Sık yapılan hata:</b> Olasılığı büyük çıkanı güvenilir sanmak. Ali'nin sonucu (1/3) daha büyük ama güvenilir değil. Güvenilirliğe olasılığın büyüklüğü değil, <b>deneme sayısı</b> karar verir.</div>
+${birlikte([
+ `Ece bir parayı 200 kez attı, 104 kez tura geldi: ${fr(bosluk('104'),bosluk('200'))} = ${fr(bosluk('13'),bosluk('25'))}`,
+ `Can aynı parayı 8 kez attı. Ece mi Can mı daha güvenilir? Daha güvenilir olanın atış sayısı: ${bosluk('200')}`])}
+${yok("Bir torbadan Mert 20, Selin 500 kez top çekti. Mert'in sonucu 3/4, Selin'inki 2/5. Torbadaki toplar hakkında hangisine güvenirsin?","<b>Selin'e.</b> Çünkü 500 kez çekmiş, deneme sayısı Mert'inkinden çok fazla.")}`}
 ],
 /* ===== BÖLÜM 6: ONDALIK GÖSTERİMLER ===== */
 [
@@ -948,19 +1124,28 @@ function sendBox(msg){
 
 /* ---------- SAYFALAR ---------- */
 function vAna(){
-  const doneCount=[1,2,3,4,5,6].filter(n=>P.b[n]&&P.b[n].yazili!=null).length;
-  let h=`<header class="home-head"><div class="top"><a class="back" href="../">← Ana sayfa</a>${themeBtn()}</div><span class="eyebrow">6. Sınıf Matematik · 1. Dönem 1. Yazılı</span><h1>Nisa'nın Matematik Çalışması</h1>
+  const N=B.length, done=B.map((_,i)=>!!(P.b[i+1]&&P.b[i+1].yazili!=null)), doneCount=done.filter(Boolean).length;
+  const STAR='<svg class="st" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1 6.3-5.6-3-5.6 3 1-6.3L2.9 9.4l6.3-.9z"/></svg>';
+  const nx=done.indexOf(false); let not;
+  if(nx>=0){const n=nx+1,p=P.b[n]||{},b=B[nx],yz=p.test!=null;
+    not={b:'Sıradaki bölüm',m:`${n}. bölüm: <b>${b.ad}</b>. `+(yz?'Testi bitirdin, sırada yazılı sorusu var. Kağıt kalemini hazırla.':`Önce konuyu oku (${KONU[nx].length} sayfa), sonra ${b.test.length} soruluk testi çöz.`),l:`#b${n}-${yz?'yazili':'konu'}`,d:(doneCount||yz)?'Kaldığım yerden devam et':'Hadi başlayalım'};}
+  else{const tj=T.findIndex((_,i)=>P.t[i+1]==null);
+    not=tj>=0?{b:'Bütün bölümler bitti!',m:`Sırada <b>${T[tj].ad}</b> var: gerçek sınav gibi ${T[tj].sorular.length} soru. Kağıda çöz, sonra babana ver.`,l:`#t${tj+1}-soru`,d:'Tatbikata başla'}
+      :{b:'Hepsi tamam!',m:'Bütün bölümler ve tatbikatlar bitti. Sınav sabahı Son Tekrar sayfasına bir göz at.',l:'#tekrar',d:"Son Tekrar'ı aç"};}
+  let h=`<header class="home-head"><div class="top"><a class="back" href="../">← Ana sayfa</a>${themeBtn()}</div>
+  <div class="ahead"><div><p class="date">6. Sınıf · 1. Dönem 1. Yazılı</p><h1>Matematik</h1></div><div class="stars">${STAR}<span>${doneCount}/${N} bölüm</span></div></div>
   <p class="muted">Sınavda 7 soru var: çarpan-kat 1, bölünebilme 1, asal sayılar 1, ortak kat-bölen 1, olasılık 2, ondalık gösterim 1.</p></header>
-  <ol class="how"><li>Konuyu oku</li><li>Testi çöz, site anında kontrol eder</li><li>Yazılı sorusunu kağıda, işlemleriyle çöz</li><li>Babam kontrol etsin, sonucu abime gönder</li></ol>
-  <h2>Bölümler</h2><div class="list">`;
-  B.forEach((b,i)=>{const n=i+1,p=P.b[n]||{};const done=p.yazili!=null;
-    const chip=p.test!=null||done?`<span class="chip ${done?'ok':''}">${p.test!=null?`Test ${p.test}/5`:''}${p.test!=null&&done?' · ':''}${done?`Yazılı ${p.yazili}/10`:''}</span>`:`<span class="chip">Başlanmadı</span>`;
-    h+=`<a class="unit ${done?'done':''}" style="--unit:var(--c${n});--unit-soft:var(--c${n}-soft)" href="#b${n}-konu"><span class="no">${n}</span><span><h3>${b.ad}</h3><span class="sub">${b.kisa}</span></span>${chip}</a>`;});
-  h+=`</div><h2>Sınav tatbikatları</h2><div class="list">`;
+  <section class="today"><h2>${not.b}</h2><p>${not.m}</p><div class="acts"><a class="btn primary" href="${not.l}">${not.d}</a></div></section>
+  <ol class="how"><li>Konuyu oku, kutuları doldur</li><li>Testi çöz, site anında kontrol eder</li><li>Yazılı sorusunu kağıda çöz</li><li>Babam kontrol etsin, sonucu abime gönder</li></ol>
+  <h2>Bölümler</h2><div class="bgrid">`;
+  B.forEach((b,i)=>{const n=i+1,p=P.b[n]||{},d=done[i],t=p.test!=null;
+    const durum=d?`${STAR}<span>Tamamlandı · Test ${p.test}/${b.test.length} · Yazılı ${p.yazili}/10</span>`:t?`<span>Test ${p.test}/${b.test.length} · sırada yazılı</span>`:`<span>${KONU[i].length} sayfa konu · ${b.test.length} soruluk test</span>`;
+    h+=`<a class="bcard${d?' done':''}" style="--unit:var(--c${n});--unit-soft:var(--c${n}-soft)" href="#b${n}-konu"><span class="band"></span><span class="bbody"><span class="bno">${n}</span><span class="btxt"><h3>${b.ad}</h3><span class="sub">${b.kisa}</span></span></span><span class="bdur">${durum}</span></a>`;});
+  h+=`</div><h2>Sınava hazırlık</h2><div class="bgrid">`;
   T.forEach((t,i)=>{const n=i+1,p=P.t[n];
-    const chip=p!=null?`<span class="chip ok">${p}/100</span>`:doneCount<6?`<span class="chip">Önce bölümler (${doneCount}/6)</span>`:`<span class="chip">Hazır</span>`;
-    h+=`<a class="unit ${p!=null?'done':''}" href="#t${n}-soru"><span class="no">T${n}</span><span><h3>${t.ad}</h3><span class="sub">${t.sorular.length} soru, gerçek sınav gibi, baba kontrollü</span></span>${chip}</a>`;});
-  h+=`<a class="unit" href="#tekrar"><span class="no">★</span><span><h3>Son Tekrar</h3><span class="sub">Sınav sabahı için bütün kurallar tek sayfada</span></span><span class="chip">1 sayfa</span></a></div>
+    const durum=p!=null?`${STAR}<span>Puan ${p}/100</span>`:doneCount<N?`<span>Önce bölümleri bitir (${doneCount}/${N})</span>`:`<span>Hazır, başlayabilirsin</span>`;
+    h+=`<a class="bcard tcard${p!=null?' done':''}" href="#t${n}-soru"><span class="band"></span><span class="bbody"><span class="bno">T${n}</span><span class="btxt"><h3>${t.ad}</h3><span class="sub">${t.sorular.length} soru, gerçek sınav gibi, baba kontrollü</span></span></span><span class="bdur">${durum}</span></a>`;});
+  h+=`<a class="bcard tcard" href="#tekrar"><span class="band"></span><span class="bbody"><span class="bno">★</span><span class="btxt"><h3>Son Tekrar</h3><span class="sub">Sınav sabahı için bütün kurallar tek sayfada</span></span></span><span class="bdur"><span>1 sayfa</span></span></a></div>
   <div class="actions center" id="resetZone"><button class="ghost" data-act="reset1">İlerlemeyi sıfırla</button></div>`;
   return h;
 }
@@ -1094,6 +1279,7 @@ app.addEventListener('click',e=>{
   else if(act==='reset2'){P={b:{},t:{}};save();S.test={};S.checks={};S.tIdx={};S.page={};render();goTop();}
   else if(act==='tnext'||act==='tprev'){const n=+el.dataset.n;S.tIdx[n]=(S.tIdx[n]||0)+(act==='tnext'?1:-1);render();goTop();}
   else if(act==='adim'){const box=el.closest('.adimlar'),nx=box.querySelector('li[hidden]');if(nx){nx.hidden=false;nx.classList.add('yeni');}if(!box.querySelector('li[hidden]')){el.textContent='Çözüm tamam';el.disabled=true;el.className='ghost';}}
+  else if(act==='deney'){const box=el.closest('.deney'),n=+el.dataset.n,c={'Mavi':0,'Sarı':0,'Kırmızı':0},renk={'Mavi':'#3c86d6','Sarı':'#e9a619','Kırmızı':'#d0452f'};for(let i=0;i<n;i++){const r=Math.floor(Math.random()*4);c[r<2?'Mavi':r===2?'Sarı':'Kırmızı']++;}box.querySelector('.dsonuc').innerHTML='<p><b>'+n+' kez çevrildi:</b></p>'+Object.keys(c).map(k=>'<div class="dbar"><span class="dad">'+k+'</span><span class="dcub"><span style="width:'+(c[k]/n*100)+'%;background:'+renk[k]+'"></span></span><span class="dsay">'+c[k]+'/'+n+'</span></div>').join('');box.querySelector('.dgecmis').insertAdjacentHTML('afterbegin','<li>'+n+' çevirme → mavi '+c['Mavi']+'/'+n+'</li>');}
   else if(act==='kontrol'){const box=el.closest('.birlikte'),ins=[...box.querySelectorAll('input.bos')];const nz=v=>String(v).trim().replace(/\s+/g,'').replace(/\./g,',').toLowerCase();let ok=0;ins.forEach(i=>{const d=i.dataset.c.split('|').some(c=>nz(c)===nz(i.value));i.classList.toggle('dogru',d);i.classList.toggle('yanlis',!d);if(d)ok++;});const fb=box.querySelector('.bfb');fb.hidden=false;fb.className='bfb '+(ok===ins.length?'iyi':'kotu');fb.textContent=ok===ins.length?'Harika, hepsi doğru!':(ins.length-ok)+' boşluk yanlış. Kırmızı olanları düzeltip tekrar dene.';}
   else if(act==='copy'){const box=document.getElementById('copybox');const txt=box.value;
     const fallback=()=>{box.hidden=false;box.focus();box.select();el.textContent='Seç ve kopyala';};
