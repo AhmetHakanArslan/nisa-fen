@@ -10,7 +10,7 @@
 :root{
   --bg:#F8FAFD; --grid:#DCE6F5; --paper:#FFFFFF; --fg:#1E2A5A; --muted:#51608F; --line:#C9D4EA; --edge:#1E2A5A;
   --note:#FFF06A; --note-edge:#E3D23E; --tape:#9FD8F7; --star:#FFC83D; --star-off:#A9B6D6;
-  --fen:#4B8DF7; --mat:#FF8A3D;
+  --fen:#4B8DF7; --mat:#FF8A3D; --sos:#2FA36B;
   --hand:"Patrick Hand","Comic Sans MS",cursive; --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
@@ -83,9 +83,11 @@ const DERSLER=[
   {id:'fen',ad:'Fen Bilimleri',kisa:'Fen',url:'fen/',key:'nisaFen',renk:'var(--fen)',sub:'Gezegenler, tutulmalar, kuvvet',
    bolum:['Güneş Sistemi ve Gezegenler','Güneş ve Ay Tutulmaları','Bileşke Kuvvet','Dengelenmiş ve Dengelenmemiş Kuvvetler'],sayfa:[4,5,5,5],tatbikat:2,tatSoru:7},
   {id:'mat',ad:'Matematik',kisa:'Matematik',url:'matematik/',key:'nisaMat',renk:'var(--mat)',sub:'Çarpan, bölünebilme, asal, olasılık, ondalık',
-   bolum:['Çarpanlar ve Katlar','Bölünebilme Kuralları','Asal Sayılar','Ortak Kat ve Ortak Bölen','Olasılık','Ondalık Gösterimler'],sayfa:[4,5,4,5,5,4],tatbikat:1,tatSoru:7}
+   bolum:['Çarpanlar ve Katlar','Bölünebilme Kuralları','Asal Sayılar','Ortak Kat ve Ortak Bölen','Olasılık','Ondalık Gösterimler'],sayfa:[4,5,4,5,5,4],tatbikat:1,tatSoru:7},
+  {id:'sos',ad:'Sosyal Bilgiler',kisa:'Sosyal',url:'sosyal/',key:'nisaSos',renk:'var(--sos)',sub:'Roller, kültürel bağlar, çözüm, konum',
+   bolum:['Gruplar ve Rollerimiz','Kültürel Bağlar ve Millî Değerler','Toplumsal Sorunlara Çözüm','Paralel, Meridyen ve Mutlak Konum','Türkiye, Kıtalar ve Okyanuslar'],sayfa:[4,4,4,4,4],tatbikat:1,tatSoru:10}
 ];
-const YAKINDA=['Türkçe','İngilizce','Sosyal Bilgiler'];
+const YAKINDA=['Türkçe','İngilizce'];
 
 const oku=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}};
 function durum(d){
