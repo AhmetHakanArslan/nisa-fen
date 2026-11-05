@@ -1,0 +1,1344 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Nisa Türkçe Çalışması</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/* Türkçe · Layout: tek sütun "çalışma defteri"; sayfalama hash ile (ana → bölüm: konu → test → yazılı → baba kontrolü → sonuç; tatbikat: 7 soru → kontrol → sonuç) */
+:root{
+  --bg:#eef2f8; --paper:#ffffff; --fg:#1b2540; --muted:#5d6a86; --line:#d6deec;
+  --accent:#2f5bd3; --accent-soft:#e6ecfc; --ok:#178a57; --ok-soft:#e0f3e9; --warn:#b5531a; --warn-soft:#fbeadf;
+  --force:#d0452f; --box:#c7d2e6; --sun:#f4b733; --shadow:rgba(20,28,48,.30); --on-accent:#ffffff;
+  --c1:#4b46c7; --c1-soft:#e9e8fb; --c2:#c26510; --c2-soft:#fcecd9; --c3:#c93a2b; --c3-soft:#fbe3df; --c4:#1d8656; --c4-soft:#dcf2e6; --c5:#0b7f86; --c5-soft:#d8f1f2; --c6:#8a4fd6; --c6-soft:#efe6fb; --c7:#b8336a; --c7-soft:#fbe4ee;
+  --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e1424; --paper:#161f35; --fg:#e7ecf8; --muted:#9eabc6; --line:#2a3655;
+  --accent:#86a8ff; --accent-soft:#1f2b4b; --ok:#4fd39a; --ok-soft:#163629; --warn:#f2a073; --warn-soft:#3b2518;
+  --force:#ff7a62; --box:#3a4868; --sun:#f6c24f; --shadow:rgba(0,0,0,.55); --on-accent:#0e1424; color-scheme:dark;
+  --c1:#a9a4ff; --c1-soft:#25244b; --c2:#f2a54e; --c2-soft:#3a2a14; --c3:#ff8370; --c3-soft:#3f201c; --c4:#5fd39a; --c4-soft:#163629; --c5:#4fd2da; --c5-soft:#113538; --c6:#c5a3ff; --c6-soft:#2c2246; --c7:#ff8ab8; --c7-soft:#3d1f2d}}
+:root[data-theme="dark"]{
+  --bg:#0e1424; --paper:#161f35; --fg:#e7ecf8; --muted:#9eabc6; --line:#2a3655;
+  --accent:#86a8ff; --accent-soft:#1f2b4b; --ok:#4fd39a; --ok-soft:#163629; --warn:#f2a073; --warn-soft:#3b2518;
+  --force:#ff7a62; --box:#3a4868; --sun:#f6c24f; --shadow:rgba(0,0,0,.55); --on-accent:#0e1424; color-scheme:dark;
+  --c1:#a9a4ff; --c1-soft:#25244b; --c2:#f2a54e; --c2-soft:#3a2a14; --c3:#ff8370; --c3-soft:#3f201c; --c4:#5fd39a; --c4-soft:#163629; --c5:#4fd2da; --c5-soft:#113538; --c6:#c5a3ff; --c6-soft:#2c2246; --c7:#ff8ab8; --c7-soft:#3d1f2d}
+
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 48px}
+.wrap{max-width:680px;margin:0 auto;display:grid;gap:16px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;line-height:1.2}
+h1{font-size:1.7rem;font-weight:800}
+h2{font-size:1.3rem;font-weight:800}
+h3{font-size:1.08rem;font-weight:700}
+p{margin:0}
+ul,ol{margin:0;padding-left:1.3em;display:grid;gap:4px}
+a{color:var(--accent)}
+.eyebrow{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:800}
+.muted{color:var(--muted)}
+
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.back{font-weight:700;text-decoration:none;font-size:.95rem}
+.crumbs{display:flex;gap:6px;flex-wrap:wrap}
+.crumb{font-size:.8rem;font-weight:700;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:var(--paper)}
+.crumb.on{background:var(--unit,var(--accent));border-color:var(--unit,var(--accent));color:var(--on-accent)}
+.crumb.done{color:var(--ok);border-color:var(--ok)}
+
+.paper{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:14px;min-width:0}
+.paper > section{display:grid;gap:10px}
+.rule{background:var(--accent-soft);border-radius:12px;padding:14px 16px;display:grid;gap:4px}
+.rule b{font-family:var(--display);font-size:1.15rem}
+.ornek{border:2px dashed var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:6px}
+.ornek .eyebrow{color:var(--accent)}
+.hata{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:12px 14px}
+.hata b:first-child{color:var(--warn)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.mini{border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.95rem}
+.mini > b:first-child{font-family:var(--display);font-size:1.05rem;display:block}
+
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:420px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);font-weight:800}
+td.blank{height:2.2em}
+
+.fig{overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:320px}
+.fig text{font-family:var(--body);font-weight:700;font-size:13px;fill:var(--fg)}
+.cap{font-size:.82rem;color:var(--muted);text-align:center}
+
+.qs{list-style:none;padding:0;display:grid;gap:10px}
+.qs li{display:grid;grid-template-columns:30px 1fr;gap:6px}
+.ql{font-family:var(--display);font-weight:800;color:var(--accent);font-size:1.1rem;line-height:1.5}
+.pts{color:var(--muted);font-size:.85rem;white-space:nowrap}
+.note{background:var(--accent-soft);border-radius:12px;padding:12px 14px;font-size:.95rem}
+
+button,.btn{font-family:var(--display);font-weight:700;font-size:1.05rem;border:0;border-radius:12px;padding:12px 18px;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
+.primary{background:var(--accent);color:var(--on-accent)}
+.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
+.wa{background:#1f9d55;color:#fff}
+button:focus-visible,.btn:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.actions.center{justify-content:center}
+
+.lead{font-size:1.05rem;border-left:4px solid var(--unit,var(--accent));padding:4px 0 4px 14px;color:var(--fg)}
+details.yokla{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--bg)}
+details.yokla summary{cursor:pointer;font-weight:700;display:grid;gap:2px}
+details.yokla summary .eyebrow{color:var(--accent)}
+details.yokla summary::after{content:"Cevabı görmek için dokun";font-weight:600;font-size:.82rem;color:var(--muted)}
+details.yokla[open] summary::after{content:""}
+details.yokla p{margin-top:8px;background:var(--ok-soft);border-radius:8px;padding:8px 10px}
+.pages{display:flex;gap:6px;flex-wrap:wrap}
+.pg{width:36px;height:36px;padding:0;border-radius:50%;font-size:.95rem;background:var(--paper);color:var(--muted);border:1px solid var(--line)}
+.pg.on{background:var(--unit,var(--accent));color:var(--on-accent);border-color:var(--unit,var(--accent))}
+.pg.done{color:var(--ok);border-color:var(--ok)}
+.hata ul{margin-top:6px}
+.themebtn{min-height:0;padding:6px 12px;font-size:.85rem;border-radius:999px;margin-left:auto}
+/* Ana sayfa */
+.home-head{display:grid;gap:6px}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;list-style:none;padding:0;counter-reset:h}
+.how li{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.9rem;counter-increment:h}
+.how li::before{content:counter(h);font-family:var(--display);font-weight:800;color:var(--accent);font-size:1.3rem;display:block;line-height:1}
+.unit{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px;text-decoration:none;color:var(--fg)}
+.unit:hover{border-color:var(--unit,var(--accent))}
+.unit .no{font-family:var(--display);font-weight:800;font-size:1.6rem;width:52px;height:52px;border-radius:12px;display:grid;place-items:center;background:var(--unit-soft,var(--accent-soft));color:var(--unit,var(--accent))}
+.unit h3{font-size:1.1rem}
+.unit .sub{font-size:.85rem;color:var(--muted)}
+.chip{font-size:.8rem;font-weight:800;padding:4px 10px;border-radius:999px;background:var(--bg);color:var(--muted);white-space:nowrap}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.list{display:grid;gap:10px}
+
+/* Test */
+.opts{display:grid;gap:8px}
+.opt{background:var(--paper);color:var(--fg);border:2px solid var(--line);text-align:left;font-family:var(--body);font-weight:700;font-size:1rem}
+.opt:hover:not([disabled]){border-color:var(--accent)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--warn);background:var(--warn-soft)}
+.opt[disabled]{cursor:default}
+.fb{border-radius:12px;padding:12px 14px}
+.fb.good{background:var(--ok-soft)} .fb.good b{color:var(--ok)}
+.fb.bad{background:var(--warn-soft)} .fb.bad b{color:var(--warn)}
+.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.progress span{display:block;height:100%;background:var(--unit,var(--accent));border-radius:99px}
+#app[data-unit] .paper{border-top:5px solid var(--unit)}
+
+/* Kontrol */
+.grp{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:14px}
+.grp.first{border-top:0;padding-top:0}
+.qhead{font-family:var(--display);font-weight:800;font-size:1.2rem;color:var(--accent);margin-top:6px}
+.model{background:var(--ok-soft);border-radius:10px;padding:10px 12px;font-size:.95rem}
+label.item{display:grid;grid-template-columns:24px 1fr auto;gap:10px;align-items:start;cursor:pointer;padding:6px 4px;border-radius:8px}
+label.item:hover{background:var(--accent-soft)}
+label.item input{width:20px;height:20px;margin:3px 0 0;accent-color:var(--ok)}
+.item .p{font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
+.scorebar{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--paper);border-radius:14px;padding:12px 16px;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:800}
+.scorebar .big{font-family:var(--display);font-size:1.4rem;font-variant-numeric:tabular-nums}
+.scorebar button{background:var(--paper);color:var(--fg);padding:10px 14px}
+
+/* Sonuç */
+.result{text-align:center;justify-items:center}
+.big-score{font-family:var(--display);font-weight:800;font-size:3rem;line-height:1;font-variant-numeric:tabular-nums}
+.scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;width:100%}
+.scores div{border:1px solid var(--line);border-radius:12px;padding:10px}
+.scores b{font-family:var(--display);font-size:1.4rem;display:block;font-variant-numeric:tabular-nums}
+.todo{list-style:none;padding:0;display:grid;gap:8px;text-align:left;width:100%}
+.todo li{background:var(--warn-soft);border-left:4px solid var(--warn);padding:8px 12px;border-radius:6px}
+.allgood{background:var(--ok-soft);padding:12px;border-radius:10px;width:100%}
+textarea.copybox{width:100%;min-height:140px;font-family:var(--body);font-size:.9rem;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg);color:var(--fg);box-sizing:border-box}
+
+/* Matematik ekleri */
+.num{font-family:var(--display);font-size:1.35em;font-weight:800;letter-spacing:.06em;white-space:nowrap}
+.blot{display:inline-block;width:1em;height:1.05em;border-radius:48% 52% 40% 60%/55% 45% 55% 45%;background:var(--fg);vertical-align:-.12em;margin:0 2px}
+.ph{display:inline-grid;place-items:center;min-width:1.4em;height:1.4em;padding:0 3px;border:2px dashed var(--unit,var(--accent));border-radius:6px;font-size:.75em;margin:0 2px;color:var(--unit,var(--accent));font-weight:800;vertical-align:middle;box-sizing:border-box;letter-spacing:0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;font-weight:800;line-height:1.15;margin:0 3px;font-variant-numeric:tabular-nums}
+.frac span:first-child{border-bottom:2px solid currentColor;padding:0 4px}
+.algo-row{display:flex;gap:32px;flex-wrap:wrap;justify-content:center;padding:4px 0}
+.algo-box{display:grid;gap:6px;justify-items:center}
+.algo{display:grid;grid-template-columns:auto auto;font-family:var(--display);font-size:1.3rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.55}
+.algo span{padding:0 14px}
+.algo span:nth-child(odd){border-right:3px solid var(--fg);text-align:right}
+.algo span:nth-child(even){color:var(--unit,var(--accent))}
+.sieve{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;max-width:560px;width:100%;margin:0 auto}
+.sieve span{aspect-ratio:1;display:grid;place-items:center;border-radius:8px;font-weight:800;font-size:.85rem;background:var(--bg);color:var(--muted);font-variant-numeric:tabular-nums}
+.sieve span.p{background:var(--unit,var(--accent));color:var(--on-accent)}
+.sieve span.one{background:transparent;border:1px dashed var(--line)}
+.unit.other .no{font-size:1.3rem}
+.basamak{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) 18px repeat(3,minmax(0,1fr));gap:6px;max-width:640px;width:100%;margin:0 auto}
+.basamak .bs{border:2px solid var(--edge);border-radius:8px;background:var(--paper);display:grid;grid-template-rows:auto 1fr;text-align:center;overflow:hidden}
+.basamak .bs.ond{background:var(--unit-soft,var(--accent-soft))}
+.basamak .bs.bosb{opacity:.45}
+.basamak .ba{font-size:.72rem;font-weight:800;padding:4px 2px;border-bottom:2px solid var(--edge);line-height:1.25;color:var(--muted)}
+.basamak .br{font-family:var(--display);font-size:2.2rem;line-height:1.5;min-height:1.5em}
+.basamak .virgul{font-family:var(--display);font-size:2.8rem;display:grid;align-items:end;justify-content:center;line-height:1.1}
+.fig.yuz svg{max-width:250px;min-width:0;margin:0 auto}
+
+html{-webkit-text-size-adjust:100%}
+button,.btn,.opt,label.item,summary{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* Tablet (iPad) */
+@media (min-width:700px){
+  body{font-size:18px;line-height:1.65;padding-block:28px 64px}
+  .wrap{max-width:860px;gap:20px}
+  .paper{padding:30px 34px;gap:18px;border-radius:20px}
+  h1{font-size:2.1rem} h2{font-size:1.55rem} h3{font-size:1.25rem}
+  .lead{font-size:1.15rem}
+  .fig svg{min-width:0}
+  .fig text{font-size:14px}
+  table{font-size:1rem}
+  th,td{padding:10px 14px}
+  button,.btn{font-size:1.15rem;padding:14px 22px;min-height:52px}
+  .opts{grid-template-columns:1fr 1fr;gap:12px}
+  .opt{min-height:64px;font-size:1.08rem}
+  .pg{width:46px;height:46px;font-size:1.05rem;min-height:0;padding:0}
+  label.item{grid-template-columns:30px 1fr auto;padding:10px 8px;font-size:1.05rem}
+  label.item input{width:26px;height:26px}
+  .unit{grid-template-columns:64px 1fr auto;padding:18px}
+  .unit .no{width:64px;height:64px;font-size:1.9rem}
+  .unit h3{font-size:1.3rem}
+  .cards{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+  .mini{padding:14px 16px}
+  details.yokla{padding:14px 18px}
+  .scorebar{padding:14px 22px}
+  .big-score{font-size:4rem}
+}
+@media (min-width:1000px){ .wrap{max-width:920px} }
+@media (prefers-reduced-motion:no-preference){.paper{animation:in .22s ease}}
+@keyframes in{from{transform:translateY(6px);opacity:.6}to{transform:none;opacity:1}}
+
+/* ===== Kareli defter teması ===== */
+:root{
+  --bg:#F8FAFD; --grid:#DCE6F5; --paper:#FFFFFF; --fg:#1E2A5A; --muted:#51608F; --line:#C9D4EA; --edge:#1E2A5A;
+  --accent:#2C47A8; --accent-soft:#EEF2FB; --on-accent:#FFFFFF; --note:#FFF06A; --note-edge:#E3D23E; --tape:#9FD8F7;
+  --hand:"Patrick Hand","Comic Sans MS",cursive; --display:var(--hand);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121933; --grid:#1D2650; --paper:#1A2346; --fg:#E8EDFF; --muted:#AAB6DC; --line:#36437A; --edge:#8294D8;
+  --accent:#AFC2FF; --accent-soft:#232F5C; --on-accent:#121933; --note:#4A4318; --note-edge:#2C280C; --tape:#2D5D7D}}
+:root[data-theme="dark"]{
+  --bg:#121933; --grid:#1D2650; --paper:#1A2346; --fg:#E8EDFF; --muted:#AAB6DC; --line:#36437A; --edge:#8294D8;
+  --accent:#AFC2FF; --accent-soft:#232F5C; --on-accent:#121933; --note:#4A4318; --note-edge:#2C280C; --tape:#2D5D7D}
+body{background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+h1,h2{font-family:var(--hand);font-weight:400;letter-spacing:.2px}
+h1{font-size:2.3rem;line-height:1.05} h2{font-size:1.7rem;line-height:1.1}
+h3{font-family:var(--body);font-weight:800}
+.eyebrow{text-transform:none;letter-spacing:0;font-size:.88rem;font-weight:800}
+.back{font-weight:800;color:var(--fg)}
+.paper{border:2px solid var(--edge);border-radius:8px;box-shadow:6px 6px 0 var(--edge)}
+#app[data-unit] .paper{border-top:2px solid var(--edge);background-image:linear-gradient(var(--unit),var(--unit));background-size:100% 12px;background-repeat:no-repeat;padding-top:32px}
+.rule{background:var(--note);border-radius:3px;box-shadow:0 6px 0 -2px var(--note-edge)}
+.rule b{font-family:var(--hand);font-weight:400;font-size:1.45rem;line-height:1.2}
+.note{background:var(--accent-soft);border:2px dashed var(--line)}
+.ornek{background:var(--paper)}
+.unit{border:2px solid var(--edge);border-radius:8px;box-shadow:4px 4px 0 var(--edge)}
+.unit:hover{border-color:var(--edge);box-shadow:5px 5px 0 var(--edge);transform:translate(-1px,-1px)}
+.unit .no{border:2px solid var(--edge);border-radius:50%;font-family:var(--hand);font-weight:400}
+.how li{border:2px solid var(--edge);border-radius:8px}
+.how li::before{font-family:var(--hand);font-weight:400;font-size:1.6rem;color:var(--fg)}
+button,.btn{font-family:var(--body);font-weight:800}
+.primary{background:var(--fg);color:var(--paper);border:2px solid var(--fg)}
+.ghost{background:var(--paper);color:var(--fg);border:2px solid var(--edge)}
+.opt{border:2px solid var(--edge);border-radius:10px}
+.crumb{border:2px solid var(--line)}
+.pg{border:2px solid var(--line)}
+.progress{height:12px;background:var(--paper);border:2px solid var(--edge)}
+.chip{border:1.5px solid var(--line);font-family:var(--hand);font-weight:400;font-size:1.02rem;background:var(--paper)}
+.chip.ok{border-color:var(--ok)}
+.scorebar{background:var(--fg);color:var(--paper);border-radius:10px}
+.big-score{font-family:var(--hand);font-weight:400}
+.scores div{border:2px solid var(--edge);border-radius:8px}
+.scores b{font-family:var(--hand);font-weight:400}
+details.yokla{border:2px solid var(--line);border-radius:8px;background:var(--paper)}
+.qhead{font-family:var(--hand);font-weight:400;font-size:1.55rem}
+.themebtn{border:2px solid var(--edge)}
+.todo li{border-radius:3px}
+@media (min-width:700px){ h1{font-size:2.8rem} h2{font-size:2rem} .rule b{font-size:1.6rem} }
+
+/* ===== Anlatım sayfaları: ferah düzen ve defter süsleri ===== */
+:root{--rl:#E3EAF6;--margin:#F3A6A6;--hl:rgba(255,232,64,.62)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--rl:#28336A;--margin:#7E4458;--hl:rgba(255,224,77,.24)}}
+:root[data-theme="dark"]{--rl:#28336A;--margin:#7E4458;--hl:rgba(255,224,77,.24)}
+article.paper{gap:22px}
+article.paper > p, article.paper > .lead{max-width:40em}
+article.paper h1{text-decoration-line:underline;text-decoration-style:wavy;text-decoration-color:var(--unit,var(--accent));text-decoration-thickness:2px;text-underline-offset:12px;text-decoration-skip-ink:none;padding-bottom:4px}
+article.paper h3{margin-top:4px}
+article.paper p b, article.paper li b{background:linear-gradient(transparent 56%,var(--hl) 56%);padding:0 2px;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.rule p b, .rule li b, .hata p b, .hata li b{background:none;padding:0}
+article.paper .deney p b{background:none;padding:0}
+.rule span b{font-family:inherit;font-size:inherit;font-weight:800;line-height:inherit}
+.ornek{position:relative;display:block;background-color:var(--paper);background-image:linear-gradient(90deg,transparent 34px,var(--margin) 34px,var(--margin) 36px,transparent 36px),repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rl) 31px,var(--rl) 32px);background-position:0 12px;border:2px solid var(--edge);border-radius:6px;box-shadow:4px 4px 0 var(--edge);padding:12px 18px 14px 50px;line-height:32px}
+.ornek > *{margin:0;line-height:32px}
+.ornek .eyebrow{display:block;color:var(--unit,var(--accent))}
+.ornek .tbl-wrap,.ornek .fig{margin:8px 0;line-height:1.5}
+.ornek .tbl-wrap *{line-height:1.5}
+.rule{position:relative;transform:rotate(-.4deg);padding:20px 20px 18px;margin-top:6px}
+.rule::before{content:"";position:absolute;top:-11px;left:24px;width:84px;height:22px;background:var(--tape);opacity:.8;transform:rotate(-3deg)}
+article.paper > .fig{background:var(--paper);border:2px solid var(--edge);border-radius:6px;padding:14px 12px}
+.hata{background:var(--warn-soft);border:2px dashed var(--warn);border-radius:6px;padding:14px 16px}
+.mini{border:2px solid var(--edge);border-radius:8px;background:var(--paper);box-shadow:3px 3px 0 var(--edge)}
+.mini > b:first-child{font-family:var(--hand);font-weight:400;font-size:1.35rem;margin-bottom:2px}
+details.yokla{background:var(--accent-soft);border:2px dashed var(--edge)}
+details.yokla[open]{background:var(--paper);border-style:solid}
+.adimlar{border:2px solid var(--edge);border-radius:10px;background:var(--paper);padding:16px 18px;display:grid;gap:12px;box-shadow:4px 4px 0 var(--edge)}
+.adimlar .eyebrow{color:var(--unit,var(--accent))}
+.adimlar ol{list-style:none;padding:0;margin:0;display:grid;gap:10px;counter-reset:a}
+.adimlar li{counter-increment:a;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:center}
+.adimlar li::before{content:counter(a);width:32px;height:32px;border-radius:50%;background:var(--unit,var(--accent));color:var(--on-accent);display:grid;place-items:center;font-family:var(--hand);font-size:1.2rem}
+.adimlar .actions{justify-content:flex-start}
+.birlikte{border:2px dashed var(--unit,var(--accent));border-radius:10px;background:var(--unit-soft,var(--accent-soft));padding:16px 18px;display:grid;gap:10px}
+.birlikte .eyebrow{color:var(--fg)}
+.birlikte .satir{font-size:1.12rem;line-height:2.3}
+.birlikte .actions{justify-content:flex-start}
+input.bos{font:inherit;font-weight:800;width:3em;text-align:center;border:none;border-bottom:3px solid var(--fg);background:var(--paper);color:var(--fg);border-radius:6px 6px 0 0;padding:1px 4px;margin:0 3px;line-height:1.4}
+input.bos.genis{width:5em}
+.frac input.bos{width:2.4em;margin:0 0 2px}
+input.bos.dogru{background:var(--ok-soft);border-bottom-color:var(--ok)}
+input.bos.yanlis{background:var(--warn-soft);border-bottom-color:var(--warn)}
+.bfb{font-weight:800} .bfb.iyi{color:var(--ok)} .bfb.kotu{color:var(--warn)}
+@media (prefers-reduced-motion:no-preference){.adimlar li.yeni{animation:adim .35s ease}}
+@keyframes adim{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@media (min-width:700px){ .wrap{max-width:940px} article.paper{padding:40px 52px 44px;gap:26px} #app[data-unit] article.paper{padding-top:48px} }
+@media (min-width:1000px){ .wrap{max-width:980px} }
+
+
+.deney{border:2px solid var(--edge);border-radius:10px;background:var(--paper);padding:16px 18px;display:grid;gap:12px;box-shadow:4px 4px 0 var(--edge)}
+.deney .eyebrow{color:var(--unit,var(--accent))}
+.deney .actions{justify-content:flex-start}
+.dsonuc{display:grid;gap:8px;min-height:120px}
+.dbar{display:grid;grid-template-columns:70px 1fr 90px;gap:10px;align-items:center;font-weight:800}
+.dcub{height:22px;border:2px solid var(--edge);border-radius:6px;overflow:hidden;background:var(--bg)}
+.dcub span{display:block;height:100%;transition:width .4s ease}
+.dsay{font-family:var(--hand);font-size:1.25rem;font-weight:400;font-variant-numeric:tabular-nums}
+.dgecmis{margin:0;padding-left:1.3em;color:var(--muted);font-size:.95rem;display:grid;gap:2px}
+.dgecmis:empty{display:none}
+/* ===== Bölüm listesi sayfası ===== */
+.home-head .date{margin:6px 0 0;font-weight:700;color:var(--muted)}
+.ahead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.ahead h1{font-size:3rem}
+.stars{display:flex;align-items:center;gap:8px;background:var(--paper);border:2px solid var(--edge);border-radius:999px;padding:7px 16px 7px 12px;font-weight:800}
+svg.st{width:24px;height:24px;flex:none}
+svg.st path{fill:#FFC83D;stroke:var(--edge);stroke-width:1.6;stroke-linejoin:round}
+.today{position:relative;background:var(--note);padding:30px 28px 26px;transform:rotate(-.8deg);box-shadow:0 10px 0 -4px var(--note-edge);display:grid;gap:12px;margin:12px 0 6px}
+.today::before{content:"";position:absolute;top:-14px;left:50%;margin-left:-70px;width:140px;height:28px;background:var(--tape);opacity:.85;transform:rotate(2deg)}
+.today h2{font-size:2.2rem}
+.today p{font-size:1.1rem;max-width:36em}
+.acts{display:flex;gap:10px;flex-wrap:wrap}
+.bgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.bcard{text-decoration:none;color:var(--fg);background:var(--paper);border:2px solid var(--edge);border-radius:6px;box-shadow:6px 6px 0 var(--edge);display:flex;flex-direction:column;overflow:hidden}
+.bcard:hover{transform:translate(-1px,-1px);box-shadow:7px 7px 0 var(--edge)}
+.bcard .band{height:14px;background:var(--unit,var(--fg));border-bottom:2px solid var(--edge)}
+.bcard.tcard .band{background:repeating-linear-gradient(45deg,var(--note) 0 10px,var(--note-edge) 10px 20px)}
+.bbody{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:16px 18px 8px;align-items:start}
+.bno{width:48px;height:48px;border-radius:50%;border:2px solid var(--edge);background:var(--unit-soft,var(--accent-soft));color:var(--unit,var(--fg));display:grid;place-items:center;font-family:var(--hand);font-size:1.6rem}
+.btxt{display:grid;gap:2px}
+.bcard h3{font-size:1.2rem;line-height:1.25}
+.bcard .sub{font-size:.9rem;color:var(--muted)}
+.bdur{display:flex;align-items:center;gap:6px;padding:4px 18px 16px;font-family:var(--hand);font-size:1.15rem;margin-top:auto}
+.bcard.done .bdur{color:var(--ok)}
+@media (max-width:600px){.bgrid{grid-template-columns:1fr}.ahead h1{font-size:2.5rem}}
+@media (prefers-reduced-motion:reduce){.bcard:hover{transform:none}}
+
+/* ===== Sosyal ekleri ===== */
+:root{--sea:#d4e7f7;--land:#f3e7c4;--near:#e4e2dc;--prov:#c9b58a;--seatext:#2a6aa8;
+ --ka:#f6c98b;--kav:#b9d3f5;--kaf:#f3aaa2;--kkam:#bfe3b0;--kgam:#d9c2f2;--kok:#f4dc80;--kan:#eef2f7;--ktr:#d0452f;
+ --y1:#7dbb6a;--y2:#e9d77a;--y3:#dca25a;--y4:#9a5b34}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sea:#132a4a;--land:#4a4230;--near:#2a3248;--prov:#6d6044;--seatext:#8fc1f2;
+ --ka:#7a5a2c;--kav:#2f4d7a;--kaf:#7a3a35;--kkam:#3f6a39;--kgam:#57407a;--kok:#776628;--kan:#4a5568;--ktr:#ff7a62;
+ --y1:#3f7a37;--y2:#8f8233;--y3:#8f5f2a;--y4:#5e3620}}
+:root[data-theme="dark"]{--sea:#132a4a;--land:#4a4230;--near:#2a3248;--prov:#6d6044;--seatext:#8fc1f2;
+ --ka:#7a5a2c;--kav:#2f4d7a;--kaf:#7a3a35;--kkam:#3f6a39;--kgam:#57407a;--kok:#776628;--kan:#4a5568;--ktr:#ff7a62;
+ --y1:#3f7a37;--y2:#8f8233;--y3:#8f5f2a;--y4:#5e3620}
+.fig.harita{margin:0;display:grid;gap:6px}
+.fig.harita svg{border:2px solid var(--edge);border-radius:8px;background:var(--sea)}
+.fig.harita figcaption{font-size:.9rem;color:var(--muted);text-align:center}
+.fig .m-lab,.fig .m-seal,.fig .m-il,.fig .m-kita,.fig .m-pusula text{paint-order:stroke;stroke:var(--paper);stroke-width:3px;stroke-linejoin:round}
+.m-sea{fill:var(--sea)} .m-near{fill:var(--near);stroke:var(--prov);stroke-width:.6}
+.m-tr{fill:var(--land);stroke:var(--fg);stroke-width:1.2;stroke-linejoin:round}
+.m-prov{fill:none;stroke:var(--prov);stroke-width:.6}
+.m-hl{fill:var(--sun);stroke:var(--fg);stroke-width:1.6;stroke-linejoin:round}
+.m-grid{stroke:var(--c3);stroke-width:1.8;stroke-dasharray:7 4}
+.m-box{fill:var(--paper);stroke:var(--c3);stroke-width:2}
+.fig text.m-lab{font-size:13px;font-weight:800}
+.fig text.m-seal{fill:var(--seatext);font-style:italic;font-weight:700;font-size:14px}
+.fig text.small{font-size:11px}
+.fig text.m-il{font-size:13px;font-weight:700}
+.fig text.m-il.on{font-weight:800;font-size:15px}
+.fig text.m-kita{font-size:13px;font-weight:800}
+.m-pusula path{fill:var(--fg)} .fig .m-pusula text{font-size:12px;font-weight:800}
+.m-dot{fill:var(--c3);stroke:var(--paper);stroke-width:2}
+.m-eq{stroke:var(--c3);stroke-width:1.6;stroke-dasharray:6 4} .m-gr{stroke:var(--c1);stroke-width:1.6;stroke-dasharray:6 4}
+.k-asya{fill:var(--ka)} .k-avrupa{fill:var(--kav)} .k-afrika{fill:var(--kaf)} .k-kam{fill:var(--kkam)} .k-gam{fill:var(--kgam)} .k-okya{fill:var(--kok)} .k-ant{fill:var(--kan)} .k-tr{fill:var(--ktr)}
+.k-asya,.k-avrupa,.k-afrika,.k-kam,.k-gam,.k-okya,.k-ant{stroke:var(--edge);stroke-width:.5;stroke-linejoin:round}
+.k-kure{fill:var(--sea);stroke:var(--fg);stroke-width:2}
+.k-par{fill:none;stroke:var(--c1);stroke-width:1.4}
+.k-ekv{fill:none;stroke:var(--c3);stroke-width:2.4}
+.k-mer{fill:none;stroke:var(--c4);stroke-width:1.4}
+.k-bas{stroke:var(--c4);stroke-width:2.4}
+.k-kutup{fill:var(--fg)}
+.fig text.ekv{fill:var(--c3)} .fig text.par{fill:var(--c1)} .fig text.bas{fill:var(--c4)}
+.y1{fill:var(--y1)} .y2{fill:var(--y2)} .y3{fill:var(--y3)} .y4{fill:var(--y4)}
+.lejant rect{stroke:var(--edge);stroke-width:1}
+.m-tepe{fill:var(--fg)}
+.metin{background:var(--paper);border:2px solid var(--edge);border-left:8px solid var(--unit,var(--accent));border-radius:6px;padding:14px 16px;font-size:1.05rem;line-height:1.6}
+input.bos.kelime{width:8.5em;text-align:left}
+input.bos.genis{width:6em}
+input.bos.sayi{width:3em}
+.secim{border:2px solid var(--edge);border-radius:10px;background:var(--paper);padding:16px 18px;display:grid;gap:10px;box-shadow:4px 4px 0 var(--edge)}
+.secim .eyebrow{color:var(--unit,var(--accent))}
+.srow{display:grid;gap:8px;padding:8px 0;border-top:1px dashed var(--line)}
+.srow:first-of-type{border-top:none}
+.stxt{font-weight:700}
+.sops{display:flex;flex-wrap:wrap;gap:8px}
+.sop{font:inherit;font-weight:800;min-height:44px;padding:8px 14px;border:2px solid var(--edge);border-radius:8px;background:var(--bg);color:var(--fg);cursor:pointer}
+.sop.dogru{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.sop.yanlis{background:var(--warn-soft);border-color:var(--warn);color:var(--warn)}
+.sop:disabled:not(.dogru){opacity:.45}
+@media (min-width:700px){.srow{grid-template-columns:1fr auto;align-items:center}}
+
+/* Türkçe: afiş, ipucu kartları */
+.afis{border:2px solid var(--edge,var(--line));border-radius:10px;padding:14px 16px;background:var(--unit-soft,var(--accent-soft));display:grid;gap:6px;text-align:center;margin:6px 0}
+.afis h4{font-family:var(--hand,var(--display));font-size:1.5rem;font-weight:400;margin:0;letter-spacing:.02em}
+.afis p{margin:0}
+.afis ol{text-align:left;margin:4px 0 0;padding-left:1.4em;display:grid;gap:4px}
+.kartlar{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:6px 0}
+.kart{border:2px dashed var(--line);border-radius:10px;padding:10px 12px;background:var(--paper)}
+.kart .kb{display:block;font-weight:800;border-bottom:2px solid var(--line);margin-bottom:6px;padding-bottom:4px}
+.kart ul{margin:0;padding-left:1.1em}
+</style>
+
+
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+const DERS='tr';
+/* ---------- ETKİLEŞİMLİ ANLATIM KUTULARI ---------- */
+const adimAdim=(baslik,adimlar)=>`<div class="adimlar"><span class="eyebrow">${baslik}</span><ol>${adimlar.map((a,i)=>`<li${i?' hidden':''}><span>${a}</span></li>`).join('')}</ol><div class="actions"><button class="primary" data-act="adim">Sonraki adım</button></div></div>`;
+/* boşluk: cevaplar | ile ayrılır; büyük-küçük harf ve noktalama önemsiz */
+const bosluk=(cevap,tur)=>`<input class="bos ${tur||'kelime'}" inputmode="${tur==='sayi'?'numeric':'text'}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Boşluk" data-c="${cevap}">`;
+const birlikte=(satirlar)=>`<div class="birlikte"><span class="eyebrow">Birlikte yapalım: boşlukları doldur</span>${satirlar.map(s=>`<div class="satir">${s}</div>`).join('')}<div class="actions"><button class="ghost" data-act="kontrol">Kontrol et</button></div><p class="bfb" hidden></p></div>`;
+/* seçmeli kutu: her satırda doğru seçeneğe dokun */
+const sec=(baslik,satirlar)=>`<div class="secim"><span class="eyebrow">${baslik}</span>${satirlar.map(([t,ops,d])=>`<div class="srow"><span class="stxt">${t}</span><span class="sops">${ops.map((o,j)=>`<button class="sop" data-act="sec" data-ok="${j===d?1:0}">${o}</button>`).join('')}</span></div>`).join('')}<p class="bfb" hidden></p></div>`;
+/* ---------- ÇİZİM YARDIMCILARI ---------- */
+const tbl=(head,rows)=>`<div class="tbl-wrap"><table><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>c===''?'<td class="blank"></td>':`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+const qs=items=>`<ol class="qs">${items.map(([l,t,p])=>`<li><span class="ql">${l}</span><span>${t} <span class="pts">(${p} puan)</span></span></li>`).join('')}</ol>`;
+const yok=(q,a)=>`<details class="yokla"><summary><span class="eyebrow">Kendini yokla</span><span>${q}</span></summary><p>${a}</p></details>`;
+const fig=(svg,alt)=>`<figure class="fig harita">${svg}${alt?`<figcaption>${alt}</figcaption>`:''}</figure>`;
+const metin=t=>`<div class="metin">${t}</div>`;
+const cizgi=n=>`<span class="cizgi" style="width:${n||8}em"></span>`;
+
+
+const KONU=[
+/* ===== BÖLÜM 1: KELİMENİN ANLAMINI TAHMİN ETME ===== */
+[
+{t:"Bilmediğin bir kelime çıktı. Ne yapacaksın?",h:`
+<p class="lead">Okurken hiç duymadığın bir kelimeyle karşılaştın. Sözlük yanında yok. Panik yok: <b>dedektif</b> gibi çevresindeki cümlelere bakıp anlamını tahmin edebilirsin.</p>
+<p>Kelimeler tek başına durmaz. Önündeki ve arkasındaki sözler, o kelimenin ne anlama geldiğini çoğu zaman <b>ele verir</b>. Bu sözlere <b>ipucu</b> diyoruz.</p>
+<div class="ornek"><span class="eyebrow">Örnek · Dedektif işi</span>
+<p>Dedem çok <b>cömert</b> biriydi; elindeki son ekmeği bile komşusuyla paylaşırdı.</p>
+<p>“Cömert” ne demek? İpucu: <b>“son ekmeği bile komşusuyla paylaşırdı”</b>. Demek ki cömert, <b>elindekini başkalarıyla paylaşmayı seven, eli açık</b> kişidir.</p></div>
+${adimAdim("Adım adım · Anlam tahmini",[
+ "Bilmediğin kelimenin geçtiği <b>cümleyi</b> baştan sona bir daha oku.",
+ "Bir önceki ve bir sonraki cümleye de bak. İpucu bazen komşu cümlededir.",
+ "Kelimeyi anlatan, ona örnek veren ya da tam tersini söyleyen <b>ipucu ifadeyi</b> bul ve altını çiz.",
+ "İpucuna göre bir <b>tahmin</b> yap: “Bu kelime galiba … demek.”",
+ "Tahminini kelimenin yerine koy ve cümleyi tekrar oku. Cümle anlamlı oluyorsa tahminin doğrudur."])}
+<div class="rule"><span class="eyebrow">Kolay hatırla</span><b>Kelime yalnız değildir</b><span>Anlamını bilmediğin kelimenin cevabı, hemen yanındaki sözlerde saklıdır.</span></div>
+${yok("“Annem bu vazoyu çok <b>kıymetli</b> bulur; kimsenin dokunmasına izin vermez, tozunu bile kendisi alır.” Kıymetli ne demek, hangi ifadeden anladın?","<b>Değerli, önemli.</b> İpucu: “kimsenin dokunmasına izin vermez, tozunu bile kendisi alır”.")}`},
+{t:"İpucu türleri",h:`
+<p class="lead">İpuçları farklı kılıklarda saklanır. Hangi kılıkta olduklarını bilirsen onları çok daha çabuk yakalarsın.</p>
+${tbl(["İpucu türü","Nasıl tanırım?","Örnek"],[
+ ["Açıklama","“yani”, “başka bir deyişle” ya da noktalı virgülden sonra kelime anlatılır","Ali çok <b>sabırlı</b>dır; yani beklemekten hiç sıkılmaz."],
+ ["Eş anlam","Aynı anlama gelen başka bir kelime yakında geçer","Bu <b>kadim</b> şehir, dünyanın en eski şehirlerinden biridir."],
+ ["Zıt anlam","“ama”, “fakat”, “oysa”, “değil” gibi kelimelerle tersi söylenir","Kardeşim eskiden <b>çekingendi</b> ama artık herkesle rahatça konuşuyor."],
+ ["Örnek","“örneğin”, “gibi” ile kelimeye örnekler verilir","Bahçede <b>kemirgenler</b> vardı; fareler, sincaplar gibi."],
+ ["Sonuç / durum","Kelimeden sonra ne olduğu anlatılır","Koşudan sonra öyle <b>bitkin</b> düştü ki bir adım bile atamadı."]])}
+${sec("Hangi ipucu? Her satırda doğru kutuya dokun",[
+ ["Kuzenim çok <b>dalgın</b>dır; yani etrafında olanları çoğu zaman fark etmez.",["Açıklama","Zıt anlam","Örnek"],0],
+ ["Elif sınavdan önce çok <b>tedirgin</b>di ama sınav başlayınca rahatladı.",["Örnek","Zıt anlam","Açıklama"],1],
+ ["Pazarda <b>baklagiller</b> satılıyordu: nohut, fasulye, mercimek gibi.",["Zıt anlam","Açıklama","Örnek"],2],
+ ["Bütün gece uyumayınca sabah çok <b>mahmur</b>du; gözleri kapanıyor, esneyip duruyordu.",["Sonuç / durum","Zıt anlam","Örnek"],0]])}
+<div class="hata"><b>Dikkat:</b> İpucu her zaman aynı cümlede olmayabilir. Bulamazsan bir önceki ve bir sonraki cümleye mutlaka bak.</div>
+${yok("“Bu kitap çok <b>sürükleyici</b>; okumaya başlayınca bir türlü elimden bırakamadım.” Hangi ipucu türü kullanılmış?","<b>Sonuç / durum ipucu.</b> Kitabı bırakamamak, kitabın sürükleyici olmasının sonucudur. Sürükleyici: insanı kendine bağlayan, merakla okutan.")}`},
+{t:"Yerine koy testi",h:`
+<p class="lead">Tahminini yaptın. Doğru mu, emin değil misin? Çok kolay bir yolu var: tahminini kelimenin yerine koy.</p>
+<div class="ornek"><span class="eyebrow">Örnek · Yerine koy</span>
+<p>Mahallemize yeni gelen aile çok <b>misafirperver</b>; kapılarını çalan herkesi içeri buyur edip çay ikram ediyorlar.</p>
+<p>Tahmin: “misafirlerini güler yüzle ağırlamayı seven”.</p>
+<p>Yerine koyalım: Mahallemize yeni gelen aile çok <b>misafirlerini güler yüzle ağırlamayı seven</b> bir aile. Cümle anlamlı oldu, tahmin doğru.</p></div>
+<div class="rule"><span class="eyebrow">Altın kural</span><b>Tahmin cümleye oturuyorsa doğrudur</b><span>Yerine koyduğunda cümle saçma oluyorsa ipucuna bir daha bak, yeni bir tahmin yap.</span></div>
+${birlikte([
+ `Nine her sabah bahçesindeki çiçekleri büyük bir <b>özenle</b> sular. Özen = ${bosluk('dikkat|itina|ihtimam|titizlik')}`,
+ `Babam bana sevindirici bir <b>müjde</b> verdi: Yaz tatilinde denize gidecekmişiz! Müjde = sevindirici ${bosluk('haber|bir haber')}`,
+ `Bu <b>kadim</b> köprü çok eskidir, yüzlerce yıl önce yapılmıştır. Kadim = çok ${bosluk('eski|eskiden kalma')}`,
+ `Ayşe hastalanan arkadaşını <b>teselli</b> etti; ona sarılıp “Merak etme, yakında iyileşeceksin.” dedi. Teselli etmek = ${bosluk('avutmak|gönlünü almak|rahatlatmak|moral vermek|üzüntüsünü hafifletmek')}`])}
+${yok("“Okulun bahçesi teneffüste çok <b>hareketli</b>ydi; çocuklar koşuyor, top oynuyor, ip atlıyordu.” Hareketli için bir tahmin yap ve yerine koyarak dene.","Tahmin: <b>canlı, kıpır kıpır, çok kişinin hareket ettiği.</b> “Bahçe teneffüste çok canlıydı” cümlesi anlamlı, tahmin doğru.")}`},
+{t:"Sınavda nasıl yazarım?",h:`
+<p class="lead">Sınavda bu sorudan tam puan almak için <b>iki şey</b> yazman gerekir: kelimenin anlamı ve bu anlamı <b>hangi ifadeden</b> çıkardığın.</p>
+<div class="rule"><span class="eyebrow">Cevap kalıbı</span><b>“… kelimesi … anlamına gelir. Bunu metindeki “…” ifadesinden çıkardım.”</b><span>Bu kalıbı ezberle. Her kelime sorusunda işine yarar.</span></div>
+<div class="ornek"><span class="eyebrow">Örnek · Tam puanlık cevap</span>
+${metin("Kasabamızın kütüphanesi çok eski bir binadaydı. Yıllarca <b>bakımsız</b> kaldığı için duvarları çatlamış, pencereleri kırılmış, rafları tozla kaplanmıştı.")}
+<p><b>Soru:</b> “Bakımsız” kelimesinin anlamını tahmin ediniz. Hangi ifadeden yararlandığınızı belirtiniz.</p>
+<p><b>Cevap:</b> “Bakımsız” kelimesi <b>ilgilenilmemiş, onarılmamış, temizlenmemiş</b> anlamına gelir. Bunu metindeki <b>“duvarları çatlamış, pencereleri kırılmış, rafları tozla kaplanmıştı”</b> ifadesinden çıkardım.</p></div>
+<div class="hata"><b>Sık yapılan hata:</b> Sadece anlamı yazıp ipucunu yazmamak. Soru “hangi ifadeden yararlandığınızı belirtiniz” diyorsa ipucunu <b>tırnak içinde</b> metinden aynen yaz. Yoksa puanın yarısı gider.</div>
+${adimAdim("Tablo sorusu gelirse",[
+ "Tabloda her kelime için ayrı bir satır olur. Her satıra o kelimenin anlamını yaz.",
+ "Anlamı <b>kısa ve net</b> yaz: “öğüt: nasihat, birine doğru yolu göstermek için söylenen söz”.",
+ "Emin olmadığın kelimede yerine koy testini yap.",
+ "Boş satır bırakma. Tahmin bile olsa yaz; yakın bir anlam da puan getirebilir."])}
+${yok("Tabloya “kuşak” kelimesinin anlamını yaz: “Her kelime kuşaktan kuşağa aktarılan bir mirastır.”","<b>Kuşak: nesil</b>, yaklaşık aynı dönemde doğmuş insanlar. Kelimeler dedelerden torunlara, nesilden nesile aktarılır.")}`}
+],
+/* ===== BÖLÜM 2: METNİN YÜZEY ANLAMI ===== */
+[
+{t:"Yüzey anlam ne demek?",h:`
+<p class="lead">Bir metin bir havuza benzer. <b>Yüzeyde</b> açıkça görünen şeyler vardır. Bu bölümde, metinde <b>açıkça yazan</b> bilgileri bulmayı öğreneceğiz.</p>
+<p><b>Yüzey anlam</b>, metinde doğrudan yazılmış bilgilerdir. Tahmin etmene ya da yorum yapmana gerek yoktur; cevap metnin içinde kelimesi kelimesine durur.</p>
+<p>Yüzey anlamı bulmak için metne <b>6 soru</b> sorarız. Bunlara <b>5N1K</b> denir.</p>
+${tbl(["Soru","Ne arar?"],[["Ne?","Ne oldu, ne yapıldı?"],["Nerede?","Olay nerede geçti?"],["Ne zaman?","Ne zaman oldu?"],["Nasıl?","Nasıl yapıldı?"],["Neden?","Niçin, hangi amaçla?"],["Kim?","Kim yaptı, kimler var?"]])}
+<div class="ornek"><span class="eyebrow">Örnek · 5N1K</span>
+${metin("Geçen cumartesi sabahı 6-B sınıfı öğrencileri, okulun yanındaki parkı temizlemek için toplandı. Eldiven ve çöp poşetleriyle bütün parkı dolaştılar. Topladıkları plastikleri geri dönüşüm kutusuna attılar.")}
+${tbl(["Soru","Metindeki cevap"],[["Kim?","6-B sınıfı öğrencileri"],["Ne zaman?","Geçen cumartesi sabahı"],["Nerede?","Okulun yanındaki parkta"],["Ne?","Parkı temizlediler"],["Nasıl?","Eldiven ve çöp poşetleriyle"],["Neden?","Parkı temizlemek için"]])}</div>
+${birlikte([
+ `Öğrenciler parkı ne zaman temizledi? Geçen ${bosluk('cumartesi|cumartesi sabahı')} sabahı.`,
+ `Topladıkları plastikleri nereye attılar? Geri dönüşüm ${bosluk('kutusuna|kutusu')}`])}
+${yok("Yukarıdaki metne göre öğrenciler parkta ne kullandı?","<b>Eldiven ve çöp poşeti.</b> Cevap metinde açıkça yazıyor.")}`},
+{t:"Cevap metnin neresinde?",h:`
+<p class="lead">Yüzey anlam sorularında altın kural şudur: <b>Cevabı kendi kafandan değil, metinden</b> bulacaksın.</p>
+<div class="rule"><span class="eyebrow">Altın kural</span><b>“Metne göre” = Metinde ne yazıyorsa o</b><span>Sen başka bir şey düşünsen bile metinde yazanı yaz.</span></div>
+${adimAdim("Adım adım · Cevabı bulma",[
+ "Soruyu dikkatle oku ve sorudaki <b>önemli kelimeyi</b> bul. Örneğin “hangi amaçla” sorusunun önemli kelimesi <b>amaç</b>tır.",
+ "Metinde bu kelimeyi ya da ona yakın bir kelimeyi ara: “amacıyla”, “için”, “diye”.",
+ "Bulduğun cümleyi bir daha oku. Cevap genellikle o cümlededir.",
+ "Cevabı <b>tam cümleyle</b> yaz. Metindeki kelimeleri kullanabilirsin."])}
+<h3>“Bu”, “bunlar”, “bu sorunlar” neyi anlatıyor?</h3>
+<p>Bazen metin bir şeyi anlattıktan sonra ona <b>“bu”</b> diye geri döner. Soru “bu sorunlar” ifadesiyle neyin anlatıldığını sorarsa, o ifadenin <b>hemen öncesine</b> bak.</p>
+<div class="ornek"><span class="eyebrow">Örnek · Geri dönüp bak</span>
+${metin("Sınıfımızın kitaplığında kitaplar karışık duruyordu. Öğrenciler aradıkları kitabı bulamıyor, okudukları kitabı da yerine koymayı unutuyordu. Öğretmenimiz <b>bu sorunları</b> çözmek için kitaplığa etiketler yapıştırdı.")}
+<p>“Bu sorunlar” = <b>1)</b> Öğrencilerin aradıkları kitabı bulamaması. <b>2)</b> Okudukları kitabı yerine koymayı unutmaları.</p></div>
+${sec("Doğru cevap hangisi? Yukarıdaki metne göre",[
+ ["Öğretmen sorunları çözmek için ne yaptı?",["Yeni kitap aldı","Kitaplığa etiket yapıştırdı","Kitaplığı kapattı"],1],
+ ["Kitaplar nasıl duruyordu?",["Karışık","Çok düzenli","Kutularda"],0]])}`},
+{t:"Afiş ve görsel okuma",h:`
+<p class="lead">Sınavda bazen metnin yanında bir <b>afiş</b> olur. Afiş de bir metindir; sadece kısa ve maddeler hâlindedir.</p>
+<div class="afis"><span class="eyebrow">Afiş</span><h4>KİTAP TAKAS GÜNÜ</h4><p><b>15 Kasım Cuma · Okul Bahçesi · 12.30</b></p>
+<ol><li>Okuduğun bir kitabı yanında getir.</li><li>Kitabını masaya bırak, karşılığında bir kitap seç.</li><li>Kitabın yoksa kütüphane öğretmenine adını yazdır; sana kütüphaneden bir kitap ödünç verilir.</li><li>Seçtiğin kitabı iki hafta içinde oku ve arkadaşlarına anlat.</li></ol></div>
+${adimAdim("Adım adım · Afiş okuma",[
+ "Önce afişin <b>başlığını</b> oku. Başlık sana afişin ne hakkında olduğunu söyler.",
+ "Tarihi, saati ve yeri bul. Bunlar “ne zaman?” ve “nerede?” sorularının cevabıdır.",
+ "Maddeleri tek tek oku. Her madde bir kuraldır ya da ne yapman gerektiğini söyler.",
+ "Soru “afişteki yönergeye göre” diyorsa cevabı mutlaka maddelerden birinden bul."])}
+${birlikte([
+ `Kitap takas günü nerede yapılacak? Okul ${bosluk('bahçesinde|bahçesi|bahcesi|bahcesinde')}`,
+ `Saat kaçta başlayacak? ${bosluk('12.30|1230|12 30|on iki otuz|on iki buçuk','sayi')}`,
+ `Kitabın yoksa kime adını yazdırmalısın? Kütüphane ${bosluk('öğretmenine|öğretmeni|ogretmenine|ogretmeni')}`,
+ `Seçtiğin kitabı kaç hafta içinde okumalısın? ${bosluk('2|iki','sayi')} hafta`])}
+${yok("Kitap takas gününe katıldın ama getirecek kitabın yok. Afişe göre ne yapmalısın?","Afişin 3. maddesine göre: <b>Kütüphane öğretmenine adımı yazdırmalıyım. Bana kütüphaneden bir kitap ödünç verilir.</b>")}`},
+{t:"Kaç şey soruyor? Hepsini yaz",h:`
+<p class="lead">Sınavdaki yüzey anlam soruları genellikle <b>a, b, c, d</b> diye maddelere ayrılır ve bazıları birden fazla cevap ister. Puanı kaçırmamak için sayıya dikkat et.</p>
+<div class="rule"><span class="eyebrow">Sınav ipucu</span><b>“Hangi iki sorun?” = İki ayrı madde</b><span>Soru “iki” diyorsa iki, “üç” diyorsa üç cevap yaz. Her cevabı ayrı satıra, numaralı yaz.</span></div>
+<div class="ornek"><span class="eyebrow">Örnek · Metin + afiş birlikte</span>
+<p>Soru: “Metne ve afişe göre bilgilendirme kartlarının arkasında hangi iki bilgi bulunur?”</p>
+<p>Bu soruda <b>hem metne hem afişe</b> bakman gerekir. Bilginin biri metinde, biri afişte olabilir. Sadece birine bakarsan cevabın eksik kalır.</p></div>
+${tbl(["Sorudaki ifade","Nereye bakarım?"],[["“Metne göre…”","Sadece metne"],["“Afişe göre…”","Sadece afişe"],["“Metne ve afişe göre…”","İkisine de"],["“Afişteki yönergeye göre ne yapmalısınız?”","Afişteki maddelere"]])}
+<div class="hata"><b>Sık yapılan hata:</b> Cevabı kendi fikrinle yazmak. Örneğin “Kartım yoksa arkadaşımdan isterim.” yazmak, afiş başka bir şey söylüyorsa puan getirmez. Afişte ne yazıyorsa onu yaz.</div>
+${sec("Nereye bakmalısın?",[
+ ["“Metne göre Kelime Köşesi hangi amaçla hazırlandı?”",["Metne","Afişe","İkisine de"],0],
+ ["“Afişteki yönergeye göre kartın yoksa ne yapmalısın?”",["Metne","Afişe","İkisine de"],1],
+ ["“Metne ve afişe göre kartların arkasında hangi bilgiler var?”",["Metne","Afişe","İkisine de"],2]])}
+${yok("Soru “Öğrencilerin yaşadığı hangi iki sorun anlatılıyor?” diyor. Cevabını nasıl yazarsın?","İki ayrı satır, numaralı: <b>1.</b> … <b>2.</b> … Her sorunu metindeki kelimelerle tam cümle olarak yaz.")}`}
+],
+/* ===== BÖLÜM 3: ANAHTAR KELİME ===== */
+[
+{t:"Anahtar kelime nedir?",h:`
+<p class="lead">Anahtar bir kapıyı açar. <b>Anahtar kelime</b> de bir metnin kapısını açar: onu duyunca metnin neyi anlattığını hemen anlarsın.</p>
+<p><b>Anahtar kelime</b>, metnin konusunu en iyi anlatan kelime ya da kelime grubudur. Metinde genellikle <b>birkaç kez geçer</b> ve metin onun etrafında döner.</p>
+<div class="ornek"><span class="eyebrow">Örnek · Anahtar kelimeleri bul</span>
+${metin("Simit, Türkiye'nin en sevilen sokak lezzetlerinden biridir. Susamlı halka biçimindeki simit, yüzyıllardır sabah kahvaltılarının vazgeçilmezidir. Simitçiler sabahın erken saatlerinde tepsilerini başlarına alıp sokak sokak dolaşır. Simit, ucuz ve doyurucu olduğu için her yaştan insanın gönlünü kazanmıştır. Bu lezzet, geleneklerimizin bir parçası olarak bugün de yaşamaktadır.")}
+<p>Anahtar kelimeler: <b>simit</b>, <b>sokak lezzeti</b>, <b>gelenek</b>. Hepsi metnin ana konusuyla doğrudan ilgili.</p>
+<p>Anahtar kelime olmayanlar: “sabah”, “tepsi”, “insan”. Bunlar metinde geçiyor ama metnin konusu değil, sadece küçük ayrıntılar.</p></div>
+${sec("Yukarıdaki metin için anahtar kelime mi?",[
+ ["Simit",["Anahtar kelime","Ayrıntı"],0],
+ ["Tepsi",["Anahtar kelime","Ayrıntı"],1],
+ ["Sokak lezzeti",["Anahtar kelime","Ayrıntı"],0],
+ ["Erken saatler",["Anahtar kelime","Ayrıntı"],1],
+ ["Gelenek",["Anahtar kelime","Ayrıntı"],0]])}
+<div class="rule"><span class="eyebrow">Kolay hatırla</span><b>Anahtar kelime = Metnin konusu</b><span>Kelime grubu da olabilir: “Türk kültürü”, “kültürel miras”, “sokak lezzeti”.</span></div>`},
+{t:"Anahtar kelime nasıl bulunur?",h:`
+<p class="lead">Anahtar kelimeyi bulmak için 4 küçük soru sorarız. Hepsini sırayla deneyelim.</p>
+${adimAdim("Adım adım · Anahtar kelime avı",[
+ "<b>Konu ne?</b> Metni bitirince kendine sor: “Bu metin ne hakkında?” Cevabın ilk anahtar kelimendir.",
+ "<b>Ne tekrar ediyor?</b> Metinde birden çok geçen kelimelere bak. Sık geçen kelime çoğu zaman anahtardır.",
+ "<b>Başlık deneyi:</b> Bu kelime metnin başlığı olabilir mi? Olabiliyorsa anahtar kelimedir.",
+ "<b>Çıkarma deneyi:</b> Bu kelimeyi metinden çıkarınca metin anlamını kaybediyor mu? Kaybediyorsa anahtar kelimedir."])}
+<div class="ornek"><span class="eyebrow">Örnek · Deneyelim</span>
+${metin("Bal arıları, doğanın en çalışkan canlılarındandır. Bir arı, çiçekten çiçeğe konarak nektar toplar. Arılar bu sırada çiçeklerin tozlaşmasını da sağlar. Tozlaşma olmasaydı meyve ve sebzelerin çoğu yetişmezdi. Bu yüzden arıları korumak, doğayı korumak demektir.")}
+${tbl(["Soru","Cevap"],[["Konu ne?","Bal arıları"],["Ne tekrar ediyor?","Arı (4 kez), tozlaşma (2 kez)"],["Başlık olur mu?","“Bal Arıları”, “Tozlaşma” olur"],["Anahtar kelimeler","<b>bal arısı, tozlaşma, doğayı korumak</b>"]])}</div>
+${birlikte([
+ `Yukarıdaki metinde en çok tekrar eden kelime: ${bosluk('arı|arılar|bal arısı|bal arıları')}`,
+ `Arıların çiçeklere sağladığı şey: ${bosluk('tozlaşma|tozlasma')}`])}
+${yok("“Japonya” kelimesi lokum hakkında bir metinde bir kez geçiyorsa anahtar kelime olur mu?","<b>Olmaz.</b> Japonya metnin konusu değil, sadece küçük bir ayrıntı. Anahtar kelime lokum, Türk mutfağı, gelenek gibi metnin konusunu anlatan kelimelerdir.")}`},
+{t:"İpucu kartları",h:`
+<p class="lead">Sınavda bazen anahtar kelimeyi sen bulmazsın; sana <b>ipucu kartları</b> verilir ve kartın başına uygun anahtar kelimeyi yazman istenir. Bir bilmece gibi!</p>
+<div class="kartlar">
+<div class="kart"><span class="kb">?</span><ul><li>Uyumadan önce söylenir</li><li>Annelerin sesiyle</li></ul></div>
+<div class="kart"><span class="kb">?</span><ul><li>Kısa ve öğüt verir</li><li>Atalarımızdan kalmıştır</li></ul></div>
+<div class="kart"><span class="kb">?</span><ul><li>Bir zamanlar…</li><li>Devler, periler</li></ul></div></div>
+${sec("Her kartın anahtar kelimesi hangisi?",[
+ ["1. kart: uyumadan önce, annelerin sesiyle",["Ninni","Türkü","Fıkra"],0],
+ ["2. kart: kısa, öğüt verir, atalardan",["Masal","Atasözü","Şiir"],1],
+ ["3. kart: bir zamanlar, devler, periler",["Masal","Haber","Ninni"],0]])}
+<h3>Tersi de sorulabilir</h3>
+<p>Bu kez sen bir anahtar kelime seçip ona <b>iki ipucu</b> yazarsın. Bir de seçtiğin kelimenin metnin konusuyla ilişkisini açıklarsın.</p>
+<div class="ornek"><span class="eyebrow">Örnek · Ben bir kelime seçtim</span>
+<p><b>Anahtar kelime:</b> Türkü · <b>1. ipucu:</b> Saz eşliğinde söylenir · <b>2. ipucu:</b> Halkın ortak eseridir</p>
+<p><b>İlişkisi:</b> Metin, kuşaktan kuşağa aktarılan kültürel mirasımızı anlattığı için “türkü” kelimesini seçtim; türküler de bu mirasın bir parçasıdır.</p></div>
+<div class="hata"><b>Dikkat:</b> İpucu yazarken anahtar kelimenin kendisini yazma. “Türkü” için “türkü söyleriz” ipucu olmaz, cevabı söyler.</div>`},
+{t:"Sınavda nasıl yazarım?",h:`
+<p class="lead">Anahtar kelime sorularında puanı bazen sadece kelime için değil, <b>neden o kelimeyi seçtiğini açıklaman</b> için de verirler.</p>
+<div class="rule"><span class="eyebrow">Cevap kalıbı</span><b>“Metin … anlattığı için bu kelimeyi seçtim.”</b><span>Önce metnin konusunu bir cümleyle söyle, sonra seçtiğin kelimeyi ona bağla.</span></div>
+<div class="ornek"><span class="eyebrow">Örnek · Tam puanlık cevap</span>
+${metin("Kitap okumak, hayal dünyamızı geliştirir. Okudukça yeni kelimeler öğrenir, kendimizi daha iyi anlatırız. Bu yüzden her gün biraz kitap okumalıyız.")}
+<p><b>Anahtar kelime:</b> kitap okumak</p>
+<p><b>İlişkisi:</b> Metin, kitap okumanın bize kazandırdıklarını ve her gün kitap okumamız gerektiğini anlattığı için bu kelime grubunu seçtim.</p></div>
+${tbl(["İyi anahtar kelime","Kötü anahtar kelime","Neden kötü?"],[["Kitap okumak","Şey","Çok genel, hiçbir şey anlatmıyor"],["Hayal dünyası","Bu yüzden","Bağlaç, konu değil"],["Kelime öğrenmek","Gün","Küçük bir ayrıntı"]])}
+${yok("Lokum metninde neden “Türk kültürü” iyi bir anahtar kelimedir?","Çünkü metin, lokumun sadece bir tatlı olmadığını, <b>Türk kültürünün bir simgesi</b> olduğunu anlatıyor. Kelime metnin ana fikrine bağlı.")}`}
+],
+/* ===== BÖLÜM 4: GERÇEK VE MECAZ ANLAM ===== */
+[
+{t:"Gerçek anlam",h:`
+<p class="lead">Bir kelimeyi duyunca aklına gelen <b>ilk anlam</b>, o kelimenin gerçek anlamıdır. Sözlükte de ilk sırada bu anlam yazar.</p>
+<p><b>Gerçek anlam</b>, kelimenin herkesin bildiği, ilk ve temel anlamıdır. Genellikle onu <b>görebilir, dokunabilir, ölçebilirsin</b>.</p>
+${tbl(["Kelime","Gerçek anlamlı cümle","Ne anlatıyor?"],[["sıcak","Çorba çok <b>sıcak</b>tı, ağzım yandı.","Isısı yüksek"],["tatlı","Annemin yaptığı kurabiye çok <b>tatlı</b>ydı.","Şekerli tat"],["ağır","Bu valiz çok <b>ağır</b>, kaldıramıyorum.","Tartıda çok çeken"],["köprü","Nehrin üstündeki <b>köprü</b>den geçtik.","İki kıyıyı birleştiren yapı"]])}
+<div class="rule"><span class="eyebrow">Kolay hatırla</span><b>Gerçek anlam = Sözlükteki ilk anlam</b><span>Kelime tam olarak kendi işini yapıyorsa gerçek anlamdadır: sıcak çorba gerçekten sıcaktır.</span></div>
+${yok("“Kar yağınca hava çok <b>soğuk</b> oldu.” Soğuk kelimesi gerçek anlamda mı?","<b>Evet, gerçek anlam.</b> Havanın ısısı gerçekten düşük. Termometreyle ölçebilirsin.")}`},
+{t:"Mecaz anlam",h:`
+<p class="lead">Bazen bir kelimeyi ilk anlamından <b>uzaklaştırıp</b> başka bir şeyi anlatmak için kullanırız. Buna <b>mecaz anlam</b> denir.</p>
+<p>“Bizi çok <b>sıcak</b> karşıladılar.” Burada kimse ateş yakmadı! Sıcak, “içten, samimi, sevgi dolu” demek. Kelime gerçek anlamından uzaklaştı, yani <b>mecaz</b> oldu.</p>
+${tbl(["Kelime","Gerçek anlam","Mecaz anlam"],[
+ ["sıcak","Çorba <b>sıcak</b>tı.","Bizi <b>sıcak</b> karşıladılar. (samimi)"],
+ ["tatlı","Kurabiye <b>tatlı</b>ydı.","Bana <b>tatlı</b> sözler söyledi. (hoş, sevimli)"],
+ ["ağır","Valiz <b>ağır</b>dı.","Arkadaşıma <b>ağır</b> bir söz söyledim. (kırıcı)"],
+ ["soğuk","Hava <b>soğuk</b>tu.","Bana çok <b>soğuk</b> davrandı. (ilgisiz)"],
+ ["engin","<b>Engin</b> denize baktık. (çok geniş)","Kitapta <b>engin</b> bir sevgi anlatılıyor. (çok büyük, derin)"],
+ ["aydınlık","<b>Aydınlık</b> bir odada çalıştık. (ışıklı)","<b>Aydınlık</b> düşünceler yol gösterir. (umutlu, olumlu)"],
+ ["köprü","<b>Köprü</b>den geçtik.","Dostluk insanlar arasında bir <b>köprü</b>dür. (bağ)"]])}
+${sec("Gerçek mi, mecaz mı? Her satırda doğru kutuya dokun",[
+ ["Kardeşimin <b>kalbi kırıldı</b>.",["Gerçek","Mecaz"],1],
+ ["Bardak yere düşüp <b>kırıldı</b>.",["Gerçek","Mecaz"],0],
+ ["Dedemin <b>tatlı</b> dili herkesi güldürür.",["Gerçek","Mecaz"],1],
+ ["Bu bıçak çok <b>keskin</b>.",["Gerçek","Mecaz"],0],
+ ["Ayşe'nin çok <b>keskin</b> bir zekâsı var.",["Gerçek","Mecaz"],1],
+ ["Odanın lambası çok <b>parlak</b>.",["Gerçek","Mecaz"],0]])}`},
+{t:"Nasıl karar veririm?",h:`
+<p class="lead">Bir kelimenin gerçek mi mecaz mı olduğuna karar vermek için kısa bir yol izleriz.</p>
+${adimAdim("Adım adım · Gerçek mi mecaz mı?",[
+ "Kelimenin <b>sözlükteki ilk anlamını</b> düşün. “Ağır = tartıda çok çeken.”",
+ "Cümleye dön ve sor: “Burada kelime gerçekten bu anlamda mı kullanılmış?”",
+ "Dokunabiliyor, ölçebiliyor, görebiliyor musun? “Ağır valiz” tartılabilir, <b>gerçek</b>tir.",
+ "Kelime bir duyguyu, düşünceyi ya da davranışı anlatıyorsa ilk anlamdan uzaklaşmıştır. “Ağır söz” tartılamaz, <b>mecaz</b>dır."])}
+<div class="ornek"><span class="eyebrow">Örnek · Karar verelim</span>
+<p>“Bu kötü haberi duyunca <b>içim karardı</b>.”</p>
+<p>Kararmak = ışığın gitmesi, karanlık olması. İçimizde ışık yanmaz, sönmez! Burada “çok üzüldüm” anlatılıyor. Kelime <b>mecaz</b> anlamda.</p></div>
+${birlikte([
+ `“Bizi sıcak karşıladılar.” cümlesinde sıcak kelimesi ${bosluk('mecaz|mecaz anlam|mecaz anlamda')} anlamdadır.`,
+ `“Çaydanlıktaki su çok sıcak.” cümlesinde sıcak kelimesi ${bosluk('gerçek|gerçek anlam|gerçek anlamda|gercek')} anlamdadır.`,
+ `“Arkadaşım bana soğuk davrandı.” Soğuk burada ${bosluk('ilgisiz|ilgisizce|samimiyetsiz|sevgisiz|mesafeli|uzak')} demek.`])}
+<div class="hata"><b>Dikkat:</b> Aynı kelime bir cümlede gerçek, başka bir cümlede mecaz olabilir. Karar verirken kelimeye değil, <b>cümleye</b> bak.</div>`},
+{t:"Sınavda nasıl yazarım?",h:`
+<p class="lead">Sınavda genellikle bir tablo olur: kelimenin sözlükteki ilk anlamı verilir, sen metinde <b>gerçek mi mecaz mı</b> kullanıldığını yazarsın. Sonra da aynı kelimeyle <b>yeni bir cümle</b> kurarsın.</p>
+${tbl(["Sözcük","Sözlükteki ilk anlamı","Metindeki anlam özelliği"],[["engin","Ucu bucağı görünmeyecek kadar geniş","<b>Mecaz</b>: “engin sevgi” çok büyük sevgi demek"],["aydınlık","Işık alan, ışıklı","<b>Mecaz</b>: “aydınlık düşünceler” umut veren düşünceler demek"]])}
+<div class="rule"><span class="eyebrow">Sınav ipucu</span><b>“Metin dışındaki diğer anlamıyla cümle kur”</b><span>Metinde mecazsa sen <b>gerçek</b> anlamla cümle kur. Metinde gerçekse sen <b>mecaz</b> anlamla cümle kur. Tersini yap!</span></div>
+<div class="ornek"><span class="eyebrow">Örnek · Köprü</span>
+<p><b>Metin:</b> “Dostluk, insanları birbirine bağlayan bir köprüdür.”</p>
+<p><b>Metindeki anlam özelliği:</b> Mecaz. Çünkü köprü burada bir yapı değil, insanlar arasındaki bağ anlamında.</p>
+<p><b>Diğer anlamıyla (gerçek) cümle:</b> Köyün girişindeki taş köprü, derenin iki yakasını birleştiriyordu.</p></div>
+${yok("Metinde “Annemin yumuşak sesi beni sakinleştirdi.” yazıyor. Yumuşak kelimesini diğer anlamıyla bir cümlede kullan.","Metinde mecaz (nazik, kırıcı olmayan ses). Gerçek anlamla: <b>“Yeni yastığım pamuk gibi yumuşak.”</b>")}`}
+],
+/* ===== BÖLÜM 5: PARAGRAF TÜRLERİ ===== */
+[
+{t:"Dört tür, dört amaç",h:`
+<p class="lead">Her paragrafın bir <b>amacı</b> vardır. Ne anlatmak istediğine göre paragrafın türü değişir. Sınavda dört türü bilmen gerekiyor.</p>
+${tbl(["Tür","Amacı","İpucu kelimeler"],[
+ ["<b>Betimleme</b>","Bir yeri, kişiyi, varlığı <b>gözde canlandırmak</b>, resmini kelimelerle çizmek","renk, ses, koku, şekil; “mavi gözlü”, “ılık rüzgâr”"],
+ ["<b>Tanıtma</b>","Bir kişiyi, yeri, kitabı, ürünü ya da etkinliği <b>tanıtmak</b>, özelliklerini anlatmak","adı, yeri, özellikleri, neden ilginç olduğu"],
+ ["<b>Öyküleme</b>","Bir <b>olayı</b> baştan sona sırayla anlatmak","kişi, yer, zaman; “önce, sonra, ertesi gün, o sırada”"],
+ ["<b>Açıklama</b>","Bilgi vermek, bir şeyi <b>öğretmek</b>, tavsiye ve öneri sunmak","“şunu yapabilirsin”, “böylece”, “çünkü”, “bu sayede”"]])}
+<div class="rule"><span class="eyebrow">Kolay hatırla</span><b>Resim · Vitrin · Film · Öğretmen</b><span>Betimleme bir <b>resim</b> çizer. Tanıtma bir <b>vitrin</b>dir. Öyküleme bir <b>film</b> gibi olayı oynatır. Açıklama bir <b>öğretmen</b> gibi bilgi verir ve yol gösterir.</span></div>
+${sec("Hangi tür? Amaca göre seç",[
+ ["Olayı sırayla anlatır",["Betimleme","Öyküleme","Açıklama"],1],
+ ["Bir yerin rengini, sesini, kokusunu anlatır",["Betimleme","Tanıtma","Açıklama"],0],
+ ["Tavsiye verir, nasıl yapılacağını anlatır",["Öyküleme","Betimleme","Açıklama"],2],
+ ["Bir kitabın adını, yazarını, konusunu anlatır",["Tanıtma","Öyküleme","Betimleme"],0]])}`},
+{t:"Aynı konu, dört paragraf",h:`
+<p class="lead">Aynı konuyu dört farklı türde yazabiliriz. Konumuz: <b>okul kütüphanesi</b>. Farklarını bulabilecek misin?</p>
+<div class="ornek"><span class="eyebrow">Betimleme</span><p>Kütüphanenin büyük pencerelerinden içeri sarı bir ışık süzülüyordu. Ahşap raflar tavana kadar uzanıyor, eski kitapların kâğıt kokusu bütün odayı sarıyordu. Sessizlikte sadece sayfaların hışırtısı duyuluyordu.</p></div>
+<div class="ornek"><span class="eyebrow">Tanıtma</span><p>Okulumuzun kütüphanesi zemin katta, kantinin yanındadır. Kütüphanede iki binden fazla kitap vardır. Her gün 08.30 ile 16.00 arasında açıktır. Öğrenciler kartlarıyla iki haftalığına kitap ödünç alabilir.</p></div>
+<div class="ornek"><span class="eyebrow">Öyküleme</span><p>Geçen pazartesi kütüphaneye ilk kez gittim. Önce rafların arasında biraz dolaştım. Sonra bir köşede eski bir macera kitabı gördüm. Kitabı açar açmaz içine daldım ve zil çaldığını duymadım bile.</p></div>
+<div class="ornek"><span class="eyebrow">Açıklama</span><p>Kütüphaneyi daha iyi kullanmak istiyorsan önce kütüphane kartı çıkarmalısın. Böylece istediğin kitabı evine götürebilirsin. Kitap seçerken arka kapaktaki yazıyı oku, çünkü bu yazı kitabın konusunu kısaca anlatır.</p></div>
+${sec("Bu cümle hangi türden?",[
+ ["Kütüphanenin kapısı açılınca içeriye mis gibi bir kitap kokusu yayıldı, raflar renk renk kitaplarla doluydu.",["Betimleme","Açıklama","Tanıtma"],0],
+ ["Kitapları iki hafta içinde geri getirmelisin; böylece başka arkadaşların da okuyabilir.",["Öyküleme","Açıklama","Betimleme"],1],
+ ["Dün akşam kitabımı bitirdim, sonra hemen ikinci cildini okumaya başladım.",["Öyküleme","Tanıtma","Açıklama"],0],
+ ["Bu kitabın yazarı Jules Verne'dir; kitap, balonla Afrika'yı geçen kâşifleri anlatır.",["Betimleme","Tanıtma","Öyküleme"],1]])}`},
+{t:"Duruma göre tür seç",h:`
+<p class="lead">Sınavda sana bir <b>durum</b> verilir ve “Bu durumda hangi tür paragraf yazarsın?” diye sorulur. Cevap, <b>ne yapmak istediğine</b> bağlıdır.</p>
+${tbl(["Durum","Ne yapmak istiyorum?","Tür"],[
+ ["Arkadaşım bir sorun yaşıyor, ona yardım etmek istiyorum","Tavsiye vermek","<b>Açıklama</b>"],
+ ["Yaz tatilinde başıma gelen komik bir olayı anlatacağım","Olay anlatmak","<b>Öyküleme</b>"],
+ ["Odamın nasıl göründüğünü anlatacağım","Gözde canlandırmak","<b>Betimleme</b>"],
+ ["Sınıfıma en sevdiğim kitabı sunacağım","Tanıtmak","<b>Tanıtma</b>"]])}
+<div class="rule"><span class="eyebrow">Sınav ipucu</span><b>“Tavsiye”, “öneri”, “nasıl” = Açıklama</b><span>Soru “arkadaşınıza tavsiyede bulunmak amacıyla” diyorsa cevap neredeyse her zaman <b>açıklama</b>dır. Çünkü bilgi verip yol gösteriyorsun.</span></div>
+${sec("Hangi türü seçersin?",[
+ ["Kardeşin dişlerini fırçalamayı unutuyor. Ona öneriler yazacaksın.",["Açıklama","Betimleme","Öyküleme"],0],
+ ["Bayramda dedeni ziyaret ettiğin günü anlatacaksın.",["Tanıtma","Öyküleme","Açıklama"],1],
+ ["Denizin gün batımında nasıl göründüğünü anlatacaksın.",["Betimleme","Açıklama","Tanıtma"],0],
+ ["Şehrindeki bir müzeyi okul gazetesinde tanıtacaksın.",["Öyküleme","Tanıtma","Betimleme"],1]])}`},
+{t:"Tavsiye paragrafı yazma kalıbı",h:`
+<p class="lead">Sınavda en çok çıkan yazma sorusu: Bir arkadaşına <b>iki öneri</b> sunan ve her önerinin <b>neden işe yarayacağını</b> açıklayan en az <b>altı cümlelik</b> bir paragraf.</p>
+${adimAdim("Adım adım · 6 cümlelik kalıp",[
+ "<b>1. cümle (giriş):</b> Sorunu ve genel öneriyi söyle. “Görevini zamanında bitirmek için işlerini planlaman gerekir.”",
+ "<b>2. cümle (1. öneri):</b> “Önce … yapabilirsin.”",
+ "<b>3. cümle (1. neden):</b> “Böylece / Çünkü …”",
+ "<b>4. cümle (2. öneri):</b> “Ayrıca … yapabilirsin.”",
+ "<b>5. cümle (2. neden):</b> “Bu sayede …”",
+ "<b>6. cümle (sonuç):</b> “Bu iki öneriyi uygularsan …”",
+ "Bitirince cümlelerini say. En az altı cümle olmalı. Her cümle büyük harfle başlamalı ve noktayla bitmeli."])}
+<div class="ornek"><span class="eyebrow">Örnek · Ödevlerini unutan arkadaşa</span>
+<p>Ödevlerini unutmamak için biraz düzenli olman yeterli. Önce her derste verilen ödevi küçük bir deftere yazabilirsin. Böylece akşam neyi yapacağını hatırlarsın. Ayrıca çantanı yatmadan önce hazırlayabilirsin. Bu sayede sabah aceleyle bir şey unutmazsın. Bu iki öneriyi uygularsan öğretmenine her gün ödevini gururla teslim edersin.</p></div>
+${birlikte([
+ `Öneriden sonra nedenini anlatmak için “${bosluk('böylece|çünkü|bu sayede|bu sayade')}” diye başlayan bir cümle yazarım.`,
+ `İkinci öneriye geçerken “${bosluk('ayrıca|ayrica|bir de|hem de|bunun yanında')}” kelimesini kullanırım.`,
+ `Tavsiye paragrafının türü: ${bosluk('açıklama|aciklama|açıklayıcı')}`])}
+<div class="hata"><b>Sık yapılan hata:</b> Öneriyi yazıp nedenini yazmamak. “Not defteri kullan.” tek başına yarım puandır. “… çünkü aradığın bilgiyi kolayca bulursun.” diye devam et.</div>`}
+],
+/* ===== BÖLÜM 6: YAZIM VE NOKTALAMA ===== */
+[
+{t:"Kesme işareti ve kısaltmalar",h:`
+<p class="lead">Özel isimlere ve kısaltmalara gelen ekler <b>kesme işaretiyle (')</b> ayrılır. Kısaltmalarda bir sır daha var: Ek, kısaltmanın <b>nasıl okunduğuna</b> göre gelir.</p>
+<p><b>Özel isimler:</b> Ankara'da, Nisa'nın, Yunus Emre'yi, Türkiye'ye</p>
+<div class="rule"><span class="eyebrow">Kısaltma kuralı</span><b>Ek, son harfin okunuşuna uyar</b><span>Kısaltmayı yüksek sesle oku. Son harfi nasıl söylüyorsan eki ona göre getir.</span></div>
+${tbl(["Kısaltma","Nasıl okunur?","Doğru yazım"],[
+ ["TDK","te-de-<b>ke</b>","TDK'<b>ye</b>, TDK'<b>nin</b>, TDK'<b>de</b>"],
+ ["TRT","te-re-<b>te</b>","TRT'<b>ye</b>, TRT'<b>nin</b>, TRT'<b>de</b>"],
+ ["PTT","pe-te-<b>te</b>","PTT'<b>ye</b>, PTT'<b>den</b>"],
+ ["TBMM","te-be-me-<b>me</b>","TBMM'<b>ye</b>, TBMM'<b>nin</b>"],
+ ["ABD","a-be-<b>de</b>","ABD'<b>ye</b>, ABD'<b>den</b>"],
+ ["NATO","<b>nato</b> (kelime gibi)","NATO'<b>ya</b>, NATO'<b>nun</b>"]])}
+<div class="ornek"><span class="eyebrow">Örnek · Sınavdaki tuzak</span>
+<p>Yanlış: TDK'<b>nın</b> yayımladığı eserler · Doğru: TDK'<b>nin</b> yayımladığı eserler</p>
+<p>Neden? TDK “te-de-<b>ke</b>” diye okunur. “Ke”deki <b>e</b> ince ünlüdür, bu yüzden ek de ince olur: <b>-nin</b>.</p></div>
+${birlikte([
+ `TDK' ${bosluk('ye')} mektup yazdım.`,
+ `Haberi TRT' ${bosluk('de|den')} izledim.`,
+ `Paketi PTT' ${bosluk('den|ye')} aldım.`,
+ `Milletvekilleri TBMM' ${bosluk('ye|de|den')} toplandı.`])}`},
+{t:"de / da: ek mi, bağlaç mı?",h:`
+<p class="lead">Türkçede en çok karıştırılan yazım kuralı budur. İki farklı “de” var ve biri <b>bitişik</b>, biri <b>ayrı</b> yazılır.</p>
+<div class="cards"><div class="mini"><b>-de / -da / -te / -ta (ek)</b>Bulunma eki. <b>Bitişik</b> yazılır. “Nerede? Ne zaman?” sorusuna cevap verir.<br><br>Evde, okulda, saat üçte, sokakta</div>
+<div class="mini"><b>de / da (bağlaç)</b>“Dahi, bile, ayrıca” anlamı katar. <b>Ayrı</b> yazılır. Asla “te / ta” olmaz.<br><br>Ben de geldim. Kardeşim de gülüyor.</div></div>
+<div class="rule"><span class="eyebrow">Çıkarma testi</span><b>Çıkar, cümle bozuluyorsa ek; bozulmuyorsa bağlaç</b><span>“Ben <b>de</b> geldim.” → “Ben geldim.” Cümle bozulmadı, demek ki <b>bağlaç</b>, ayrı yazılır.<br>“Ev<b>de</b> kaldım.” → “Ev kaldım.” Cümle bozuldu, demek ki <b>ek</b>, bitişik yazılır.</span></div>
+${sec("Ek mi, bağlaç mı? Her satırda doğru kutuya dokun",[
+ ["Çocukluğumun en güzel anıları bu evin bahçesin<b>de</b> saklıdır.",["Ek (bitişik)","Bağlaç (ayrı)"],0],
+ ["Sen <b>de</b> bizimle gel.",["Ek (bitişik)","Bağlaç (ayrı)"],1],
+ ["Toplantı saat beş<b>te</b> başlayacak.",["Ek (bitişik)","Bağlaç (ayrı)"],0],
+ ["Kardeşim <b>de</b> bu kitabı çok sevdi.",["Ek (bitişik)","Bağlaç (ayrı)"],1],
+ ["Kitabım çantam<b>da</b> duruyor.",["Ek (bitişik)","Bağlaç (ayrı)"],0]])}
+<div class="hata"><b>Dikkat:</b> Ek olan “-de”, sertleşip “-te, -ta” olabilir: kitapta, sokakta. Bağlaç olan “de” <b>asla</b> “te” olmaz. “Ahmet te geldi.” yanlıştır, “Ahmet de geldi.” doğrudur.</div>`},
+{t:"ki: ayrı mı, bitişik mi?",h:`
+<p class="lead">“ki” de ikiye ayrılır: biri cümleleri <b>bağlar</b> ve ayrı yazılır, öteki kelimeye <b>yapışır</b> ve bitişik yazılır.</p>
+<div class="cards"><div class="mini"><b>ki (bağlaç)</b>Kelimeleri ya da cümleleri birbirine bağlar. <b>Ayrı</b> yazılır.<br><br>Anladım <b>ki</b> sevgi paylaştıkça çoğalır. · Öyle yoruldum <b>ki</b> hemen uyudum.</div>
+<div class="mini"><b>-ki (ek)</b>Kelimeye eklenir, “hangi?” sorusuna cevap verir ya da bir ismin yerini tutar. <b>Bitişik</b> yazılır.<br><br>Evde<b>ki</b> kedi · yarın<b>ki</b> maç · Benim kalemim mavi, senin<b>ki</b> kırmızı.</div></div>
+<div class="rule"><span class="eyebrow">Hangi? testi</span><b>“Hangi?” sorusuna cevap veriyorsa ek, bitişik</b><span>“Evdeki kedi” → Hangi kedi? Evdeki. Bu bir <b>ek</b>tir.<br>“Gözlerindeki pırıltı” → Hangi pırıltı? Gözlerindeki. Bu da <b>ek</b>tir.</span></div>
+${sec("Bağlaç mı, ek mi?",[
+ ["Duydum <b>ki</b> yarın kar yağacakmış.",["Bağlaç (ayrı)","Ek (bitişik)"],0],
+ ["Masada<b>ki</b> kitabı bana uzatır mısın?",["Bağlaç (ayrı)","Ek (bitişik)"],1],
+ ["O kadar güldük <b>ki</b> karnımız ağrıdı.",["Bağlaç (ayrı)","Ek (bitişik)"],0],
+ ["Dün<b>kü</b> maçı izledin mi?",["Bağlaç (ayrı)","Ek (bitişik)"],1]])}
+<div class="hata"><b>Bunlar hep bitişik:</b> belki, çünkü, sanki, hâlbuki, oysaki, mademki. Bu kelimelerdeki “ki”yi ayırma.</div>
+${yok("“Bahçede<b>ki</b> ağaçlar çiçek açtı.” cümlesindeki ki neden bitişik yazılmış?","Çünkü “Hangi ağaçlar?” sorusuna cevap veriyor: <b>bahçedeki ağaçlar.</b> Bu, ismi niteleyen <b>-ki ekidir</b>, bitişik yazılır.")}`},
+{t:"mi: soru eki ve “-ince” anlamı",h:`
+<p class="lead">“mi” her zaman <b>ayrı</b> yazılır. Ama iki farklı görevi vardır: soru sormak ve “-ınca, -ırsa” anlamı katmak.</p>
+<div class="rule"><span class="eyebrow">Altın kural</span><b>mi her zaman ayrı, ondan sonraki ekler mi'ye bitişik</b><span>Geldin <b>mi</b>? · Gelecek <b>misin</b>? · Okudun <b>mu</b>? · Güzel <b>mi</b>ydi?<br>“Gelecekmisin” yanlış · “Gelecek misin” doğru</span></div>
+<p>“mi”, önündeki kelimeye uyar: <b>mı, mi, mu, mü</b> olur. Kitap <b>mı</b>, kalem <b>mi</b>, okul <b>mu</b>, gül <b>mü</b>?</p>
+<div class="cards"><div class="mini"><b>Soru eki mi</b>Bir şey sorar. Cümlenin sonunda soru işareti olur.<br><br>Eski mektupları sakladığın kutu hâlâ duruyor <b>mu</b>?</div>
+<div class="mini"><b>Zaman / şart anlamı veren mi</b>Soru sormaz. “-ınca” ya da “-ırsa” anlamı katar.<br><br>Bahar geldi <b>mi</b> içimi sevinç kaplar. = Bahar <b>gelince</b> içimi sevinç kaplar.</div></div>
+${sec("Hangi görevde?",[
+ ["Kar yağdı <b>mı</b> bütün çocuklar sokağa koşar.",["Soru","Zaman / şart"],1],
+ ["Ödevini bitirdin <b>mi</b>?",["Soru","Zaman / şart"],0],
+ ["Akşam oldu <b>mu</b> dedem çayını demler.",["Soru","Zaman / şart"],1],
+ ["Yarın sinemaya gidecek <b>miyiz</b>?",["Soru","Zaman / şart"],0]])}
+${birlikte([
+ `Sen de bizimle gelecek ${bosluk('misin')}?`,
+ `Bu kitabı okudun ${bosluk('mu')}?`])}`},
+{t:"İki nokta, noktalı virgül, virgül",h:`
+<p class="lead">Noktalama işaretleri cümlenin trafik işaretleridir. Nerede duracağını, nerede yavaşlayacağını gösterir. Sınavda en çok bu üçü çıkar.</p>
+${tbl(["İşaret","Ne zaman kullanırım?","Örnek"],[
+ ["<b>İki nokta (:)</b>","Ardından <b>alıntı</b>, açıklama ya da örnek gelecekse","Yunus Emre şöyle der<b>:</b> “Söz ola kese savaşı.”"],
+ ["<b>Noktalı virgül (;)</b>","İçinde <b>virgül olan</b> sıralı cümleleri ayırırken","Sözlerimizi tartarak konuşmalıyız<b>;</b> dilimiz, en kıymetli hazinemizdir."],
+ ["<b>Virgül (,)</b>","Sıralı cümleleri, eş görevli kelimeleri ayırırken ve başka görevlerde","Kitap okudum<b>,</b> resim yaptım<b>,</b> uyudum."]])}
+<h3>Virgülün sınavdaki üç görevi</h3>
+${tbl(["Görev","Örnek"],[
+ ["1. Sıralı cümleleri ayırma","Dilimizin zenginliğini keşfettikçe düşünce dünyamız genişler<b>,</b> ifade gücümüz artar."],
+ ["2. Tırnak içinde olmayan alıntı cümleyi belirtme","Öğretmenimiz<b>,</b> her gün kitap okuyun<b>,</b> dedi."],
+ ["3. “Evet, hayır, peki, tamam, haydi” gibi sözlerden sonra","<b>Evet,</b> bu yüzden dilimize sahip çıkmalıyız. · <b>Haydi,</b> parka gidelim."]])}
+${sec("Virgülün görevi hangisi?",[
+ ["Annem, yarın erken kalk, dedi.",["Sıralı cümleler","Tırnaksız alıntı","Evet/hayır sonrası"],1],
+ ["Hayır, bugün dışarı çıkmayacağız.",["Sıralı cümleler","Tırnaksız alıntı","Evet/hayır sonrası"],2],
+ ["Güneş doğdu, kuşlar ötmeye başladı.",["Sıralı cümleler","Tırnaksız alıntı","Evet/hayır sonrası"],0]])}
+<div class="hata"><b>Noktalı virgül sırrı:</b> İkinci cümlenin içinde zaten virgül varsa, iki cümleyi virgülle değil <b>noktalı virgülle</b> ayır. Yoksa hangi virgülün neyi ayırdığı karışır.</div>`}
+],
+/* ===== BÖLÜM 7: KALIP SÖZLER, DEYİMLER, ATASÖZLERİ ===== */
+[
+{t:"Kalıp sözler: doğru yerde doğru söz",h:`
+<p class="lead">Bazı durumlarda herkesin söylediği <b>hazır sözler</b> vardır. Bunlara <b>kalıp söz</b> denir. Doğru durumda doğru kalıp sözü söylemek nezaketin bir parçasıdır.</p>
+${tbl(["Durum","Söylenen kalıp söz"],[
+ ["Yeni bir eve taşınan komşuya","<b>Güle güle oturun!</b> / Hayırlı olsun!"],
+ ["Yeni bir şey alan kişiye","<b>Güle güle kullan / giy!</b>"],
+ ["Yemek yiyip teşekkür eden misafire","<b>Afiyet olsun!</b>"],
+ ["Yemeği hazırlayan kişiye","<b>Eline sağlık!</b>"],
+ ["Hasta olan ya da hastaneden çıkan kişiye","<b>Geçmiş olsun!</b>"],
+ ["Çalışan birinin yanından geçerken","<b>Kolay gelsin!</b>"],
+ ["Yolculuğa çıkan kişiye","<b>İyi yolculuklar!</b> / Yolun açık olsun!"],
+ ["Uzun süredir görmediğin birine","<b>Nasılsınız, iyi misiniz?</b> / Ne var ne yok?"]])}
+${birlikte([
+ `Annem harika bir yemek yaptı. Ona: “${bosluk('eline sağlık|elinize sağlık|ellerine sağlık|ellerinize sağlık')}!”`,
+ `Arkadaşım kolunu kırdı. Ona: “${bosluk('geçmiş olsun')}!”`,
+ `Bahçede çalışan dedeme: “${bosluk('kolay gelsin')}!”`,
+ `Komşumuz yeni eve taşındı. Ona: “${bosluk('güle güle oturun|hayırlı olsun|hayırlı uğurlu olsun|güle güle oturun|eviniz şen olsun')}!”`])}
+<div class="hata"><b>Dikkat:</b> “Afiyet olsun” yemeği yiyecek ya da yemiş olan kişiye söylenir. Yemeği yapan kişiye “eline sağlık” denir. Bu ikisini karıştırma.</div>`},
+{t:"Deyimler",h:`
+<p class="lead"><b>Deyim</b>, en az iki kelimeden oluşan, kalıplaşmış ve genellikle <b>mecaz anlamlı</b> bir sözdür. Deyimler anlatımı renklendirir.</p>
+<div class="rule"><span class="eyebrow">Deyimi tanı</span><b>En az iki kelime · Kalıplaşmış · Çoğu “-mek / -mak” ile biter</b><span>Kelimelerinin yeri değiştirilemez. “El ele vermek” yerine “ele el vermek” denmez.</span></div>
+${tbl(["Deyim","Anlamı"],[
+ ["El ele vermek","Birlikte çalışmak, yardımlaşmak"],
+ ["Kapısı herkese açık olmak","Herkesi evinde ağırlamak, misafirperver olmak"],
+ ["Göz kulak olmak","Birine ya da bir şeye dikkat edip korumak"],
+ ["Etekleri zil çalmak","Çok sevinmek"],
+ ["Kulak vermek","Dikkatle dinlemek"],
+ ["Omuz omuza vermek","Birlikte, dayanışarak çalışmak"],
+ ["Gözden düşmek","Değerini, sevgisini kaybetmek"]])}
+${sec("Deyimin anlamı hangisi?",[
+ ["Etekleri zil çalmak",["Çok sevinmek","Çok korkmak","Dans etmek"],0],
+ ["Göz kulak olmak",["Gözlük takmak","Dikkat edip korumak","Kulak tıkamak"],1],
+ ["Kulak vermek",["Dikkatle dinlemek","Kulağını göstermek","Bağırmak"],0],
+ ["El ele vermek",["El sıkışmak","Birlikte çalışmak","Kavga etmek"],1]])}
+${yok("“Kardeşim bayram harçlığını alınca çok sevindi.” cümlesini bir deyimle yeniden yaz.","<b>“Kardeşim bayram harçlığını alınca etekleri zil çaldı.”</b>")}`},
+{t:"Atasözleri",h:`
+<p class="lead"><b>Atasözü</b>, atalarımızın yaşadıklarından çıkardığı dersleri anlatan, kısa ve kalıplaşmış <b>cümlelerdir</b>. Atasözleri genellikle bir <b>öğüt</b> verir.</p>
+${tbl(["Atasözü","Ne anlatır?"],[
+ ["Ev alma, komşu al.","İyi komşu, iyi evden daha önemlidir."],
+ ["Komşu komşunun külüne muhtaçtır.","Komşular en küçük işte bile birbirine ihtiyaç duyar."],
+ ["Birlikten kuvvet doğar.","Birlikte hareket edenler güçlü olur."],
+ ["Damlaya damlaya göl olur.","Küçük birikimler zamanla büyük olur."],
+ ["Tatlı dil yılanı deliğinden çıkarır.","Güzel söz, en zor insanı bile yumuşatır."],
+ ["Bir elin nesi var, iki elin sesi var.","Birlikte çalışmak, tek başına çalışmaktan daha verimlidir."]])}
+<div class="cards"><div class="mini"><b>Deyim</b>Kalıplaşmış <b>söz</b>dür. Çoğu “-mek, -mak” ile biter. Öğüt vermez, bir durumu anlatır.<br><br>El ele vermek</div>
+<div class="mini"><b>Atasözü</b>Kalıplaşmış <b>cümle</b>dir. Bir ders, bir öğüt verir.<br><br>Birlikten kuvvet doğar.</div></div>
+${sec("Deyim mi, atasözü mü?",[
+ ["Damlaya damlaya göl olur.",["Deyim","Atasözü"],1],
+ ["Kapısı herkese açık olmak",["Deyim","Atasözü"],0],
+ ["Ev alma, komşu al.",["Deyim","Atasözü"],1],
+ ["Göz kulak olmak",["Deyim","Atasözü"],0]])}`},
+{t:"Paragrafta kullanmak",h:`
+<p class="lead">Sınavda sana bir <b>havuz</b> verilir: içinde deyimler, atasözleri, kalıp sözler olur. En az ikisini seçip <b>4–5 cümlelik</b> bilgilendirici bir paragraf yazman istenir.</p>
+${adimAdim("Adım adım · Havuzdan paragraf",[
+ "Paragrafın <b>konusunu</b> oku. Örneğin: “komşuluk ilişkilerinde yardımlaşmanın önemi”.",
+ "Havuzdan konuya en uygun <b>iki ifadeyi</b> seç ve anlamlarını düşün.",
+ "<b>1. cümle:</b> Konuyu söyle. “Komşuluk ilişkilerinde yardımlaşma çok önemlidir.”",
+ "<b>2–3. cümle:</b> Birinci ifadeyi kullan ve ne anlattığını açıkla.",
+ "<b>4. cümle:</b> İkinci ifadeyi kullan, bir örnekle destekle.",
+ "<b>5. cümle:</b> Sonuç cümlesi yaz. “Böylece komşular arasındaki dostluk güçlenir.”"])}
+<div class="ornek"><span class="eyebrow">Örnek · Okulda yardımlaşma</span>
+<p>Okulda yardımlaşmak, hepimizin işini kolaylaştırır. “Birlikten kuvvet doğar.” atasözü, birlikte hareket edenlerin daha güçlü olduğunu anlatır. Sınıfça <b>el ele verdiğimizde</b> bahçeyi bir saatte temizledik. Tek başımıza yapsaydık günlerce sürerdi. Bu yüzden zor işlerde birbirimize destek olmalıyız.</p></div>
+<div class="hata"><b>Sık yapılan hata:</b> İfadeleri art arda dizip bırakmak: “Birlikten kuvvet doğar. El ele vermek önemlidir.” Bu bir paragraf değil. İfadeyi cümlenin içinde, anlamına uygun kullan ve düşünceni desteklemesini sağla.</div>
+${yok("“Göz kulak olmak” deyimini komşulukla ilgili bir cümlede kullan.","Örneğin: <b>“Tatile giden komşumuzun evine biz göz kulak olduk.”</b>")}`}
+]
+];
+
+const B=[
+{ ad:"Kelimenin Anlamını Tahmin Etme", kisa:"Bilmediğin kelimeyi metindeki ipuçlarından bulma",
+test:[
+ {q:"“Komşumuz çok <b>titiz</b> biridir; eve girmeden ayakkabılarını siler, her eşyayı yerli yerine koyar.” Titiz ne demektir?",o:["Temizliğe ve düzene çok önem veren","Çok konuşan","Çabuk sinirlenen","İşini yavaş yapan"],a:0,n:"İpucu: “ayakkabılarını siler, her eşyayı yerli yerine koyar”. Bunlar temizlik ve düzen göstergesi."},
+ {q:"Bilmediğimiz bir kelimenin anlamını tahmin ederken en çok neye bakmalıyız?",o:["Kelimenin kaç harfli olduğuna","Kelimenin çevresindeki cümlelere","Kelimenin ilk harfine","Metnin kaç paragraf olduğuna"],a:1,n:"Kelimenin anlamının ipucu, çevresindeki sözlerde saklıdır."},
+ {q:"“Yarışmayı kazanan takım büyük bir <b>coşkuyla</b> sevindi; öğrenciler zıplıyor, şarkılar söylüyordu.” Coşku ne demektir?",o:["Üzüntü","Yorgunluk","Taşkın sevinç, heyecan","Korku"],a:2,n:"İpucu: “zıplıyor, şarkılar söylüyordu”. Bunlar taşkın bir sevincin belirtileri."},
+ {q:"“Bu köprü çok <b>kadim</b> bir yapıdır; yüzlerce yıl önce yapılmıştır.” Kadim kelimesinin anlamını hangi ifadeden çıkarırız?",o:["“yüzlerce yıl önce yapılmıştır”","“bu köprü”","“bir yapıdır”","“çok”"],a:0,n:"Yüzlerce yıl önce yapılmış olmak, kadim kelimesinin “çok eski” anlamını verir."},
+ {q:"“Ali önce çok <b>çekingendi</b> ama zamanla sınıfta herkesle rahatça konuşmaya başladı.” Burada hangi ipucu türü var?",o:["Zıt anlam ipucu","Örnek ipucu","Sayı ipucu","İpucu yok"],a:0,n:"“ama” kelimesinden sonra tam tersi anlatılıyor: herkesle rahatça konuşmak. Çekingen = utangaç, insanlardan uzak duran."}
+],
+yazili:{
+ soru:`${metin("Babaannemin sandığında yıllar önce yazılmış mektuplar vardı. Kâğıtları sararmış, mürekkepleri solmuştu ama babaannem onları büyük bir <b>itinayla</b> saklamıştı; her birini ayrı ayrı katlayıp kurdeleyle bağlamıştı. Bir gün bana o mektupları okudu. Mektuplarda dedemin askerdeyken ailesine duyduğu <b>hasret</b> anlatılıyordu. Dedem, “Sizi görmeyeli aylar oldu, her gece yüzünüzü düşünüyorum.” diye yazmıştı. Babaannem, bu mektupların ailemiz için paha biçilmez bir <b>hatıra</b> olduğunu söyledi.")}
+${qs([["a)","Metinde koyu yazılmış “itina” kelimesinin anlamını tahmin ediniz. Tahmininizi yazarken metindeki hangi ifadeden yararlandığınızı belirtiniz.",4],
+ ["b)","“Hasret” ve “hatıra” kelimelerinin anlamlarını metnin bağlamından tahmin ederek bir tablo çizip yazınız.",4],
+ ["c)","“Hasret” kelimesini kendi kurduğunuz bir cümlede kullanınız.",2]])}`,
+ kontrol:[
+  {b:"a) İtina",m:"<b>İtina: özen, dikkat.</b> İpucu: “her birini ayrı ayrı katlayıp kurdeleyle bağlamıştı”.",
+   i:[["İtina kelimesine “özen, dikkat” ya da yakın bir anlam yazdı",2,"Kelimenin anlamını yazarken ipucu cümlesini oku: babaanne mektupları nasıl saklamış?"],
+      ["Yararlandığı ifadeyi metinden yazdı",2,"“Hangi ifadeden yararlandınız” diyorsa ipucunu tırnak içinde metinden aynen yaz."]]},
+  {b:"b) Tablo",m:"<b>Hasret: özlem.</b> · <b>Hatıra: anı</b>, geçmişten kalan ve hatırlatan şey.",
+   i:[["Hasret için “özlem” ya da yakın bir anlam yazdı",2,"Hasret: dedenin ailesini görememesi ve her gece düşünmesi → özlem."],
+      ["Hatıra için “anı” ya da yakın bir anlam yazdı",2,"Hatıra: geçmişten kalan ve bize geçmişi hatırlatan şey, anı."]]},
+  {b:"c) Cümle",m:"Örnek: <b>“Yaz tatilinde arkadaşlarıma büyük bir hasret duydum.”</b>",
+   i:[["Hasret kelimesini anlamına uygun bir cümlede kullandı",2,"Kendi cümlende kelimeyi doğru anlamıyla kullan: hasret = özlem."]]}
+ ]}
+},
+{ ad:"Metnin Yüzey Anlamı", kisa:"Metinde ve afişte açıkça yazanları bulma",
+test:[
+ {q:"Yüzey anlam sorusunun cevabını nereden buluruz?",o:["Kendi düşüncemizden","Metinde açıkça yazanlardan","Resmin rengine bakarak","Arkadaşımıza sorarak"],a:1,n:"Yüzey anlam, metinde açıkça yazılan bilgilerdir. Cevap metinde durur."},
+ {q:"“Geçen pazar Ece ve ailesi, köydeki dedesini ziyaret etmek için yola çıktı.” Bu cümlede “Ne zaman?” sorusunun cevabı nedir?",o:["Ece ve ailesi","Köyde","Geçen pazar","Dedesini ziyaret etmek için"],a:2,n:"“Ne zaman?” zamanı sorar: geçen pazar."},
+ {q:"Aynı cümlede “Neden yola çıktılar?” sorusunun cevabı nedir?",o:["Dedesini ziyaret etmek için","Geçen pazar","Arabayla","Köyde"],a:0,n:"“Neden?” amacı sorar. “… için” kelimesine bak: dedesini ziyaret etmek için."},
+ {q:"“Sınıfta çöpler yere atılıyor, sıralar karalanıyordu. Öğretmenimiz bu sorunları çözmek için sınıf kuralları yazdı.” “Bu sorunlar” neleri anlatıyor?",o:["Kuralların yazılmasını","Çöplerin yere atılmasını ve sıraların karalanmasını","Öğretmenin gelmesini","Sınıfın küçük olmasını"],a:1,n:"“Bu” bir şeye geri döner. Hemen öncesine bak: çöplerin yere atılması ve sıraların karalanması."},
+ {q:"Soru “Afişteki yönergeye göre ne yapmalısınız?” diyorsa cevabı nereden buluruz?",o:["Metnin ilk cümlesinden","Kendi fikrimizden","Afişteki maddelerden","Başlıktan"],a:2,n:"Yönerge = ne yapılacağını söyleyen madde. Afişin maddelerinden bul."}
+],
+yazili:{
+ soru:`${metin("Okulumuzda bahçeyi daha yeşil hâle getirmek amacıyla bir Okul Bahçesi Projesi başlatıldı. Eskiden öğrenciler bahçeye fidan dikmek istiyor ama ne zaman ve nereye dikeceklerini bilmiyordu. Ayrıca dikilen fidanlar düzenli sulanmadığı için kısa sürede kuruyordu. Öğretmenlerimiz bu sorunları çözmek için her sınıfa bir bahçe köşesi ayırdı. Her köşeye o sınıfın adının yazdığı bir tabela koydular. Sulama için de her hafta bir sulama nöbetçisi seçilmesine karar verdiler. Projenin nasıl yürüyeceğini anlatan aşağıdaki afişi okul girişine astılar.")}
+<div class="afis"><span class="eyebrow">Afiş</span><h4>OKUL BAHÇESİ PROJESİ</h4><p><b>Fidan dikimi: 22 Kasım Cumartesi · Saat 10.00</b></p>
+<ol><li>Sınıfının köşesini tabeladaki addan bul.</li><li>Fidanını öğretmenle birlikte dik.</li><li>Sulama nöbetçisiysen fidanları salı ve cuma günleri sula.</li><li>Sulama kovan yoksa hademe odasından ödünç al, işin bitince geri götür.</li></ol></div>
+${qs([["a)","Metne göre Okul Bahçesi Projesi hangi amaçla başlatılmıştır?",2],
+ ["b)","Metindeki “bu sorunları” ifadesiyle anlatılan iki sorunu yazınız.",3],
+ ["c)","Metne ve afişe göre fidan dikimi ne zaman yapılacaktır ve sınıflar kendi köşelerini nasıl bulacaktır?",3],
+ ["d)","Sulama nöbetçisi seçildiniz ama sulama kovanız yok. Afişteki yönergeye göre ne yapmalısınız?",2]])}`,
+ kontrol:[
+  {b:"a) Amaç",m:"<b>Okul bahçesini daha yeşil hâle getirmek amacıyla.</b>",
+   i:[["Projenin amacını metinden doğru yazdı",2,"“Hangi amaçla” sorusunda metinde “amacıyla” ya da “için” kelimesini ara."]]},
+  {b:"b) İki sorun",m:"<b>1.</b> Öğrencilerin fidanları ne zaman ve nereye dikeceklerini bilmemesi. <b>2.</b> Fidanların düzenli sulanmadığı için kuruması.",
+   i:[["Birinci sorunu yazdı",1,"“Bu sorunlar” ifadesinin hemen öncesindeki cümlelere geri dön."],
+      ["İkinci sorunu yazdı",2,"Soru “iki sorun” diyorsa iki ayrı madde yaz."]]},
+  {b:"c) Zaman ve köşe",m:"<b>22 Kasım Cumartesi, saat 10.00.</b> Sınıflar köşelerini <b>tabeladaki addan</b> bulacak.",
+   i:[["Fidan dikiminin tarihini (saatiyle) yazdı",2,"Tarih ve saat afişin üst kısmında yazar."],
+      ["Köşenin tabeladaki addan bulunacağını yazdı",1,"“Metne ve afişe göre” diyorsa iki yere de bak."]]},
+  {b:"d) Yönerge",m:"<b>Hademe odasından sulama kovası ödünç almalıyım, işim bitince geri götürmeliyim.</b>",
+   i:[["Afişteki maddeye uygun cevap yazdı",2,"Yönerge sorusunda kendi fikrini değil, afişteki maddeyi yaz."]]}
+ ]}
+},
+{ ad:"Anahtar Kelime", kisa:"Metnin konusunu anlatan kelimeleri bulma",
+test:[
+ {q:"Anahtar kelime nedir?",o:["Metinde en uzun kelime","Metnin konusunu en iyi anlatan kelime","Metnin ilk kelimesi","Metinde bir kez geçen kelime"],a:1,n:"Anahtar kelime metnin konusunu anlatır ve genellikle birkaç kez geçer."},
+ {q:"Çay hakkında bir metinde aşağıdakilerden hangisi anahtar kelime olur?",o:["Bardak altlığı","Çay kültürü","Masa","Sabah"],a:1,n:"Çay kültürü metnin konusunu anlatır. Diğerleri küçük ayrıntılardır."},
+ {q:"İpucu kartında şunlar yazıyor: “saz eşliğinde söylenir, halkın ortak eseridir”. Kartın anahtar kelimesi hangisidir?",o:["Türkü","Masal","Fıkra","Roman"],a:0,n:"Saz eşliğinde söylenen ve halkın ortak eseri olan şey türküdür."},
+ {q:"Anahtar kelime için ipucu yazarken hangisini yapmamalıyız?",o:["Kelimeyle ilgili özellik yazmak","Anahtar kelimenin kendisini yazmak","Kısa yazmak","İki ipucu yazmak"],a:1,n:"İpucunda kelimenin kendisini yazarsan cevabı söylemiş olursun."},
+ {q:"“Metin, lokumun Türk kültürünün bir simgesi olduğunu anlattığı için bu kelimeyi seçtim.” Bu cümle neyi açıklıyor?",o:["Seçilen anahtar kelimenin metnin konusuyla ilişkisini","Lokumun nasıl yapıldığını","Metnin kaç cümle olduğunu","Lokumun fiyatını"],a:0,n:"Sınavda seçtiğin kelimenin metinle ilişkisini böyle bir cümleyle açıklarsın."}
+],
+yazili:{
+ soru:`${metin("Karagöz ile Hacivat, yüzyıllardır sevilen geleneksel bir gölge oyunudur. Deriden yapılan renkli tasvirler, arkasından ışık tutulan beyaz bir perdeye yansıtılır. Perdenin arkasındaki usta hem tasvirleri oynatır hem de bütün karakterleri tek başına seslendirir. Karagöz saf ve dobra, Hacivat ise bilgiç ve kibar konuşur. İkisinin anlaşmazlıkları seyircileri güldürürken onlara önemli dersler de verir. UNESCO, Karagöz'ü korunması gereken kültürel miraslar listesine almıştır.")}
+${qs([["a)","Yukarıdaki bilgilendirici metinden üç anahtar kelime ya da kelime grubu belirleyiniz.",6],
+ ["b)","Belirlediğiniz anahtar kelimelerden birini seçiniz. Bu ifadenin metnin konusuyla ilişkisini bir cümleyle açıklayınız.",4]])}`,
+ kontrol:[
+  {b:"a) Üç anahtar kelime",m:"Örneğin: <b>Karagöz ve Hacivat, gölge oyunu, kültürel miras.</b> Geleneksel oyun, perde, tasvir, usta gibi metnin konusunu yansıtan ifadeler de kabul edilir.",
+   i:[["Birinci anahtar kelime metnin konusuna uygun",2,"Anahtar kelime = metnin konusu. Kendine sor: Bu metin ne hakkında?"],
+      ["İkinci anahtar kelime metnin konusuna uygun",2,"Metinde tekrar eden ve başlık olabilecek kelimelere bak."],
+      ["Üçüncü anahtar kelime metnin konusuna uygun",2,"“Saf”, “kibar” gibi küçük ayrıntılar anahtar kelime olmaz."]]},
+  {b:"b) İlişki",m:"Örnek: <b>“Metin, Karagöz'ün korunması gereken bir gölge oyunu olduğunu anlattığı için ‘kültürel miras’ ifadesini seçtim.”</b>",
+   i:[["Bir anahtar kelime seçti",1,"Önce hangi kelimeyi seçtiğini açıkça yaz."],
+      ["Kelimenin metnin konusuyla ilişkisini açıkladı",3,"Kalıp: “Metin … anlattığı için bu kelimeyi seçtim.”"]]}
+ ]}
+},
+{ ad:"Gerçek ve Mecaz Anlam", kisa:"Kelimenin ilk anlamı ve ondan uzaklaşan anlamı",
+test:[
+ {q:"Hangi cümlede “sıcak” kelimesi mecaz anlamda kullanılmıştır?",o:["Çorba çok sıcaktı.","Bu yaz çok sıcak geçti.","Komşularımız bizi çok sıcak karşıladı.","Sıcak su ile elini yıka."],a:2,n:"“Sıcak karşılamak” içten, samimi karşılamak demektir. Isı yoktur, mecazdır."},
+ {q:"Gerçek anlam nedir?",o:["Kelimenin sözlükteki ilk anlamı","Kelimenin şakacı anlamı","Kelimenin uzun hâli","Kelimenin yabancı dildeki karşılığı"],a:0,n:"Gerçek anlam, kelimenin akla gelen ilk ve temel anlamıdır."},
+ {q:"“Arkadaşının bu <b>ağır</b> sözü onu çok üzdü.” Ağır kelimesinin anlamı nedir?",o:["Tartıda çok çeken","Kırıcı, incitici","Yavaş","Büyük"],a:1,n:"Söz tartılmaz! Burada “kırıcı” anlamında, mecaz kullanılmış."},
+ {q:"Hangi cümlede altı çizili kelime gerçek anlamdadır?",o:["Annemin <b>tatlı</b> sesi beni uyuttu.","Bu pasta çok <b>tatlı</b> olmuş.","Bebeğin <b>tatlı</b> gülüşü herkesi güldürdü.","Öğretmenimiz <b>tatlı</b> bir dille konuştu."],a:1,n:"Pastanın tadı gerçekten şekerli. Diğerlerinde tatlı “hoş, sevimli” anlamında, mecaz."},
+ {q:"“Dostluk insanlar arasında bir köprüdür.” cümlesindeki köprü kelimesini gerçek anlamda kullanan cümle hangisidir?",o:["Kitaplar geçmişle bugün arasında bir köprüdür.","Annem ailemizin köprüsüdür.","Nehrin üzerindeki köprü yenilendi.","Müzik insanlar arasında köprü kurar."],a:2,n:"Nehrin üzerindeki köprü gerçekten iki kıyıyı birleştiren bir yapıdır."}
+],
+yazili:{
+ soru:`${metin("Yeni okulumdaki ilk günüm çok zor geçti. Kimseyi tanımıyordum ve içimde <u>ağır</u> bir yük vardı. Teneffüste yanıma Elif geldi ve bana <u>sıcak</u> bir gülümsemeyle merhaba dedi. Elif'in <u>tatlı</u> sözleri bana cesaret verdi. O günden sonra en iyi arkadaşım oldu.")}
+${qs([["a)","Metinde altı çizili “ağır” ve “sıcak” sözcüklerinin sözlükteki ilk anlamları aşağıda verilmiştir. Her sözcüğün metinde gerçek anlamda mı, mecaz anlamda mı kullanıldığını yazınız.<br>• Ağır: Tartıda çok çeken.<br>• Sıcak: Isısı yüksek olan.",4],
+ ["b)","Metinde yer alan “tatlı” sözcüğünün anlam özelliğini (gerçek/mecaz) belirleyiniz. Bu sözcüğü metindeki kullanımının dışındaki diğer anlamıyla yeni bir cümlede kullanınız.",4],
+ ["c)","“Soğuk” sözcüğünü mecaz anlamda kullanarak bir cümle kurunuz.",2]])}`,
+ kontrol:[
+  {b:"a) Tablo",m:"<b>Ağır: mecaz</b> (içindeki sıkıntı, üzüntü anlatılıyor). <b>Sıcak: mecaz</b> (içten, samimi gülümseme).",
+   i:[["Ağır için “mecaz” yazdı",2,"İçteki yük tartılamaz. Kelime duygu anlatıyorsa mecazdır."],
+      ["Sıcak için “mecaz” yazdı",2,"Gülümsemenin ısısı ölçülmez; “sıcak gülümseme” samimi gülümseme demektir."]]},
+  {b:"b) Tatlı",m:"Anlam özelliği: <b>mecaz</b> (hoş, gönül alıcı sözler). Gerçek anlamlı cümle: <b>“Annemin yaptığı kurabiyeler çok tatlıydı.”</b>",
+   i:[["Tatlı sözcüğünün metinde mecaz olduğunu yazdı",2,"Söz yenmez, tadına bakılmaz. Tatlı söz = hoş, güzel söz, mecaz."],
+      ["Tatlı sözcüğünü gerçek anlamıyla (şekerli tat) cümlede kullandı",2,"Metinde mecazsa sen gerçek anlamla cümle kur: yiyecek ya da içeceğin tadı."]]},
+  {b:"c) Soğuk",m:"Örnek: <b>“Küstüğü için bana çok soğuk davrandı.”</b>",
+   i:[["Soğuk sözcüğünü mecaz anlamda (ilgisiz, samimiyetsiz) kullandı",2,"Mecaz soğuk = ilgisiz, sevgisiz davranış. “Hava soğuk” gerçek anlam olur, puan almaz."]]}
+ ]}
+},
+{ ad:"Paragraf Türleri", kisa:"Betimleme, tanıtma, öyküleme, açıklama",
+test:[
+ {q:"Bir olayı baştan sona sırayla anlatan paragraf türü hangisidir?",o:["Betimleme","Tanıtma","Öyküleme","Açıklama"],a:2,n:"Öyküleme olayı film gibi sırayla anlatır: önce, sonra, ertesi gün."},
+ {q:"“Göl kenarındaki yaşlı söğüdün yeşil dalları suya kadar sarkıyor, rüzgârda hafifçe sallanıyordu.” Bu paragraf hangi türdedir?",o:["Betimleme","Açıklama","Öyküleme","Tanıtma"],a:0,n:"Renk, şekil ve hareketle bir yeri gözde canlandırıyor: betimleme."},
+ {q:"Arkadaşına derslerini nasıl daha iyi çalışabileceği konusunda tavsiye vermek istiyorsun. Hangi türü seçersin?",o:["Betimleme","Öyküleme","Açıklama","Tanıtma"],a:2,n:"Tavsiye ve öneri vermek, bilgi verip yol göstermektir: açıklama."},
+ {q:"“Ankara'daki Anıtkabir, Atatürk'ün ebedî istirahatgâhıdır. Her gün açıktır ve giriş ücretsizdir. İçinde bir de müze bulunur.” Bu paragraf hangi türdedir?",o:["Tanıtma","Öyküleme","Betimleme","Hiçbiri"],a:0,n:"Bir yerin adını, yerini ve özelliklerini anlatıyor: tanıtma."},
+ {q:"Tavsiye paragrafında bir öneriden sonra hangi kelimeyle devam etmek doğru olur?",o:["Bir zamanlar","Böylece","Mavi","Dün"],a:1,n:"“Böylece”, “çünkü”, “bu sayede” önerinin neden işe yarayacağını anlatmaya başlar."}
+],
+yazili:{
+ soru:`<p>Arkadaşın Defne, okul gazetesi için haftada bir yazı yazmak istiyor. Ancak hafta içinde ödevleri, kursları ve oyunları arasında zamanını iyi kullanamadığı için yazısını hep son güne bırakıyor ve yetiştiremiyor.</p>
+${qs([["a)","Defne'ye tavsiyelerde bulunmak amacıyla yazacağınız paragrafın türünü yazınız: betimleme, tanıtma, öyküleme, açıklama.",2],
+ ["b)","Seçtiğiniz türe uygun, en az altı cümlelik bir paragraf yazınız. Paragrafınızda iki öneri sununuz ve her önerinin neden işe yarayacağını açıklayınız.",8]])}`,
+ kontrol:[
+  {b:"a) Tür",m:"<b>Açıklama.</b> Çünkü tavsiye verip yol gösteriyoruz.",
+   i:[["Paragraf türü olarak “açıklama” yazdı",2,"Tavsiye, öneri, nasıl yapılır = açıklama paragrafı."]]},
+  {b:"b) Paragraf",m:"Örnek: <i>Zamanını planlarsan yazılarını kolayca yetiştirirsin. Önce haftalık bir plan hazırlayıp yazıya bir gün ayırabilirsin. Böylece yazını son güne bırakmazsın. Ayrıca her gün on dakika not alabilirsin. Bu sayede yazacağın günde aklında hazır fikirler olur. Bu iki öneriyi uygularsan gazete yazıların hep zamanında yetişir.</i>",
+   i:[["Birinci öneriyi yazdı",2,"Öneri cümlesi: “Önce … yapabilirsin.”"],
+      ["Birinci önerinin neden işe yarayacağını açıkladı",2,"Öneriden sonra “Böylece / Çünkü …” diye nedenini yaz."],
+      ["İkinci öneriyi ve nedenini yazdı",2,"“Ayrıca …” ile ikinci öneriye geç, “Bu sayede …” ile nedenini yaz."],
+      ["En az altı cümle yazdı, giriş ve sonuç cümlesi var",2,"6 cümlelik kalıp: giriş, öneri 1, neden 1, öneri 2, neden 2, sonuç."]]}
+ ]}
+},
+{ ad:"Yazım ve Noktalama", kisa:"Kısaltmalar, de/da, ki, mi, iki nokta, noktalı virgül, virgül",
+test:[
+ {q:"Hangisinin yazımı doğrudur?",o:["TDK'nın","TDK'nin","TDK'nun","TDKnin"],a:1,n:"TDK “te-de-ke” diye okunur. Son ses “ke”, ince ünlü: TDK'nin."},
+ {q:"Hangi cümlede “de” bağlaç olarak kullanılmıştır?",o:["Kitabım çantamda.","Okulda kaldım.","Ben de seninle geleceğim.","Saat üçte buluşalım."],a:2,n:"Çıkarma testi: “Ben seninle geleceğim.” Cümle bozulmadı, demek ki bağlaç, ayrı yazılır."},
+ {q:"Hangisinin yazımı yanlıştır?",o:["Gelecek misin?","Okudun mu?","Gidecekmisin?","Güzel mi?"],a:2,n:"mi her zaman ayrı yazılır, sonraki ekler ona bitişir: gidecek misin?"},
+ {q:"“Sözlerimizi tartarak konuşmalıyız ( ) dilimiz, bizim en kıymetli hazinemizdir.” Boşluğa hangi işaret gelmelidir?",o:["Noktalı virgül (;)","Soru işareti (?)","Ünlem (!)","Kesme işareti (')"],a:0,n:"İkinci cümlenin içinde virgül var. Böyle sıralı cümleleri noktalı virgülle ayırırız."},
+ {q:"“Evet, bu kitabı okumalısın.” cümlesinde virgülün görevi nedir?",o:["Sıralı cümleleri ayırma","Kendisinden sonraki cümleye bağlı kabul bildiren sözden sonra kullanılma","Alıntı cümleyi belirtme","Kısaltmayı gösterme"],a:1,n:"“Evet, hayır, peki, tamam, haydi” gibi sözlerden sonra virgül konur."}
+],
+yazili:{
+ soru:`${metin("Okulumuzda Cumhuriyet Bayramı için bir tören düzenlendi. Müdürümüz konuşmasına şu sözlerle başladı (1) “Cumhuriyet, en büyük armağanımızdır.” Törene <b>TRT'nın</b> muhabirleri <b>de</b> geldi. Arkadaşım Ece bana dönüp “Sen de sahneye <b>çıkacakmısın</b>?” diye sordu. Evet, çıkacaktım (2) heyecandan ellerim titriyor, kalbim hızlı hızlı atıyordu. <b>Bahçedeki</b> bayraklar o gün bana her zamankinden güzel göründü.")}
+${qs([["a)","Metindeki koyu yazılmış ifadelerin yazımını inceleyiniz. Yazımı yanlış olan iki ifadeyi bulup doğru biçimde yeniden yazınız.",4],
+ ["b)","Metinde yay ayraçla ( ) boş bırakılan yerlere gelmesi gereken noktalama işaretlerini yazınız. Her işaretin görevini kısaca belirtiniz.",4],
+ ["c)","“Evet, çıkacaktım” ifadesindeki virgülün görevini yazınız.",2]])}`,
+ kontrol:[
+  {b:"a) Yazım",m:"<b>TRT'nın → TRT'nin</b> (te-re-<b>te</b> okunur, ince ünlü). <b>çıkacakmısın → çıkacak mısın</b> (mi ayrı yazılır). “de” bağlaç ayrı yazıldığı için, “Bahçedeki” de -ki eki bitişik yazıldığı için doğrudur.",
+   i:[["TRT'nin yazımını düzeltti",2,"Kısaltmayı sesli oku: te-re-te. Son ses ince, ek de ince: TRT'nin."],
+      ["“çıkacak mısın” yazımını düzeltti",2,"Soru eki mi her zaman ayrı yazılır: gelecek misin, çıkacak mısın."]]},
+  {b:"b) Noktalama",m:"(1) <b>İki nokta (:)</b>: ardından alıntı gelecek. (2) <b>Noktalı virgül (;)</b>: ikinci cümlenin içinde virgül var, sıralı cümleleri ayırıyor.",
+   i:[["1. boşluğa iki nokta yazdı ve görevini belirtti",2,"Alıntıdan (tırnak içindeki sözden) önce iki nokta konur."],
+      ["2. boşluğa noktalı virgül yazdı ve görevini belirtti",2,"İçinde virgül olan sıralı cümleler noktalı virgülle ayrılır."]]},
+  {b:"c) Virgülün görevi",m:"<b>Kendisinden sonraki cümleye bağlı kabul bildiren “evet” sözünden sonra</b> kullanılmıştır.",
+   i:[["Virgülün “evet” gibi kabul bildiren sözden sonra kullanıldığını yazdı",2,"Evet, hayır, peki, tamam, haydi gibi sözlerden sonra virgül konur."]]}
+ ]}
+},
+{ ad:"Kalıp Sözler, Deyimler, Atasözleri", kisa:"Doğru yerde doğru söz ve paragrafta kullanma",
+test:[
+ {q:"Yemeği hazırlayan kişiye ne deriz?",o:["Afiyet olsun!","Eline sağlık!","Geçmiş olsun!","İyi yolculuklar!"],a:1,n:"Yemeği yapana “eline sağlık”, yiyene “afiyet olsun” denir."},
+ {q:"Hastaneden çıkan komşumuza ne deriz?",o:["Kolay gelsin!","Güle güle oturun!","Geçmiş olsun!","Afiyet olsun!"],a:2,n:"Hasta olan ya da iyileşen birine “geçmiş olsun” denir."},
+ {q:"“El ele vermek” deyiminin anlamı nedir?",o:["El sıkışmak","Birlikte çalışmak, yardımlaşmak","Eldiven takmak","Selamlaşmak"],a:1,n:"Deyimler çoğu zaman mecaz anlamlıdır: el ele vermek = birlikte çalışmak."},
+ {q:"Aşağıdakilerden hangisi bir atasözüdür?",o:["Göz kulak olmak","Kulak vermek","Damlaya damlaya göl olur.","Etekleri zil çalmak"],a:2,n:"Atasözü bir öğüt veren kalıplaşmış cümledir. Diğerleri “-mak” ile biten deyimlerdir."},
+ {q:"Havuzdan seçtiğin ifadeleri paragrafta nasıl kullanmalısın?",o:["Art arda sıralayıp bırakmalısın","Anlamına uygun, düşünceni destekleyecek biçimde cümle içinde","Sadece başlığa yazmalısın","Hiç açıklamadan en sona yazmalısın"],a:1,n:"İfadeler cümlenin içinde, anlamına uygun ve düşünceni destekleyecek şekilde kullanılmalı."}
+],
+yazili:{
+ soru:`<p><b>1.</b> Aşağıdaki günlük yaşam durumlarına uygun kalıp sözleri yazınız.</p>
+<ul><li>Arkadaşın yeni bir bisiklet aldı. Ona “${cizgi(10)}” dersin.</li><li>Okulun bahçesini süpüren görevliye selam verirken “${cizgi(10)}” dersin.</li><li>Yaz tatili için uzak bir şehre giden kuzenine “${cizgi(10)}” dersin.</li></ul>
+<p><b>2.</b> Aşağıda söz varlığı unsurlarından oluşan bir havuz verilmiştir.</p>
+<div class="afis"><span class="eyebrow">Havuz</span><ul style="text-align:left;margin:0;padding-left:1.2em"><li>Birlikten kuvvet doğar.</li><li>El ele vermek</li><li>Bir elin nesi var, iki elin sesi var.</li><li>Omuz omuza vermek</li><li>Göz kulak olmak</li></ul></div>
+${qs([["a)","1. sorudaki üç durum için uygun kalıp sözleri yazınız.",6],
+ ["b)","Havuzdan en az iki ifade seçerek okulda yardımlaşmanın önemini anlatan 4–5 cümlelik bilgilendirici bir paragraf yazınız.",4]])}`,
+ kontrol:[
+  {b:"a) Kalıp sözler",m:"Bisiklet: <b>Güle güle kullan / binersin!</b> · Görevli: <b>Kolay gelsin!</b> · Kuzen: <b>İyi yolculuklar! / Yolun açık olsun!</b>",
+   i:[["Bisiklet için “güle güle kullan” ya da uygun bir söz yazdı",2,"Yeni bir şey alan kişiye “güle güle kullan / giy” denir."],
+      ["Görevli için “kolay gelsin” yazdı",2,"Çalışan birine “kolay gelsin” denir."],
+      ["Kuzen için “iyi yolculuklar” ya da uygun bir söz yazdı",2,"Yolculuğa çıkan birine “iyi yolculuklar, yolun açık olsun” denir."]]},
+  {b:"b) Paragraf",m:"Örnek: <i>Okulda yardımlaşmak işlerimizi kolaylaştırır. “Birlikten kuvvet doğar.” atasözü, birlikte olanların güçlü olduğunu anlatır. Sınıfça el ele verince panoyu bir teneffüste hazırladık. Böylece hepimiz bu işten gurur duyduk.</i>",
+   i:[["Havuzdan en az iki ifadeyi anlamına uygun kullandı",2,"Seçtiğin ifadeleri cümle içinde, anlamına uygun kullan; art arda dizme."],
+      ["4–5 cümlelik, konuya uygun, bağlantılı bir paragraf yazdı",2,"Konu cümlesi, ifadeli cümleler, örnek ve sonuç cümlesi: toplam 4–5 cümle."]]}
+ ]}
+}
+];
+
+const KONU_AD=["Kelime anlamı","Metin ve afiş","Anahtar kelime","Gerçek ve mecaz","Paragraf yazma","Yazım ve noktalama","Kalıp söz, deyim"];
+
+const TEKRAR=[
+ ["Kelimenin anlamını tahmin etme",["Bilmediğin kelimenin cümlesini, öncesini ve sonrasını oku.","İpucu türleri: açıklama (yani), eş anlam, zıt anlam (ama), örnek (gibi), sonuç.","Tahminini kelimenin yerine koy; cümle anlamlıysa doğrudur.","Cevap kalıbı: “… kelimesi … anlamına gelir. Bunu metindeki “…” ifadesinden çıkardım.”"]],
+ ["Metin ve afiş okuma",["Yüzey anlam = metinde açıkça yazan. Cevap kendi fikrin değil, metin.","5N1K: ne, nerede, ne zaman, nasıl, neden, kim.","“Bu sorunlar” gibi ifadelerde hemen öncesine geri dön.","“İki sorun” diyorsa iki ayrı madde yaz.","“Metne ve afişe göre” diyorsa ikisine de bak. Yönerge sorusunun cevabı afişteki maddededir."]],
+ ["Anahtar kelime",["Anahtar kelime = metnin konusu. Kelime grubu da olabilir: “kültürel miras”.","Bul: Konu ne? Ne tekrar ediyor? Başlık olur mu?","Küçük ayrıntılar (Japonya, tepsi, sabah) anahtar kelime olmaz.","İpucu kartında kelimenin kendisini yazma.","Kalıp: “Metin … anlattığı için bu kelimeyi seçtim.”"]],
+ ["Gerçek ve mecaz anlam",["Gerçek = sözlükteki ilk anlam. Dokunabilir, ölçebilirsin: sıcak çorba.","Mecaz = ilk anlamdan uzaklaşmış: sıcak karşılama, tatlı söz, ağır söz, engin sevgi.","Kelime bir duygu, düşünce ya da davranış anlatıyorsa mecazdır.","“Diğer anlamıyla cümle kur”: metinde mecazsa gerçekle, gerçekse mecazla kur."]],
+ ["Paragraf türleri",["Betimleme = resim (renk, ses, koku). Tanıtma = vitrin (özellikler). Öyküleme = film (olay, sıra). Açıklama = öğretmen (bilgi, tavsiye).","Tavsiye, öneri sorusu → açıklama.","6 cümle: giriş · öneri 1 · böylece… · ayrıca öneri 2 · bu sayede… · sonuç.","Her önerinin nedenini mutlaka yaz."]],
+ ["Yazım ve noktalama",["Kısaltmada ek okunuşa göre: TDK'nin, TRT'de, TBMM'ye, NATO'ya.","de bağlaç ayrı (çıkar, cümle bozulmaz), -de ek bitişik (evde, saat üçte).","ki bağlaç ayrı (anladım ki), -ki ek bitişik (evdeki, yarınki). belki, çünkü, sanki bitişik.","mi her zaman ayrı: gelecek misin. “Bahar geldi mi…” = gelince (zaman/şart).","İki nokta: alıntıdan önce. Noktalı virgül: içinde virgül olan sıralı cümleler arasında.","Virgül: sıralı cümleler · tırnaksız alıntı (…, dedi.) · evet, hayır, peki, haydi sonrası."]],
+ ["Kalıp sözler, deyimler, atasözleri",["Yeni ev: güle güle oturun · Yemek yapan: eline sağlık · Yiyen: afiyet olsun · Hasta: geçmiş olsun · Çalışan: kolay gelsin.","Deyim: kalıplaşmış söz, çoğu “-mak” ile biter: el ele vermek.","Atasözü: öğüt veren kalıplaşmış cümle: Birlikten kuvvet doğar.","Havuz paragrafı: en az iki ifadeyi anlamına uygun, cümle içinde kullan; 4–5 cümle."]]
+];
+
+const T=[
+{ ad:"Sınav Tatbikatı 1", sorular:[
+ {k:1,h:`${metin("Fatma, ilçedeki yüzme yarışına hazırlanırken büyük bir <b>azim</b> gösterdi. Yağmur, kar demeden her sabah havuza gitti. Bazı günler çok yorulsa bile hiç vazgeçmedi ve antrenmanlarını sonuna kadar tamamladı.")}
+${qs([["","Metinde koyu yazılmış “azim” kelimesinin anlamını metnin bağlamından hareketle tahmin ediniz. Tahmininizi yazarken metindeki hangi ifadeden yararlandığınızı da belirtiniz.",8]])}`,
+  c:[{b:"Azim",m:"<b>Azim: kararlılık, bir işi sonuna kadar götürme isteği.</b> İpucu: “çok yorulsa bile hiç vazgeçmedi” ya da “yağmur, kar demeden her sabah havuza gitti”.",
+   i:[["Azim için “kararlılık” ya da yakın bir anlam yazdı",4,"Kelimenin geçtiği cümleyi ve sonrasını oku: Fatma ne yapıyor, vazgeçiyor mu?"],
+      ["Yararlandığı ifadeyi metinden yazdı",4,"Soru “hangi ifadeden yararlandığınızı belirtiniz” diyorsa ipucunu tırnak içinde yaz."]]}]},
+ {k:1,h:`${metin("Köyümüzün meydanında kocaman bir çınar vardı. Yaşlılar onun gölgesinde oturur, yolculara su ikram ederdi. Dedem, köye gelen her misafiri <b>hürmetle</b> karşılardı; onları baş köşeye oturtur, en güzel yemekleri önlerine koyardı. Akşamları köyün çocukları dedemin etrafında toplanır, onun anlattığı <b>ibretlik</b> hikâyeleri dinlerdi. Bu hikâyelerden hepimiz doğruluğun ve dürüstlüğün değerini öğrenirdik.")}
+${qs([["","Metinde geçen “hürmet” ve “ibretlik” kelimelerinin anlamlarını metnin bağlamından hareketle tahmin ederek bir tablo çizip yazınız.",8]])}`,
+  c:[{b:"Tablo",m:"<b>Hürmet: saygı.</b> (İpucu: baş köşeye oturtmak, en güzel yemekleri sunmak) · <b>İbretlik: ders alınacak, örnek olacak.</b> (İpucu: hikâyelerden doğruluğun değerini öğrenmek)",
+   i:[["Hürmet için “saygı” ya da yakın bir anlam yazdı",4,"Dede misafirlere nasıl davranıyor? Baş köşeye oturtmak saygı göstergesidir."],
+      ["İbretlik için “ders alınacak” ya da yakın bir anlam yazdı",4,"Sonraki cümleye bak: hikâyelerden ne öğreniyorlar? İbretlik = ders veren."]]}]},
+ {k:2,h:`${metin("Öğrencilerin bilime olan merakını artırmak amacıyla okulumuzda bu yıl ilk kez Bilim Şenliği düzenlenecek. Geçen yıl öğrenciler deney yapmak istiyor ancak malzeme bulamıyordu. Bazı öğrenciler de hazırladıkları deneyleri kime göstereceklerini bilmiyordu. Fen öğretmenlerimiz bu sorunları çözmek için bir plan yaptı. Okul laboratuvarına mıknatıs, büyüteç, pil ve kablo gibi malzemelerin bulunduğu bir malzeme dolabı koydular. Ayrıca şenlik günü spor salonunda her sınıfa bir deney masası ayırdılar. Öğrenciler deneylerini bu masalarda ailelerine ve arkadaşlarına gösterecek. Şenliğin kurallarını anlatan aşağıdaki afişi de hazırladılar.")}
+<div class="afis"><span class="eyebrow">Afiş</span><h4>BİLİM ŞENLİĞİ</h4><p><b>20 Aralık Cuma · Spor Salonu · 13.00</b></p>
+<ol><li>Deneyini seç ve en geç 13 Aralık'a kadar fen öğretmenine bildir.</li><li>Malzemen yoksa laboratuvardaki malzeme dolabından al, işin bitince yerine koy.</li><li>Deney masana deneyinin adını yazdığın bir kart koy.</li><li>Deneyini gösterirken güvenlik gözlüğünü tak.</li></ol></div>
+${qs([["a)","Metne göre Bilim Şenliği hangi amaçla düzenlenecektir?",4],["b)","Metindeki “bu sorunları” ifadesiyle öğrencilerin yaşadığı hangi iki sorun anlatılmaktadır?",4],["c)","Metne ve afişe göre şenlik nerede ve ne zaman yapılacaktır?",4],["d)","Deneyiniz için büyüteç gerekiyor ama sizde yok. Afişteki yönergeye göre ne yapmalısınız?",4]])}`,
+  c:[{b:"a) Amaç",m:"<b>Öğrencilerin bilime olan merakını artırmak amacıyla.</b>",i:[["Amacı metinden doğru yazdı",4,"“Hangi amaçla” sorusunda metinde “amacıyla” kelimesini ara."]]},
+     {b:"b) İki sorun",m:"<b>1.</b> Öğrencilerin deney için malzeme bulamaması. <b>2.</b> Deneylerini kime göstereceklerini bilmemeleri.",
+      i:[["Birinci sorunu yazdı",2,"“Bu sorunlar”ın hemen öncesindeki cümlelere dön."],["İkinci sorunu yazdı",2,"İki sorun istiyorsa iki ayrı, numaralı madde yaz."]]},
+     {b:"c) Yer ve zaman",m:"<b>Spor salonunda · 20 Aralık Cuma, saat 13.00.</b>",
+      i:[["Yeri (spor salonu) yazdı",2,"Yer hem metinde hem afişte geçiyor."],["Zamanı (20 Aralık Cuma) yazdı",2,"Tarih ve saat afişin üst kısmında yazar."]]},
+     {b:"d) Yönerge",m:"<b>Laboratuvardaki malzeme dolabından almalı, işim bitince yerine koymalıyım.</b>",
+      i:[["Afişin 2. maddesine uygun cevap yazdı",4,"Yönerge sorusunda kendi fikrini değil, afişteki maddeyi yaz."]]}]},
+ {k:3,h:`${metin("Ebru, Türk el sanatlarının en renkli örneklerinden biridir. Ebru yapmak için önce özel bir teknedeki su koyulaştırılır. Ardından doğal boyalar fırçayla suyun yüzeyine serpilir. Sanatçı, boyaları ince bir çubukla hareket ettirerek lale, karanfil gibi desenler oluşturur. Son olarak kâğıt suyun üzerine yavaşça bırakılır ve desen kâğıda geçer. Her ebru benzersizdir; aynı desen bir daha asla yapılamaz. UNESCO, ebruyu korunması gereken kültürel miraslar arasına almıştır.")}
+${qs([["","Yukarıdaki bilgilendirici metni okuyunuz. Metinden üç anahtar kelime belirleyiniz.",9]])}`,
+  c:[{b:"Anahtar kelimeler",m:"Örneğin: <b>ebru, el sanatı, kültürel miras.</b> “Su ve boya”, “benzersiz desen”, “geleneksel sanat” gibi metnin konusunu yansıtan ifadeler de kabul edilir.",
+   i:[["Birinci anahtar kelime metnin konusuna uygun",3,"Anahtar kelime = metnin konusu. Metin ne hakkında?"],
+      ["İkinci anahtar kelime metnin konusuna uygun",3,"Metinde tekrar eden ve başlık olabilecek kelimelere bak."],
+      ["Üçüncü anahtar kelime metnin konusuna uygun",3,"Fırça, çubuk gibi küçük ayrıntılar anahtar kelime olmaz."]]}]},
+ {k:3,h:`${metin("Kitaplar, insanı hiç gitmediği yerlere götüren sihirli kapılardır. Okudukça kelime hazinemiz zenginleşir, kendimizi daha iyi ifade ederiz. Kütüphaneler bu kapıları herkese ücretsiz açar. Her gün biraz okumak, okuma alışkanlığı kazanmamızı sağlar.")}
+<div class="kartlar"><div class="kart"><span class="kb">1. kart: ?</span><ul><li>Sayfaları vardır</li><li>Bir yazar tarafından yazılır</li></ul></div>
+<div class="kart"><span class="kb">2. kart: ?</span><ul><li>Rafları vardır</li><li>Ödünç alınabilir</li></ul></div>
+<div class="kart"><span class="kb">3. kart: ?</span><ul><li>Her gün, düzenli</li><li>Vazgeçmeden sürdürülür</li></ul></div></div>
+${qs([["a)","Metinden ve kartlardaki ipuçlarından yararlanarak her kartın başına uygun bir anahtar kelime veya kelime grubu yazınız.",6],["b)","Metinden, kartlara yazdıklarınızdan farklı bir anahtar kelime seçiniz. Bu ifadeyle ilgili iki ipucu yazınız ve ifadenin metnin konusuyla ilişkisini açıklayınız.",4]])}`,
+  c:[{b:"a) Kartlar",m:"1. kart: <b>kitap</b> · 2. kart: <b>kütüphane</b> · 3. kart: <b>okuma alışkanlığı</b>",
+      i:[["1. karta “kitap” yazdı",2,"Sayfaları olan ve yazarı olan şey: kitap."],["2. karta “kütüphane” yazdı",2,"Rafları olan ve kitap ödünç alınan yer: kütüphane."],["3. karta “okuma alışkanlığı” yazdı",2,"Her gün düzenli yapılan ve vazgeçilmeyen şey: alışkanlık. Metinde “okuma alışkanlığı” geçiyor."]]},
+     {b:"b) Farklı anahtar kelime",m:"Örnek: <b>Kelime hazinesi</b> · İpuçları: yeni sözcükler öğrenmek, kendini iyi ifade etmek · İlişkisi: Metin kitap okumanın kelime hazinemizi zenginleştirdiğini anlattığı için bu ifadeyi seçtim.",
+      i:[["Kartlardakinden farklı bir anahtar kelime ve iki ipucu yazdı",2,"İpucunda anahtar kelimenin kendisini yazma."],["İfadenin metnin konusuyla ilişkisini açıkladı",2,"Kalıp: “Metin … anlattığı için bu kelimeyi seçtim.”"]]}]},
+ {k:4,h:`${metin("Öğretmenimiz <u>derin</u> bilgisiyle hepimizi şaşırtıyordu. Sınıfa her girdiğinde yüzü güleç, sözleri <u>yumuşak</u>tı. Bir gün sınıfa getirdiği kitabı göstererek “Bu kitap, karanlıkta yolumuzu bulmamızı sağlayan bir <u>fener</u> gibidir.” dedi.")}
+${qs([["a)","Altı çizili sözcüklerin sözlükteki ilk anlamları verilmiştir. Her sözcüğün metinde gerçek anlamda mı, mecaz anlamda mı kullanıldığını yazınız.<br>• Derin: Yüzeyden aşağıya doğru uzaklığı çok olan.<br>• Yumuşak: Dokunulduğunda kolayca çöken, sert olmayan.",6],["b)","“Fener” sözcüğünün metindeki anlam özelliğini belirleyiniz ve sözcüğü metindeki kullanımının dışındaki diğer anlamıyla yeni bir cümlede kullanınız.",4]])}`,
+  c:[{b:"a) Tablo",m:"<b>Derin: mecaz</b> (çok geniş, çok fazla bilgi). <b>Yumuşak: mecaz</b> (kırıcı olmayan, nazik sözler).",
+      i:[["Derin için “mecaz” yazdı",3,"Bilginin derinliği ölçülemez. Kelime ilk anlamından uzaklaşmışsa mecazdır."],["Yumuşak için “mecaz” yazdı",3,"Sözlere dokunulmaz! Yumuşak söz = nazik söz, mecaz."]]},
+     {b:"b) Fener",m:"Anlam özelliği: <b>mecaz</b> (yol gösteren şey). Gerçek anlamlı cümle: <b>“Elektrikler kesilince feneri yakıp merdivenden indik.”</b>",
+      i:[["Fenerin metinde mecaz olduğunu yazdı",2,"Kitap gerçekten ışık vermez; burada “yol gösteren” anlamında."],["Feneri gerçek anlamıyla (ışık veren araç) cümlede kullandı",2,"Metinde mecazsa sen gerçek anlamla cümle kur."]]}]},
+ {k:5,h:`<p>Sınıfınızda bir okuma köşesi kuruldu. Arkadaşınız Berk her gün kitap okumak istiyor ancak telefonda oyun oynamaya çok zaman ayırdığı için okumaya vakit bulamıyor ve başladığı kitapları bitiremiyor.</p>
+<p class="muted">Betimleme · Tanıtma · Öyküleme · Açıklama</p>
+${qs([["","Arkadaşınıza tavsiyelerde bulunmak amacıyla yazacağınız paragraf türünü seçiniz. Seçtiğiniz türe uygun, en az altı cümlelik bir paragraf yazınız. Paragrafınızda iki öneri sununuz ve her önerinin neden işe yarayacağını açıklayınız.",12]])}`,
+  c:[{b:"Tür ve paragraf",m:"Tür: <b>Açıklama.</b> Örnek: <i>Kitaplarını bitirmek için zamanını iyi kullanman yeterli. Önce her akşam yatmadan önce yarım saat okuma zamanı ayırabilirsin. Böylece okumak bir alışkanlık olur. Ayrıca okurken telefonunu başka bir odaya bırakabilirsin. Bu sayede dikkatin dağılmaz. Bu iki öneriyi uygularsan başladığın her kitabı bitirirsin.</i>",
+   i:[["Paragraf türü olarak açıklamayı seçti",2,"Tavsiye vermek = açıklama paragrafı."],
+      ["Birinci öneriyi ve nedenini yazdı",3,"Öneri + “Böylece / Çünkü …” ile neden."],
+      ["İkinci öneriyi ve nedenini yazdı",3,"“Ayrıca …” ile ikinci öneri, “Bu sayede …” ile neden."],
+      ["En az altı cümle yazdı",2,"Cümlelerini say: giriş, öneri 1, neden 1, öneri 2, neden 2, sonuç."],
+      ["Giriş ve sonuç cümlesi var, cümleler birbirine bağlı",2,"İlk cümle konuyu söylesin, son cümle toparlasın."]]}]},
+ {k:6,h:`${metin("Mimar Sinan, Osmanlı Devleti'nin en büyük mimarıdır. Onun en ünlü eseri Edirne'deki Selimiye Camisi'dir. Selimiye'yi görenler hep aynı şeyi söyler (1) “Bu kubbe insanı büyülüyor.” Bugün <b>UNESCO'nun</b> listesinde yer alan cami, her yıl binlerce turisti ağırlar. Ziyaretçiler <b>ABD'den</b>, Japonya'dan ve <b>Almanyadan</b> gelir. Ben <b>de</b> geçen yaz ailemle oraya gittim (2) kubbenin altında durunca, insanın içi huzurla doluyor.")}
+${qs([["a)","Metindeki koyu yazılmış ifadelerin yazımını inceleyiniz. Yazımı yanlış olan ifadeyi düzelterek yeniden yazınız.",4],["b)","Yay ayraçla ( ) boş bırakılan yerlere gelmesi gereken noktalama işaretlerini yazınız. Her işaretin metindeki görevini kısaca belirtiniz.",4]])}`,
+  c:[{b:"a) Yazım",m:"Yanlış: <b>Almanyadan</b> · Doğru: <b>Almanya'dan</b>. Özel isimlere gelen ekler kesmeyle ayrılır. UNESCO'nun (okunuşu “unesko”), ABD'den (a-be-de) ve “de” bağlacı doğru yazılmıştır.",
+      i:[["Yanlış yazılan ifadeyi buldu",2,"Koyu yazılanları tek tek kontrol et: kısaltma okunuşu, özel isim kesmesi, de/da."],["Doğru yazımı (Almanya'dan) yazdı",2,"Ülke adı özel isimdir; ekini kesme işaretiyle ayır."]]},
+     {b:"b) Noktalama",m:"(1) <b>İki nokta (:)</b>: ardından alıntı geliyor. (2) <b>Noktalı virgül (;)</b>: ikinci cümlenin içinde virgül olduğu için sıralı cümleleri ayırıyor.",
+      i:[["1. boşluğa iki nokta yazdı ve görevini belirtti",2,"Tırnak içindeki sözden önce iki nokta konur."],["2. boşluğa noktalı virgül yazdı ve görevini belirtti",2,"İçinde virgül olan sıralı cümleler noktalı virgülle ayrılır."]]}]},
+ {k:7,h:`<p>Aşağıdaki günlük yaşam durumlarına uygun olarak kullanılabilecek kalıp sözleri boşluklara yazınız.</p>
+<ul><li>Arkadaşın yeni ayakkabılarını giyip okula geldi. Ona “${cizgi(10)}” dersin.</li><li>Annen akşam yemeğini hazırladı. Yemekten sonra ona “${cizgi(10)}” dersin.</li><li>Hastaneden yeni çıkan komşuna “${cizgi(10)}” dersin.</li></ul>
+${qs([["","Üç durum için uygun kalıp sözleri yazınız.",6]])}`,
+  c:[{b:"Kalıp sözler",m:"<b>Güle güle giy!</b> · <b>Eline sağlık!</b> · <b>Geçmiş olsun!</b>",
+   i:[["Ayakkabı için “güle güle giy” yazdı",2,"Yeni bir şey alana “güle güle giy / kullan” denir."],
+      ["Anne için “eline sağlık” yazdı",2,"Yemeği yapana “eline sağlık”, yiyene “afiyet olsun” denir."],
+      ["Komşu için “geçmiş olsun” yazdı",2,"Hasta ya da iyileşen birine “geçmiş olsun” denir."]]}]},
+ {k:7,h:`<div class="afis"><span class="eyebrow">Söz varlığı havuzu</span><ul style="text-align:left;margin:0;padding-left:1.2em"><li>Damlaya damlaya göl olur.</li><li>İşleyen demir ışıldar.</li><li>Ter dökmek</li><li>Sabrın sonu selamettir.</li><li>Gözünü budaktan sakınmamak</li></ul></div>
+${qs([["","Bu havuzdan en az iki farklı ifade seçerek düzenli çalışmanın önemini anlatan 4–5 cümlelik bilgilendirici bir paragraf yazınız. Seçtiğiniz ifadeleri anlamlarına uygun biçimde kullanınız.",6]])}`,
+  c:[{b:"Paragraf",m:"Örnek: <i>Başarılı olmak için her gün biraz çalışmak gerekir. “Damlaya damlaya göl olur.” atasözü, küçük çalışmaların zamanla büyük bir başarıya dönüştüğünü anlatır. Her gün yarım saat tekrar yapan bir öğrenci, sınav haftasında rahat eder. “İşleyen demir ışıldar.” sözü de çalışan insanın hep parlayacağını söyler. Bu yüzden derslerimizi son güne bırakmamalıyız.</i>",
+   i:[["Havuzdan birinci ifadeyi anlamına uygun kullandı",2,"İfadeyi cümle içinde kullan ve ne anlattığını göster."],
+      ["Havuzdan ikinci ifadeyi anlamına uygun kullandı",2,"En az iki farklı ifade seç; art arda dizip bırakma."],
+      ["4–5 cümlelik, konuya bağlı bir paragraf yazdı",2,"Konu cümlesi, ifadeli cümleler, örnek ve sonuç: 4–5 cümle."]]}]},
+ {k:6,h:`${metin("Kitaplar bize yeni dünyalar açar, hayal gücümüzü geliştirir. Öğretmenimiz, her gün en az yirmi sayfa okuyun, dedi. Haydi, bu hafta sonu kütüphaneye birlikte gidelim.")}
+<p>a) Virgülün aşağıdaki görevleri için metinden birer cümle bulup yazınız.</p>
+<ol><li>Sıralı cümleleri ayırma</li><li>Tırnak içinde olmayan alıntı cümleyi belirtme</li><li>Kendisinden sonraki cümleye bağlı olarak ret, kabul veya teşvik bildiren ifadeyi belirtme</li></ol>
+${tbl(["No","Cümle"],[["1","Öyle güzel bir gündü ki herkes bahçeye çıktı."],["2","Kar yağdı mı bütün çocuklar sokağa koşar."],["3","Ödevini bitirdin mi?"],["4","Toplantı saat üçte başlayacak."],["5","Sen de bizimle gel."]])}
+<p>b) Yukarıdaki cümleleri okuyunuz. Numaraları kullanarak boşlukları doldurunuz.</p>
+<ul><li>${cizgi(3)} numaralı cümlede bulunma ve zaman anlamı veren “-de” kullanılmıştır.</li><li>${cizgi(3)} numaralı cümlede cümleleri bağlama görevinde olan “ki” kullanılmıştır.</li><li>${cizgi(3)} numaralı cümlede zaman veya şart anlamı veren “mi” kullanılmıştır.</li><li>${cizgi(3)} numaralı cümlede soru eki olan “mi” kullanılmıştır.</li></ul>
+${qs([["a)","Virgülün üç görevi için metinden birer cümle yazınız.",3],["b)","Boşluklara uygun cümle numaralarını yazınız.",4]])}`,
+  c:[{b:"a) Virgülün görevleri",m:"1) <b>Kitaplar bize yeni dünyalar açar, hayal gücümüzü geliştirir.</b> 2) <b>Öğretmenimiz, her gün en az yirmi sayfa okuyun, dedi.</b> 3) <b>Haydi, bu hafta sonu kütüphaneye birlikte gidelim.</b>",
+      i:[["Sıralı cümleler için doğru cümleyi yazdı",1,"Virgülün iki yanında iki ayrı yüklem varsa sıralı cümledir."],["Tırnaksız alıntı için doğru cümleyi yazdı",1,"“…, dedi.” ile biten cümle tırnaksız alıntıdır."],["Teşvik bildiren ifade için doğru cümleyi yazdı",1,"Haydi, evet, hayır, peki gibi sözlerden sonra virgül konur."]]},
+     {b:"b) Numaralar",m:"Sırasıyla <b>4, 1, 2, 3</b>. (5. cümledeki “de” bağlaçtır, hiçbir boşluğa gelmez.)",
+      i:[["“-de” için 4 yazdı",1,"“Saat üçte” → ne zaman? Bitişik yazılan bulunma eki."],["Bağlaç “ki” için 1 yazdı",1,"“Öyle güzel bir gündü ki …” iki cümleyi bağlıyor, ayrı yazılır."],["Zaman/şart “mi” için 2 yazdı",1,"“Kar yağdı mı …” = kar yağınca. Soru sormuyor."],["Soru eki “mi” için 3 yazdı",1,"Soru işaretiyle biten cümledeki mi soru ekidir."]]}]}
+]}
+];
+
+
+/* ---------- DURUM ---------- */
+const app=document.getElementById('app');
+const S={test:{},checks:{},tIdx:{},page:{}};
+let P=(()=>{try{return JSON.parse(localStorage.getItem('nisaTr'))||{b:{},t:{}}}catch(e){return {b:{},t:{}}}})();
+P.b=P.b||{}; P.t=P.t||{};
+function save(){try{localStorage.setItem('nisaTr',JSON.stringify(P))}catch(e){}}
+/* tema: oto / acik / koyu */
+const HOST_THEME=document.documentElement.getAttribute('data-theme');
+let THEME=(()=>{try{return localStorage.getItem('nisaTema')||'oto'}catch(e){return 'oto'}})();
+const THEME_AD={oto:'Otomatik',acik:'Açık',koyu:'Koyu'};
+function applyTheme(){const r=document.documentElement;
+  if(THEME==='oto'){HOST_THEME?r.setAttribute('data-theme',HOST_THEME):r.removeAttribute('data-theme');}
+  else r.setAttribute('data-theme',THEME==='acik'?'light':'dark');}
+const themeBtn=()=>`<button class="ghost themebtn" data-act="theme" aria-label="Temayı değiştir">Tema: ${THEME_AD[THEME]}</button>`;
+applyTheme();
+
+/* kontrol grupları ve maddeler */
+function blocks(key){
+  const n=+key.slice(1);
+  if(key[0]==='b') return [{si:0,k:n,groups:B[n-1].yazili.kontrol}];
+  return T[n-1].sorular.map((s,i)=>({si:i,k:s.k,groups:s.c}));
+}
+function items(key){
+  const out=[];
+  blocks(key).forEach(bl=>bl.groups.forEach((g,gi)=>g.i.forEach((it,ii)=>out.push({id:`${key}.${bl.si}.${gi}.${ii}`,t:it[0],p:it[1],fix:it[2],k:bl.k}))));
+  return out;
+}
+const checkedSet=key=>S.checks[key]||(S.checks[key]=new Set());
+function scoreOf(key){const c=checkedSet(key);return items(key).filter(i=>c.has(i.id)).reduce((s,i)=>s+i.p,0)}
+const maxOf=key=>items(key).reduce((s,i)=>s+i.p,0);
+
+/* ---------- ORTAK PARÇALAR ---------- */
+function topBar(crumbs,cur){
+  return `<div class="top"><a class="back" href="#ana">← Bölümler</a>${crumbs?`<div class="crumbs">${crumbs.map((c,i)=>`<span class="crumb ${i===cur?'on':i<cur?'done':''}">${c}</span>`).join('')}</div>`:''}${themeBtn()}</div>`;
+}
+const BC=["Konu","Test","Yazılı","Sonuç"];
+function sendBox(msg){
+  const url='https://wa.me/?text='+encodeURIComponent(msg);
+  return `<div class="actions center"><a class="btn wa" href="${url}" target="_blank" rel="noopener">Abime WhatsApp'tan gönder</a>
+  <button class="ghost" data-act="copy">Metni kopyala</button></div>
+  <textarea class="copybox" id="copybox" readonly hidden>${msg}</textarea>`;
+}
+
+/* ---------- SAYFALAR ---------- */
+function vAna(){
+  const N=B.length, done=B.map((_,i)=>!!(P.b[i+1]&&P.b[i+1].yazili!=null)), doneCount=done.filter(Boolean).length;
+  const STAR='<svg class="st" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1 6.3-5.6-3-5.6 3 1-6.3L2.9 9.4l6.3-.9z"/></svg>';
+  const nx=done.indexOf(false); let not;
+  if(nx>=0){const n=nx+1,p=P.b[n]||{},b=B[nx],yz=p.test!=null;
+    not={b:'Sıradaki bölüm',m:`${n}. bölüm: <b>${b.ad}</b>. `+(yz?'Testi bitirdin, sırada yazılı sorusu var. Kağıt kalemini hazırla.':`Önce konuyu oku (${KONU[nx].length} sayfa), sonra ${b.test.length} soruluk testi çöz.`),l:`#b${n}-${yz?'yazili':'konu'}`,d:(doneCount||yz)?'Kaldığım yerden devam et':'Hadi başlayalım'};}
+  else{const tj=T.findIndex((_,i)=>P.t[i+1]==null);
+    not=tj>=0?{b:'Bütün bölümler bitti!',m:`Sırada <b>${T[tj].ad}</b> var: gerçek sınav gibi ${T[tj].sorular.length} soru. Kağıda çöz, sonra babana ver.`,l:`#t${tj+1}-soru`,d:'Tatbikata başla'}
+      :{b:'Hepsi tamam!',m:'Bütün bölümler ve tatbikatlar bitti. Sınav sabahı Son Tekrar sayfasına bir göz at.',l:'#tekrar',d:"Son Tekrar'ı aç"};}
+  let h=`<header class="home-head"><div class="top"><a class="back" href="../">← Ana sayfa</a>${themeBtn()}</div>
+  <div class="ahead"><div><p class="date">6. Sınıf · 1. Dönem 1. Yazılı</p><h1>Türkçe</h1></div><div class="stars">${STAR}<span>${doneCount}/${N} bölüm</span></div></div>
+  <p class="muted">Hazırlık dosyasında 11 soru var ve hepsi yazılı: kelime anlamı 2, metin ve afiş okuma 1, anahtar kelime 2, gerçek-mecaz 1, paragraf yazma 1, yazım ve noktalama 2, kalıp söz ve deyim 2.</p></header>
+  <section class="today"><h2>${not.b}</h2><p>${not.m}</p><div class="acts"><a class="btn primary" href="${not.l}">${not.d}</a></div></section>
+  <ol class="how"><li>Konuyu oku, kutuları doldur</li><li>Testi çöz, site anında kontrol eder</li><li>Yazılı sorusunu kağıda çöz</li><li>Babam kontrol etsin, sonucu abime gönder</li></ol>
+  <h2>Bölümler</h2><div class="bgrid">`;
+  B.forEach((b,i)=>{const n=i+1,p=P.b[n]||{},d=done[i],t=p.test!=null;
+    const durum=d?`${STAR}<span>Tamamlandı · Test ${p.test}/${b.test.length} · Yazılı ${p.yazili}/10</span>`:t?`<span>Test ${p.test}/${b.test.length} · sırada yazılı</span>`:`<span>${KONU[i].length} sayfa konu · ${b.test.length} soruluk test</span>`;
+    h+=`<a class="bcard${d?' done':''}" style="--unit:var(--c${n});--unit-soft:var(--c${n}-soft)" href="#b${n}-konu"><span class="band"></span><span class="bbody"><span class="bno">${n}</span><span class="btxt"><h3>${b.ad}</h3><span class="sub">${b.kisa}</span></span></span><span class="bdur">${durum}</span></a>`;});
+  h+=`</div><h2>Sınava hazırlık</h2><div class="bgrid">`;
+  T.forEach((t,i)=>{const n=i+1,p=P.t[n];
+    const durum=p!=null?`${STAR}<span>Puan ${p}/100</span>`:doneCount<N?`<span>Önce bölümleri bitir (${doneCount}/${N})</span>`:`<span>Hazır, başlayabilirsin</span>`;
+    h+=`<a class="bcard tcard${p!=null?' done':''}" href="#t${n}-soru"><span class="band"></span><span class="bbody"><span class="bno">T${n}</span><span class="btxt"><h3>${t.ad}</h3><span class="sub">${t.sorular.length} soru, gerçek sınav gibi, baba kontrollü</span></span></span><span class="bdur">${durum}</span></a>`;});
+  h+=`<a class="bcard tcard" href="#tekrar"><span class="band"></span><span class="bbody"><span class="bno">★</span><span class="btxt"><h3>Son Tekrar</h3><span class="sub">Sınav sabahı için bütün kurallar tek sayfada</span></span></span><span class="bdur"><span>1 sayfa</span></span></a></div>
+  <div class="actions center" id="resetZone"><button class="ghost" data-act="reset1">İlerlemeyi sıfırla</button></div>`;
+  return h;
+}
+function vKonu(n){
+  const b=B[n-1], pages=KONU[n-1], L=pages.length, i=Math.min(S.page[n]||0,L-1), pg=pages[i];
+  return topBar(BC,0)+`<article class="paper"><div class="top"><span class="eyebrow">Bölüm ${n} · ${b.ad}</span><span class="eyebrow">Sayfa ${i+1}/${L}</span></div>
+  <div class="progress"><span style="width:${(i+1)/L*100}%"></span></div>
+  <nav class="pages" aria-label="Sayfalar">${pages.map((p,j)=>`<button class="pg ${j===i?'on':j<i?'done':''}" data-act="pg" data-p="${j}" title="${p.t}">${j+1}</button>`).join('')}</nav>
+  <h1>${pg.t}</h1>${pg.h}
+  <div class="actions">${i>0?`<button class="ghost" data-act="pprev">← Önceki</button>`:''}${i<L-1?`<button class="primary" data-act="pnext">Sonraki sayfa →</button>`:`<button class="primary" data-act="startTest" data-n="${n}">Teste geç →</button>`}</div></article>`;
+}
+function vTest(n){
+  const b=B[n-1],st=S.test[n]||(S.test[n]={i:0,ans:[]}),Q=b.test;
+  if(st.i<Q.length){
+    const q=Q[st.i],a=st.ans[st.i],answered=a!=null;
+    let h=topBar(BC,1)+`<section class="paper"><div class="top"><span class="eyebrow">Bölüm ${n} · Test</span><span class="eyebrow">Soru ${st.i+1}/${Q.length}</span></div>
+    <div class="progress"><span style="width:${(st.i+(answered?1:0))/Q.length*100}%"></span></div><h2>${q.q}</h2><div class="opts">`;
+    q.o.forEach((o,j)=>{let cls='';if(answered){if(j===q.a)cls='right';else if(j===a)cls='wrong';}
+      h+=`<button class="opt ${cls}" data-act="ans" data-j="${j}" ${answered?'disabled':''}>${String.fromCharCode(65+j)}) ${o}</button>`;});
+    h+=`</div>`;
+    if(answered){h+=a===q.a?`<div class="fb good"><b>Doğru!</b> ${q.n}</div>`:`<div class="fb bad"><b>Doğru cevap: ${q.o[q.a]}.</b> ${q.n}</div>`;
+      h+=`<div class="actions"><button class="primary" data-act="next">${st.i+1<Q.length?'Sonraki soru →':'Test sonucunu gör →'}</button></div>`;}
+    return h+`</section>`;
+  }
+  const sc=Q.filter((q,i)=>st.ans[i]===q.a).length, wrong=Q.filter((q,i)=>st.ans[i]!==q.a);
+  let h=topBar(BC,1)+`<section class="paper result"><span class="eyebrow">Bölüm ${n} · Test sonucu</span><div class="big-score">${sc}/${Q.length}</div>`;
+  h+=wrong.length?`<p>Yanlış yaptığın konular için kısa notların:</p><ul class="todo">${wrong.map(q=>`<li><b>${q.q}</b><br>${q.n}</li>`).join('')}</ul>`:`<div class="allgood">Hepsi doğru! Yazılı sorusuna geçebilirsin.</div>`;
+  h+=`<div class="actions center"><button class="ghost" data-act="startTest" data-n="${n}">Testi tekrar çöz</button><a class="btn primary" href="#b${n}-yazili">Yazılı sorusuna geç →</a></div></section>`;
+  return h;
+}
+function vYazili(n){
+  const b=B[n-1];
+  return topBar(BC,2)+`<section class="paper"><span class="eyebrow">Bölüm ${n} · Yazılı sorusu</span><h1>Sınavdaki gibi</h1>
+  <div class="note">Nisa, cevaplarını <b>kağıda</b> yaz. Tablo varsa kağıda çizip doldur. Bitince telefonu babana ver.</div>
+  ${b.yazili.soru}
+  <div class="actions"><a class="btn primary" href="#b${n}-kontrol">Bitirdim, babama veriyorum →</a></div></section>`;
+}
+function vKontrol(key){
+  const n=+key.slice(1), isB=key[0]==='b', set=checkedSet(key);
+  let h=topBar(isB?BC:null,2)+`<section class="paper"><span class="eyebrow">${isB?`Bölüm ${n}`:T[n-1].ad} · Baba kontrolü</span>
+  <div class="note">Babacığım, Nisa'nın kağıdına bak. Yazdığı her madde için kutuyu işaretle. Aynı anlamı kendi cümlesiyle yazdıysa da say.</div>`;
+  blocks(key).forEach(bl=>{
+    if(!isB) h+=`<div class="qhead">Soru ${bl.si+1} · ${KONU_AD[bl.k-1]}</div>`;
+    bl.groups.forEach((g,gi)=>{
+      h+=`<div class="grp ${gi===0?'first':''}"><h3>${g.b}</h3><div class="model">${g.m}</div>`;
+      g.i.forEach((it,ii)=>{const id=`${key}.${bl.si}.${gi}.${ii}`;
+        h+=`<label class="item" for="${id}"><input type="checkbox" id="${id}" data-id="${id}" ${set.has(id)?'checked':''}><span>${it[0]}</span><span class="p">${it[1]} p</span></label>`;});
+      h+=`</div>`;
+    });
+  });
+  h+=`</section><div class="scorebar"><span>Puan <span class="big" id="score">${scoreOf(key)}</span> / ${maxOf(key)}</span><a class="btn" style="background:var(--paper);color:var(--fg);padding:10px 14px" href="#${key}-sonuc">Sonucu gör</a></div>`;
+  return h;
+}
+function vSonucB(n){
+  const key='b'+n, s=scoreOf(key), mx=maxOf(key), c=checkedSet(key);
+  P.b[n]=Object.assign({},P.b[n],{yazili:s}); save();
+  const test=P.b[n].test, miss=items(key).filter(i=>!c.has(i.id)).map(i=>i.fix);
+  const msg=`Nisa · Türkçe Bölüm ${n}: ${B[n-1].ad}\nTest: ${test!=null?test+'/5':'çözülmedi'}\nYazılı: ${s}/${mx}`+(miss.length?`\nTekrar edilecekler:\n- ${miss.join('\n- ')}`:'\nEksik yok.');
+  let h=topBar(BC,3)+`<section class="paper result"><span class="eyebrow">Bölüm ${n} · Sonuç</span><h1>${B[n-1].ad}</h1>
+  <div class="scores"><div>Test<b>${test!=null?test+'/5':'—'}</b></div><div>Yazılı<b>${s}/${mx}</b></div></div>`;
+  h+=miss.length?`<span class="eyebrow">Tekrar edilecekler</span><ul class="todo">${miss.map(m=>`<li>${m}</li>`).join('')}</ul>`:`<div class="allgood">Eksik yok, harika!</div>`;
+  h+=sendBox(msg)+`<div class="actions center"><a class="btn ghost" href="#b${n}-kontrol">Kontrole dön</a>${n<B.length?`<a class="btn primary" href="#b${n+1}-konu">Sonraki bölüm →</a>`:`<a class="btn primary" href="#ana">Bölümlere dön</a>`}</div></section>`;
+  return h;
+}
+function vTSoru(n){
+  const t=T[n-1],i=S.tIdx[n]||0,q=t.sorular[i],L=t.sorular.length;
+  let h=topBar(null)+`<section class="paper"><div class="top"><span class="eyebrow">${t.ad} · ${KONU_AD[q.k-1]}</span><span class="eyebrow">Soru ${i+1}/${L}</span></div>
+  <div class="progress"><span style="width:${(i+1)/L*100}%"></span></div>
+  ${i===0?`<div class="note">Gerçek sınav gibi çöz: cevapları kağıda, soru numarasıyla yaz. Bitince telefonu babana ver.</div>`:''}
+  <h2>${i+1}. Soru</h2>${q.h}
+  <div class="actions">${i>0?`<button class="ghost" data-act="tprev" data-n="${n}">← Önceki</button>`:''}
+  ${i<L-1?`<button class="primary" data-act="tnext" data-n="${n}">Sonraki soru →</button>`:`<a class="btn primary" href="#t${n}-kontrol">Bitirdim, babama veriyorum →</a>`}</div></section>`;
+  return h;
+}
+function vSonucT(n){
+  const key='t'+n, c=checkedSet(key), all=items(key), s=scoreOf(key), mx=maxOf(key), p100=Math.round(s/mx*100);
+  P.t[n]=p100; save();
+  const per=KONU_AD.map((_,i)=>i+1).map(k=>{const its=all.filter(i=>i.k===k);return [its.filter(i=>c.has(i.id)).reduce((a,i)=>a+i.p,0),its.reduce((a,i)=>a+i.p,0)]});
+  const miss=all.filter(i=>!c.has(i.id)).map(i=>i.fix);
+  const uniq=[...new Set(miss)];
+  const msg=`Nisa · Türkçe ${T[n-1].ad}\nPuan: ${p100}/100\n`+per.map((v,i)=>`${KONU_AD[i]}: ${v[0]}/${v[1]}`).join('\n')+(uniq.length?`\nTekrar edilecekler:\n- ${uniq.join('\n- ')}`:'\nEksik yok.');
+  let h=topBar(null)+`<section class="paper result"><span class="eyebrow">${T[n-1].ad} · Sonuç</span><div class="big-score">${p100}<span class="muted" style="font-size:1.2rem">/100</span></div>
+  <div class="scores">${per.map((v,i)=>`<div>${KONU_AD[i]}<b>${v[0]}/${v[1]}</b></div>`).join('')}</div>`;
+  h+=uniq.length?`<span class="eyebrow">Tekrar edilecekler</span><ul class="todo">${uniq.map(m=>`<li>${m}</li>`).join('')}</ul>`:`<div class="allgood">Eksik yok, sınava hazırsın!</div>`;
+  h+=sendBox(msg)+`<div class="actions center"><a class="btn ghost" href="#t${n}-kontrol">Kontrole dön</a><a class="btn primary" href="#ana">Ana sayfa</a></div></section>`;
+  return h;
+}
+function vTekrar(){
+  const R=TEKRAR;
+  return topBar(null)+`<article class="paper"><span class="eyebrow">Sınav sabahı</span><h1>Son Tekrar</h1>${R.map(([t,l])=>`<section><h2>${t}</h2><ul>${l.map(x=>`<li>${x}</li>`).join('')}</ul></section>`).join('')}
+  <div class="rule"><b>Unutma:</b><span>Her cevabı tam cümleyle yaz. Soru “hangi ifadeden yararlandınız” diyorsa ipucunu tırnak içinde metinden aynen yaz. “İki” diyorsa iki madde yaz. Paragraf sorularında cümlelerini say. Bitirince yazım ve noktalamaya bir kez daha bak.</span></div></article>`;
+}
+
+/* ---------- YÖNLENDİRME ---------- */
+function render(){
+  const h=(location.hash||'#ana').slice(1); let html; let m;
+  try{const bm=h.match(/^b(\d)-/),tm=h.match(/^t(\d)-/);if(bm)localStorage.setItem('nisaSon',JSON.stringify({d:DERS,b:+bm[1],t:Date.now()}));else if(tm)localStorage.setItem('nisaSon',JSON.stringify({d:DERS,tt:+tm[1],t:Date.now()}));}catch(e){}
+  const um=h.match(/^b([1-7])-/);
+  if(um){app.style.setProperty('--unit',`var(--c${um[1]})`);app.style.setProperty('--unit-soft',`var(--c${um[1]}-soft)`);app.dataset.unit=um[1];}
+  else{app.style.removeProperty('--unit');app.style.removeProperty('--unit-soft');delete app.dataset.unit;}
+  if((m=h.match(/^b([1-7])-(konu|test|yazili|kontrol|sonuc)$/))){const n=+m[1];
+    html={konu:()=>vKonu(n),test:()=>vTest(n),yazili:()=>vYazili(n),kontrol:()=>vKontrol('b'+n),sonuc:()=>vSonucB(n)}[m[2]]();}
+  else if((m=h.match(/^t([1-9])-(soru|kontrol|sonuc)$/))){const n=+m[1];
+    html={soru:()=>vTSoru(n),kontrol:()=>vKontrol('t'+n),sonuc:()=>vSonucT(n)}[m[2]]();}
+  else if(h==='tekrar') html=vTekrar();
+  else html=vAna();
+  app.innerHTML=html;
+}
+function goTop(){window.scrollTo(0,0)}
+window.addEventListener('hashchange',()=>{render();goTop();});
+app.addEventListener('click',e=>{
+  const el=e.target.closest('[data-act]'); if(!el) return;
+  const act=el.dataset.act;
+  if(act==='startTest'){const n=+el.dataset.n;S.test[n]={i:0,ans:[]};if(location.hash==='#b'+n+'-test'){render();goTop();}else location.hash='b'+n+'-test';}
+  else if(act==='ans'){const n=+location.hash.match(/b(\d)/)[1],st=S.test[n];st.ans[st.i]=+el.dataset.j;render();}
+  else if(act==='next'){const n=+location.hash.match(/b(\d)/)[1],st=S.test[n];st.i++;
+    if(st.i>=B[n-1].test.length){const sc=B[n-1].test.filter((q,i)=>st.ans[i]===q.a).length;P.b[n]=Object.assign({},P.b[n],{test:sc});save();}
+    render();goTop();}
+  else if(act==='pg'||act==='pnext'||act==='pprev'){const n=+location.hash.match(/b(\d)/)[1];const cur=S.page[n]||0;
+    S.page[n]=act==='pg'?+el.dataset.p:cur+(act==='pnext'?1:-1);render();goTop();}
+  else if(act==='theme'){THEME={oto:'acik',acik:'koyu',koyu:'oto'}[THEME];try{localStorage.setItem('nisaTema',THEME)}catch(e){}applyTheme();document.querySelectorAll('.themebtn').forEach(b=>b.textContent='Tema: '+THEME_AD[THEME]);}
+  else if(act==='reset1'){document.getElementById('resetZone').innerHTML=`<span>Bütün puanlar silinsin mi?</span><button class="ghost" data-act="reset0">Vazgeç</button><button class="primary" data-act="reset2">Evet, sıfırla</button>`;}
+  else if(act==='reset0'){render();}
+  else if(act==='reset2'){P={b:{},t:{}};save();S.test={};S.checks={};S.tIdx={};S.page={};render();goTop();}
+  else if(act==='tnext'||act==='tprev'){const n=+el.dataset.n;S.tIdx[n]=(S.tIdx[n]||0)+(act==='tnext'?1:-1);render();goTop();}
+  else if(act==='adim'){const box=el.closest('.adimlar'),nx=box.querySelector('li[hidden]');if(nx){nx.hidden=false;nx.classList.add('yeni');}if(!box.querySelector('li[hidden]')){el.textContent='Çözüm tamam';el.disabled=true;el.className='ghost';}}
+  else if(act==='deney'){const box=el.closest('.deney'),n=+el.dataset.n,c={'Mavi':0,'Sarı':0,'Kırmızı':0},renk={'Mavi':'#3c86d6','Sarı':'#e9a619','Kırmızı':'#d0452f'};for(let i=0;i<n;i++){const r=Math.floor(Math.random()*4);c[r<2?'Mavi':r===2?'Sarı':'Kırmızı']++;}box.querySelector('.dsonuc').innerHTML='<p><b>'+n+' kez çevrildi:</b></p>'+Object.keys(c).map(k=>'<div class="dbar"><span class="dad">'+k+'</span><span class="dcub"><span style="width:'+(c[k]/n*100)+'%;background:'+renk[k]+'"></span></span><span class="dsay">'+c[k]+'/'+n+'</span></div>').join('');box.querySelector('.dgecmis').insertAdjacentHTML('afterbegin','<li>'+n+' çevirme → mavi '+c['Mavi']+'/'+n+'</li>');}
+  else if(act==='sec'){const row=el.closest('.srow');if(row.dataset.done)return;const ok=el.dataset.ok==='1';el.classList.add(ok?'dogru':'yanlis');if(ok){row.dataset.done=1;row.querySelectorAll('.sop').forEach(b=>{if(b!==el)b.disabled=true;});}const box=el.closest('.secim'),rows=[...box.querySelectorAll('.srow')],d=rows.filter(r=>r.dataset.done).length,fb=box.querySelector('.bfb');fb.hidden=false;fb.className='bfb '+(d===rows.length?'iyi':'');fb.textContent=d===rows.length?'Harika, hepsini buldun!':ok?'Doğru! '+(rows.length-d)+' tane kaldı.':'Olmadı, bir daha dene.';}
+  else if(act==='kontrol'){const box=el.closest('.birlikte'),ins=[...box.querySelectorAll('input.bos')];const nz=v=>String(v).toLocaleLowerCase('tr').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9ı]/g,'');let ok=0;ins.forEach(i=>{const d=i.dataset.c.split('|').some(c=>nz(c)===nz(i.value));i.classList.toggle('dogru',d);i.classList.toggle('yanlis',!d);if(d)ok++;});const fb=box.querySelector('.bfb');fb.hidden=false;fb.className='bfb '+(ok===ins.length?'iyi':'kotu');fb.textContent=ok===ins.length?'Harika, hepsi doğru!':(ins.length-ok)+' boşluk yanlış. Kırmızı olanları düzeltip tekrar dene.';}
+  else if(act==='copy'){const box=document.getElementById('copybox');const txt=box.value;
+    const fallback=()=>{box.hidden=false;box.focus();box.select();el.textContent='Seç ve kopyala';};
+    try{navigator.clipboard.writeText(txt).then(()=>{el.textContent='Kopyalandı ✓';},fallback);}catch(err){fallback();}}
+});
+app.addEventListener('change',e=>{
+  const cb=e.target.closest('input[data-id]'); if(!cb) return;
+  const key=cb.dataset.id.split('.')[0], set=checkedSet(key);
+  cb.checked?set.add(cb.dataset.id):set.delete(cb.dataset.id);
+  const sc=document.getElementById('score'); if(sc) sc.textContent=scoreOf(key);
+});
+render();
+</script>
+
+</body>
+</html>
