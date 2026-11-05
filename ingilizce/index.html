@@ -1,0 +1,1248 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Nisa İngilizce Çalışması</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/* İngilizce · Layout: tek sütun "çalışma defteri"; sayfalama hash ile (ana → bölüm: konu → test → yazılı → baba kontrolü → sonuç; tatbikat: 7 soru → kontrol → sonuç) */
+:root{
+  --bg:#eef2f8; --paper:#ffffff; --fg:#1b2540; --muted:#5d6a86; --line:#d6deec;
+  --accent:#2f5bd3; --accent-soft:#e6ecfc; --ok:#178a57; --ok-soft:#e0f3e9; --warn:#b5531a; --warn-soft:#fbeadf;
+  --force:#d0452f; --box:#c7d2e6; --sun:#f4b733; --shadow:rgba(20,28,48,.30); --on-accent:#ffffff;
+  --c1:#4b46c7; --c1-soft:#e9e8fb; --c2:#c26510; --c2-soft:#fcecd9; --c3:#c93a2b; --c3-soft:#fbe3df; --c4:#1d8656; --c4-soft:#dcf2e6; --c5:#0b7f86; --c5-soft:#d8f1f2; --c6:#8a4fd6; --c6-soft:#efe6fb; --c7:#b8336a; --c7-soft:#fbe4ee;
+  --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e1424; --paper:#161f35; --fg:#e7ecf8; --muted:#9eabc6; --line:#2a3655;
+  --accent:#86a8ff; --accent-soft:#1f2b4b; --ok:#4fd39a; --ok-soft:#163629; --warn:#f2a073; --warn-soft:#3b2518;
+  --force:#ff7a62; --box:#3a4868; --sun:#f6c24f; --shadow:rgba(0,0,0,.55); --on-accent:#0e1424; color-scheme:dark;
+  --c1:#a9a4ff; --c1-soft:#25244b; --c2:#f2a54e; --c2-soft:#3a2a14; --c3:#ff8370; --c3-soft:#3f201c; --c4:#5fd39a; --c4-soft:#163629; --c5:#4fd2da; --c5-soft:#113538; --c6:#c5a3ff; --c6-soft:#2c2246; --c7:#ff8ab8; --c7-soft:#3d1f2d}}
+:root[data-theme="dark"]{
+  --bg:#0e1424; --paper:#161f35; --fg:#e7ecf8; --muted:#9eabc6; --line:#2a3655;
+  --accent:#86a8ff; --accent-soft:#1f2b4b; --ok:#4fd39a; --ok-soft:#163629; --warn:#f2a073; --warn-soft:#3b2518;
+  --force:#ff7a62; --box:#3a4868; --sun:#f6c24f; --shadow:rgba(0,0,0,.55); --on-accent:#0e1424; color-scheme:dark;
+  --c1:#a9a4ff; --c1-soft:#25244b; --c2:#f2a54e; --c2-soft:#3a2a14; --c3:#ff8370; --c3-soft:#3f201c; --c4:#5fd39a; --c4-soft:#163629; --c5:#4fd2da; --c5-soft:#113538; --c6:#c5a3ff; --c6-soft:#2c2246; --c7:#ff8ab8; --c7-soft:#3d1f2d}
+
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 48px}
+.wrap{max-width:680px;margin:0 auto;display:grid;gap:16px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;line-height:1.2}
+h1{font-size:1.7rem;font-weight:800}
+h2{font-size:1.3rem;font-weight:800}
+h3{font-size:1.08rem;font-weight:700}
+p{margin:0}
+ul,ol{margin:0;padding-left:1.3em;display:grid;gap:4px}
+a{color:var(--accent)}
+.eyebrow{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:800}
+.muted{color:var(--muted)}
+
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.back{font-weight:700;text-decoration:none;font-size:.95rem}
+.crumbs{display:flex;gap:6px;flex-wrap:wrap}
+.crumb{font-size:.8rem;font-weight:700;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:var(--paper)}
+.crumb.on{background:var(--unit,var(--accent));border-color:var(--unit,var(--accent));color:var(--on-accent)}
+.crumb.done{color:var(--ok);border-color:var(--ok)}
+
+.paper{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:14px;min-width:0}
+.paper > section{display:grid;gap:10px}
+.rule{background:var(--accent-soft);border-radius:12px;padding:14px 16px;display:grid;gap:4px}
+.rule b{font-family:var(--display);font-size:1.15rem}
+.ornek{border:2px dashed var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:6px}
+.ornek .eyebrow{color:var(--accent)}
+.hata{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:8px;padding:12px 14px}
+.hata b:first-child{color:var(--warn)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.mini{border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.95rem}
+.mini > b:first-child{font-family:var(--display);font-size:1.05rem;display:block}
+
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:420px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);font-weight:800}
+td.blank{height:2.2em}
+
+.fig{overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:320px}
+.fig text{font-family:var(--body);font-weight:700;font-size:13px;fill:var(--fg)}
+.cap{font-size:.82rem;color:var(--muted);text-align:center}
+
+.qs{list-style:none;padding:0;display:grid;gap:10px}
+.qs li{display:grid;grid-template-columns:30px 1fr;gap:6px}
+.ql{font-family:var(--display);font-weight:800;color:var(--accent);font-size:1.1rem;line-height:1.5}
+.pts{color:var(--muted);font-size:.85rem;white-space:nowrap}
+.note{background:var(--accent-soft);border-radius:12px;padding:12px 14px;font-size:.95rem}
+
+button,.btn{font-family:var(--display);font-weight:700;font-size:1.05rem;border:0;border-radius:12px;padding:12px 18px;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
+.primary{background:var(--accent);color:var(--on-accent)}
+.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
+.wa{background:#1f9d55;color:#fff}
+button:focus-visible,.btn:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.actions.center{justify-content:center}
+
+.lead{font-size:1.05rem;border-left:4px solid var(--unit,var(--accent));padding:4px 0 4px 14px;color:var(--fg)}
+details.yokla{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--bg)}
+details.yokla summary{cursor:pointer;font-weight:700;display:grid;gap:2px}
+details.yokla summary .eyebrow{color:var(--accent)}
+details.yokla summary::after{content:"Cevabı görmek için dokun";font-weight:600;font-size:.82rem;color:var(--muted)}
+details.yokla[open] summary::after{content:""}
+details.yokla p{margin-top:8px;background:var(--ok-soft);border-radius:8px;padding:8px 10px}
+.pages{display:flex;gap:6px;flex-wrap:wrap}
+.pg{width:36px;height:36px;padding:0;border-radius:50%;font-size:.95rem;background:var(--paper);color:var(--muted);border:1px solid var(--line)}
+.pg.on{background:var(--unit,var(--accent));color:var(--on-accent);border-color:var(--unit,var(--accent))}
+.pg.done{color:var(--ok);border-color:var(--ok)}
+.hata ul{margin-top:6px}
+.themebtn{min-height:0;padding:6px 12px;font-size:.85rem;border-radius:999px;margin-left:auto}
+/* Ana sayfa */
+.home-head{display:grid;gap:6px}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;list-style:none;padding:0;counter-reset:h}
+.how li{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.9rem;counter-increment:h}
+.how li::before{content:counter(h);font-family:var(--display);font-weight:800;color:var(--accent);font-size:1.3rem;display:block;line-height:1}
+.unit{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px;text-decoration:none;color:var(--fg)}
+.unit:hover{border-color:var(--unit,var(--accent))}
+.unit .no{font-family:var(--display);font-weight:800;font-size:1.6rem;width:52px;height:52px;border-radius:12px;display:grid;place-items:center;background:var(--unit-soft,var(--accent-soft));color:var(--unit,var(--accent))}
+.unit h3{font-size:1.1rem}
+.unit .sub{font-size:.85rem;color:var(--muted)}
+.chip{font-size:.8rem;font-weight:800;padding:4px 10px;border-radius:999px;background:var(--bg);color:var(--muted);white-space:nowrap}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.list{display:grid;gap:10px}
+
+/* Test */
+.opts{display:grid;gap:8px}
+.opt{background:var(--paper);color:var(--fg);border:2px solid var(--line);text-align:left;font-family:var(--body);font-weight:700;font-size:1rem}
+.opt:hover:not([disabled]){border-color:var(--accent)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--warn);background:var(--warn-soft)}
+.opt[disabled]{cursor:default}
+.fb{border-radius:12px;padding:12px 14px}
+.fb.good{background:var(--ok-soft)} .fb.good b{color:var(--ok)}
+.fb.bad{background:var(--warn-soft)} .fb.bad b{color:var(--warn)}
+.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.progress span{display:block;height:100%;background:var(--unit,var(--accent));border-radius:99px}
+#app[data-unit] .paper{border-top:5px solid var(--unit)}
+
+/* Kontrol */
+.grp{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:14px}
+.grp.first{border-top:0;padding-top:0}
+.qhead{font-family:var(--display);font-weight:800;font-size:1.2rem;color:var(--accent);margin-top:6px}
+.model{background:var(--ok-soft);border-radius:10px;padding:10px 12px;font-size:.95rem}
+label.item{display:grid;grid-template-columns:24px 1fr auto;gap:10px;align-items:start;cursor:pointer;padding:6px 4px;border-radius:8px}
+label.item:hover{background:var(--accent-soft)}
+label.item input{width:20px;height:20px;margin:3px 0 0;accent-color:var(--ok)}
+.item .p{font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
+.scorebar{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--paper);border-radius:14px;padding:12px 16px;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:800}
+.scorebar .big{font-family:var(--display);font-size:1.4rem;font-variant-numeric:tabular-nums}
+.scorebar button{background:var(--paper);color:var(--fg);padding:10px 14px}
+
+/* Sonuç */
+.result{text-align:center;justify-items:center}
+.big-score{font-family:var(--display);font-weight:800;font-size:3rem;line-height:1;font-variant-numeric:tabular-nums}
+.scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;width:100%}
+.scores div{border:1px solid var(--line);border-radius:12px;padding:10px}
+.scores b{font-family:var(--display);font-size:1.4rem;display:block;font-variant-numeric:tabular-nums}
+.todo{list-style:none;padding:0;display:grid;gap:8px;text-align:left;width:100%}
+.todo li{background:var(--warn-soft);border-left:4px solid var(--warn);padding:8px 12px;border-radius:6px}
+.allgood{background:var(--ok-soft);padding:12px;border-radius:10px;width:100%}
+textarea.copybox{width:100%;min-height:140px;font-family:var(--body);font-size:.9rem;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg);color:var(--fg);box-sizing:border-box}
+
+/* Matematik ekleri */
+.num{font-family:var(--display);font-size:1.35em;font-weight:800;letter-spacing:.06em;white-space:nowrap}
+.blot{display:inline-block;width:1em;height:1.05em;border-radius:48% 52% 40% 60%/55% 45% 55% 45%;background:var(--fg);vertical-align:-.12em;margin:0 2px}
+.ph{display:inline-grid;place-items:center;min-width:1.4em;height:1.4em;padding:0 3px;border:2px dashed var(--unit,var(--accent));border-radius:6px;font-size:.75em;margin:0 2px;color:var(--unit,var(--accent));font-weight:800;vertical-align:middle;box-sizing:border-box;letter-spacing:0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;font-weight:800;line-height:1.15;margin:0 3px;font-variant-numeric:tabular-nums}
+.frac span:first-child{border-bottom:2px solid currentColor;padding:0 4px}
+.algo-row{display:flex;gap:32px;flex-wrap:wrap;justify-content:center;padding:4px 0}
+.algo-box{display:grid;gap:6px;justify-items:center}
+.algo{display:grid;grid-template-columns:auto auto;font-family:var(--display);font-size:1.3rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.55}
+.algo span{padding:0 14px}
+.algo span:nth-child(odd){border-right:3px solid var(--fg);text-align:right}
+.algo span:nth-child(even){color:var(--unit,var(--accent))}
+.sieve{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;max-width:560px;width:100%;margin:0 auto}
+.sieve span{aspect-ratio:1;display:grid;place-items:center;border-radius:8px;font-weight:800;font-size:.85rem;background:var(--bg);color:var(--muted);font-variant-numeric:tabular-nums}
+.sieve span.p{background:var(--unit,var(--accent));color:var(--on-accent)}
+.sieve span.one{background:transparent;border:1px dashed var(--line)}
+.unit.other .no{font-size:1.3rem}
+.basamak{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) 18px repeat(3,minmax(0,1fr));gap:6px;max-width:640px;width:100%;margin:0 auto}
+.basamak .bs{border:2px solid var(--edge);border-radius:8px;background:var(--paper);display:grid;grid-template-rows:auto 1fr;text-align:center;overflow:hidden}
+.basamak .bs.ond{background:var(--unit-soft,var(--accent-soft))}
+.basamak .bs.bosb{opacity:.45}
+.basamak .ba{font-size:.72rem;font-weight:800;padding:4px 2px;border-bottom:2px solid var(--edge);line-height:1.25;color:var(--muted)}
+.basamak .br{font-family:var(--display);font-size:2.2rem;line-height:1.5;min-height:1.5em}
+.basamak .virgul{font-family:var(--display);font-size:2.8rem;display:grid;align-items:end;justify-content:center;line-height:1.1}
+.fig.yuz svg{max-width:250px;min-width:0;margin:0 auto}
+
+html{-webkit-text-size-adjust:100%}
+button,.btn,.opt,label.item,summary{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* Tablet (iPad) */
+@media (min-width:700px){
+  body{font-size:18px;line-height:1.65;padding-block:28px 64px}
+  .wrap{max-width:860px;gap:20px}
+  .paper{padding:30px 34px;gap:18px;border-radius:20px}
+  h1{font-size:2.1rem} h2{font-size:1.55rem} h3{font-size:1.25rem}
+  .lead{font-size:1.15rem}
+  .fig svg{min-width:0}
+  .fig text{font-size:14px}
+  table{font-size:1rem}
+  th,td{padding:10px 14px}
+  button,.btn{font-size:1.15rem;padding:14px 22px;min-height:52px}
+  .opts{grid-template-columns:1fr 1fr;gap:12px}
+  .opt{min-height:64px;font-size:1.08rem}
+  .pg{width:46px;height:46px;font-size:1.05rem;min-height:0;padding:0}
+  label.item{grid-template-columns:30px 1fr auto;padding:10px 8px;font-size:1.05rem}
+  label.item input{width:26px;height:26px}
+  .unit{grid-template-columns:64px 1fr auto;padding:18px}
+  .unit .no{width:64px;height:64px;font-size:1.9rem}
+  .unit h3{font-size:1.3rem}
+  .cards{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+  .mini{padding:14px 16px}
+  details.yokla{padding:14px 18px}
+  .scorebar{padding:14px 22px}
+  .big-score{font-size:4rem}
+}
+@media (min-width:1000px){ .wrap{max-width:920px} }
+@media (prefers-reduced-motion:no-preference){.paper{animation:in .22s ease}}
+@keyframes in{from{transform:translateY(6px);opacity:.6}to{transform:none;opacity:1}}
+
+/* ===== Kareli defter teması ===== */
+:root{
+  --bg:#F8FAFD; --grid:#DCE6F5; --paper:#FFFFFF; --fg:#1E2A5A; --muted:#51608F; --line:#C9D4EA; --edge:#1E2A5A;
+  --accent:#2C47A8; --accent-soft:#EEF2FB; --on-accent:#FFFFFF; --note:#FFF06A; --note-edge:#E3D23E; --tape:#9FD8F7;
+  --hand:"Patrick Hand","Comic Sans MS",cursive; --display:var(--hand);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121933; --grid:#1D2650; --paper:#1A2346; --fg:#E8EDFF; --muted:#AAB6DC; --line:#36437A; --edge:#8294D8;
+  --accent:#AFC2FF; --accent-soft:#232F5C; --on-accent:#121933; --note:#4A4318; --note-edge:#2C280C; --tape:#2D5D7D}}
+:root[data-theme="dark"]{
+  --bg:#121933; --grid:#1D2650; --paper:#1A2346; --fg:#E8EDFF; --muted:#AAB6DC; --line:#36437A; --edge:#8294D8;
+  --accent:#AFC2FF; --accent-soft:#232F5C; --on-accent:#121933; --note:#4A4318; --note-edge:#2C280C; --tape:#2D5D7D}
+body{background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px}
+h1,h2{font-family:var(--hand);font-weight:400;letter-spacing:.2px}
+h1{font-size:2.3rem;line-height:1.05} h2{font-size:1.7rem;line-height:1.1}
+h3{font-family:var(--body);font-weight:800}
+.eyebrow{text-transform:none;letter-spacing:0;font-size:.88rem;font-weight:800}
+.back{font-weight:800;color:var(--fg)}
+.paper{border:2px solid var(--edge);border-radius:8px;box-shadow:6px 6px 0 var(--edge)}
+#app[data-unit] .paper{border-top:2px solid var(--edge);background-image:linear-gradient(var(--unit),var(--unit));background-size:100% 12px;background-repeat:no-repeat;padding-top:32px}
+.rule{background:var(--note);border-radius:3px;box-shadow:0 6px 0 -2px var(--note-edge)}
+.rule b{font-family:var(--hand);font-weight:400;font-size:1.45rem;line-height:1.2}
+.note{background:var(--accent-soft);border:2px dashed var(--line)}
+.ornek{background:var(--paper)}
+.unit{border:2px solid var(--edge);border-radius:8px;box-shadow:4px 4px 0 var(--edge)}
+.unit:hover{border-color:var(--edge);box-shadow:5px 5px 0 var(--edge);transform:translate(-1px,-1px)}
+.unit .no{border:2px solid var(--edge);border-radius:50%;font-family:var(--hand);font-weight:400}
+.how li{border:2px solid var(--edge);border-radius:8px}
+.how li::before{font-family:var(--hand);font-weight:400;font-size:1.6rem;color:var(--fg)}
+button,.btn{font-family:var(--body);font-weight:800}
+.primary{background:var(--fg);color:var(--paper);border:2px solid var(--fg)}
+.ghost{background:var(--paper);color:var(--fg);border:2px solid var(--edge)}
+.opt{border:2px solid var(--edge);border-radius:10px}
+.crumb{border:2px solid var(--line)}
+.pg{border:2px solid var(--line)}
+.progress{height:12px;background:var(--paper);border:2px solid var(--edge)}
+.chip{border:1.5px solid var(--line);font-family:var(--hand);font-weight:400;font-size:1.02rem;background:var(--paper)}
+.chip.ok{border-color:var(--ok)}
+.scorebar{background:var(--fg);color:var(--paper);border-radius:10px}
+.big-score{font-family:var(--hand);font-weight:400}
+.scores div{border:2px solid var(--edge);border-radius:8px}
+.scores b{font-family:var(--hand);font-weight:400}
+details.yokla{border:2px solid var(--line);border-radius:8px;background:var(--paper)}
+.qhead{font-family:var(--hand);font-weight:400;font-size:1.55rem}
+.themebtn{border:2px solid var(--edge)}
+.todo li{border-radius:3px}
+@media (min-width:700px){ h1{font-size:2.8rem} h2{font-size:2rem} .rule b{font-size:1.6rem} }
+
+/* ===== Anlatım sayfaları: ferah düzen ve defter süsleri ===== */
+:root{--rl:#E3EAF6;--margin:#F3A6A6;--hl:rgba(255,232,64,.62)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--rl:#28336A;--margin:#7E4458;--hl:rgba(255,224,77,.24)}}
+:root[data-theme="dark"]{--rl:#28336A;--margin:#7E4458;--hl:rgba(255,224,77,.24)}
+article.paper{gap:22px}
+article.paper > p, article.paper > .lead{max-width:40em}
+article.paper h1{text-decoration-line:underline;text-decoration-style:wavy;text-decoration-color:var(--unit,var(--accent));text-decoration-thickness:2px;text-underline-offset:12px;text-decoration-skip-ink:none;padding-bottom:4px}
+article.paper h3{margin-top:4px}
+article.paper p b, article.paper li b{background:linear-gradient(transparent 56%,var(--hl) 56%);padding:0 2px;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.rule p b, .rule li b, .hata p b, .hata li b{background:none;padding:0}
+article.paper .deney p b{background:none;padding:0}
+.rule span b{font-family:inherit;font-size:inherit;font-weight:800;line-height:inherit}
+.ornek{position:relative;display:block;background-color:var(--paper);background-image:linear-gradient(90deg,transparent 34px,var(--margin) 34px,var(--margin) 36px,transparent 36px),repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rl) 31px,var(--rl) 32px);background-position:0 12px;border:2px solid var(--edge);border-radius:6px;box-shadow:4px 4px 0 var(--edge);padding:12px 18px 14px 50px;line-height:32px}
+.ornek > *{margin:0;line-height:32px}
+.ornek .eyebrow{display:block;color:var(--unit,var(--accent))}
+.ornek .tbl-wrap,.ornek .fig{margin:8px 0;line-height:1.5}
+.ornek .tbl-wrap *{line-height:1.5}
+.rule{position:relative;transform:rotate(-.4deg);padding:20px 20px 18px;margin-top:6px}
+.rule::before{content:"";position:absolute;top:-11px;left:24px;width:84px;height:22px;background:var(--tape);opacity:.8;transform:rotate(-3deg)}
+article.paper > .fig{background:var(--paper);border:2px solid var(--edge);border-radius:6px;padding:14px 12px}
+.hata{background:var(--warn-soft);border:2px dashed var(--warn);border-radius:6px;padding:14px 16px}
+.mini{border:2px solid var(--edge);border-radius:8px;background:var(--paper);box-shadow:3px 3px 0 var(--edge)}
+.mini > b:first-child{font-family:var(--hand);font-weight:400;font-size:1.35rem;margin-bottom:2px}
+details.yokla{background:var(--accent-soft);border:2px dashed var(--edge)}
+details.yokla[open]{background:var(--paper);border-style:solid}
+.adimlar{border:2px solid var(--edge);border-radius:10px;background:var(--paper);padding:16px 18px;display:grid;gap:12px;box-shadow:4px 4px 0 var(--edge)}
+.adimlar .eyebrow{color:var(--unit,var(--accent))}
+.adimlar ol{list-style:none;padding:0;margin:0;display:grid;gap:10px;counter-reset:a}
+.adimlar li{counter-increment:a;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:center}
+.adimlar li::before{content:counter(a);width:32px;height:32px;border-radius:50%;background:var(--unit,var(--accent));color:var(--on-accent);display:grid;place-items:center;font-family:var(--hand);font-size:1.2rem}
+.adimlar .actions{justify-content:flex-start}
+.birlikte{border:2px dashed var(--unit,var(--accent));border-radius:10px;background:var(--unit-soft,var(--accent-soft));padding:16px 18px;display:grid;gap:10px}
+.birlikte .eyebrow{color:var(--fg)}
+.birlikte .satir{font-size:1.12rem;line-height:2.3}
+.birlikte .actions{justify-content:flex-start}
+input.bos{font:inherit;font-weight:800;width:3em;text-align:center;border:none;border-bottom:3px solid var(--fg);background:var(--paper);color:var(--fg);border-radius:6px 6px 0 0;padding:1px 4px;margin:0 3px;line-height:1.4}
+input.bos.genis{width:5em}
+.frac input.bos{width:2.4em;margin:0 0 2px}
+input.bos.dogru{background:var(--ok-soft);border-bottom-color:var(--ok)}
+input.bos.yanlis{background:var(--warn-soft);border-bottom-color:var(--warn)}
+.bfb{font-weight:800} .bfb.iyi{color:var(--ok)} .bfb.kotu{color:var(--warn)}
+@media (prefers-reduced-motion:no-preference){.adimlar li.yeni{animation:adim .35s ease}}
+@keyframes adim{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@media (min-width:700px){ .wrap{max-width:940px} article.paper{padding:40px 52px 44px;gap:26px} #app[data-unit] article.paper{padding-top:48px} }
+@media (min-width:1000px){ .wrap{max-width:980px} }
+
+
+.deney{border:2px solid var(--edge);border-radius:10px;background:var(--paper);padding:16px 18px;display:grid;gap:12px;box-shadow:4px 4px 0 var(--edge)}
+.deney .eyebrow{color:var(--unit,var(--accent))}
+.deney .actions{justify-content:flex-start}
+.dsonuc{display:grid;gap:8px;min-height:120px}
+.dbar{display:grid;grid-template-columns:70px 1fr 90px;gap:10px;align-items:center;font-weight:800}
+.dcub{height:22px;border:2px solid var(--edge);border-radius:6px;overflow:hidden;background:var(--bg)}
+.dcub span{display:block;height:100%;transition:width .4s ease}
+.dsay{font-family:var(--hand);font-size:1.25rem;font-weight:400;font-variant-numeric:tabular-nums}
+.dgecmis{margin:0;padding-left:1.3em;color:var(--muted);font-size:.95rem;display:grid;gap:2px}
+.dgecmis:empty{display:none}
+/* ===== Bölüm listesi sayfası ===== */
+.home-head .date{margin:6px 0 0;font-weight:700;color:var(--muted)}
+.ahead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.ahead h1{font-size:3rem}
+.stars{display:flex;align-items:center;gap:8px;background:var(--paper);border:2px solid var(--edge);border-radius:999px;padding:7px 16px 7px 12px;font-weight:800}
+svg.st{width:24px;height:24px;flex:none}
+svg.st path{fill:#FFC83D;stroke:var(--edge);stroke-width:1.6;stroke-linejoin:round}
+.today{position:relative;background:var(--note);padding:30px 28px 26px;transform:rotate(-.8deg);box-shadow:0 10px 0 -4px var(--note-edge);display:grid;gap:12px;margin:12px 0 6px}
+.today::before{content:"";position:absolute;top:-14px;left:50%;margin-left:-70px;width:140px;height:28px;background:var(--tape);opacity:.85;transform:rotate(2deg)}
+.today h2{font-size:2.2rem}
+.today p{font-size:1.1rem;max-width:36em}
+.acts{display:flex;gap:10px;flex-wrap:wrap}
+.bgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.bcard{text-decoration:none;color:var(--fg);background:var(--paper);border:2px solid var(--edge);border-radius:6px;box-shadow:6px 6px 0 var(--edge);display:flex;flex-direction:column;overflow:hidden}
+.bcard:hover{transform:translate(-1px,-1px);box-shadow:7px 7px 0 var(--edge)}
+.bcard .band{height:14px;background:var(--unit,var(--fg));border-bottom:2px solid var(--edge)}
+.bcard.tcard .band{background:repeating-linear-gradient(45deg,var(--note) 0 10px,var(--note-edge) 10px 20px)}
+.bbody{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:16px 18px 8px;align-items:start}
+.bno{width:48px;height:48px;border-radius:50%;border:2px solid var(--edge);background:var(--unit-soft,var(--accent-soft));color:var(--unit,var(--fg));display:grid;place-items:center;font-family:var(--hand);font-size:1.6rem}
+.btxt{display:grid;gap:2px}
+.bcard h3{font-size:1.2rem;line-height:1.25}
+.bcard .sub{font-size:.9rem;color:var(--muted)}
+.bdur{display:flex;align-items:center;gap:6px;padding:4px 18px 16px;font-family:var(--hand);font-size:1.15rem;margin-top:auto}
+.bcard.done .bdur{color:var(--ok)}
+@media (max-width:600px){.bgrid{grid-template-columns:1fr}.ahead h1{font-size:2.5rem}}
+@media (prefers-reduced-motion:reduce){.bcard:hover{transform:none}}
+
+/* ===== Sosyal ekleri ===== */
+:root{--sea:#d4e7f7;--land:#f3e7c4;--near:#e4e2dc;--prov:#c9b58a;--seatext:#2a6aa8;
+ --ka:#f6c98b;--kav:#b9d3f5;--kaf:#f3aaa2;--kkam:#bfe3b0;--kgam:#d9c2f2;--kok:#f4dc80;--kan:#eef2f7;--ktr:#d0452f;
+ --y1:#7dbb6a;--y2:#e9d77a;--y3:#dca25a;--y4:#9a5b34}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sea:#132a4a;--land:#4a4230;--near:#2a3248;--prov:#6d6044;--seatext:#8fc1f2;
+ --ka:#7a5a2c;--kav:#2f4d7a;--kaf:#7a3a35;--kkam:#3f6a39;--kgam:#57407a;--kok:#776628;--kan:#4a5568;--ktr:#ff7a62;
+ --y1:#3f7a37;--y2:#8f8233;--y3:#8f5f2a;--y4:#5e3620}}
+:root[data-theme="dark"]{--sea:#132a4a;--land:#4a4230;--near:#2a3248;--prov:#6d6044;--seatext:#8fc1f2;
+ --ka:#7a5a2c;--kav:#2f4d7a;--kaf:#7a3a35;--kkam:#3f6a39;--kgam:#57407a;--kok:#776628;--kan:#4a5568;--ktr:#ff7a62;
+ --y1:#3f7a37;--y2:#8f8233;--y3:#8f5f2a;--y4:#5e3620}
+.fig.harita{margin:0;display:grid;gap:6px}
+.fig.harita svg{border:2px solid var(--edge);border-radius:8px;background:var(--sea)}
+.fig.harita figcaption{font-size:.9rem;color:var(--muted);text-align:center}
+.fig .m-lab,.fig .m-seal,.fig .m-il,.fig .m-kita,.fig .m-pusula text{paint-order:stroke;stroke:var(--paper);stroke-width:3px;stroke-linejoin:round}
+.m-sea{fill:var(--sea)} .m-near{fill:var(--near);stroke:var(--prov);stroke-width:.6}
+.m-tr{fill:var(--land);stroke:var(--fg);stroke-width:1.2;stroke-linejoin:round}
+.m-prov{fill:none;stroke:var(--prov);stroke-width:.6}
+.m-hl{fill:var(--sun);stroke:var(--fg);stroke-width:1.6;stroke-linejoin:round}
+.m-grid{stroke:var(--c3);stroke-width:1.8;stroke-dasharray:7 4}
+.m-box{fill:var(--paper);stroke:var(--c3);stroke-width:2}
+.fig text.m-lab{font-size:13px;font-weight:800}
+.fig text.m-seal{fill:var(--seatext);font-style:italic;font-weight:700;font-size:14px}
+.fig text.small{font-size:11px}
+.fig text.m-il{font-size:13px;font-weight:700}
+.fig text.m-il.on{font-weight:800;font-size:15px}
+.fig text.m-kita{font-size:13px;font-weight:800}
+.m-pusula path{fill:var(--fg)} .fig .m-pusula text{font-size:12px;font-weight:800}
+.m-dot{fill:var(--c3);stroke:var(--paper);stroke-width:2}
+.m-eq{stroke:var(--c3);stroke-width:1.6;stroke-dasharray:6 4} .m-gr{stroke:var(--c1);stroke-width:1.6;stroke-dasharray:6 4}
+.k-asya{fill:var(--ka)} .k-avrupa{fill:var(--kav)} .k-afrika{fill:var(--kaf)} .k-kam{fill:var(--kkam)} .k-gam{fill:var(--kgam)} .k-okya{fill:var(--kok)} .k-ant{fill:var(--kan)} .k-tr{fill:var(--ktr)}
+.k-asya,.k-avrupa,.k-afrika,.k-kam,.k-gam,.k-okya,.k-ant{stroke:var(--edge);stroke-width:.5;stroke-linejoin:round}
+.k-kure{fill:var(--sea);stroke:var(--fg);stroke-width:2}
+.k-par{fill:none;stroke:var(--c1);stroke-width:1.4}
+.k-ekv{fill:none;stroke:var(--c3);stroke-width:2.4}
+.k-mer{fill:none;stroke:var(--c4);stroke-width:1.4}
+.k-bas{stroke:var(--c4);stroke-width:2.4}
+.k-kutup{fill:var(--fg)}
+.fig text.ekv{fill:var(--c3)} .fig text.par{fill:var(--c1)} .fig text.bas{fill:var(--c4)}
+.y1{fill:var(--y1)} .y2{fill:var(--y2)} .y3{fill:var(--y3)} .y4{fill:var(--y4)}
+.lejant rect{stroke:var(--edge);stroke-width:1}
+.m-tepe{fill:var(--fg)}
+.metin{background:var(--paper);border:2px solid var(--edge);border-left:8px solid var(--unit,var(--accent));border-radius:6px;padding:14px 16px;font-size:1.05rem;line-height:1.6}
+input.bos.kelime{width:8.5em;text-align:left}
+input.bos.genis{width:6em}
+input.bos.sayi{width:3em}
+.secim{border:2px solid var(--edge);border-radius:10px;background:var(--paper);padding:16px 18px;display:grid;gap:10px;box-shadow:4px 4px 0 var(--edge)}
+.secim .eyebrow{color:var(--unit,var(--accent))}
+.srow{display:grid;gap:8px;padding:8px 0;border-top:1px dashed var(--line)}
+.srow:first-of-type{border-top:none}
+.stxt{font-weight:700}
+.sops{display:flex;flex-wrap:wrap;gap:8px}
+.sop{font:inherit;font-weight:800;min-height:44px;padding:8px 14px;border:2px solid var(--edge);border-radius:8px;background:var(--bg);color:var(--fg);cursor:pointer}
+.sop.dogru{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.sop.yanlis{background:var(--warn-soft);border-color:var(--warn);color:var(--warn)}
+.sop:disabled:not(.dogru){opacity:.45}
+@media (min-width:700px){.srow{grid-template-columns:1fr auto;align-items:center}}
+
+/* Türkçe: afiş, ipucu kartları */
+.afis{border:2px solid var(--edge,var(--line));border-radius:10px;padding:14px 16px;background:var(--unit-soft,var(--accent-soft));display:grid;gap:6px;text-align:center;margin:6px 0}
+.afis h4{font-family:var(--hand,var(--display));font-size:1.5rem;font-weight:400;margin:0;letter-spacing:.02em}
+.afis p{margin:0}
+.afis ol{text-align:left;margin:4px 0 0;padding-left:1.4em;display:grid;gap:4px}
+.kartlar{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:6px 0}
+.kart{border:2px dashed var(--line);border-radius:10px;padding:10px 12px;background:var(--paper)}
+.kart .kb{display:block;font-weight:800;border-bottom:2px solid var(--line);margin-bottom:6px;padding-bottom:4px}
+.kart ul{margin:0;padding-left:1.1em}
+
+/* İngilizce: resim kartları, İngilizce metin */
+.resimler{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:6px 0}
+.resim{position:relative;border:2px solid var(--line);border-radius:10px;background:var(--paper);padding:12px 10px 10px;display:grid;justify-items:center;text-align:center;gap:4px;font-size:.92rem;line-height:1.35}
+.resim .re{font-size:2.4rem;line-height:1}
+.resim .rno{position:absolute;top:6px;left:8px;font-weight:800;font-size:.85rem;color:var(--muted)}
+.metin.en{font-size:1.02rem}
+</style>
+
+
+
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+const DERS='ing';
+/* ---------- ETKİLEŞİMLİ ANLATIM KUTULARI ---------- */
+const adimAdim=(baslik,adimlar)=>`<div class="adimlar"><span class="eyebrow">${baslik}</span><ol>${adimlar.map((a,i)=>`<li${i?' hidden':''}><span>${a}</span></li>`).join('')}</ol><div class="actions"><button class="primary" data-act="adim">Sonraki adım</button></div></div>`;
+/* boşluk: cevaplar | ile ayrılır; büyük-küçük harf ve noktalama önemsiz */
+const bosluk=(cevap,tur)=>`<input class="bos ${tur||'kelime'}" inputmode="${tur==='sayi'?'numeric':'text'}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Boşluk" data-c="${cevap}">`;
+const birlikte=(satirlar)=>`<div class="birlikte"><span class="eyebrow">Birlikte yapalım: boşlukları doldur</span>${satirlar.map(s=>`<div class="satir">${s}</div>`).join('')}<div class="actions"><button class="ghost" data-act="kontrol">Kontrol et</button></div><p class="bfb" hidden></p></div>`;
+/* seçmeli kutu: her satırda doğru seçeneğe dokun */
+const sec=(baslik,satirlar)=>`<div class="secim"><span class="eyebrow">${baslik}</span>${satirlar.map(([t,ops,d])=>`<div class="srow"><span class="stxt">${t}</span><span class="sops">${ops.map((o,j)=>`<button class="sop" data-act="sec" data-ok="${j===d?1:0}">${o}</button>`).join('')}</span></div>`).join('')}<p class="bfb" hidden></p></div>`;
+/* ---------- ÇİZİM YARDIMCILARI ---------- */
+const tbl=(head,rows)=>`<div class="tbl-wrap"><table><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>c===''?'<td class="blank"></td>':`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+const qs=items=>`<ol class="qs">${items.map(([l,t,p])=>`<li><span class="ql">${l}</span><span>${t} <span class="pts">(${p} puan)</span></span></li>`).join('')}</ol>`;
+const yok=(q,a)=>`<details class="yokla"><summary><span class="eyebrow">Kendini yokla</span><span>${q}</span></summary><p>${a}</p></details>`;
+const fig=(svg,alt)=>`<figure class="fig harita">${svg}${alt?`<figcaption>${alt}</figcaption>`:''}</figure>`;
+const metin=t=>`<div class="metin">${t}</div>`;
+const cizgi=n=>`<span class="cizgi" style="width:${n||8}em"></span>`;
+
+
+/* resim kartı: emoji + kısa Türkçe açıklama */
+const resim=(e,t,no)=>`<div class="resim">${no?`<span class="rno">${no}</span>`:''}<span class="re" aria-hidden="true">${e}</span><span>${t}</span></div>`;
+const resimler=a=>`<div class="resimler">${a.join('')}</div>`;
+const en=t=>`<div class="metin en" lang="en">${t}</div>`;
+
+const KONU=[
+/* ===== BÖLÜM 1: HIZLI OKUMA ===== */
+[
+{t:"Hızlı okuma: metin ne hakkında?",h:`
+<p class="lead">İngilizce bir metin gördün ve bazı kelimeleri bilmiyorsun. Sorun değil! Metnin <b>konusunu</b> bulmak için her kelimeyi bilmen gerekmez. Bu okuma türüne <b>skimming</b> (hızlı okuma) denir.</p>
+<p>Hızlı okurken metnin üzerinden bir kuş gibi uçarsın. Amaç, <b>“Bu metin ne hakkında?”</b> sorusunun cevabını bulmaktır.</p>
+${adimAdim("Adım adım · Hızlı okuma",[
+ "Önce <b>sorudaki yarım cümleyi</b> oku: “The text is about …” Böylece ne aradığını bilirsin.",
+ "Metnin <b>ilk cümlesini</b> dikkatle oku. Konu çoğu zaman ilk cümlede saklıdır.",
+ "Metinde <b>tekrar eden</b> ya da aynı konuya ait kelimelere bak: bag, school, teacher, classroom…",
+ "Bildiğin kelimelerden bir resim oluştur: “Hepsi okul gününde yapılan işler.”",
+ "Konuyu tek kelimeyle söyle: <b>routine</b> (her gün yapılanlar)."])}
+<div class="ornek"><span class="eyebrow">Örnek · Konuyu bul</span>
+${en("Every morning, Ali puts his books in his bag. He says goodbye to his mother and walks to school. At school, he says hello to his friends.")}
+<p>Ali <b>her sabah</b> çantasını hazırlıyor, okula yürüyor, arkadaşlarına merhaba diyor. Bunlar her gün tekrar eden işler. Konu: <b>Ali's morning routine</b> (Ali'nin sabah rutini).</p></div>
+<div class="rule"><span class="eyebrow">Kolay hatırla</span><b>Every day / every morning = routine</b><span>Metin “every day, every morning, usually” diye başlıyorsa konu büyük ihtimalle bir <b>rutin</b>dir.</span></div>`},
+{t:"Konu kelimeleri",h:`
+<p class="lead">Sınavda “The text is about …” cümlesini tamamlarken genellikle <b>genel bir kelime</b> yazarsın. İşte okul hayatında en çok çıkan konu kelimeleri.</p>
+${tbl(["İngilizce","Türkçe","Metinde neler olur?"],[
+ ["<b>routine</b>","her gün yapılan işler, rutin","every day, get up, have breakfast, go to school"],
+ ["<b>rules</b>","kurallar","must, mustn't, don't run, listen to"],
+ ["<b>ceremony</b>","tören","flag, national anthem, speech, poem"],
+ ["<b>celebration</b>","kutlama","Republic Day, songs, folk dances, decorate"],
+ ["<b>event</b>","etkinlik","prepare, special day, together"],
+ ["<b>project</b>","proje, ödev çalışması","group, work together, presentation"],
+ ["<b>trip</b>","gezi","bus, museum, visit"]])}
+${sec("Metin hangi konuda? Her satırda doğru kutuya dokun",[
+ ["“Don't run in the corridor. Listen to your teacher. Keep the classroom tidy.”",["routine","rules","trip"],1],
+ ["“Every day, Ece gets up at seven, has breakfast and goes to school.”",["routine","ceremony","project"],0],
+ ["“Students sing the national anthem. The headmaster gives a speech. Kerem carries the flag.”",["trip","rules","ceremony"],2],
+ ["“The students get on the bus. They visit a museum in Ankara.”",["trip","routine","rules"],0]])}
+<div class="hata"><b>Sık yapılan hata:</b> Metinde geçen küçük bir ayrıntıyı yazmak. “The text is about İnci's school <b>bag</b>.” yanlıştır; çanta sadece bir ayrıntı. Metnin bütününü anlatan kelime: <b>routine</b>.</div>`},
+{t:"Görsel ve kelime ipuçları",h:`
+<p class="lead">Bazen metindeki kelimeler bir <b>resim</b> çizer. Bayraklar, Atatürk resimleri, şiirler, şarkılar… Bunları bir araya getirince ne görüyorsun?</p>
+<div class="ornek"><span class="eyebrow">Örnek · İpuçlarını topla</span>
+${en("Students decorate the school with Turkish flags. Some students practise poems. Others learn a new song. On 29 October, everyone goes to the school garden.")}
+${resimler([resim("🇹🇷","Türk bayrakları"),resim("📜","Şiir çalışmak"),resim("🎶","Şarkı öğrenmek"),resim("📅","29 Ekim")])}
+<p>Bayraklar + şiir + şarkı + 29 Ekim = <b>Republic Day celebration / ceremony</b> (Cumhuriyet Bayramı kutlaması / töreni).</p></div>
+${birlikte([
+ `Bayraklar, şiirler ve 29 Ekim varsa metnin konusu bir school ${bosluk('ceremony|celebration|event')}.`,
+ `“Every day, I get up, have breakfast and go to school.” The text is about my daily ${bosluk('routine')}.`,
+ `“We must follow the rules. Don't eat in class.” The text is about school ${bosluk('rules')}.`])}
+<div class="rule"><span class="eyebrow">Sınav ipucu</span><b>Birden fazla doğru cevap olabilir</b><span>“The students are preparing for a school ___.” cümlesine <b>ceremony, celebration, event</b> ya da <b>day</b> yazabilirsin. Hepsi kabul edilir.</span></div>`},
+{t:"Sınavda nasıl yazarım?",h:`
+<p class="lead">Hızlı okuma sorusunda tek bir boşluk vardır ve oraya <b>tek kelime</b> yazarsın. Kısa ama puanı kaçırmak kolay.</p>
+${adimAdim("Adım adım · Boşluğu doldur",[
+ "Yarım cümleyi oku: “The students are preparing for a school ____.”",
+ "Kendine sor: Boşluğa bir <b>isim</b> gelecek. Öğrenciler neye hazırlanıyor?",
+ "Metni hızlıca oku ve ipuçlarını topla: noticeboards, flags, Atatürk, poems, songs, special event.",
+ "Genel kelimeyi seç: <b>ceremony</b>. “Flag” ya da “poem” yazma; onlar ayrıntı.",
+ "Kelimeyi doğru yaz ve cümleyi bir kez daha oku: “a school ceremony” anlamlı mı? Evet!"])}
+${tbl(["Doğru cevap","Yanlış cevap","Neden?"],[["routine","bag","Çanta sadece bir ayrıntı"],["ceremony","poem","Şiir törenin sadece bir parçası"],["rules","corridor","Koridor bir yer, konu değil"]])}
+${yok("“Every Friday, all the students and teachers meet in the hall. The headmaster talks about the week.” The students meet for a school ____.","<b>assembly</b> (bütün okulun toplandığı toplantı). “Meeting” de kabul edilebilir.")}`}
+],
+/* ===== BÖLÜM 2: DİKKATLİ OKUMA ===== */
+[
+{t:"Olayları sıraya koy",h:`
+<p class="lead">Bu kez metni yavaş ve dikkatli okuyacağız. Sınavda resimleri metindeki <b>sıraya göre</b> numaralandırman istenebilir.</p>
+${tbl(["Sıra kelimesi","Anlamı"],[["<b>first</b>","önce, ilk olarak"],["<b>then</b> / <b>after that</b>","sonra, ondan sonra"],["<b>finally</b>","en sonunda"],["<b>before</b>","…den önce"],["<b>after</b>","…den sonra"]])}
+<div class="hata"><b>“Before” tuzağı:</b> “She packs her bag <b>before</b> she leaves home.” cümlesinde önce “leaves home” yazıyor gibi görünür, ama önce yapılan iş <b>çanta hazırlamak</b>tır. “Before” = “-den önce”.</div>
+<div class="ornek"><span class="eyebrow">Örnek · Sırala</span>
+${en("Every school day, Ela has breakfast before she leaves home. At school, she greets her teachers. Then she enters the classroom. Finally, she listens to her teacher and opens her book.")}
+${resimler([resim("🚪","Sınıfa giriyor","3"),resim("🍳","Kahvaltı yapıyor","1"),resim("📖","Kitabını açıyor","4"),resim("👋","Öğretmenlerine selam veriyor","2")])}
+<p>Soldan sağa: <b>3 – 1 – 4 – 2</b></p></div>
+${adimAdim("Adım adım · Resimleri sırala",[
+ "Resimlere bak ve her birinde ne yapıldığını Türkçe söyle: kahvaltı, selam, sınıfa giriş…",
+ "Metni cümle cümle oku. Her cümlenin hangi resme ait olduğunu bul.",
+ "“Before / after / then / finally” kelimelerine dikkat et. Sırayı onlar belirler.",
+ "Numaraları resimlerin altına yaz ve metinle bir kez daha karşılaştır."])}`},
+{t:"Tabloyu doldur: kim ne yapıyor?",h:`
+<p class="lead">Sınavda bir metin ve bir tablo olur. Tabloda <b>görevler</b> yazar, sen de <b>isimleri</b> yazarsın.</p>
+<div class="ornek"><span class="eyebrow">Örnek · Kim ne istiyor?</span>
+${en("Our class is preparing for Sports Day. Emma wants to run in the race. Can wants to play football. He also wants to help the teachers. Zoe and Defne want to make posters. Mrs Brown, our teacher, wants to give the prizes.")}
+${tbl(["Görev","İsim"],[["Running in the race","Emma"],["Playing football","Can"],["Making posters","Zoe and Defne"],["Giving the prizes","Mrs Brown"]])}</div>
+<div class="rule"><span class="eyebrow">İki tuzak</span><b>“He / She also…” ve “… and …”</b><span><b>He also wants</b> = Bir önceki cümledeki erkek aynı zamanda bunu da istiyor (Can).<br><b>Zoe and Defne want</b> = İki kişi birlikte. Tabloya <b>iki ismi de</b> yaz.</span></div>
+${birlikte([
+ `Who wants to help the teachers? ${bosluk('can')}`,
+ `Who wants to give the prizes? Mrs ${bosluk('brown')}`,
+ `Who wants to make posters? Zoe and ${bosluk('defne')}`])}
+<p>Kelime ipucu: <b>wants to</b> = istiyor · <b>give a speech</b> = konuşma yapmak · <b>carry the flag</b> = bayrak taşımak · <b>read a poem</b> = şiir okumak · <b>sing in the choir</b> = koroda şarkı söylemek</p>`},
+{t:"Metinden sıfat çıkar",h:`
+<p class="lead">Metin bir kişinin <b>ne yaptığını</b> anlatır, sen de onun <b>nasıl biri</b> olduğunu bulursun. Buna çıkarım yapmak denir.</p>
+${tbl(["Kişi ne yapıyor?","Nasıl biri?","Türkçe"],[
+ ["Says hello, says thank you, greets teachers","<b>polite</b> / respectful","kibar / saygılı"],
+ ["Helps classmates with problems","<b>helpful</b> / supportive","yardımsever / destekleyici"],
+ ["Works with friends in projects","a good <b>team player</b>","iyi bir takım oyuncusu"],
+ ["Studies a lot, does homework every day","<b>hardworking</b>","çalışkan"],
+ ["Comes to school on time","<b>punctual</b>","dakik"],
+ ["Smiles, talks to everyone","<b>friendly</b>","arkadaş canlısı"],
+ ["Follows the rules, listens carefully","<b>careful</b> / responsible","dikkatli / sorumlu"]])}
+${sec("Nasıl biri? Her satırda doğru sıfata dokun",[
+ ["Ben always does his homework and studies every evening. He is …",["hardworking","friendly","punctual"],0],
+ ["Ayşe helps her friend with Maths. She is …",["polite","helpful","late"],1],
+ ["Leo always says “Good morning” and “Thank you”. He is …",["polite","hardworking","tall"],0],
+ ["Mia is never late for school. She is …",["helpful","punctual","friendly"],1]])}`},
+{t:"Sınavda nasıl yazarım?",h:`
+<p class="lead">Sınavda metnin altında yarım cümleler olur: “She is ___.” Boşluğa metindeki davranışa uygun <b>sıfatı</b> yazarsın.</p>
+<div class="ornek"><span class="eyebrow">Örnek · Tam puanlık cevap</span>
+${en("Every morning, Sophie greets her teachers. She helps her classmates when they have problems. In projects, she works with her friends.")}
+<p>1. Sophie says hello to her teachers. She is <b>polite</b>.<br>2. Sophie helps her classmates. She is <b>helpful</b>.<br>3. Sophie works with her friends in projects. She is a good team <b>player</b>.</p></div>
+<div class="rule"><span class="eyebrow">Sınav ipucu</span><b>Boşluktan önceki kelimeye bak</b><span>“She is <b>a good team</b> ___” diyorsa cevap bir isim olmalı: <b>player</b>. “She is ___” diyorsa bir sıfat yazarsın: polite, helpful.</span></div>
+${birlikte([
+ `Tom says “please” and “thank you”. He is ${bosluk('polite|respectful|kind')}.`,
+ `Lara helps her friends every day. She is ${bosluk('helpful|supportive|kind')}.`,
+ `Arda works well with his group. He is a good team ${bosluk('player|member')}.`])}
+${yok("“Kemal is never late. He comes to school at 8:00 every day.” Kemal nasıl biri?","<b>He is punctual.</b> (dakik) Hiç geç kalmıyor, her gün tam saatinde okulda.")}`}
+],
+/* ===== BÖLÜM 3: KELİMELER ===== */
+[
+{t:"Okuldaki roller",h:`
+<p class="lead">Okulda herkesin bir <b>rolü</b> vardır. İngilizcede bu rollerin adlarını bilmek, metinleri anlamayı çok kolaylaştırır.</p>
+${tbl(["İngilizce","Türkçe"],[
+ ["<b>headmaster</b> / headteacher / principal","okul müdürü"],
+ ["<b>teacher</b>","öğretmen"],
+ ["<b>student</b>","öğrenci"],
+ ["<b>classmate</b>","sınıf arkadaşı"],
+ ["<b>class president</b>","sınıf başkanı"],
+ ["<b>librarian</b>","kütüphaneci"],
+ ["<b>choir member</b>","koro üyesi"],
+ ["<b>team player</b>","takım oyuncusu"]])}
+${sec("Doğru kelimeye dokun",[
+ ["Okul müdürü",["headmaster","classmate","librarian"],0],
+ ["Sınıf arkadaşı",["teacher","classmate","student"],1],
+ ["Kütüphaneci",["choir member","headmaster","librarian"],2],
+ ["Sınıf başkanı",["class president","team player","student"],0]])}
+<p>İsimlerin önündeki <b>Mr</b> erkek, <b>Mrs</b> evli kadın, <b>Ms</b> kadın öğretmenler için kullanılır: <b>Mr Alkan, Mrs Green</b>.</p>`},
+{t:"Tören ve bayram kelimeleri",h:`
+<p class="lead">Sınavın teması okul hayatı ve <b>Cumhuriyet Bayramı</b>. Törenlerde geçen kelimeleri resimlerle öğrenelim.</p>
+${resimler([resim("🎤","<b>speech</b> · konuşma (give a speech)"),resim("🇹🇷","<b>flag</b> · bayrak (carry the flag)"),resim("🏫","<b>assembly</b> · bütün okulun toplantısı"),resim("🥁","<b>parade</b> · geçit töreni"),resim("🎶","<b>choir</b> · koro (sing in the choir)"),resim("💃","<b>folk dance</b> · halk oyunu")])}
+${tbl(["İngilizce","Türkçe"],[
+ ["<b>Republic Day</b>","Cumhuriyet Bayramı (29 Ekim)"],
+ ["<b>ceremony</b>","tören"],
+ ["<b>celebration</b> / celebrate","kutlama / kutlamak"],
+ ["<b>national anthem</b>","İstiklâl Marşı (millî marş)"],
+ ["<b>poem</b> · read a poem","şiir · şiir okumak"],
+ ["<b>noticeboard</b>","pano"],
+ ["<b>decorate</b>","süslemek"]])}
+${sec("Resimdeki ne? Doğru kelimeye dokun",[
+ ["🎤 Müdür kürsüde konuşuyor",["speech","choir","parade"],0],
+ ["🥁 Öğrenciler bayraklarla yürüyor",["poem","parade","assembly"],1],
+ ["🎶 Bir grup öğrenci birlikte şarkı söylüyor",["choir","flag","speech"],0],
+ ["🏫 Cuma sabahı bütün okul salonda toplanıyor",["parade","assembly","poem"],1]])}`},
+{t:"Okul fiilleri",h:`
+<p class="lead">Fiiller “ne yapıyoruz?” sorusunun cevabıdır. Okulla ilgili metinlerde hep aynı fiiller karşına çıkar.</p>
+${tbl(["Fiil","Türkçe","Örnek"],[
+ ["<b>follow</b> the rules","kurallara uymak","We must follow the school rules."],
+ ["<b>carry</b>","taşımak","I can't carry these books. They are heavy."],
+ ["<b>pass</b> / <b>fail</b> a test","sınavı geçmek / sınavdan kalmak","Study more to pass the test."],
+ ["<b>try</b> again","tekrar denemek","Don't give up. Try again!"],
+ ["<b>greet</b>","selamlamak","She greets her teachers."],
+ ["<b>help</b>","yardım etmek","Can you help me?"],
+ ["<b>prepare</b> for","…a hazırlanmak","We prepare for the ceremony."],
+ ["<b>practise</b>","alıştırma yapmak, prova etmek","They practise songs."]])}
+${birlikte([
+ `We must ${bosluk('follow')} the school rules. (kurallara uymak)`,
+ `This bag is heavy. Can you ${bosluk('carry')} it? (taşımak)`,
+ `I want to ${bosluk('pass')} my English test. (geçmek)`,
+ `Don't give up! ${bosluk('try')} again. (denemek)`])}
+<div class="hata"><b>Karıştırma:</b> <b>pass</b> = sınavı geçmek, <b>fail</b> = sınavdan kalmak. “I don't want to <b>fail</b> my test.” = Sınavdan kalmak istemiyorum.</div>`},
+{t:"İlk harf ipucu",h:`
+<p class="lead">Sınavda kelimenin <b>ilk harfi</b> verilir: “We must f______ the school rules.” İlk harf ve diyalog seni doğru kelimeye götürür.</p>
+${adimAdim("Adım adım · İlk harften kelimeyi bul",[
+ "Diyaloğun tamamını oku. Kişiler ne hakkında konuşuyor?",
+ "Boşluğun önüne ve arkasına bak: “must f___ <b>the rules</b>” → kurallarla ne yaparız?",
+ "İlk harfle başlayan, anlama uyan kelimeyi düşün: <b>f</b> + kurallar = <b>follow</b>.",
+ "İki boşluk ve iki harf varsa iki kelime yazarsın: “a s___ c___” = <b>school ceremony</b>.",
+ "Kelimeyi yerine koyup cümleyi baştan oku. Anlamlıysa tamam."])}
+${birlikte([
+ `Why are the students singing the national anthem? — Because there is a school c${bosluk('eremony')} today.`,
+ `Where do we meet on Monday mornings? — In the hall. We have an a${bosluk('ssembly')}.`,
+ `This exercise is hard. — Please t${bosluk('ry')} again. You can do it!`,
+ `I'm worried. I don't want to f${bosluk('ail')} the test.`])}
+${yok("“Can we run in the corridor?” — “No. We must f____ the school rules.”","<b>follow</b>. Kurallara <b>uymak</b> = follow the rules.")}`}
+],
+/* ===== BÖLÜM 4: AM/IS/ARE, THERE IS/ARE, GENİŞ ZAMAN ===== */
+[
+{t:"am / is / are",h:`
+<p class="lead">Türkçede “Ben öğrenciyim” deriz. İngilizcede “-im” ekinin yerine <b>am, is, are</b> kullanılır. Hangisinin geleceği <b>kişiye</b> bağlıdır.</p>
+${tbl(["Kişi","Fiil","Örnek"],[["I","<b>am</b>","I <b>am</b> a Year 6 student."],["he / she / it","<b>is</b>","She <b>is</b> my teacher. · My name <b>is</b> Nisa."],["we / you / they","<b>are</b>","We <b>are</b> good friends."]])}
+<div class="rule"><span class="eyebrow">Kolay hatırla</span><b>Tek kişi “is”, çok kişi “are”, ben “am”</b><span>“My name” tek bir şeydir, bu yüzden <b>My name is</b> deriz. “Ali and I” iki kişidir, bu yüzden <b>Ali and I are</b> deriz.</span></div>
+${sec("am, is, are? Doğru kutuya dokun",[
+ ["My name … Berkay.",["am","is","are"],1],
+ ["I … a student.",["am","is","are"],0],
+ ["Elif and Can … classmates.",["am","is","are"],2],
+ ["Our school … big.",["am","is","are"],1],
+ ["We … in the school choir.",["am","is","are"],2]])}`},
+{t:"there is / there are",h:`
+<p class="lead">Bir yerde bir şeyin <b>var</b> olduğunu söylemek için <b>there is</b> ve <b>there are</b> kullanırız.</p>
+${tbl(["Yapı","Ne zaman?","Örnek"],[["<b>There is</b>","Bir tane (tekil)","There <b>is</b> a library in our school."],["<b>There are</b>","Birden çok (çoğul)","There <b>are</b> twenty classrooms."]])}
+<div class="rule"><span class="eyebrow">Sınav ipucu</span><b>Arkasındaki kelimeye bak</b><span>“a library, an art room, one gym” → <b>is</b>. “twenty classrooms, two teachers, many books” → <b>are</b>. Kelimenin sonunda <b>-s</b> varsa çoğuldur.</span></div>
+${birlikte([
+ `There ${bosluk('is')} a garden in our school.`,
+ `There ${bosluk('are')} thirty students in my class.`,
+ `There ${bosluk('is')} a big noticeboard in the corridor.`,
+ `There ${bosluk('are')} also two computer labs.`])}`},
+{t:"Geniş zaman: her gün yaptıklarımız",h:`
+<p class="lead">Her gün, her zaman yaptığımız işleri <b>Simple Present</b> (geniş zaman) ile anlatırız: I get up early. She goes to school.</p>
+${tbl(["Kişi","Fiil","Örnek"],[["I / you / we / they","fiil olduğu gibi","I <b>get</b> up at 7. We <b>follow</b> the rules."],["he / she / it","fiil + <b>-s</b>","She <b>gets</b> up at 7. Our teacher <b>helps</b> us."]])}
+${tbl(["Özel durumlar","Örnek"],[["have → <b>has</b>","She <b>has</b> breakfast."],["do → <b>does</b>, go → <b>goes</b>","He <b>does</b> homework. She <b>goes</b> to bed."],["-ch, -sh, -s ile biten → <b>-es</b>","He <b>watches</b> TV. She <b>brushes</b> her teeth."],["sessiz harf + y → <b>-ies</b>","She <b>studies</b> English."]])}
+<p><b>Sıklık kelimeleri</b> fiilden önce gelir: <b>always</b> (her zaman), <b>usually</b> (genellikle), <b>often</b> (sık sık), <b>sometimes</b> (bazen), <b>never</b> (asla). “I <b>usually</b> get up early.”</p>
+${birlikte([
+ `Merve ${bosluk('gets')} up early. (get)`,
+ `She ${bosluk('has')} breakfast at 7:30. (have)`,
+ `We ${bosluk('listen')} to our teacher carefully. (listen)`,
+ `My brother ${bosluk('goes')} to bed at 10. (go)`])}`},
+{t:"Metin tamamlama",h:`
+<p class="lead">Sınavda bir metin olur ve 10 boşluğa <b>uygun fiili</b> yazarsın. Bazen am/is/are, bazen there is/are, bazen de bir eylem fiili gelir.</p>
+${adimAdim("Adım adım · Boşluğa fiil yaz",[
+ "Boşluktan önceki <b>kişiye</b> bak: I, she, we, my name, there…",
+ "Boşluktan sonraki kelimeye bak: “a student” mı (bir şey) yoksa “up early” mı (bir eylem)?",
+ "Bir şeyi tanımlıyorsa <b>am/is/are</b>: I am a student. We are friends.",
+ "“There” ile başlıyorsa <b>is/are</b>: There is a library. There are classrooms.",
+ "Bir eylem varsa uygun fiili seç: get up, have breakfast, follow the rules, listen to.",
+ "Kişi he/she ise eylem fiiline <b>-s</b> eklemeyi unutma: Mrs Green <b>helps</b> us."])}
+<div class="ornek"><span class="eyebrow">Örnek · Birlikte dolduralım</span>
+${birlikte([
+ `Hi! My name ${bosluk('is')} Zeynep. I ${bosluk('am')} eleven years old.`,
+ `I usually ${bosluk('get|wake')} up at 7:00 and ${bosluk('have|eat')} breakfast.`,
+ `My friends and I ${bosluk('are')} in the same class.`,
+ `There ${bosluk('are')} twenty-five students in our class.`,
+ `Our teacher ${bosluk('helps|supports')} us with our projects.`])}</div>`}
+],
+/* ===== BÖLÜM 5: ZAMİRLER ===== */
+[
+{t:"Özne zamirleri: kim yapıyor?",h:`
+<p class="lead">Bir ismi tekrar tekrar söylememek için onun yerine <b>zamir</b> kullanırız. “Mr Green is our teacher. <b>He</b> supports our team.”</p>
+${tbl(["Zamir","Türkçe","Kimin yerine?"],[["<b>I</b>","ben","kendim"],["<b>you</b>","sen / siz","karşımdaki"],["<b>he</b>","o (erkek)","Mr Green, Ali, my brother"],["<b>she</b>","o (kız / kadın)","Chloe, Mrs Brown, my sister"],["<b>it</b>","o (eşya, hayvan)","the school, the book, my cat"],["<b>we</b>","biz","Poppy and I, my class and I"],["<b>they</b>","onlar","the students, Zoe and Defne, the books"]])}
+${sec("İsmin yerine hangi zamir gelir?",[
+ ["Mr Alkan",["he","she","they"],0],
+ ["Chloe",["he","she","it"],1],
+ ["The students",["we","it","they"],2],
+ ["Poppy and I",["we","they","you"],0],
+ ["Our school",["it","he","we"],0]])}`},
+{t:"Nesne zamirleri: kime?",h:`
+<p class="lead">Zamir fiilden <b>sonra</b> gelirse biçimi değişir. “Ben” kelimesi “bana, beni” olur. İngilizcede de <b>I</b> kelimesi <b>me</b> olur.</p>
+${tbl(["Özne (fiilden önce)","Nesne (fiilden sonra)","Örnek"],[["I","<b>me</b>","Can you help <b>me</b>?"],["you","<b>you</b>","I can help <b>you</b>."],["he","<b>him</b>","We like <b>him</b>."],["she","<b>her</b>","I always thank <b>her</b>."],["it","<b>it</b>","Put <b>it</b> on the desk."],["we","<b>us</b>","Our teacher helps <b>us</b>."],["they","<b>them</b>","Where can I put <b>them</b>?"]])}
+<div class="rule"><span class="eyebrow">Kolay hatırla</span><b>Fiilden önce: I, he, she, we, they · Fiilden sonra: me, him, her, us, them</b><span><b>She</b> helps <b>me</b>. · <b>I</b> help <b>her</b>.</span></div>
+${sec("Nesne zamiri hangisi?",[
+ ["I → ?",["me","my","mine"],0],
+ ["they → ?",["their","them","they"],1],
+ ["he → ?",["him","his","he"],0],
+ ["we → ?",["our","we","us"],2]])}`},
+{t:"Hangisini seçmeliyim?",h:`
+<p class="lead">Boşluğa özne zamiri mi, nesne zamiri mi gelecek? Karar vermek için <b>fiile</b> bakarız.</p>
+${adimAdim("Adım adım · Zamir seçme",[
+ "Zamirin <b>kimin yerine</b> geçtiğini bul. “Mr Green” mi, “these books” mu, “you and I” mı?",
+ "Boşluk fiilden <b>önce</b> mi? O zaman özne: I, he, she, it, we, they. “____ supports our team.” → <b>He</b>",
+ "Boşluk fiilden ya da “for, with, to” gibi kelimelerden <b>sonra</b> mı? O zaman nesne: me, him, her, it, us, them. “I thank ____.” → <b>her</b>",
+ "Cümleyi zamirle bir kez oku. “He supports our team.” Kulağa doğru geliyor mu?"])}
+${birlikte([
+ `I can't do my homework. Can you help ${bosluk('me')}?`,
+ `Mrs Green is our teacher. ${bosluk('she')} is very kind.`,
+ `These pencils are new. Put ${bosluk('them')} in your bag.`,
+ `You and I are in the same team. ${bosluk('we')} play well together.`,
+ `Ali is my friend. I play football with ${bosluk('him')}.`])}`},
+{t:"Diyaloglarda zamir",h:`
+<p class="lead">Sınavda zamir soruları <b>kısa diyaloglar</b> hâlinde gelir. Önceki konuşmacı kimden bahsediyor, ona dikkat et.</p>
+<div class="ornek"><span class="eyebrow">Örnek · Diyalog</span>
+${en("<b>Henry:</b> Chloe is helpful.<br><b>Mia:</b> Yes. I always thank <b>her</b> for her support.")}
+<p>Chloe bir kız → she. Boşluk “thank” fiilinden sonra → nesne: <b>her</b>.</p></div>
+${sec("Diyaloğu tamamla",[
+ ["Harry: I can't finish this project. Can you help …?",["I","me","my"],1],
+ ["Ruby: Mr Green is our new teacher. … supports our team.",["He","Him","She"],0],
+ ["Freya: These books are for our class. Where can I put …?",["they","them","it"],1],
+ ["Poppy: You and I are in the same group. … work well together.",["Us","We","They"],1]])}
+<div class="hata"><b>Sık yapılan hata:</b> Cümle başında nesne zamiri kullanmak: “<b>Him</b> supports our team.” yanlıştır. Cümle başı = özne: <b>He</b>.</div>`}
+],
+/* ===== BÖLÜM 6: GÜNLÜK RUTİN YAZMA ===== */
+[
+{t:"Rutin fiilleri ve zaman ifadeleri",h:`
+<p class="lead">Bir günü anlatmak için hep aynı fiilleri kullanırız. Bunları bilirsen rutin yazmak çok kolaydır.</p>
+${tbl(["İngilizce","Türkçe"],[["get up / wake up","kalkmak / uyanmak"],["have breakfast","kahvaltı yapmak"],["brush my teeth","dişlerimi fırçalamak"],["go to school","okula gitmek"],["come home","eve gelmek"],["do homework","ödev yapmak"],["have dinner","akşam yemeği yemek"],["read a book","kitap okumak"],["watch TV","televizyon izlemek"],["go to bed","yatmak"]])}
+${tbl(["Zaman ifadesi","Türkçe"],[["in the morning","sabahleyin"],["in the afternoon","öğleden sonra"],["in the evening","akşamleyin"],["at night","geceleyin"],["at 7 o'clock / at 7:30","saat 7'de / 7.30'da"]])}
+${sec("Hangi zaman? Doğru kutuya dokun",[
+ ["have breakfast",["in the morning","in the evening"],0],
+ ["go to bed",["in the afternoon","at night"],1],
+ ["come home from school",["in the afternoon","in the morning"],0]])}`},
+{t:"Kendi rutinim: I",h:`
+<p class="lead">Kendi günümü anlatırken <b>I</b> ile başlarım ve fiil olduğu gibi kalır. Hiç <b>-s</b> eklemem.</p>
+<div class="ornek"><span class="eyebrow">Örnek · Nisa'nın bir günü</span>
+${en("I get up at 7:00 in the morning. I have breakfast with my family. I go to school at 8:00. In the afternoon, I come home and do my homework. In the evening, I read a book. I go to bed at 10:00.")}</div>
+<div class="rule"><span class="eyebrow">Kolay hatırla</span><b>I + fiil (değişmez)</b><span>I get up · I have breakfast · I go to school · I do homework</span></div>
+${birlikte([
+ `I ${bosluk('get|wake')} up at 7 o'clock.`,
+ `I ${bosluk('have|eat')} breakfast with my family.`,
+ `In the afternoon, I ${bosluk('do')} my homework.`,
+ `At night, I ${bosluk('go')} to bed.`])}`},
+{t:"Başkasının rutini: he / she + s",h:`
+<p class="lead">Sınavda genellikle <b>başka birinin</b> (Merve'nin) rutinini yazarsın. Bu durumda fiile <b>-s</b> eklenir. Puanların çoğu burada kaybedilir!</p>
+${tbl(["I (ben)","She / Merve (o)"],[["I get up","She <b>gets</b> up"],["I have breakfast","She <b>has</b> breakfast"],["I come home","She <b>comes</b> home"],["I do homework","She <b>does</b> her homework"],["I read a book","She <b>reads</b> a book"],["I go to bed","She <b>goes</b> to bed"]])}
+<div class="hata"><b>Dikkat:</b> “Merve <b>get</b> up early.” ✗ → “Merve <b>gets</b> up early.” ✓<br>“She <b>have</b> breakfast.” ✗ → “She <b>has</b> breakfast.” ✓<br>“my homework” yerine “<b>her</b> homework” yaz.</div>
+${birlikte([
+ `Merve ${bosluk('gets')} up early. (get)`,
+ `She ${bosluk('has')} breakfast at 7:30. (have)`,
+ `She ${bosluk('does')} her homework. (do)`,
+ `She ${bosluk('goes')} to bed at 10. (go)`])}`},
+{t:"Plandan cümle yazma",h:`
+<p class="lead">Sınavda bir <b>plan tablosu</b> verilir ve 3 cümle yazman istenir. Her satırdan bir cümle çıkar.</p>
+${tbl(["Time of day","Merve's plan"],[["In the morning","get up early, have breakfast"],["In the afternoon","come home, do homework"],["In the evening","read a book, go to bed"]])}
+${adimAdim("Adım adım · Tablodan cümle",[
+ "Satırın başındaki zaman ifadesiyle başla ve virgül koy: “<b>In the morning,</b>”",
+ "İlk cümlede ismi yaz, sonrakilerde <b>she</b> kullan: “In the morning, <b>Merve</b> …” / “In the afternoon, <b>she</b> …”",
+ "İki eylemi <b>and</b> ile bağla: “gets up early <b>and</b> has breakfast.”",
+ "Her fiile <b>-s</b> ekle: gets, has, comes, does, reads, goes.",
+ "Cümleyi büyük harfle başlat, <b>nokta</b> ile bitir."])}
+<div class="ornek"><span class="eyebrow">Tam puanlık cevap</span>
+${en("In the morning, Merve gets up early and has breakfast.<br>In the afternoon, she comes home and does her homework.<br>In the evening, she reads a book and goes to bed.")}</div>
+${yok("Planda “In the evening: watch TV, have dinner” yazıyor. Cümleyi Ali için yaz.","<b>In the evening, Ali watches TV and has dinner.</b> (watch → watch<b>es</b>, have → <b>has</b>)")}`}
+],
+/* ===== BÖLÜM 7: OKUL KURALLARI ===== */
+[
+{t:"Kural cümlesi: Do! / Don't!",h:`
+<p class="lead">Kural yazmanın en kolay yolu <b>emir cümlesi</b>dir. Cümle doğrudan fiille başlar.</p>
+${tbl(["Yapılacak (olumlu)","Yapılmayacak (olumsuz)"],[["<b>Listen</b> to your teacher.","<b>Don't</b> run in the corridor."],["<b>Keep</b> your classroom tidy.","<b>Don't</b> eat in class."],["<b>Raise</b> your hand.","<b>Don't</b> shout."],["<b>Be</b> on time.","<b>Don't</b> be late."]])}
+<div class="rule"><span class="eyebrow">Kolay hatırla</span><b>Olumlu: Fiil + … · Olumsuz: Don't + fiil + …</b><span>Kişi yazmazsın! “You listen…” değil, sadece “<b>Listen</b> to your teacher.”</span></div>
+${sec("Olumlu kural mı, olumsuz kural mı?",[
+ ["Don't use your phone in class.",["Olumlu","Olumsuz"],1],
+ ["Wear your school uniform.",["Olumlu","Olumsuz"],0],
+ ["Don't throw rubbish on the floor.",["Olumlu","Olumsuz"],1],
+ ["Be quiet in the library.",["Olumlu","Olumsuz"],0]])}`},
+{t:"must / mustn't",h:`
+<p class="lead">Kuralları <b>must</b> (zorunda) ve <b>mustn't</b> (yasak) ile de yazabiliriz.</p>
+${tbl(["Yapı","Anlam","Örnek"],[["We <b>must</b> + fiil","…malıyız (zorunlu)","We <b>must</b> follow the school rules."],["We <b>mustn't</b> + fiil","…mamalıyız (yasak)","We <b>mustn't</b> run in the corridor."],["<b>Can</b> we …?","…ebilir miyiz?","<b>Can</b> we eat in the library? — No, we <b>can't</b>."]])}
+<div class="hata"><b>Dikkat:</b> “must”tan sonra fiil olduğu gibi gelir. “We must <b>to</b> follow” ✗ · “We must <b>follows</b>” ✗ · “We must <b>follow</b>” ✓</div>
+${birlikte([
+ `We ${bosluk('must')} wear our uniforms. (zorunlu)`,
+ `We ${bosluk('mustnt|must not')} eat in the classroom. (yasak)`,
+ `Students must ${bosluk('listen')} to the teacher carefully.`])}`},
+{t:"Kural kelimeleri",h:`
+<p class="lead">İyi bir kural yazmak için okulla ilgili hazır kalıpları bilmek gerekir.</p>
+${tbl(["Kalıp","Türkçe"],[["be on time","zamanında gelmek"],["keep the classroom tidy","sınıfı düzenli tutmak"],["raise your hand","parmak kaldırmak"],["wear your uniform","üniformanı giymek"],["be quiet in the library","kütüphanede sessiz olmak"],["throw rubbish in the bin","çöpü çöp kutusuna atmak"],["respect your friends","arkadaşlarına saygı göstermek"],["do your homework","ödevini yapmak"]])}
+${sec("Bu iyi bir okul kuralı mı?",[
+ ["Respect your friends.",["Doğru kural","Yanlış kural"],0],
+ ["Run in the corridor.",["Doğru kural","Yanlış kural"],1],
+ ["Don't be late for class.",["Doğru kural","Yanlış kural"],0],
+ ["Shout in the library.",["Doğru kural","Yanlış kural"],1]])}`},
+{t:"Sınavda üç kural yaz",h:`
+<p class="lead">Son soru seni serbest bırakır: “Write three school rules for students.” Üç kısa, doğru cümle yeterli.</p>
+${adimAdim("Adım adım · Üç kural",[
+ "Bildiğin bir kalıbı seç: listen to your teacher, keep the classroom tidy, don't run…",
+ "Her kuralı <b>numarayla</b> ayrı satıra yaz: 1. 2. 3.",
+ "Biri ya da ikisi <b>olumlu</b>, biri <b>olumsuz</b> (Don't) olursa çeşitli görünür.",
+ "Cümleyi <b>büyük harfle</b> başlat, <b>nokta</b> ile bitir.",
+ "Yazdıktan sonra kontrol et: Fiil doğru mu? “Don't” kesme işaretiyle mi yazıldı?"])}
+<div class="ornek"><span class="eyebrow">Tam puanlık cevap</span>
+${en("1. Listen to your teachers carefully.<br>2. Keep your classroom tidy.<br>3. Don't run in the corridors.")}</div>
+${birlikte([
+ `1. ${bosluk('listen')} to your teacher carefully.`,
+ `2. ${bosluk('keep')} your classroom tidy.`,
+ `3. ${bosluk('dont|do not')} run in the corridor.`])}
+${yok("Kütüphane için iki kural yaz.","Örneğin: <b>Be quiet in the library.</b> · <b>Don't eat in the library.</b>")}`}
+]
+];
+
+const B=[
+{ ad:"Hızlı Okuma: Konuyu Bul", kisa:"Metni hızlıca okuyup ne hakkında olduğunu bulma",
+test:[
+ {q:"Hızlı okumada (skimming) amaç nedir?",o:["Her kelimenin anlamını bulmak","Metnin konusunu bulmak","Metni ezberlemek","Metni çevirmek"],a:1,n:"Hızlı okumada “Bu metin ne hakkında?” sorusunun cevabını ararız."},
+ {q:"“Every morning, Can gets up, has breakfast and walks to school.” The text is about Can's …",o:["morning routine","school rules","birthday party","school trip"],a:0,n:"Every morning + her gün yapılan işler = routine."},
+ {q:"“Don't run in the corridor. Keep your desk tidy. Listen to your teacher.” The text is about …",o:["a trip","school rules","a ceremony","a routine"],a:1,n:"Don't, keep, listen: hepsi kural cümleleri."},
+ {q:"“Students sing the national anthem. The headmaster gives a speech. Kerem carries the flag.” The students are at a school …",o:["ceremony","canteen","library","trip"],a:0,n:"Marş, konuşma, bayrak → tören (ceremony)."},
+ {q:"“The text is about İnci's school ____.” Boşluğa neden “bag” yazmamalıyız?",o:["Çünkü çanta bir ayrıntıdır, konu değildir","Çünkü bag yanlış yazılmıştır","Çünkü bag Türkçedir","Çünkü cevap her zaman uzun olmalıdır"],a:0,n:"Konu kelimesi metnin bütününü anlatmalı: routine, rules, ceremony gibi."}
+],
+yazili:{
+ soru:`<p>Read the texts quickly and complete the sentences.</p>
+${en("<b>Text A:</b> Every day, Sena gets up at seven. She has breakfast with her family. Then she takes the school bus.")}
+<p>The text is about Sena's daily ${cizgi(8)}.</p>
+${en("<b>Text B:</b> Be on time for class. Don't eat in the library. Raise your hand before you speak.")}
+<p>The text is about school ${cizgi(8)}.</p>
+${en("<b>Text C:</b> Students decorate the school with Turkish flags. The choir practises songs. Some students learn poems for 29 October.")}
+<p>The students are preparing for a school ${cizgi(8)}.</p>
+${qs([["A)","Text A için boşluğu doldurunuz.",3],["B)","Text B için boşluğu doldurunuz.",3],["C)","Text C için boşluğu doldurunuz.",4]])}`,
+ kontrol:[
+  {b:"Text A",m:"<b>routine</b>",i:[["“routine” yazdı",3,"“Every day” ile başlayan, her gün yapılan işleri anlatan metin = routine."]]},
+  {b:"Text B",m:"<b>rules</b>",i:[["“rules” yazdı",3,"“Be, don't, raise” gibi emir cümleleri kuralları anlatır: rules."]]},
+  {b:"Text C",m:"<b>ceremony</b> / celebration / event / day",i:[["Bu dört kelimeden birini yazdı",4,"Bayrak, şarkı, şiir ve 29 Ekim → ceremony ya da celebration. Ayrıntı kelime (flag, song) yazma."]]}
+ ]}
+},
+{ ad:"Dikkatli Okuma", kisa:"Sıralama, tablo doldurma, metinden sıfat çıkarma",
+test:[
+ {q:"“She packs her bag <b>before</b> she leaves home.” Önce ne yapıyor?",o:["Evden çıkıyor","Çantasını hazırlıyor","Okula varıyor","Uyuyor"],a:1,n:"Before = -den önce. Önce çanta hazırlanır, sonra evden çıkılır."},
+ {q:"“Kerem wants to carry the flag. He also wants to decorate the garden.” Bahçeyi kim süslemek istiyor?",o:["Kerem","Nobody","The teacher","Everybody"],a:0,n:"“He also” bir önceki cümledeki kişiyi gösterir: Kerem."},
+ {q:"“Ela always says “thank you” and greets her teachers.” She is …",o:["polite","lazy","late","tall"],a:0,n:"Teşekkür etmek ve selam vermek kibarlıktır: polite."},
+ {q:"“Arda helps his classmates when they have problems.” He is …",o:["punctual","helpful","quiet","angry"],a:1,n:"Yardım eden kişi = helpful."},
+ {q:"“Zoe works with her friends in projects. She is a good team ____.”",o:["player","teacher","helpful","friend"],a:0,n:"“a good team” den sonra isim gelir: team player."}
+],
+yazili:{
+ soru:`${en("Every school day, Kaan wakes up at seven. He brushes his teeth before he has breakfast. Then he walks to school with his sister. At school, he greets his friends. He is never late for school. This week, Kaan's class is preparing for Republic Day. Kaan wants to read a poem. Selin wants to carry the Turkish flag. Mr Demir, the music teacher, wants to lead the choir. Kaan always helps his classmates and says “thank you” to everyone.")}
+<p><b>a)</b> Resimleri metindeki sıraya göre 1'den 4'e kadar numaralandırınız.</p>
+${resimler([resim("🚶","Okula yürüyor"),resim("🪥","Dişlerini fırçalıyor"),resim("👋","Arkadaşlarını selamlıyor"),resim("🍳","Kahvaltı yapıyor")])}
+<p><b>b)</b> Write the correct names in the table.</p>
+${tbl(["Role in the celebration","Name"],[["1. Reading a poem",""],["2. Carrying the Turkish flag",""],["3. Leading the choir",""]])}
+<p><b>c)</b> Complete the sentences.</p>
+<ul><li>Kaan helps his classmates. He is ${cizgi(7)}.</li><li>Kaan says “thank you” to everyone. He is ${cizgi(7)}.</li><li>Kaan is never late for school. He is ${cizgi(7)}.</li></ul>
+${qs([["a)","Resimleri sıralayınız.",4],["b)","Tabloya isimleri yazınız.",3],["c)","Cümleleri tamamlayınız.",3]])}`,
+ kontrol:[
+  {b:"a) Sıralama",m:"Soldan sağa: <b>3 – 1 – 4 – 2</b> (diş fırçalama 1, kahvaltı 2, okula yürüme 3, selamlama 4)",
+   i:[["Diş fırçalama 1, kahvaltı 2",2,"“Before” tuzağı: “He brushes his teeth before he has breakfast” → önce diş fırçalama."],["Okula yürüme 3, selamlama 4",2,"“Then” ve “At school” kelimeleri sırayı gösterir."]]},
+  {b:"b) Tablo",m:"1. <b>Kaan</b> · 2. <b>Selin</b> · 3. <b>Mr Demir</b>",
+   i:[["Reading a poem: Kaan",1,"“wants to read a poem” cümlesindeki ismi bul."],["Carrying the flag: Selin",1,"“carry the Turkish flag” → kim istiyor?"],["Leading the choir: Mr Demir",1,"Unvanıyla birlikte yaz: Mr Demir."]]},
+  {b:"c) Sıfatlar",m:"<b>helpful</b> (supportive) · <b>polite</b> (respectful) · <b>punctual</b>",
+   i:[["helpful yazdı",1,"Yardım eden kişi = helpful."],["polite yazdı",1,"Teşekkür eden, selam veren kişi = polite."],["punctual yazdı",1,"Hiç geç kalmayan kişi = punctual (dakik)."]]}
+ ]}
+},
+{ ad:"Kelimeler: Okul ve Bayram", kisa:"Okul rolleri, tören kelimeleri, okul fiilleri",
+test:[
+ {q:"“Okul müdürü” İngilizcede nedir?",o:["classmate","headmaster","librarian","student"],a:1,n:"Headmaster (ya da headteacher, principal) = okul müdürü."},
+ {q:"İstiklâl Marşı için hangi ifade kullanılır?",o:["folk dance","national anthem","noticeboard","assembly"],a:1,n:"National anthem = millî marş."},
+ {q:"“We must f____ the school rules.”",o:["fail","follow","fly","find"],a:1,n:"Kurallara uymak = follow the rules."},
+ {q:"“I don't want to f____ my test. I want to pass it.”",o:["fail","follow","find","finish"],a:0,n:"Fail = sınavdan kalmak, pass = geçmek."},
+ {q:"Cuma sabahları bütün okulun salonda toplanmasına ne denir?",o:["parade","choir","assembly","poem"],a:2,n:"Assembly = bütün okulun toplandığı toplantı."}
+],
+yazili:{
+ soru:`<p><b>a)</b> Look at the pictures and write the correct English word under each picture.</p>
+${resimler([resim("🎤","Müdür kürsüde herkese hitap ediyor","1"),resim("🎶","Öğrenciler hep birlikte şarkı söyleyen bir grup","2"),resim("🇹🇷","Kerem bunu törende taşıyor","3")])}
+<p><b>b)</b> Complete the dialogues. The first letters are given.</p>
+${en("<b>Can:</b> Can we eat in the library?<br><b>Eda:</b> No. We must f________ the library rules.")}
+${en("<b>Ali:</b> You look worried. What's wrong?<br><b>Su:</b> I have a Maths test tomorrow. I want to p________ it.")}
+${qs([["a)","Resimlerin altına İngilizce kelimeleri yazınız.",6],["b)","Diyalogları tamamlayınız.",4]])}`,
+ kontrol:[
+  {b:"a) Resimler",m:"1. <b>speech</b> (give a speech) · 2. <b>choir</b> (school choir) · 3. <b>flag</b> (Turkish flag)",
+   i:[["1. speech yazdı",2,"Kürsüde konuşma yapmak = give a speech."],["2. choir yazdı",2,"Birlikte şarkı söyleyen grup = choir (koro)."],["3. flag yazdı",2,"Bayrak = flag. “Turkish flag” da doğru."]]},
+  {b:"b) Diyaloglar",m:"<b>follow</b> · <b>pass</b>",
+   i:[["follow yazdı",2,"Kurallara uymak = follow the rules."],["pass yazdı",2,"Sınavı geçmek = pass a test."]]}
+ ]}
+},
+{ ad:"am / is / are ve Geniş Zaman", kisa:"am, is, are · there is, there are · gets, has, helps",
+test:[
+ {q:"My name … Berkay.",o:["am","is","are","be"],a:1,n:"My name tek bir şeydir: is."},
+ {q:"We … good friends.",o:["am","is","are","be"],a:2,n:"We (biz) çoğuldur: are."},
+ {q:"There … twenty classrooms in our school.",o:["is","are","am","be"],a:1,n:"Twenty classrooms çoğul: there are."},
+ {q:"Our teacher … us when we have problems.",o:["help","helps","helping","to help"],a:1,n:"Our teacher = she/he. Geniş zamanda fiile -s eklenir: helps."},
+ {q:"I usually … breakfast at 7:30.",o:["has","have","am","is"],a:1,n:"I ile fiil olduğu gibi kalır: I have breakfast."}
+],
+yazili:{
+ soru:`<p>Complete the text with suitable verbs.</p>
+${en("Hello! My name (1) ________ Defne. I (2) ________ eleven years old. I usually (3) ________ up at 7:00. I (4) ________ breakfast with my family. My best friend (5) ________ Eda. We (6) ________ in the same class. Our teacher, Mr Kaya, (7) ________ us with our projects. There (8) ________ a big garden in our school. There (9) ________ also three science labs. We always (10) ________ the school rules.")}
+${qs([["","On boşluğa uygun fiilleri yazınız.",10]])}`,
+ kontrol:[
+  {b:"Boşluklar",m:"(1) <b>is</b> (2) <b>am</b> (3) <b>get / wake</b> (4) <b>have / eat</b> (5) <b>is</b> (6) <b>are</b> (7) <b>helps / supports</b> (8) <b>is</b> (9) <b>are</b> (10) <b>follow</b>",
+   i:[["(1) is",1,"My name + is."],["(2) am",1,"I + am."],["(3) get / wake",1,"“___ up” → get up ya da wake up."],["(4) have / eat",1,"Kahvaltı yapmak = have breakfast."],["(5) is",1,"My best friend tek kişi: is."],["(6) are",1,"We + are."],["(7) helps / supports",1,"Mr Kaya = he → fiile -s ekle: helps."],["(8) is",1,"A big garden tekil: there is."],["(9) are",1,"Three labs çoğul: there are."],["(10) follow",1,"Kurallara uymak = follow the rules."]]}
+ ]}
+},
+{ ad:"Zamirler", kisa:"I–me, he–him, she–her, we–us, they–them",
+test:[
+ {q:"Mr Green is our teacher. … supports our team.",o:["Him","He","She","They"],a:1,n:"Mr Green erkek, cümle başında özne: He."},
+ {q:"Chloe is helpful. I always thank … .",o:["she","her","him","they"],a:1,n:"Chloe kız, fiilden sonra nesne: her."},
+ {q:"These books are heavy. Can you carry … ?",o:["they","them","it","us"],a:1,n:"Books çoğul, fiilden sonra: them."},
+ {q:"I can't do this. Can you help … ?",o:["I","me","my","you"],a:1,n:"I fiilden sonra me olur."},
+ {q:"You and I are in the same group. … work well together.",o:["We","Us","They","You"],a:0,n:"You and I = biz, cümle başında: We."}
+],
+yazili:{
+ soru:`<p>Complete the dialogues with the correct words.</p>
+${en("1. <b>Nil:</b> My bag is heavy. Can you help ________?<br><b>Efe:</b> Sure!")}
+${en("2. <b>Ada:</b> Ms Ece is our art teacher.<br><b>Bora:</b> Yes. ________ is very kind.")}
+${en("3. <b>Tuna:</b> Where are the new pencils? I can't find ________.<br><b>Ela:</b> They are in the box.")}
+${en("4. <b>Deniz:</b> Ali and I are in the school choir. ________ sing every Friday.<br><b>Mert:</b> Great!")}
+${en("5. <b>Zeynep:</b> Kerem is my classmate. I study with ________ every day.")}
+${qs([["","Beş boşluğu doldurunuz.",10]])}`,
+ kontrol:[
+  {b:"Zamirler",m:"1. <b>me</b> · 2. <b>She</b> · 3. <b>them</b> · 4. <b>We</b> · 5. <b>him</b>",
+   i:[["1. me",2,"“help” fiilinden sonra I → me."],["2. She",2,"Ms Ece kadın, cümle başı: She."],["3. them",2,"Pencils çoğul, fiilden sonra: them."],["4. We",2,"Ali and I = biz, cümle başında özne: We."],["5. him",2,"Kerem erkek, “with” den sonra: him."]]}
+ ]}
+},
+{ ad:"Günlük Rutin Yazma", kisa:"Plan tablosundan he/she ile cümle yazma",
+test:[
+ {q:"Merve … up early.",o:["get","gets","getting","to get"],a:1,n:"Merve = she → fiile -s: gets."},
+ {q:"She … breakfast at 7:30.",o:["have","has","haves","having"],a:1,n:"have → has."},
+ {q:"He … his homework in the afternoon.",o:["do","does","dos","doing"],a:1,n:"do → does."},
+ {q:"“Akşamleyin” İngilizcede nasıl söylenir?",o:["in the morning","in the afternoon","in the evening","at noon"],a:2,n:"In the evening = akşamleyin."},
+ {q:"Hangisi doğru bir cümledir?",o:["In the morning, Ali get up and have breakfast.","In the morning, Ali gets up and has breakfast.","In the morning Ali getting up.","Ali in the morning gets up has breakfast."],a:1,n:"Zaman ifadesi + virgül + isim + fiil-s + and + fiil-s."}
+],
+yazili:{
+ soru:`<p>Look at Emre's plan below. Write 3 sentences about his daily routine.</p>
+${tbl(["Time of day","Emre's plan"],[["In the morning","wake up at 7, brush his teeth"],["In the afternoon","play football, do homework"],["In the evening","have dinner, watch TV"]])}
+${qs([["1.","Sabah için bir cümle yazınız.",3],["2.","Öğleden sonra için bir cümle yazınız.",3],["3.","Akşam için bir cümle yazınız.",3],["","Cümleler büyük harfle başlayıp noktayla bitiyor mu?",1]])}`,
+ kontrol:[
+  {b:"1. Sabah",m:"<b>In the morning, Emre wakes up at 7 and brushes his teeth.</b>",
+   i:[["İki eylemi de yazdı",1,"Tablodaki iki eylemi “and” ile bağla."],["Fiillere -s / -es ekledi (wakes, brushes)",2,"Emre = he. wake → wakes, brush → brushes."]]},
+  {b:"2. Öğleden sonra",m:"<b>In the afternoon, he plays football and does his homework.</b>",
+   i:[["İki eylemi de yazdı",1,"Satırın başındaki zaman ifadesiyle başla."],["Fiilleri doğru çekimledi (plays, does)",2,"play → plays, do → does."]]},
+  {b:"3. Akşam",m:"<b>In the evening, he has dinner and watches TV.</b>",
+   i:[["İki eylemi de yazdı",1,"Her satırdan bir cümle çıkar."],["Fiilleri doğru çekimledi (has, watches)",2,"have → has, watch → watches."]]},
+  {b:"Yazım",m:"Her cümle büyük harfle başlıyor ve nokta ile bitiyor.",
+   i:[["Büyük harf ve nokta doğru",1,"Cümleye büyük harfle başla, sonuna nokta koy."]]}
+ ]}
+},
+{ ad:"Okul Kuralları Yazma", kisa:"Do / Don't, must / mustn't",
+test:[
+ {q:"Hangisi doğru bir kural cümlesidir?",o:["You runs in the corridor.","Don't run in the corridor.","Not run corridor.","Running don't."],a:1,n:"Olumsuz kural: Don't + fiil."},
+ {q:"We … wear our uniforms. (zorunlu)",o:["must","mustn't","can't","don't"],a:0,n:"Zorunluluk = must."},
+ {q:"We … eat in the library. (yasak)",o:["must","mustn't","can","do"],a:1,n:"Yasak = mustn't (must not)."},
+ {q:"Hangisi iyi bir okul kuralı değildir?",o:["Be on time.","Respect your friends.","Shout in the classroom.","Keep your desk tidy."],a:2,n:"Sınıfta bağırmak kural olmaz; doğrusu “Don't shout in the classroom.”"},
+ {q:"“We must to follow the rules.” cümlesindeki hata nedir?",o:["“to” fazladır","“must” yanlıştır","“rules” tekil olmalıdır","Hata yok"],a:0,n:"must + fiil (to yok): We must follow the rules."}
+],
+yazili:{
+ soru:`<p><b>a)</b> Write three school rules for students.</p>
+<p><b>b)</b> Rewrite the rules with <b>must</b> or <b>mustn't</b>.</p>
+<ul><li>Be on time. → We ${cizgi(10)}</li><li>Don't run in the corridor. → We ${cizgi(10)}</li></ul>
+${qs([["a)","Üç okul kuralı yazınız.",6],["b)","İki kuralı must / mustn't ile yeniden yazınız.",4]])}`,
+ kontrol:[
+  {b:"a) Üç kural",m:"Örnek: <b>1. Listen to your teachers carefully. 2. Keep your classroom tidy. 3. Don't run in the corridors.</b> Anlamlı ve doğru yazılmış her okul kuralı kabul edilir.",
+   i:[["1. kural anlamlı ve doğru yazılmış",2,"Fiille başla: Listen, Keep, Be, Raise… Olumsuzda Don't."],["2. kural anlamlı ve doğru yazılmış",2,"Hazır kalıpları kullan: keep the classroom tidy, be on time."],["3. kural anlamlı ve doğru yazılmış",2,"Büyük harfle başla, nokta ile bitir."]]},
+  {b:"b) must / mustn't",m:"<b>We must be on time.</b> · <b>We mustn't run in the corridor.</b>",
+   i:[["We must be on time.",2,"Olumlu emir → must + fiil."],["We mustn't run in the corridor.",2,"Don't … → mustn't + fiil."]]}
+ ]}
+}
+];
+
+const KONU_AD=["Hızlı okuma","Dikkatli okuma","Kelimeler","am/is/are, geniş zaman","Zamirler","Rutin yazma","Kural yazma"];
+
+const TEKRAR=[
+ ["Hızlı okuma",["Önce yarım cümleyi oku, sonra metni hızlıca tara.","Konu kelimeleri: routine (her gün yapılanlar), rules (kurallar), ceremony / celebration (tören / kutlama), event, trip.","Every day / every morning → routine · Don't, must → rules · flag, anthem, poem → ceremony.","Ayrıntı yazma (bag, poem); bütünü anlatan genel kelimeyi yaz."]],
+ ["Dikkatli okuma",["Sıra: first, then, after that, finally. “A before B” → önce A.","“He / She also …” bir önceki cümledeki kişiyi gösterir.","“Grace and Nehir want …” → tabloya iki ismi de yaz.","Sıfatlar: polite (kibar), helpful (yardımsever), hardworking (çalışkan), punctual (dakik), friendly, team player."]],
+ ["Kelimeler",["headmaster (müdür), classmate, librarian, class president.","ceremony, celebration, national anthem, flag, parade, assembly, choir, speech, poem, folk dance.","follow the rules · carry · pass / fail a test · try again · greet · prepare · practise.","İlk harf ipucu: önündeki ve arkasındaki kelimelere bak, iki harf varsa iki kelime yaz."]],
+ ["am / is / are ve geniş zaman",["I am · he / she / it / my name is · we / you / they are.","There is + tekil · There are + çoğul.","He / she + fiil-s: gets, helps, has, does, goes, watches, studies.","I / we / they + fiil olduğu gibi: I get up, we follow."]],
+ ["Zamirler",["Fiilden önce: I, you, he, she, it, we, they.","Fiilden sonra: me, you, him, her, it, us, them.","Mr Green → he / him · Chloe → she / her · books → they / them · you and I → we / us.","Cümle başında “Him” ya da “Her” olmaz."]],
+ ["Günlük rutin yazma",["Zaman + virgül: In the morning, In the afternoon, In the evening.","Merve / she + fiil-s: gets up, has breakfast, comes home, does her homework, reads, goes to bed.","İki eylemi “and” ile bağla.","Büyük harfle başla, noktayla bitir."]],
+ ["Okul kuralları",["Olumlu: Listen to your teacher. Keep your classroom tidy. Be on time.","Olumsuz: Don't run in the corridor. Don't eat in class.","We must + fiil · We mustn't + fiil (to yok, -s yok).","Üç kuralı numaralı, ayrı satırlara yaz."]]
+];
+
+const T=[
+{ ad:"Sınav Tatbikatı 1", sorular:[
+ {k:1,h:`${en("Every school day, Deniz gets up early. She puts on her school uniform before she has breakfast. At school, she says hello to her friends. Then she sits at her desk and opens her notebook.")}
+<p><b>A.</b> Read the text quickly and complete the sentence.</p><p>The text is about Deniz's school ${cizgi(9)}.</p>
+<p><b>B.</b> Read the text again. Number the pictures from 1 to 4 in the correct order.</p>
+${resimler([resim("🍳","Kahvaltı yapıyor"),resim("📓","Defterini açıyor"),resim("👕","Üniformasını giyiyor"),resim("👋","Arkadaşlarına merhaba diyor")])}
+${qs([["A.","Cümleyi tamamlayınız.",4],["B.","Resimleri sıralayınız.",8]])}`,
+  c:[{b:"A. Konu",m:"<b>routine</b>",i:[["“routine” yazdı",4,"Every school day + her gün yapılan işler = routine."]]},
+     {b:"B. Sıralama",m:"Soldan sağa: <b>2 – 4 – 1 – 3</b> (üniforma 1, kahvaltı 2, merhaba 3, defter 4)",
+      i:[["Üniforma: 1",2,"“before” tuzağı: üniformasını kahvaltıdan önce giyiyor."],["Kahvaltı: 2",2,"“before she has breakfast” → kahvaltı ikinci."],["Merhaba demek: 3",2,"“At school” okulda yapılanlar sonra gelir."],["Defter açmak: 4",2,"“Then” en son yapılanı gösterir."]]}]},
+ {k:1,h:`${en("Students put Turkish flags on the walls of the hall. The school choir practises the national anthem. Some students learn folk dances. Everyone is getting ready for 29 October.")}
+<p>Read the text quickly and complete the sentence.</p><p>The students are getting ready for a school ${cizgi(9)}.</p>
+${qs([["","Cümleyi tamamlayınız.",6]])}`,
+  c:[{b:"Konu",m:"<b>ceremony</b> / celebration / event / day",i:[["Bu kelimelerden birini yazdı",6,"Bayrak + marş + halk oyunu + 29 Ekim = ceremony / celebration. “flag” gibi ayrıntı yazma."]]}]},
+ {k:2,h:`${en("Our school celebrates Republic Day on 29 October. Students and teachers prepare for the ceremony together. Deniz wants to read a poem. Murat wants to carry the Turkish flag. He also wants to decorate the noticeboards. Ada and Lina want to perform a folk dance. Mrs Yıldız, our headmaster, wants to give a speech.")}
+<p>Read the text carefully. Write the correct names in the table.</p>
+${tbl(["Role in the celebration","Name"],[["1. Decorating the noticeboards",""],["2. Giving a speech",""],["3. Reading a poem",""],["4. Performing a folk dance",""]])}
+${qs([["","Tabloyu doldurunuz.",8]])}`,
+  c:[{b:"Tablo",m:"1. <b>Murat</b> · 2. <b>Mrs Yıldız</b> · 3. <b>Deniz</b> · 4. <b>Ada and Lina</b>",
+   i:[["1. Murat",2,"“He also wants to decorate” → bir önceki cümledeki erkek: Murat."],["2. Mrs Yıldız",2,"Give a speech = konuşma yapmak. Müdürü unvanıyla yaz."],["3. Deniz",2,"“wants to read a poem” → Deniz."],["4. Ada and Lina",2,"İki kişi birlikte: iki ismi de yaz."]]}]},
+ {k:2,h:`${en("Burak always says “please” and “thank you” to his teachers. He studies for his lessons every day. In group projects, he works with his classmates and shares his ideas.")}
+<p>Read the text carefully and complete the sentences with the correct words.</p>
+<ol><li>Burak says “please” and “thank you”. He is ${cizgi(8)}.</li><li>Burak studies every day. He is ${cizgi(8)}.</li><li>Burak works with his classmates in projects. He is a good team ${cizgi(8)}.</li></ol>
+${qs([["","Üç cümleyi tamamlayınız.",9]])}`,
+  c:[{b:"Sıfatlar",m:"1. <b>polite</b> / respectful · 2. <b>hardworking</b> · 3. <b>player</b>",
+   i:[["1. polite (respectful)",3,"Please ve thank you diyen kişi = polite."],["2. hardworking",3,"Her gün ders çalışan kişi = hardworking (çalışkan)."],["3. player",3,"“a good team ___” → team player."]]}]},
+ {k:3,h:`<p>Look at the pictures and write the correct English word or phrase under each picture.</p>
+${resimler([resim("🥁","Öğrenciler bayraklarla sokakta yürüyor","1"),resim("🎶","Öğrenciler sahnede hep birlikte şarkı söylüyor","2"),resim("🎤","Müdür kürsüden herkese hitap ediyor","3"),resim("🏫","Pazartesi sabahı bütün okul salonda toplanıyor","4"),resim("🇹🇷","Törende direğe çekilen kırmızı beyaz kumaş","5")])}
+${qs([["","Beş resmin altına kelimeleri yazınız.",10]])}`,
+  c:[{b:"Resimler",m:"1. <b>parade</b> · 2. <b>choir</b> · 3. <b>speech</b> (give a speech) · 4. <b>assembly</b> · 5. <b>flag</b> (Turkish flag)",
+   i:[["1. parade",2,"Bayraklarla yürüyüş = parade (geçit töreni)."],["2. choir",2,"Birlikte şarkı söyleyen grup = choir."],["3. speech",2,"Kürsüden konuşma = (give a) speech."],["4. assembly",2,"Bütün okulun toplantısı = assembly."],["5. flag",2,"Bayrak = flag."]]}]},
+ {k:3,h:`<p>Complete the dialogues with suitable words or phrases. The first letters are given.</p>
+${en("1. <b>Ece:</b> Why is everyone in the school garden?<br><b>Tom:</b> There is a s________ c________ for Republic Day.")}
+${en("2. <b>Jack:</b> Where do we meet on Monday mornings?<br><b>Nil:</b> In the hall. We have an a________ there.")}
+${en("3. <b>Mia:</b> You look worried.<br><b>Can:</b> I don't want to f________ my Science test.<br><b>Mia:</b> Study every day and you can p________ it.")}
+${en("4. <b>Leo:</b> These chairs are heavy. I can't c________ them.<br><b>Ada:</b> Let me help you.")}
+${en("5. <b>Su:</b> Can we talk loudly in the library?<br><b>Efe:</b> No. We must f________ the library rules.")}
+${en("6. <b>Kaan:</b> This puzzle is too hard!<br><b>Eda:</b> Don't give up. T________ again!")}
+${qs([["","Yedi boşluğu doldurunuz.",14]])}`,
+  c:[{b:"Boşluklar",m:"1. <b>school ceremony</b> · 2. <b>assembly</b> · 3. <b>fail</b>, <b>pass</b> · 4. <b>carry</b> · 5. <b>follow</b> · 6. <b>try</b>",
+   i:[["1. school ceremony",2,"İki harf = iki kelime: s… c… → school ceremony."],["2. assembly",2,"Bütün okulun salondaki toplantısı = assembly."],["3. fail",2,"Endişeli, sınavdan kalmak istemiyor: fail."],["3. pass",2,"Çalışırsan sınavı geçersin: pass."],["4. carry",2,"Ağır sandalyeleri taşımak = carry."],["5. follow",2,"Kurallara uymak = follow the rules."],["6. try",2,"Vazgeçme, tekrar dene = try again."]]}]},
+ {k:4,h:`<p>Complete the text with suitable verbs.</p>
+${en("Hi! My name (1) ________ Melis. I (2) ________ eleven years old. I (3) ________ up at 6:45 every day. I (4) ________ breakfast with my brother. My brother and I (5) ________ in the same school. Our school (6) ________ very big. There (7) ________ a swimming pool. There (8) ________ forty classrooms. Our headmaster, Mr Tan, (9) ________ a speech every Monday. We (10) ________ to him carefully.")}
+${qs([["","On boşluğu doldurunuz.",10]])}`,
+  c:[{b:"Boşluklar",m:"(1) <b>is</b> (2) <b>am</b> (3) <b>get / wake</b> (4) <b>have / eat</b> (5) <b>are</b> (6) <b>is</b> (7) <b>is</b> (8) <b>are</b> (9) <b>gives</b> (10) <b>listen</b>",
+   i:[["(1) is",1,"My name is."],["(2) am",1,"I am."],["(3) get / wake",1,"get up / wake up."],["(4) have / eat",1,"have breakfast."],["(5) are",1,"My brother and I = we → are."],["(6) is",1,"Our school tekil → is."],["(7) is",1,"A swimming pool tekil → there is."],["(8) are",1,"Forty classrooms çoğul → there are."],["(9) gives",1,"Mr Tan = he → give + s: gives a speech."],["(10) listen",1,"We listen to him."]]}]},
+ {k:5,h:`<p>Complete the dialogues with the correct words.</p>
+${en("1. <b>Tom:</b> I can't open this window. Can you help ________?<br><b>Ada:</b> Of course.")}
+${en("2. <b>Ada:</b> Mrs Brown is our new English teacher.<br><b>Ben:</b> Yes. ________ is very friendly.")}
+${en("3. <b>Sam:</b> Look at these posters!<br><b>Lucy:</b> Wow! Who made ________?")}
+${en("4. <b>Ece:</b> Deniz, you and I are in the choir.<br><b>Deniz:</b> Yes. ________ sing every Friday.")}
+${en("5. <b>Leo:</b> Can is very helpful.<br><b>Mia:</b> Yes. I always ask ________ for help.")}
+${qs([["","Beş boşluğu doldurunuz.",10]])}`,
+  c:[{b:"Zamirler",m:"1. <b>me</b> · 2. <b>She</b> · 3. <b>them</b> · 4. <b>We</b> · 5. <b>him</b>",
+   i:[["1. me",2,"help fiilinden sonra I → me."],["2. She",2,"Mrs Brown kadın, cümle başı: She."],["3. them",2,"Posters çoğul, fiilden sonra: them."],["4. We",2,"You and I = we, cümle başı."],["5. him",2,"Can erkek, fiilden sonra: him."]]}]},
+ {k:6,h:`<p>Look at Ozan's plan below. Write 3 sentences about his daily routine.</p>
+${tbl(["Time of day","Ozan's plan"],[["In the morning","wake up at 7, brush his teeth"],["In the afternoon","come home, play basketball"],["In the evening","do homework, go to bed"]])}
+${qs([["","Üç cümle yazınız.",9]])}`,
+  c:[{b:"Cümleler",m:"<b>In the morning, Ozan wakes up at 7 and brushes his teeth.<br>In the afternoon, he comes home and plays basketball.<br>In the evening, he does his homework and goes to bed.</b>",
+   i:[["Sabah cümlesinde iki eylem var",1,"Tablodaki iki eylemi and ile bağla."],["Sabah fiilleri doğru (wakes, brushes)",2,"he + fiil-s: wakes, brush → brushes."],["Öğleden sonra cümlesinde iki eylem var",1,"Zaman ifadesiyle başla: In the afternoon,"],["Öğleden sonra fiilleri doğru (comes, plays)",2,"come → comes, play → plays."],["Akşam cümlesinde iki eylem var",1,"Her satırdan bir cümle."],["Akşam fiilleri doğru (does, goes)",2,"do → does, go → goes."]]}]},
+ {k:7,h:`<p>Write three school rules for students.</p>
+<p>1. ${cizgi(14)}<br>2. ${cizgi(14)}<br>3. ${cizgi(14)}</p>
+${qs([["","Üç okul kuralı yazınız.",12]])}`,
+  c:[{b:"Kurallar",m:"Örnek: <b>1. Listen to your teachers carefully. 2. Keep your classroom tidy. 3. Don't run in the corridors.</b> “We must / mustn't …” ile yazılan anlamlı kurallar da kabul edilir.",
+   i:[["1. kural okul için anlamlı",2,"Okulla ilgili bir kural yaz: listen, keep tidy, be on time…"],["1. kuralın yazımı doğru (fiille başlıyor, büyük harf, nokta)",2,"Emir cümlesi fiille başlar. Sonuna nokta koy."],["2. kural okul için anlamlı",2,"Hazır kalıplardan seç: raise your hand, wear your uniform."],["2. kuralın yazımı doğru",2,"must + fiil (to yok, -s yok)."],["3. kural okul için anlamlı",2,"Bir olumsuz kural ekle: Don't …"],["3. kuralın yazımı doğru",2,"Don't kesme işaretiyle yazılır."]]}]}
+]}
+];
+
+
+/* ---------- DURUM ---------- */
+const app=document.getElementById('app');
+const S={test:{},checks:{},tIdx:{},page:{}};
+let P=(()=>{try{return JSON.parse(localStorage.getItem('nisaIng'))||{b:{},t:{}}}catch(e){return {b:{},t:{}}}})();
+P.b=P.b||{}; P.t=P.t||{};
+function save(){try{localStorage.setItem('nisaIng',JSON.stringify(P))}catch(e){}}
+/* tema: oto / acik / koyu */
+const HOST_THEME=document.documentElement.getAttribute('data-theme');
+let THEME=(()=>{try{return localStorage.getItem('nisaTema')||'oto'}catch(e){return 'oto'}})();
+const THEME_AD={oto:'Otomatik',acik:'Açık',koyu:'Koyu'};
+function applyTheme(){const r=document.documentElement;
+  if(THEME==='oto'){HOST_THEME?r.setAttribute('data-theme',HOST_THEME):r.removeAttribute('data-theme');}
+  else r.setAttribute('data-theme',THEME==='acik'?'light':'dark');}
+const themeBtn=()=>`<button class="ghost themebtn" data-act="theme" aria-label="Temayı değiştir">Tema: ${THEME_AD[THEME]}</button>`;
+applyTheme();
+
+/* kontrol grupları ve maddeler */
+function blocks(key){
+  const n=+key.slice(1);
+  if(key[0]==='b') return [{si:0,k:n,groups:B[n-1].yazili.kontrol}];
+  return T[n-1].sorular.map((s,i)=>({si:i,k:s.k,groups:s.c}));
+}
+function items(key){
+  const out=[];
+  blocks(key).forEach(bl=>bl.groups.forEach((g,gi)=>g.i.forEach((it,ii)=>out.push({id:`${key}.${bl.si}.${gi}.${ii}`,t:it[0],p:it[1],fix:it[2],k:bl.k}))));
+  return out;
+}
+const checkedSet=key=>S.checks[key]||(S.checks[key]=new Set());
+function scoreOf(key){const c=checkedSet(key);return items(key).filter(i=>c.has(i.id)).reduce((s,i)=>s+i.p,0)}
+const maxOf=key=>items(key).reduce((s,i)=>s+i.p,0);
+
+/* ---------- ORTAK PARÇALAR ---------- */
+function topBar(crumbs,cur){
+  return `<div class="top"><a class="back" href="#ana">← Bölümler</a>${crumbs?`<div class="crumbs">${crumbs.map((c,i)=>`<span class="crumb ${i===cur?'on':i<cur?'done':''}">${c}</span>`).join('')}</div>`:''}${themeBtn()}</div>`;
+}
+const BC=["Konu","Test","Yazılı","Sonuç"];
+function sendBox(msg){
+  const url='https://wa.me/?text='+encodeURIComponent(msg);
+  return `<div class="actions center"><a class="btn wa" href="${url}" target="_blank" rel="noopener">Abime WhatsApp'tan gönder</a>
+  <button class="ghost" data-act="copy">Metni kopyala</button></div>
+  <textarea class="copybox" id="copybox" readonly hidden>${msg}</textarea>`;
+}
+
+/* ---------- SAYFALAR ---------- */
+function vAna(){
+  const N=B.length, done=B.map((_,i)=>!!(P.b[i+1]&&P.b[i+1].yazili!=null)), doneCount=done.filter(Boolean).length;
+  const STAR='<svg class="st" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1 6.3-5.6-3-5.6 3 1-6.3L2.9 9.4l6.3-.9z"/></svg>';
+  const nx=done.indexOf(false); let not;
+  if(nx>=0){const n=nx+1,p=P.b[n]||{},b=B[nx],yz=p.test!=null;
+    not={b:'Sıradaki bölüm',m:`${n}. bölüm: <b>${b.ad}</b>. `+(yz?'Testi bitirdin, sırada yazılı sorusu var. Kağıt kalemini hazırla.':`Önce konuyu oku (${KONU[nx].length} sayfa), sonra ${b.test.length} soruluk testi çöz.`),l:`#b${n}-${yz?'yazili':'konu'}`,d:(doneCount||yz)?'Kaldığım yerden devam et':'Hadi başlayalım'};}
+  else{const tj=T.findIndex((_,i)=>P.t[i+1]==null);
+    not=tj>=0?{b:'Bütün bölümler bitti!',m:`Sırada <b>${T[tj].ad}</b> var: gerçek sınav gibi ${T[tj].sorular.length} soru. Kağıda çöz, sonra babana ver.`,l:`#t${tj+1}-soru`,d:'Tatbikata başla'}
+      :{b:'Hepsi tamam!',m:'Bütün bölümler ve tatbikatlar bitti. Sınav sabahı Son Tekrar sayfasına bir göz at.',l:'#tekrar',d:"Son Tekrar'ı aç"};}
+  let h=`<header class="home-head"><div class="top"><a class="back" href="../">← Ana sayfa</a>${themeBtn()}</div>
+  <div class="ahead"><div><p class="date">6. Sınıf · 1. Dönem 1. Yazılı</p><h1>İngilizce</h1></div><div class="stars">${STAR}<span>${doneCount}/${N} bölüm</span></div></div>
+  <p class="muted">Hazırlık dosyasında 10 soru var ve hepsi yazılı: hızlı okuma 2, dikkatli okuma 3, kelimeler 2, fiiller 1, zamirler 1, rutin yazma 1, kural yazma 1. Hepsi okul hayatı ve Cumhuriyet Bayramı ile ilgili.</p></header>
+  <section class="today"><h2>${not.b}</h2><p>${not.m}</p><div class="acts"><a class="btn primary" href="${not.l}">${not.d}</a></div></section>
+  <ol class="how"><li>Konuyu oku, kutuları doldur</li><li>Testi çöz, site anında kontrol eder</li><li>Yazılı sorusunu kağıda çöz</li><li>Babam kontrol etsin, sonucu abime gönder</li></ol>
+  <h2>Bölümler</h2><div class="bgrid">`;
+  B.forEach((b,i)=>{const n=i+1,p=P.b[n]||{},d=done[i],t=p.test!=null;
+    const durum=d?`${STAR}<span>Tamamlandı · Test ${p.test}/${b.test.length} · Yazılı ${p.yazili}/10</span>`:t?`<span>Test ${p.test}/${b.test.length} · sırada yazılı</span>`:`<span>${KONU[i].length} sayfa konu · ${b.test.length} soruluk test</span>`;
+    h+=`<a class="bcard${d?' done':''}" style="--unit:var(--c${n});--unit-soft:var(--c${n}-soft)" href="#b${n}-konu"><span class="band"></span><span class="bbody"><span class="bno">${n}</span><span class="btxt"><h3>${b.ad}</h3><span class="sub">${b.kisa}</span></span></span><span class="bdur">${durum}</span></a>`;});
+  h+=`</div><h2>Sınava hazırlık</h2><div class="bgrid">`;
+  T.forEach((t,i)=>{const n=i+1,p=P.t[n];
+    const durum=p!=null?`${STAR}<span>Puan ${p}/100</span>`:doneCount<N?`<span>Önce bölümleri bitir (${doneCount}/${N})</span>`:`<span>Hazır, başlayabilirsin</span>`;
+    h+=`<a class="bcard tcard${p!=null?' done':''}" href="#t${n}-soru"><span class="band"></span><span class="bbody"><span class="bno">T${n}</span><span class="btxt"><h3>${t.ad}</h3><span class="sub">${t.sorular.length} soru, gerçek sınav gibi, baba kontrollü</span></span></span><span class="bdur">${durum}</span></a>`;});
+  h+=`<a class="bcard tcard" href="#tekrar"><span class="band"></span><span class="bbody"><span class="bno">★</span><span class="btxt"><h3>Son Tekrar</h3><span class="sub">Sınav sabahı için bütün kurallar tek sayfada</span></span></span><span class="bdur"><span>1 sayfa</span></span></a></div>
+  <div class="actions center" id="resetZone"><button class="ghost" data-act="reset1">İlerlemeyi sıfırla</button></div>`;
+  return h;
+}
+function vKonu(n){
+  const b=B[n-1], pages=KONU[n-1], L=pages.length, i=Math.min(S.page[n]||0,L-1), pg=pages[i];
+  return topBar(BC,0)+`<article class="paper"><div class="top"><span class="eyebrow">Bölüm ${n} · ${b.ad}</span><span class="eyebrow">Sayfa ${i+1}/${L}</span></div>
+  <div class="progress"><span style="width:${(i+1)/L*100}%"></span></div>
+  <nav class="pages" aria-label="Sayfalar">${pages.map((p,j)=>`<button class="pg ${j===i?'on':j<i?'done':''}" data-act="pg" data-p="${j}" title="${p.t}">${j+1}</button>`).join('')}</nav>
+  <h1>${pg.t}</h1>${pg.h}
+  <div class="actions">${i>0?`<button class="ghost" data-act="pprev">← Önceki</button>`:''}${i<L-1?`<button class="primary" data-act="pnext">Sonraki sayfa →</button>`:`<button class="primary" data-act="startTest" data-n="${n}">Teste geç →</button>`}</div></article>`;
+}
+function vTest(n){
+  const b=B[n-1],st=S.test[n]||(S.test[n]={i:0,ans:[]}),Q=b.test;
+  if(st.i<Q.length){
+    const q=Q[st.i],a=st.ans[st.i],answered=a!=null;
+    let h=topBar(BC,1)+`<section class="paper"><div class="top"><span class="eyebrow">Bölüm ${n} · Test</span><span class="eyebrow">Soru ${st.i+1}/${Q.length}</span></div>
+    <div class="progress"><span style="width:${(st.i+(answered?1:0))/Q.length*100}%"></span></div><h2>${q.q}</h2><div class="opts">`;
+    q.o.forEach((o,j)=>{let cls='';if(answered){if(j===q.a)cls='right';else if(j===a)cls='wrong';}
+      h+=`<button class="opt ${cls}" data-act="ans" data-j="${j}" ${answered?'disabled':''}>${String.fromCharCode(65+j)}) ${o}</button>`;});
+    h+=`</div>`;
+    if(answered){h+=a===q.a?`<div class="fb good"><b>Doğru!</b> ${q.n}</div>`:`<div class="fb bad"><b>Doğru cevap: ${q.o[q.a]}.</b> ${q.n}</div>`;
+      h+=`<div class="actions"><button class="primary" data-act="next">${st.i+1<Q.length?'Sonraki soru →':'Test sonucunu gör →'}</button></div>`;}
+    return h+`</section>`;
+  }
+  const sc=Q.filter((q,i)=>st.ans[i]===q.a).length, wrong=Q.filter((q,i)=>st.ans[i]!==q.a);
+  let h=topBar(BC,1)+`<section class="paper result"><span class="eyebrow">Bölüm ${n} · Test sonucu</span><div class="big-score">${sc}/${Q.length}</div>`;
+  h+=wrong.length?`<p>Yanlış yaptığın konular için kısa notların:</p><ul class="todo">${wrong.map(q=>`<li><b>${q.q}</b><br>${q.n}</li>`).join('')}</ul>`:`<div class="allgood">Hepsi doğru! Yazılı sorusuna geçebilirsin.</div>`;
+  h+=`<div class="actions center"><button class="ghost" data-act="startTest" data-n="${n}">Testi tekrar çöz</button><a class="btn primary" href="#b${n}-yazili">Yazılı sorusuna geç →</a></div></section>`;
+  return h;
+}
+function vYazili(n){
+  const b=B[n-1];
+  return topBar(BC,2)+`<section class="paper"><span class="eyebrow">Bölüm ${n} · Yazılı sorusu</span><h1>Sınavdaki gibi</h1>
+  <div class="note">Nisa, cevaplarını <b>kağıda</b> yaz. Tablo varsa kağıda çizip doldur. Bitince telefonu babana ver.</div>
+  ${b.yazili.soru}
+  <div class="actions"><a class="btn primary" href="#b${n}-kontrol">Bitirdim, babama veriyorum →</a></div></section>`;
+}
+function vKontrol(key){
+  const n=+key.slice(1), isB=key[0]==='b', set=checkedSet(key);
+  let h=topBar(isB?BC:null,2)+`<section class="paper"><span class="eyebrow">${isB?`Bölüm ${n}`:T[n-1].ad} · Baba kontrolü</span>
+  <div class="note">Babacığım, Nisa'nın kağıdına bak. Yazdığı her madde için kutuyu işaretle. Aynı anlamı kendi cümlesiyle yazdıysa da say.</div>`;
+  blocks(key).forEach(bl=>{
+    if(!isB) h+=`<div class="qhead">Soru ${bl.si+1} · ${KONU_AD[bl.k-1]}</div>`;
+    bl.groups.forEach((g,gi)=>{
+      h+=`<div class="grp ${gi===0?'first':''}"><h3>${g.b}</h3><div class="model">${g.m}</div>`;
+      g.i.forEach((it,ii)=>{const id=`${key}.${bl.si}.${gi}.${ii}`;
+        h+=`<label class="item" for="${id}"><input type="checkbox" id="${id}" data-id="${id}" ${set.has(id)?'checked':''}><span>${it[0]}</span><span class="p">${it[1]} p</span></label>`;});
+      h+=`</div>`;
+    });
+  });
+  h+=`</section><div class="scorebar"><span>Puan <span class="big" id="score">${scoreOf(key)}</span> / ${maxOf(key)}</span><a class="btn" style="background:var(--paper);color:var(--fg);padding:10px 14px" href="#${key}-sonuc">Sonucu gör</a></div>`;
+  return h;
+}
+function vSonucB(n){
+  const key='b'+n, s=scoreOf(key), mx=maxOf(key), c=checkedSet(key);
+  P.b[n]=Object.assign({},P.b[n],{yazili:s}); save();
+  const test=P.b[n].test, miss=items(key).filter(i=>!c.has(i.id)).map(i=>i.fix);
+  const msg=`Nisa · İngilizce Bölüm ${n}: ${B[n-1].ad}\nTest: ${test!=null?test+'/5':'çözülmedi'}\nYazılı: ${s}/${mx}`+(miss.length?`\nTekrar edilecekler:\n- ${miss.join('\n- ')}`:'\nEksik yok.');
+  let h=topBar(BC,3)+`<section class="paper result"><span class="eyebrow">Bölüm ${n} · Sonuç</span><h1>${B[n-1].ad}</h1>
+  <div class="scores"><div>Test<b>${test!=null?test+'/5':'—'}</b></div><div>Yazılı<b>${s}/${mx}</b></div></div>`;
+  h+=miss.length?`<span class="eyebrow">Tekrar edilecekler</span><ul class="todo">${miss.map(m=>`<li>${m}</li>`).join('')}</ul>`:`<div class="allgood">Eksik yok, harika!</div>`;
+  h+=sendBox(msg)+`<div class="actions center"><a class="btn ghost" href="#b${n}-kontrol">Kontrole dön</a>${n<B.length?`<a class="btn primary" href="#b${n+1}-konu">Sonraki bölüm →</a>`:`<a class="btn primary" href="#ana">Bölümlere dön</a>`}</div></section>`;
+  return h;
+}
+function vTSoru(n){
+  const t=T[n-1],i=S.tIdx[n]||0,q=t.sorular[i],L=t.sorular.length;
+  let h=topBar(null)+`<section class="paper"><div class="top"><span class="eyebrow">${t.ad} · ${KONU_AD[q.k-1]}</span><span class="eyebrow">Soru ${i+1}/${L}</span></div>
+  <div class="progress"><span style="width:${(i+1)/L*100}%"></span></div>
+  ${i===0?`<div class="note">Gerçek sınav gibi çöz: cevapları kağıda, soru numarasıyla yaz. Bitince telefonu babana ver.</div>`:''}
+  <h2>${i+1}. Soru</h2>${q.h}
+  <div class="actions">${i>0?`<button class="ghost" data-act="tprev" data-n="${n}">← Önceki</button>`:''}
+  ${i<L-1?`<button class="primary" data-act="tnext" data-n="${n}">Sonraki soru →</button>`:`<a class="btn primary" href="#t${n}-kontrol">Bitirdim, babama veriyorum →</a>`}</div></section>`;
+  return h;
+}
+function vSonucT(n){
+  const key='t'+n, c=checkedSet(key), all=items(key), s=scoreOf(key), mx=maxOf(key), p100=Math.round(s/mx*100);
+  P.t[n]=p100; save();
+  const per=KONU_AD.map((_,i)=>i+1).map(k=>{const its=all.filter(i=>i.k===k);return [its.filter(i=>c.has(i.id)).reduce((a,i)=>a+i.p,0),its.reduce((a,i)=>a+i.p,0)]});
+  const miss=all.filter(i=>!c.has(i.id)).map(i=>i.fix);
+  const uniq=[...new Set(miss)];
+  const msg=`Nisa · İngilizce ${T[n-1].ad}\nPuan: ${p100}/100\n`+per.map((v,i)=>`${KONU_AD[i]}: ${v[0]}/${v[1]}`).join('\n')+(uniq.length?`\nTekrar edilecekler:\n- ${uniq.join('\n- ')}`:'\nEksik yok.');
+  let h=topBar(null)+`<section class="paper result"><span class="eyebrow">${T[n-1].ad} · Sonuç</span><div class="big-score">${p100}<span class="muted" style="font-size:1.2rem">/100</span></div>
+  <div class="scores">${per.map((v,i)=>`<div>${KONU_AD[i]}<b>${v[0]}/${v[1]}</b></div>`).join('')}</div>`;
+  h+=uniq.length?`<span class="eyebrow">Tekrar edilecekler</span><ul class="todo">${uniq.map(m=>`<li>${m}</li>`).join('')}</ul>`:`<div class="allgood">Eksik yok, sınava hazırsın!</div>`;
+  h+=sendBox(msg)+`<div class="actions center"><a class="btn ghost" href="#t${n}-kontrol">Kontrole dön</a><a class="btn primary" href="#ana">Ana sayfa</a></div></section>`;
+  return h;
+}
+function vTekrar(){
+  const R=TEKRAR;
+  return topBar(null)+`<article class="paper"><span class="eyebrow">Sınav sabahı</span><h1>Son Tekrar</h1>${R.map(([t,l])=>`<section><h2>${t}</h2><ul>${l.map(x=>`<li>${x}</li>`).join('')}</ul></section>`).join('')}
+  <div class="rule"><b>Unutma:</b><span>He / she ile fiile -s ekle (gets, has, does). Fiilden önce I, he, she, we, they; fiilden sonra me, him, her, us, them. “Before” tuzağına dikkat. İki harf ipucu varsa iki kelime yaz. Cümleye büyük harfle başla, noktayla bitir.</span></div></article>`;
+}
+
+/* ---------- YÖNLENDİRME ---------- */
+function render(){
+  const h=(location.hash||'#ana').slice(1); let html; let m;
+  try{const bm=h.match(/^b(\d)-/),tm=h.match(/^t(\d)-/);if(bm)localStorage.setItem('nisaSon',JSON.stringify({d:DERS,b:+bm[1],t:Date.now()}));else if(tm)localStorage.setItem('nisaSon',JSON.stringify({d:DERS,tt:+tm[1],t:Date.now()}));}catch(e){}
+  const um=h.match(/^b([1-7])-/);
+  if(um){app.style.setProperty('--unit',`var(--c${um[1]})`);app.style.setProperty('--unit-soft',`var(--c${um[1]}-soft)`);app.dataset.unit=um[1];}
+  else{app.style.removeProperty('--unit');app.style.removeProperty('--unit-soft');delete app.dataset.unit;}
+  if((m=h.match(/^b([1-7])-(konu|test|yazili|kontrol|sonuc)$/))){const n=+m[1];
+    html={konu:()=>vKonu(n),test:()=>vTest(n),yazili:()=>vYazili(n),kontrol:()=>vKontrol('b'+n),sonuc:()=>vSonucB(n)}[m[2]]();}
+  else if((m=h.match(/^t([1-9])-(soru|kontrol|sonuc)$/))){const n=+m[1];
+    html={soru:()=>vTSoru(n),kontrol:()=>vKontrol('t'+n),sonuc:()=>vSonucT(n)}[m[2]]();}
+  else if(h==='tekrar') html=vTekrar();
+  else html=vAna();
+  app.innerHTML=html;
+}
+function goTop(){window.scrollTo(0,0)}
+window.addEventListener('hashchange',()=>{render();goTop();});
+app.addEventListener('click',e=>{
+  const el=e.target.closest('[data-act]'); if(!el) return;
+  const act=el.dataset.act;
+  if(act==='startTest'){const n=+el.dataset.n;S.test[n]={i:0,ans:[]};if(location.hash==='#b'+n+'-test'){render();goTop();}else location.hash='b'+n+'-test';}
+  else if(act==='ans'){const n=+location.hash.match(/b(\d)/)[1],st=S.test[n];st.ans[st.i]=+el.dataset.j;render();}
+  else if(act==='next'){const n=+location.hash.match(/b(\d)/)[1],st=S.test[n];st.i++;
+    if(st.i>=B[n-1].test.length){const sc=B[n-1].test.filter((q,i)=>st.ans[i]===q.a).length;P.b[n]=Object.assign({},P.b[n],{test:sc});save();}
+    render();goTop();}
+  else if(act==='pg'||act==='pnext'||act==='pprev'){const n=+location.hash.match(/b(\d)/)[1];const cur=S.page[n]||0;
+    S.page[n]=act==='pg'?+el.dataset.p:cur+(act==='pnext'?1:-1);render();goTop();}
+  else if(act==='theme'){THEME={oto:'acik',acik:'koyu',koyu:'oto'}[THEME];try{localStorage.setItem('nisaTema',THEME)}catch(e){}applyTheme();document.querySelectorAll('.themebtn').forEach(b=>b.textContent='Tema: '+THEME_AD[THEME]);}
+  else if(act==='reset1'){document.getElementById('resetZone').innerHTML=`<span>Bütün puanlar silinsin mi?</span><button class="ghost" data-act="reset0">Vazgeç</button><button class="primary" data-act="reset2">Evet, sıfırla</button>`;}
+  else if(act==='reset0'){render();}
+  else if(act==='reset2'){P={b:{},t:{}};save();S.test={};S.checks={};S.tIdx={};S.page={};render();goTop();}
+  else if(act==='tnext'||act==='tprev'){const n=+el.dataset.n;S.tIdx[n]=(S.tIdx[n]||0)+(act==='tnext'?1:-1);render();goTop();}
+  else if(act==='adim'){const box=el.closest('.adimlar'),nx=box.querySelector('li[hidden]');if(nx){nx.hidden=false;nx.classList.add('yeni');}if(!box.querySelector('li[hidden]')){el.textContent='Çözüm tamam';el.disabled=true;el.className='ghost';}}
+  else if(act==='deney'){const box=el.closest('.deney'),n=+el.dataset.n,c={'Mavi':0,'Sarı':0,'Kırmızı':0},renk={'Mavi':'#3c86d6','Sarı':'#e9a619','Kırmızı':'#d0452f'};for(let i=0;i<n;i++){const r=Math.floor(Math.random()*4);c[r<2?'Mavi':r===2?'Sarı':'Kırmızı']++;}box.querySelector('.dsonuc').innerHTML='<p><b>'+n+' kez çevrildi:</b></p>'+Object.keys(c).map(k=>'<div class="dbar"><span class="dad">'+k+'</span><span class="dcub"><span style="width:'+(c[k]/n*100)+'%;background:'+renk[k]+'"></span></span><span class="dsay">'+c[k]+'/'+n+'</span></div>').join('');box.querySelector('.dgecmis').insertAdjacentHTML('afterbegin','<li>'+n+' çevirme → mavi '+c['Mavi']+'/'+n+'</li>');}
+  else if(act==='sec'){const row=el.closest('.srow');if(row.dataset.done)return;const ok=el.dataset.ok==='1';el.classList.add(ok?'dogru':'yanlis');if(ok){row.dataset.done=1;row.querySelectorAll('.sop').forEach(b=>{if(b!==el)b.disabled=true;});}const box=el.closest('.secim'),rows=[...box.querySelectorAll('.srow')],d=rows.filter(r=>r.dataset.done).length,fb=box.querySelector('.bfb');fb.hidden=false;fb.className='bfb '+(d===rows.length?'iyi':'');fb.textContent=d===rows.length?'Harika, hepsini buldun!':ok?'Doğru! '+(rows.length-d)+' tane kaldı.':'Olmadı, bir daha dene.';}
+  else if(act==='kontrol'){const box=el.closest('.birlikte'),ins=[...box.querySelectorAll('input.bos')];const nz=v=>String(v).toLocaleLowerCase('tr').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9ı]/g,'');let ok=0;ins.forEach(i=>{const d=i.dataset.c.split('|').some(c=>nz(c)===nz(i.value));i.classList.toggle('dogru',d);i.classList.toggle('yanlis',!d);if(d)ok++;});const fb=box.querySelector('.bfb');fb.hidden=false;fb.className='bfb '+(ok===ins.length?'iyi':'kotu');fb.textContent=ok===ins.length?'Harika, hepsi doğru!':(ins.length-ok)+' boşluk yanlış. Kırmızı olanları düzeltip tekrar dene.';}
+  else if(act==='copy'){const box=document.getElementById('copybox');const txt=box.value;
+    const fallback=()=>{box.hidden=false;box.focus();box.select();el.textContent='Seç ve kopyala';};
+    try{navigator.clipboard.writeText(txt).then(()=>{el.textContent='Kopyalandı ✓';},fallback);}catch(err){fallback();}}
+});
+app.addEventListener('change',e=>{
+  const cb=e.target.closest('input[data-id]'); if(!cb) return;
+  const key=cb.dataset.id.split('.')[0], set=checkedSet(key);
+  cb.checked?set.add(cb.dataset.id):set.delete(cb.dataset.id);
+  const sc=document.getElementById('score'); if(sc) sc.textContent=scoreOf(key);
+});
+render();
+</script>
+
+</body>
+</html>

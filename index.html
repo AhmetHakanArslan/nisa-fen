@@ -10,7 +10,7 @@
 :root{
   --bg:#F8FAFD; --grid:#DCE6F5; --paper:#FFFFFF; --fg:#1E2A5A; --muted:#51608F; --line:#C9D4EA; --edge:#1E2A5A;
   --note:#FFF06A; --note-edge:#E3D23E; --tape:#9FD8F7; --star:#FFC83D; --star-off:#A9B6D6;
-  --fen:#4B8DF7; --mat:#FF8A3D; --sos:#2FA36B; --tr:#E0457B;
+  --fen:#4B8DF7; --mat:#FF8A3D; --sos:#2FA36B; --tr:#E0457B; --ing:#8A5CF6;
   --hand:"Patrick Hand","Comic Sans MS",cursive; --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
@@ -87,9 +87,11 @@ const DERSLER=[
   {id:'sos',ad:'Sosyal Bilgiler',kisa:'Sosyal',url:'sosyal/',key:'nisaSos',renk:'var(--sos)',sub:'Roller, kültürel bağlar, çözüm, konum',
    bolum:['Gruplar ve Rollerimiz','Kültürel Bağlar ve Millî Değerler','Toplumsal Sorunlara Çözüm','Paralel, Meridyen ve Mutlak Konum','Türkiye, Kıtalar ve Okyanuslar'],sayfa:[4,4,4,4,4],tatbikat:1,tatSoru:10},
   {id:'tr',ad:'Türkçe',kisa:'Türkçe',url:'turkce/',key:'nisaTr',renk:'var(--tr)',sub:'Kelime anlamı, anahtar kelime, paragraf, yazım',
-   bolum:['Kelimenin Anlamını Tahmin Etme','Metnin Yüzey Anlamı','Anahtar Kelime','Gerçek ve Mecaz Anlam','Paragraf Türleri','Yazım ve Noktalama','Kalıp Sözler, Deyimler, Atasözleri'],sayfa:[4,4,4,4,4,5,4],tatbikat:1,tatSoru:11}
+   bolum:['Kelimenin Anlamını Tahmin Etme','Metnin Yüzey Anlamı','Anahtar Kelime','Gerçek ve Mecaz Anlam','Paragraf Türleri','Yazım ve Noktalama','Kalıp Sözler, Deyimler, Atasözleri'],sayfa:[4,4,4,4,4,5,4],tatbikat:1,tatSoru:11},
+  {id:'ing',ad:'İngilizce',kisa:'İngilizce',url:'ingilizce/',key:'nisaIng',renk:'var(--ing)',sub:'Okul hayatı, bayram, fiiller, zamirler',
+   bolum:['Hızlı Okuma: Konuyu Bul','Dikkatli Okuma','Kelimeler: Okul ve Bayram','am / is / are ve Geniş Zaman','Zamirler','Günlük Rutin Yazma','Okul Kuralları Yazma'],sayfa:[4,4,4,4,4,4,4],tatbikat:1,tatSoru:10}
 ];
-const YAKINDA=['İngilizce'];
+const YAKINDA=[];
 
 const oku=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}};
 function durum(d){
@@ -143,7 +145,7 @@ function render(){
     <span class="row" aria-hidden="true">${s.bitti.map(x=>x?STAR_ON:STAR_OFF).join('')}</span>
     <span class="say">${say}</span></span></a>`;});
   h+=`</div></section>
-  <section class="sec soon" aria-labelledby="yh"><h2 id="yh">Yakında eklenecek</h2><div class="soonlist">${YAKINDA.map(y=>`<div><b>${y}</b><span>Abim hazırlıyor</span></div>`).join('')}</div></section>
+  ${YAKINDA.length?`<section class="sec soon" aria-labelledby="yh"><h2 id="yh">Yakında eklenecek</h2><div class="soonlist">${YAKINDA.map(y=>`<div><b>${y}</b><span>Abim hazırlıyor</span></div>`).join('')}</div></section>`:''}
   <footer class="foot"><button class="themebtn" id="tema" type="button">Tema: ${THEME_AD[THEME]}</button></footer>`;
   document.getElementById('app').innerHTML=h;
   document.getElementById('tema').onclick=()=>{THEME={oto:'acik',acik:'koyu',koyu:'oto'}[THEME];try{localStorage.setItem('nisaTema',THEME)}catch(e){}applyTheme();render();};
